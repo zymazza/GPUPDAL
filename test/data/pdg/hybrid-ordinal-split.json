@@ -1,0 +1,7 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.expression","expression":"Classification <= 5"},
+  {"type":"filters.decimation","step":2.5},
+  {"type":"filters.assign","value":"UserData = Classification"},
+  {"type":"writers.las","filename":"out.las"}
+]

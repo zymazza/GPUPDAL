@@ -1,0 +1,31 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.laz"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([REPLACE_MINX,REPLACE_MAXX],[REPLACE_MINY,REPLACE_MAXY])"
+    },
+    {
+      "type": "filters.assign",
+      "value": "GridKeep = 0"
+    },
+    {
+      "type": "filters.gridDecimation",
+      "resolution": 1.0,
+      "output_type": "max",
+      "value": "GridKeep = 1"
+    },
+    {
+      "type": "filters.range",
+      "limits": "GridKeep[1:1]"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

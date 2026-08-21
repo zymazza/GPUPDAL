@@ -1,0 +1,5 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.locate","dimension":"Z","minmax":"sideways"},
+  {"type":"writers.las","filename":"out.las"}
+]

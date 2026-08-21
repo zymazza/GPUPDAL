@@ -1,0 +1,9 @@
+# UBSan suppressions for the Host ASan/UBSan lane (B0270).
+#
+# Vendored lazperf's LAZ integer predictors (point14 field decoders and the
+# integer decompressor) rely on two's-complement wraparound of int32
+# arithmetic. Pinned PDAL ships the same code, every reference artifact is
+# byte-identical, and the report only appears on stderr under UBSan, where it
+# fails the exact stream comparison for a reason unrelated to fork code.
+# Use: UBSAN_OPTIONS=suppressions=$PWD/tests/sanitizers/ubsan-lazperf.supp
+signed-integer-overflow:vendor/lazperf

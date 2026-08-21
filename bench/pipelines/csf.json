@@ -1,0 +1,19 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.csf",
+      "smooth": false,
+      "iterations": 32,
+      "resolution": 25
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las",
+      "extra_dims": "all"
+    }
+  ]
+}

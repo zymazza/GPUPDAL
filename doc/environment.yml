@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+dependencies:
+  - python-pdal
+  - jupyter-book == 1.0.4
+  - breathe > 4.34
+  - sphinxcontrib-jquery
+  - sphinx-notfound-page
+  - sphinx-inline-tabs
+  - cmake

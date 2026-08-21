@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p packages
+
+CONDA_PLAT=""
+if grep -q "windows" <<< "$GHA_CI_PLATFORM"; then
+    CONDA_PLAT="win"
+    ARCH="64"
+fi
+
+if grep -q "ubuntu" <<< "$GHA_CI_PLATFORM"; then
+    CONDA_PLAT="linux"
+    if grep -q "arm" <<< "$GHA_CI_PLATFORM"; then
+      ARCH="aarch64"
+    else
+      ARCH="64"
+    fi
+fi
+
+if grep -q "macos" <<< "$GHA_CI_PLATFORM"; then
+    CONDA_PLAT="osx"
+    ARCH="arm64"
+fi
+
+#echo "CONDA_SUBDIR=${CONDA_PLAT}-${ARCH}" >> $GITHUB_ENV
+
+rattler-build build --recipe recipe/recipe.yaml  --output-dir packages -m ".ci_support/${CONDA_PLAT}_${ARCH}_.yaml"
+conda create -y -n test -c ./packages/${CONDA_PLAT}-${ARCH} python pdal
+conda deactivate
+
+conda activate test
+pdal --version
+conda deactivate

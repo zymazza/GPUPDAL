@@ -1,0 +1,21 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([635619.85, 638982.55], [848899.7, 853535.43], [406.59, 500])",
+      "outside": true
+    },
+    {
+      "type": "filters.assign",
+      "value": "Classification = 5"
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

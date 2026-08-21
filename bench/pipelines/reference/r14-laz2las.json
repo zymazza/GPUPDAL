@@ -1,0 +1,6 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "writers.las", "filename": "output.las" }
+  ]
+}

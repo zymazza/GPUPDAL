@@ -1,0 +1,649 @@
+/******************************************************************************
+* Copyright (c) 2016, Hobu Inc. (info@hobu.co)
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following
+* conditions are met:
+*
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in
+*       the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of Hobu, Inc. or Flaxen Geo Consulting nor the
+*       names of its contributors may be used to endorse or promote
+*       products derived from this software without specific prior
+*       written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+* OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+* AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+* OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+* OF SUCH DAMAGE.
+****************************************************************************/
+
+#include "GDALGrid.hpp"
+
+#include <algorithm>
+#include <cmath>
+#include <limits>
+#include <iostream>
+#include <pdal/pdal_types.hpp>
+
+namespace pdal
+{
+
+//ABELL - In the beginning this data needed to be contiguous, as it was passed
+//  directly to GDAL to write.  Since we started supporting various data types
+//  in GDAL output, we end up copying/casting data to a block for output,
+//  so there's no reason that we must have contiguous data -- we just need
+//  an iterator that allows traversal of the data in row-major order.  So,
+//  this should probably be re-implemented in some way that doesn't require
+//  moving data around every time the grid is resized.
+
+GDALGrid::GDALGrid(double xOrigin, double yOrigin, size_t width, size_t height, double edgeLength,
+        double radius, int outputTypes, size_t windowSize, double power, bool binMode, 
+        std::vector<int> percentileValues) :
+    m_windowSize(windowSize), m_edgeLength(edgeLength), m_radius(radius), m_power(power),
+    m_outputTypes(outputTypes), m_binMode(binMode)
+{
+    if (width > (size_t)(std::numeric_limits<int>::max)() ||
+        height > (size_t)(std::numeric_limits<int>::max)())
+    {
+        std::ostringstream oss;
+        oss << "Grid width or height is too large. Width and height are "
+            "limited to " << (std::numeric_limits<int>::max)() << " cells."
+            "Try setting bounds or increasing resolution.";
+        throw error(oss.str());
+    }
+    RasterLimits limits(xOrigin, yOrigin, width, height, edgeLength);
+
+    m_count.reset(new Rasterd(limits));
+    if (m_outputTypes & statMin)
+        m_min.reset(new Rasterd(limits, (std::numeric_limits<double>::max)()));
+    if (m_outputTypes & statMax)
+        m_max.reset(new Rasterd(limits, std::numeric_limits<double>::lowest()));
+    if (m_outputTypes & statIdw)
+    {
+        m_idw.reset(new Rasterd(limits));
+        m_idwDist.reset(new Rasterd(limits));
+    }
+    if ((m_outputTypes & statMean) || (m_outputTypes & statStdDev))
+        m_mean.reset(new Rasterd(limits));
+    if (m_outputTypes & statStdDev)
+        m_stdDev.reset(new Rasterd(limits));
+    //!! We do binmode checks in the writer, so probably not needed here
+    for (auto& p : percentileValues)
+    {
+        if (p > 0 && p < 100)
+            m_pctls.emplace(p, new Rasterd(limits));
+        else
+        {
+            std::ostringstream oss;
+            oss << "Invalid percentile value: " << p << ". Percentiles are limited to " << 
+                "0-100 integer values.";
+            throw error(oss.str());
+        }
+    }
+}
+
+int GDALGrid::width() const
+{
+    return m_count->width();
+}
+
+int GDALGrid::height() const
+{
+    return m_count->height();
+}
+
+double GDALGrid::xOrigin() const
+{
+    return m_count->xOrigin();
+}
+
+double GDALGrid::yOrigin() const
+{
+    return m_count->yOrigin();
+}
+
+double GDALGrid::distance(int i, int j, double x, double y) const
+{
+    double x1 = m_count->xCellPos(i);
+    double y1 = m_count->yCellPos(j);
+    return std::sqrt(std::pow(x1 - x, 2) + std::pow(y1 - y, 2));
+}
+
+void GDALGrid::windowFill()
+{
+    for (int i = 0; i < width(); ++i)
+        for (int j = 0; j < height(); ++j)
+            if (empty(i, j))
+                windowFill(i, j);
+}
+
+/**
+  Expand the grid to a new size.
+
+  /param width
+*/
+void GDALGrid::expandToInclude(double x, double y)
+{
+    m_count->expandToInclude(x, y);
+    if (m_outputTypes & statMin)
+        m_min->expandToInclude(x, y);
+    if (m_outputTypes & statMax)
+        m_max->expandToInclude(x, y);
+    if (m_outputTypes & statIdw)
+    {
+        m_idw->expandToInclude(x, y);
+        m_idwDist->expandToInclude(x, y);
+    }
+    if ((m_outputTypes & statMean) || (m_outputTypes & statStdDev))
+        m_mean->expandToInclude(x, y);
+    if (m_outputTypes & statStdDev)
+        m_stdDev->expandToInclude(x, y);
+}
+
+
+int GDALGrid::numBands() const
+{
+    int num = 0;
+
+    if (m_outputTypes & statCount)
+        num++;
+    if (m_outputTypes & statMin)
+        num++;
+    if (m_outputTypes & statMax)
+        num++;
+    if (m_outputTypes & statMean)
+        num++;
+    if (m_outputTypes & statIdw)
+        num++;
+    if (m_outputTypes & statStdDev)
+        num++;
+    if (!m_pctls.empty())
+        num += m_pctls.size();
+    return num;
+}
+
+
+double *GDALGrid::data(const std::string& name)
+{
+    if (name == "count" && (m_outputTypes & statCount))
+        return m_count->data();
+    if (name == "min" && (m_outputTypes & statMin))
+        return m_min->data();
+    if (name == "max" && (m_outputTypes & statMax))
+        return m_max->data();
+    if (name == "mean" && (m_outputTypes & statMean))
+        return m_mean->data();
+    if (name == "idw" && (m_outputTypes & statIdw))
+         return m_idw->data();
+    if (name == "stdev" && (m_outputTypes & statStdDev))
+        return m_stdDev->data();
+    return nullptr;
+}
+
+
+//!! could maybe run something equivalent to fillPercentiles to calculate on the fly, but that would
+//!! entail looping thru m_valBins multiple times. Not sure which is better
+double *GDALGrid::pctlData(int pct) const
+{
+    auto it = m_pctls.find(pct);
+    if ((it != m_pctls.end()) && m_valBins.size())
+        return it->second->data();
+    return nullptr;
+}
+
+
+GDALGrid::Cell GDALGrid::pointToCell(const Point& p)
+{
+    bool okX, okY;
+
+    Cell cell;
+    cell.i = m_count->xCell(p.x, okX);
+    cell.j = m_count->yCell(p.y, okY);
+    if (!okX)
+        throw error("Range of X coordinates exceeds limits.");
+    if (!okY)
+        throw error("Range of Y coordinates exceeds limits.");
+    return cell;
+}
+
+void GDALGrid::addPoint(double x, double y, double z)
+{
+    addPoint(x, y, z, 0, height());
+}
+
+void GDALGrid::rowSpan(double y, int& rowBegin, int& rowEnd) const
+{
+    // A cell is updated only when its center lies closer than the radius,
+    // so its row satisfies |yCellPos(j) - y| < radius. One extra row on each
+    // side absorbs floating-point rounding of the cell arithmetic.
+    const double low = (y - m_radius - m_count->yOrigin()) / m_edgeLength - 1.5;
+    const double high = (y + m_radius - m_count->yOrigin()) / m_edgeLength + 0.5;
+    const double lowClamped = (std::max)(0.0, std::floor(low));
+    const double highClamped =
+        (std::min)(static_cast<double>(height()), std::ceil(high) + 1.0);
+    rowBegin = static_cast<int>(lowClamped);
+    rowEnd = static_cast<int>((std::max)(lowClamped, highClamped));
+}
+
+void GDALGrid::addPoint(double x, double y, double z, int rowBegin,
+    int rowEnd)
+{
+    // Here's the logic... we divide the cells around the subject cell
+    // (at iOrigin, jOrigin) into four quadrants.  We move outward from the
+    // subject cell, checking distance until we find that we're farther than
+    // permitted by the radius, then we move up (down, over, whatever) a row
+    // or column and do it again until we find a case where there's not a
+    // single cell in the row that meets our criteria.
+    // There are easier ways to figure out which cells will be close enough,
+    // be we need the precise distance for all those cells that we already
+    // know will qualify, so I don't think there's much overhead here that
+    // we can avoid.
+
+    // The four quadrant cases could certainly be merged into one, but I
+    // think it would be harder to follow and there's really not that
+    // much code here.
+
+    // The quadrants are the standard mathematical ones.  Here's a picture
+    // of how things kind of work.  At the end we update the central cell.
+
+    //            ^ ->
+    //          ^ | -->
+    //        ^ | | --->
+    //      ^ | | | ---->
+    //   <------- X ------>
+    //    <------ | | | v
+    //     <----- | | v
+    //       <--- | v
+    //         <- v
+
+    Cell origin = pointToCell({x, y});
+    double d;
+
+    if (!m_binMode)
+    {
+        updateFirstQuadrant(x, y, z, rowBegin, rowEnd);
+        updateSecondQuadrant(x, y, z, rowBegin, rowEnd);
+        updateThirdQuadrant(x, y, z, rowBegin, rowEnd);
+        updateFourthQuadrant(x, y, z, rowBegin, rowEnd);
+        d = distance(origin.i, origin.j, x, y);
+    }
+    else
+        d = 0;
+
+    // In non bin mode, this case is where a point lies in a cell.
+    // In bin mode, this is the only case and distance is zero.
+    if ((m_binMode || d < m_radius) &&
+        origin.i >= 0 && origin.j >= 0 &&
+        origin.i < width() && origin.j < height())
+        updateInBand(origin.i, origin.j, z, d, rowBegin, rowEnd);
+}
+
+
+void GDALGrid::updateFirstQuadrant(double x, double y, double z,
+    int rowBegin, int rowEnd)
+{
+    int i, j;
+    int iStart;
+
+    Cell origin = pointToCell({x, y});
+
+    i = iStart = (std::max)(0, origin.i + 1);
+    j = (std::min)(origin.j, (height() - 1));
+
+    if (iStart >= width())
+        return;
+
+    while (j >= 0)
+    {
+        double d = distance(i, j, x, y);
+        if (d < m_radius)
+        {
+            updateInBand(i, j, z, d, rowBegin, rowEnd);
+            i++;
+            if (i < width())
+                continue;
+        }
+
+        // Either d >= m_radius or we've hit the end of a row (i == width),
+        // so move to the next row.
+        if (i == iStart)
+            break;
+        i = iStart;
+        j--;
+    }
+}
+
+
+void GDALGrid::updateSecondQuadrant(double x, double y, double z,
+    int rowBegin, int rowEnd)
+{
+    int i, j;
+    int jStart;
+
+    Cell origin = pointToCell({x, y});
+
+    i = (std::min)(origin.i, (width() - 1));
+    j = jStart = (std::min)(origin.j - 1, (height() - 1));
+
+    if (jStart < 0)
+        return;
+
+    while (i >= 0)
+    {
+        double d = distance(i, j, x, y);
+        if (d < m_radius)
+        {
+            updateInBand(i, j, z, d, rowBegin, rowEnd);
+            j--;
+            if (j >= 0)
+                continue;
+        }
+
+        // Either d >= m_radius or we've hit the end of a column (j < 0),
+        // so move to the next column.
+        if (j == jStart)
+            break;
+        j = jStart;
+        i--;
+    }
+}
+
+
+void GDALGrid::updateThirdQuadrant(double x, double y, double z,
+    int rowBegin, int rowEnd)
+{
+    int i, j;
+    int iStart;
+
+    Cell origin = pointToCell({x, y});
+
+    i = iStart = (std::min)(origin.i - 1, (width() - 1));
+    j = (std::max)(origin.j, 0);
+
+    if (iStart < 0)
+        return;
+
+    while (j < height())
+    {
+        double d = distance(i, j, x, y);
+        if (d < m_radius)
+        {
+            updateInBand(i, j, z, d, rowBegin, rowEnd);
+            i--;
+            if (i >= 0)
+                continue;
+        }
+
+        // Either d >= m_radius or we've hit the end of a row (i < 0),
+        // so move to the next row.
+        if (i == iStart)
+            break;
+        i = iStart;
+        j++;
+    }
+}
+
+
+void GDALGrid::updateFourthQuadrant(double x, double y, double z,
+    int rowBegin, int rowEnd)
+{
+    int i, j;
+    int jStart;
+
+    Cell origin = pointToCell({x, y});
+
+    i = (std::max)(origin.i, 0);
+    j = jStart = (std::max)(origin.j + 1, 0);
+
+    if (jStart >= height())
+        return;
+
+    while (i < width())
+    {
+        double d = distance(i, j, x, y);
+        if (d < m_radius)
+        {
+            updateInBand(i, j, z, d, rowBegin, rowEnd);
+            j++;
+            if (j < height())
+                continue;
+        }
+
+        // Either d >= m_radius or we've hit the end of a column (j == height())
+        // so move to the next row.
+        if (j == jStart)
+            break;
+        j = jStart;
+        i++;
+    }
+}
+
+
+void GDALGrid::update(size_t i, size_t j, double val, double dist)
+{
+    // Once we determine that a point is close enough to a cell to count it,
+    // this function does the actual math.  We use the value of the
+    // point (val) and its distance from the cell center (dist).  There's
+    // a little math that needs to be done once all points are added.  See
+    // finalize() for that.
+
+    // See
+    // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+    // https://en.wikipedia.org/wiki/Inverse_distance_weighting
+
+    double& count = m_count->at(i, j);
+    count++;
+
+    if (m_pctls.size())
+        m_valBins[m_count->indexAt(i, j)].push_back(val);
+
+    if (m_min)
+    {
+        double& min = m_min->at(i, j);
+        min = (std::min)(val, min);
+    }
+
+    if (m_max)
+    {
+        double& max = m_max->at(i, j);
+        max = (std::max)(val, max);
+    }
+
+    if (m_mean)
+    {
+        double& mean = m_mean->at(i, j);
+        double delta = val - mean;
+
+        mean += delta / count;
+        if (m_stdDev)
+        {
+            double& stdDev = m_stdDev->at(i, j);
+            stdDev += delta * (val - mean);
+        }
+    }
+
+    if (m_idw)
+    {
+        double& idw = m_idw->at(i, j);
+        double& idwDist = m_idwDist->at(i, j);
+
+        // If the distance is 0, we set the idwDist to nan to signal that
+        // we should ignore the distance and take the value as is.
+        if (!std::isnan(idwDist))
+        {
+            if (dist == 0)
+            {
+                idw = val;
+                idwDist = std::numeric_limits<double>::quiet_NaN();
+            }
+            else
+            {
+                idw += val / std::pow(dist, m_power);
+                idwDist += 1 / std::pow(dist, m_power);
+            }
+        }
+    }
+}
+
+
+void GDALGrid::fillPercentiles(const size_t& idx, std::vector<double>& values)
+{
+    std::sort(values.begin(), values.end());
+    //!! This check is mostly for testing
+    if (values.size() != static_cast<size_t>(m_count->at(idx)))
+    {
+        throw error("Mismatch in size of accumulated values and count raster; "
+            "expected " + std::to_string(m_count->at(idx)) + " values, got " +
+            std::to_string(values.size()));
+        return;
+    }
+    //!! Could use nth_element?
+    for (auto& [pct, raster] : m_pctls)
+    {
+        const double pctIdxExact = (pct / 100.0) * (m_count->at(idx) - 1);
+        const size_t pctIdxFloor = static_cast<size_t>(pctIdxExact);
+        double fraction = pctIdxExact - pctIdxFloor;
+        if (!fraction)
+            (*raster)[idx] = values[pctIdxFloor];
+        else
+            (*raster)[idx] = values[pctIdxFloor] + fraction *
+                (values[pctIdxFloor + 1] - values[pctIdxFloor]);
+    }
+}
+
+
+void GDALGrid::finalize()
+{
+    // See
+    // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+    // https://en.wikipedia.org/wiki/Inverse_distance_weighting
+    if (m_stdDev)
+        for (size_t i = 0; i < m_count->size(); ++i)
+            if (!empty(i))
+                (*m_stdDev)[i] = sqrt((*m_stdDev)[i] / (*m_count)[i]);
+
+    if (m_idw)
+        for (size_t i = 0; i < m_count->size(); ++i)
+            if (!empty(i))
+            {
+                double& distSum = (*m_idwDist)[i];
+                if (!std::isnan(distSum))
+                    (*m_idw)[i] /= distSum;
+            }
+
+    if (m_pctls.size())
+        for (auto& it : m_valBins)
+        {
+            size_t idx = it.first;
+            if (!empty(idx))
+                fillPercentiles(idx, it.second);
+        }
+
+    if (m_windowSize > 0)
+        windowFill();
+    else
+    {
+        for (int i = 0; i < m_count->width(); ++i)
+            for (int j = 0; j < m_count->height(); ++j)
+                if (empty(i, j))
+                    fillNodata(i, j);
+    }
+}
+
+
+void GDALGrid::fillNodata(int i, int j)
+{
+    if (m_min)
+        m_min->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+    if (m_max)
+        m_max->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+    if (m_mean)
+        m_mean->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+    if (m_idw)
+        m_idw->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+    if (m_stdDev)
+        m_stdDev->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+    if (m_pctls.size())
+        for (auto& it : m_pctls)
+            it.second->at(i, j) = std::numeric_limits<double>::quiet_NaN();
+}
+
+
+void GDALGrid::windowFill(int dstI, int dstJ)
+{
+    int istart = dstI > m_windowSize ? dstI - m_windowSize : (size_t)0;
+    int iend = (std::min)(width(), dstI + m_windowSize + 1);
+    int jstart = dstJ > m_windowSize ? dstJ - m_windowSize : (size_t)0;
+    int jend = (std::min)(height(), dstJ + m_windowSize + 1);
+
+    double distSum = 0;
+
+    // Initialize to 0 (rather than numeric_limits::max/lowest) since we're
+    // going to accumulate and average.
+    if (m_min)
+        m_min->at(dstI, dstJ) = 0;
+    if (m_max)
+        m_max->at(dstI, dstJ) = 0;
+
+    for (int i = istart; i < iend; ++i)
+        for (int j = jstart; j < jend; ++j)
+        {
+            if ((i == dstI && j == dstJ) || empty(i, j))
+                continue;
+            // The ternaries just avoid underflow UB.  We're just trying to
+            // find the distance from j to dstJ or i to dstI.
+            double distance = (double)(std::max)(j > dstJ ? j - dstJ : dstJ - j,
+                i > dstI ? i - dstI : dstI - i);
+            windowFillCell(i, j, dstI, dstJ, distance);
+            distSum += (1 / distance);
+        }
+
+    // Divide summed values by the (inverse) distance sum.
+    if (distSum > 0)
+    {
+        if (m_min)
+            m_min->at(dstI, dstJ) /= distSum;
+        if (m_max)
+            m_max->at(dstI, dstJ) /= distSum;
+        if (m_mean)
+            m_mean->at(dstI, dstJ) /= distSum;
+        if (m_idw)
+            m_idw->at(dstI, dstJ) /= distSum;
+        if (m_stdDev)
+            m_stdDev->at(dstI, dstJ) /= distSum;
+    }
+    else
+        fillNodata(dstI, dstJ);
+}
+
+
+void GDALGrid::windowFillCell(int srcI, int srcJ, int dstI, int dstJ, double distance)
+{
+    if (m_min)
+        m_min->at(dstI, dstJ) += m_min->at(srcI, srcJ) / distance;
+    if (m_max)
+        m_max->at(dstI, dstJ) += m_max->at(srcI, srcJ) / distance;
+    if (m_mean)
+        m_mean->at(dstI, dstJ) += m_mean->at(srcI, srcJ) / distance;
+    if (m_idw)
+        m_idw->at(dstI, dstJ) += m_idw->at(srcI, srcJ) / distance;
+    if (m_stdDev)
+        m_stdDev->at(dstI, dstJ) += m_stdDev->at(srcI, srcJ) / distance;
+}
+
+} //namespace pdal

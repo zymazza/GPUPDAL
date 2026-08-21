@@ -1,0 +1,19 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.text",
+      "filename": "input.csv"
+    },
+    {
+      "type": "filters.outlier",
+      "method": "radius",
+      "radius": 1.01,
+      "min_k": 4,
+      "class": 18
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA GeForce RTX 4060 Ti
+compute_capability: 8.9
+driver: 595.71.05
+cuda: 13.3
+cpu_model: AMD EPYC 7K62 48-Core Processor
+logical_cpus: 192
+embedded_profile: applies (shipped-rtx4060ti-sm89-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtx4060ti-sm89-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtx4060ti-sm89-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtx4060ti.json
+active_profile_sha256: 038d12e9d7fb46c47f9d77e97ecf6513b83ee43494d007389f57d08e715b0b4d

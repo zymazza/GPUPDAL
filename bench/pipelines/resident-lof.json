@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.lof",
+      "minpts": 10
+    },
+    {
+      "type": "filters.assign",
+      "value": "UserData = 1 WHERE LocalOutlierFactor >= 1.2"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

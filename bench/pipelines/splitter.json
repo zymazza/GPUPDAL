@@ -1,0 +1,16 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "@INPUT@"
+    },
+    {
+      "type": "filters.splitter",
+      "length": 250.0
+    },
+    {
+      "type": "writers.las",
+      "filename": "@OUTPUT@#.las"
+    }
+  ]
+}

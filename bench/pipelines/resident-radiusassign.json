@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.radiusassign",
+      "radius": 2.0,
+      "src_domain": "ReturnNumber[1:1]",
+      "reference_domain": "ReturnNumber[2:15]",
+      "is3d": true,
+      "update_expression": "UserData = 9"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

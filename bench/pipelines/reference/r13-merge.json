@@ -1,0 +1,8 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.merge-a.laz", "tag": "left" },
+    { "type": "readers.las", "filename": "input.merge-b.laz", "tag": "right" },
+    { "type": "filters.merge", "inputs": ["left", "right"] },
+    { "type": "writers.las", "filename": "output.laz", "compression": "true" }
+  ]
+}

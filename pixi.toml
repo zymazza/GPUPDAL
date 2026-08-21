@@ -1,0 +1,161 @@
+[project]
+channels = ["conda-forge"]
+name = "pdal"
+platforms = ["linux-64", "win-64", "osx-64", "osx-arm64", "linux-aarch64"]
+version = "2.8.2"
+
+[feature.dev.dependencies]
+libgdal-core = "*"
+cmake = "*"
+compilers = "*"
+ninja = "*"
+libpq = "*"
+hdf5 = "*"
+cpd = "*"
+fgt = "*"
+tiledb = "*"
+draco = "*"
+nitro = "*"
+ceres-solver = "*"
+python = "*"
+libarrow = "*"
+libparquet = "*"
+
+[feature.doc.dependencies]
+jupyter-book = ">=1.0.3,<2"
+sphinx-notfound-page = ">=1.0.4,<2"
+sphinxcontrib-jquery = ">=4.1,<5"
+breathe = ">=4.35.0,<5"
+sphinx-inline-tabs = ">=2023.4.21,<2024"
+doxygen = "*"
+cmake = "*"
+python-pdal = "*"
+
+[feature.goldendoodle.dependencies]
+jupyterlab = ">=4.3.1,<5"
+pdal = ">=2.8.2,<3"
+python-pdal = ">=3.4.5,<4"
+numpy = ">=2.1.3,<3"
+scipy = ">=1.14.1,<2"
+pandas = ">=2.2.3,<3"
+geopandas = ">=1.0.1,<2"
+scikit-learn = ">=1.5.2,<2"
+scikit-image = ">=0.24.0,<0.25"
+rasterio = ">=1.4.3,<2"
+shapely = ">=2.0.6,<3"
+matplotlib = ">=3.9.3,<4"
+tqdm = ">=4.67.1,<5"
+
+[feature.dev.target.win-64.tasks]
+configure = { cmd = [ "cmake",
+    "-G", "Ninja",
+    "-S", ".",
+    "-B", ".build",
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+    "-DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX",
+    "-DWITH_TESTS=ON",
+    "-DCMAKE_VERBOSE_MAKEFILE=OFF",
+    "-DCMAKE_LIBRARY_PATH:FILEPATH=$CONDA_PREFIX/Library/lib",
+    "-DCMAKE_INCLUDE_PATH:FILEPATH=$CONDA_PREFIX/Library/include",
+    "-DOPENSSL_ROOT_DIR=$CONDA_PREFIX/Library",
+    "-DBUILD_PLUGIN_CPD=OFF",
+    "-DBUILD_PLUGIN_ICEBRIDGE=ON",
+    "-DBUILD_PLUGIN_HDF=ON",
+    "-DBUILD_PLUGIN_ARROW=ON",
+    "-DBUILD_PLUGIN_TILEDB=ON",
+    "-DBUILD_PLUGIN_NITF=ON",
+    "-DBUILD_PLUGIN_TRAJECTORY=ON",
+    "-DBUILD_PLUGIN_PGPOINTCLOUD=ON",
+    "-DBUILD_PLUGIN_DRACO=ON",
+    "-DBUILD_PLUGIN_RIVLIB=OFF",
+    "-DENABLE_CTEST=OFF",
+    "-DWITH_LZMA=OFF",
+    "-DHDF5_DIR:FILEPATH=$CONDA_PREFIX/Library/cmake",
+    "-DWITH_ZLIB=ON",
+    "-Dgtest_force_shared_crt=ON",
+    "-DBUILD_PGPOINTCLOUD_TESTS=OFF",
+    "-DCMAKE_CXX_FLAGS=/D_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR" ] }
+
+[feature.dev.target.linux.tasks]
+configure = { cmd = [ "cmake",
+    "-G", "Ninja",
+    "-S", ".",
+    "-B", ".build",
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+    "-DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX",
+    "-DWITH_TESTS=ON",
+    "-DCMAKE_VERBOSE_MAKEFILE=OFF",
+    "-DCMAKE_LIBRARY_PATH:FILEPATH=$CONDA_PREFIX/Library/lib",
+    "-DCMAKE_INCLUDE_PATH:FILEPATH=$CONDA_PREFIX/Library/include",
+    "-DOPENSSL_ROOT_DIR=$CONDA_PREFIX/Library",
+    "-DBUILD_PLUGIN_CPD=OFF",
+    "-DBUILD_PLUGIN_ICEBRIDGE=ON",
+    "-DBUILD_PLUGIN_HDF=ON",
+    "-DBUILD_PLUGIN_ARROW=ON",
+    "-DBUILD_PLUGIN_TILEDB=ON",
+    "-DBUILD_PLUGIN_NITF=ON",
+    "-DBUILD_PLUGIN_TRAJECTORY=ON",
+    "-DBUILD_PLUGIN_PGPOINTCLOUD=ON",
+    "-DBUILD_PLUGIN_DRACO=ON",
+    "-DBUILD_PLUGIN_RIVLIB=OFF",
+    "-DENABLE_CTEST=OFF",
+    "-DWITH_LZMA=OFF",
+    "-DHDF5_DIR:FILEPATH=$CONDA_PREFIX/Library/cmake",
+    "-DWITH_ZLIB=ON",
+    "-Dgtest_force_shared_crt=ON",
+    "-DBUILD_PGPOINTCLOUD_TESTS=OFF" ] }
+
+[feature.dev.target.osx.tasks]
+configure = { cmd = [ "cmake",
+    "-G", "Ninja",
+    "-S", ".",
+    "-B", ".build",
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+    "-DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX",
+    "-DWITH_TESTS=ON",
+    "-DCMAKE_VERBOSE_MAKEFILE=OFF",
+    "-DCMAKE_LIBRARY_PATH:FILEPATH=$CONDA_PREFIX/Library/lib",
+    "-DCMAKE_INCLUDE_PATH:FILEPATH=$CONDA_PREFIX/Library/include",
+    "-DOPENSSL_ROOT_DIR=$CONDA_PREFIX/Library",
+    "-DBUILD_PLUGIN_CPD=ON",
+    "-DBUILD_PLUGIN_ICEBRIDGE=ON",
+    "-DBUILD_PLUGIN_HDF=ON",
+    "-DBUILD_PLUGIN_ARROW=ON",
+    "-DBUILD_PLUGIN_TILEDB=ON",
+    "-DBUILD_PLUGIN_NITF=ON",
+    "-DBUILD_PLUGIN_TRAJECTORY=ON",
+    "-DBUILD_PLUGIN_PGPOINTCLOUD=ON",
+    "-DBUILD_PLUGIN_DRACO=ON",
+    "-DENABLE_CTEST=OFF",
+    "-DWITH_LZMA=OFF",
+    "-DBUILD_PGPOINTCLOUD_TESTS=OFF" ] }
+
+
+[feature.dev.tasks]
+build = { cmd = "cd .build && ninja", depends-on = ["configure"] }
+test = { cmd = "cd .build && ctest -VV --output-on-failure", depends-on = ["build"] }
+install = { cmd = "cd .build && ninja install", depends-on = ["build"] }
+
+[feature.doc.tasks]
+configure = { cmd = [ "cmake",
+    "-S", ".",
+    "-B", "_build" ], cwd = "doc" }
+doxygen = { cmd = "cmake --build . --target doxygen", depends-on = ["configure"], cwd = "doc/_build" }
+build = { cmd = "cmake --build . --target html", depends-on = ["configure"], cwd = "doc/_build" }
+
+[feature.doc.target.win-64.tasks]
+preview = { cmd = "cmd /c start index.html", depends-on = ["build"], cwd = "doc/_build/html" }
+
+[feature.doc.target.linux-64.tasks]
+preview = { cmd = "xdg-open index.html", depends-on = ["build"], cwd = "doc/_build/html" }
+
+[feature.doc.target.osx-64.tasks]
+preview = { cmd = "open index.html", depends-on = ["build"], cwd = "doc/_build/html" }
+
+[feature.doc.target.osx-arm64.tasks]
+preview = { cmd = "open index.html", depends-on = ["build"], cwd = "doc/_build/html" }
+
+[environments]
+dev = ["dev"]
+goldendoodle = ["goldendoodle"]
+doc = ["doc"]

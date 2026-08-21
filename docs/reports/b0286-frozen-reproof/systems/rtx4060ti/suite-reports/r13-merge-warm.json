@@ -1,0 +1,387 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "r13-merge",
+  "pipeline": {
+    "path": "/workspace/reproof/results-v3/shadow-repo/bench/pipelines/reference/r13-merge.json",
+    "sha256": "fee5cc69929de4b32b018ad4bcf0a948c2ea8e5e119e733a5463e5a93e3d543e",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/results-v3/suite-work/r13-merge/warm/r13-merge-oracle.json",
+        "sha256": "6ed4084ba9f9703665d93e0919689b2a6039376c17d38274c71fadc002ece48f"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/results-v3/suite-work/r13-merge/warm/r13-merge-candidate.json",
+        "sha256": "a64b04a34ff234abb2a618711d4487c4f5b1aad896f20aa4ab225677bd021e44"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+      "bytes": 6747641,
+      "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      },
+      "input.merge-a.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-merge-a.laz",
+        "bytes": 3639841,
+        "sha256": "8fba368406e19242bc8f2d4e422befed8e1b60369fa34d0b9650ff3db8143368"
+      },
+      "input.merge-b.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-merge-b.laz",
+        "bytes": 4457249,
+        "sha256": "3160fa5fecbbbc6c17f4042adfd1ad803fec2c513188c49c2f7e76f7d5cba62c"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-merge-a.laz",
+        "bytes": 3639841,
+        "sha256": "8fba368406e19242bc8f2d4e422befed8e1b60369fa34d0b9650ff3db8143368"
+      },
+      {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-merge-b.laz",
+        "bytes": 4457249,
+        "sha256": "3160fa5fecbbbc6c17f4042adfd1ad803fec2c513188c49c2f7e76f7d5cba62c"
+      }
+    ],
+    "used_input_bytes": 8097090,
+    "extent": {
+      "minx": 184500,
+      "maxx": 185999.99,
+      "miny": 494923.21,
+      "maxy": 494999.99,
+      "points": 1000000
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-5.15.0-185-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/evidence/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 4060 Ti",
+      "compute_capability": "8.9",
+      "driver": "595.71.05",
+      "cuda": "13.3",
+      "cpu_model": "AMD EPYC 7K62 48-Core Processor",
+      "logical_cpus": "192",
+      "embedded_profile": "applies (shipped-rtx4060ti-sm89-cuda13.3)",
+      "local_profile_path": "/workspace/reproof/results-v3/clean-config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx4060ti-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-rtx4060ti-sm89-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        1.4126717364415526,
+        1.401022945996374,
+        1.4163145222701132
+      ],
+      "median_seconds": 1.4126717364415526,
+      "minimum_seconds": 1.401022945996374,
+      "maximum_seconds": 1.4163145222701132,
+      "peak_rss_bytes": [
+        110329856,
+        110350336,
+        110497792
+      ],
+      "median_peak_rss_bytes": 110350336,
+      "output_bytes": [
+        8237980,
+        8237980,
+        8237980
+      ],
+      "median_output_bytes": 8237980,
+      "points_per_second": 707878.5355463744,
+      "input_mib_per_second": 5.466228686701958,
+      "output_mib_per_second": 5.561341493854829,
+      "compression_ratio_input_to_output": 0.9828975064275466
+    },
+    "candidate": {
+      "seconds": [
+        1.4647893481887877,
+        1.4162723710760474,
+        1.4487063572742045
+      ],
+      "median_seconds": 1.4487063572742045,
+      "minimum_seconds": 1.4162723710760474,
+      "maximum_seconds": 1.4647893481887877,
+      "peak_rss_bytes": [
+        110739456,
+        110399488,
+        110505984
+      ],
+      "median_peak_rss_bytes": 110505984,
+      "output_bytes": [
+        8237980,
+        8237980,
+        8237980
+      ],
+      "median_output_bytes": 8237980,
+      "points_per_second": 690271.0097038144,
+      "input_mib_per_second": 5.3302636050821866,
+      "output_mib_per_second": 5.423010609168843,
+      "compression_ratio_input_to_output": 0.9828975064275466
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 0.9751263458935513,
+    "resolution": {
+      "paired_speedups": [
+        0.96441972232275,
+        0.9892327031218667,
+        0.9776408553455666
+      ],
+      "paired_mean": 0.9770977602633945,
+      "paired_spread": 0.024812980799116757,
+      "candidate_faster_in": 0,
+      "pairs": 3,
+      "paired_standard_error": 0.0071680359521871795,
+      "interval_half_width": 0.014336071904374359,
+      "resolvable": true
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17"
+    ],
+    "candidate_artifact_sha256": [
+      "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 1.37432631989941,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110546944,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.4871863722801208,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110637056,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.4126717364415526,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110329856,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 1.4647893481887877,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110739456,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 1.4162723710760474,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110399488,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 1.401022945996374,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110350336,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 1.4163145222701132,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110497792,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 1.4487063572742045,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 110505984,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 8237980,
+          "sha256": "d82fdba13fffe8ae1eb098c787a90c574ab233577eec1e35131ceafe6ec46e17",
+          "las_point_count": 1000000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

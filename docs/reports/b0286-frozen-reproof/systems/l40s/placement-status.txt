@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA L40S
+compute_capability: 8.9
+driver: 580.65.06
+cuda: 13.3
+cpu_model: Intel(R) Xeon(R) Gold 6430
+logical_cpus: 128
+embedded_profile: applies (shipped-l40s-sm89-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-l40s-sm89-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-l40s-sm89-cuda13.3
+active_profile_tier: shipped
+active_profile_source: l40s.json
+active_profile_sha256: 0a3ef45694722c4a33fc7a59e619c1752e1b6aff5a02b2df94566fea22b7ade5

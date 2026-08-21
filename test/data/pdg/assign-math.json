@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Unit = Intensity / 65536 + 1",
+        "GpsTime = floor(Unit) + ceil(Unit) + round(Unit) + abs(-Unit) + fabs(-Unit) + sqrt(Unit) + sin(Unit) + cos(Unit) + tan(Unit) + asin(Unit / 2) + acos(Unit / 2) + atan(Unit) + sinh(Unit) + cosh(Unit) + tanh(Unit) + asinh(Unit) + acosh(Unit) + log(Unit) + log2(Unit) + log10(Unit) + exp(Unit) + exp2(Unit)",
+        "Classification = 9 WHERE !(GpsTime < 0) && !isnan(GpsTime)"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

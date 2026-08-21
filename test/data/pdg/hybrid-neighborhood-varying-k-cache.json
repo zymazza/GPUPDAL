@@ -1,0 +1,37 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "always_up": false,
+      "knn": 5,
+      "type": "filters.normal"
+    },
+    {
+      "dimensions": "NormalZ=>GpsTime",
+      "type": "filters.ferry"
+    },
+    {
+      "knn": 11,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "dimensions": "Eigenvalue2=>GpsTime",
+      "type": "filters.ferry"
+    },
+    {
+      "feature_set": "dimensionality",
+      "knn": 5,
+      "mode": "raw",
+      "type": "filters.covariancefeatures"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.transformation",
+   "matrix":"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1",
+   "override_srs":"EPSG:3857"},
+  {"type":"writers.las","filename":"out.las"}
+]

@@ -1,0 +1,29 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "always_up": false,
+      "knn": 12,
+      "type": "filters.normal"
+    },
+    {
+      "knn": 12,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "feature_set": "dimensionality,anisotropy,surfacevariation",
+      "knn": 12,
+      "mode": "raw",
+      "type": "filters.covariancefeatures"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

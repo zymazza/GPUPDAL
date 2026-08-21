@@ -1,0 +1,5 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.tail","count":2000},
+  {"type":"writers.las","filename":"out.las"}
+]

@@ -1,0 +1,216 @@
+PDG native compatibility implementation notices
+=================================================
+
+The native LAS reader/writer compatibility behavior in `src/io/las` is
+behaviorally derived from the upstream PDAL implementation pinned in
+`cmake/pdg-oracle.cmake`, particularly:
+
+- `io/LasReader.cpp`
+- `io/LasWriter.cpp`
+- `io/private/las/Header.cpp`
+- `io/private/las/Summary.cpp`
+- `io/private/las/Utils.cpp`
+
+Those upstream files are Copyright their respective PDAL contributors and are
+distributed under PDAL's BSD 3-Clause license. The complete license text is in
+`LICENSE.txt` at the repository root. This notice does not imply endorsement by
+PDAL or its contributors.
+
+The exact Morton ordering compatibility behavior in
+`src/pdal/PdgMortonOrderFilter.cpp` and `src/stages/Morton*` is behaviorally
+derived from the upstream `filters/MortonOrderFilter.cpp` implementation pinned
+in `cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2014,
+Bradley J Chambers and is distributed under PDAL's BSD 3-Clause license.
+
+The exact categorical grouping and PointView creation-order behavior in
+`src/pdal/PdgGroupByFilter.cpp` is behaviorally derived from the upstream
+`filters/GroupByFilter.cpp` implementation pinned in
+`cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2016,
+Bradley J Chambers and is distributed under PDAL's BSD 3-Clause license.
+
+The exact return grouping, output-view creation order, warning behavior, and
+merge view-composition behavior in `src/pdal/PdgReturnsFilter.cpp` and
+`src/pdal/PdgMergeFilter.cpp` are behaviorally derived from the upstream
+`filters/ReturnsFilter.cpp` and `filters/MergeFilter.cpp` implementations
+pinned in `cmake/pdg-oracle.cmake`. ReturnsFilter is Copyright (c) 2018,
+Bradley J Chambers. MergeFilter is Copyright (c) 2014, Hobu Inc. and Copyright
+(c) 2015, Bradley J Chambers. Both are distributed under PDAL's BSD 3-Clause
+license.
+
+The exact count-divider, XY cell assignment, buffered membership, persistent
+origin/map, and output-view creation-order behavior in
+`src/pdal/PdgDividerFilter.cpp`, `src/pdal/PdgSplitterFilter.cpp`, and
+`src/stages/Partition*` is behaviorally derived from the upstream
+`filters/DividerFilter.cpp` and `filters/SplitterFilter.cpp` implementations
+pinned in `cmake/pdg-oracle.cmake`. DividerFilter is Copyright (c) 2015, Hobu
+Inc. SplitterFilter is Copyright (c) 2013, Bradley J Chambers. Both are
+distributed under PDAL's BSD 3-Clause license.
+
+The exact color-ramp loading, range/statistics state, ramp indexing, and RGB
+preservation behavior in `src/pdal/PdgColorinterpFilter.cpp` and
+`src/stages/ColorMap*` is behaviorally derived from the upstream
+`filters/ColorinterpFilter.cpp` and `filters/ColorInterpRamps.hpp`
+implementations pinned in `cmake/pdg-oracle.cmake`. ColorinterpFilter is
+Copyright (c) 2016, Howard Butler, hobu.inc@gmail.com and is distributed under
+PDAL's BSD 3-Clause license.
+
+The exact online summary recurrence, metadata schema, enumeration/count/global
+statistics, and bounding-box behavior in `src/pdal/PdgStatsFilter.cpp` and
+`src/stages/Summary*` is behaviorally derived from the upstream
+`filters/StatsFilter.cpp` and `filters/StatsFilter.hpp` implementations pinned
+in `cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2011,
+Michael P. Gerlek (mpg@flaxen.com) and is distributed under PDAL's BSD
+3-Clause license.
+
+The exact point/query parsing, selected-point packing, bounds/count metadata,
+dimension listing, and nearest-point behavior in `src/pdal/PdgInfoFilter.cpp`
+and `src/stages/Information*` is behaviorally derived from the upstream
+`filters/InfoFilter.cpp` implementation pinned in `cmake/pdg-oracle.cmake`.
+That implementation is Copyright (c) 2018, Hobu Inc. and is distributed under
+PDAL's BSD 3-Clause license.
+
+The exact expression preparation, canonical labels, ordered bin maps, empty
+statistics, and metadata schema in `src/pdal/PdgExpressionStatsFilter.cpp` and
+`src/stages/Histogram*` is behaviorally derived from the upstream
+`filters/ExpressionStatsFilter.cpp` implementation pinned in
+`cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2024, Howard
+Butler and is distributed under PDAL's BSD 3-Clause license.
+
+The exact radius/statistical classification, warning, and output-view behavior
+in `src/pdal/PdgOutlierFilter.cpp`, plus the strict radius-query compatibility
+contract in `src/index/SpatialIndex*`, is behaviorally derived from the
+upstream `filters/OutlierFilter.cpp`, `pdal/KDIndex.cpp`, and
+`pdal/private/KDImpl.hpp` implementations pinned in
+`cmake/pdg-oracle.cmake`. OutlierFilter is Copyright (c) 2016-2017, Bradley J
+Chambers. KDIndex/KDImpl are Copyright (c) 2020, Hobu Inc. They are distributed
+under PDAL's BSD 3-Clause license.
+
+The exact radial-density count, scaling, logging, and dimension-publication
+behavior in `src/pdal/PdgRadialDensityFilter.cpp`, plus the shared radius and
+core/ghost tiling primitives in `src/index/SpatialIndex*` and
+`src/index/SpatialTile*`, is behaviorally derived from the upstream
+`filters/RadialDensityFilter.cpp`, `pdal/KDIndex.cpp`, and
+`pdal/private/KDImpl.hpp` implementations pinned in `cmake/pdg-oracle.cmake`.
+RadialDensityFilter is Copyright (c) 2016, Bradley J Chambers. KDIndex/KDImpl
+are Copyright (c) 2020, Hobu Inc. They are distributed under PDAL's BSD
+3-Clause license.
+
+The exact radius-domain selection, strict distance predicate, two-dimensional
+vertical caps, ordered assignment finale, and diagnostics in
+`src/pdal/PdgRadiusAssignFilter.cpp` and `src/pdal/PdgNeighborhood.cpp` are
+derived from upstream `filters/RadiusAssignFilter.cpp`,
+`filters/private/DimRange.cpp`, `pdal/KDIndex.cpp`, and
+`pdal/private/KDImpl.hpp` pinned in `cmake/pdg-oracle.cmake`.
+RadiusAssignFilter and DimRange are Copyright (c) 2015, Brad Chambers.
+KDIndex/KDImpl are Copyright (c) 2020, Hobu Inc. They are distributed under
+PDAL's BSD 3-Clause license.
+
+The exact adjacent-predecessor duplicate comparison, double-conversion,
+first-row preservation, empty-dimension behavior, and diagnostics in
+`src/pdal/PdgLabelDuplicatesFilter.cpp` and `src/stages/LabelDuplicates*` are
+behaviorally derived from upstream `filters/LabelDuplicatesFilter.cpp` pinned
+in `cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2024,
+Howard Butler (howard@hobu.co) and is distributed under PDAL's BSD 3-Clause
+license.
+
+The exact minimum raster, eight-nearest inpainting, progressive diamond
+morphology, net cutting, provisional surface, gradient, return selection,
+classification, and diagnostics in `src/pdal/PdgSmrfFilter.cpp` and
+`src/stages/Smrf*` are behaviorally derived from upstream
+`filters/SMRFilter.cpp` and `pdal/private/MathUtils.*` pinned in
+`cmake/pdg-oracle.cmake`. Those implementations are Copyright (c) 2016-2017,
+2020 Bradley J Chambers and other PDAL contributors and are distributed under
+PDAL's BSD 3-Clause license.
+
+The exact PMF minimum raster, one-nearest void fill, progressive window
+schedule, morphological opening, return selection, classification, and
+diagnostics in `src/pdal/PdgPmfFilter.cpp` and `src/stages/Pmf*` are
+behaviorally derived from upstream `filters/PMFFilter.*` and
+`pdal/private/MathUtils.*` pinned in `cmake/pdg-oracle.cmake`. Those
+implementations are Copyright (c) 2015-2017, 2020 Bradley J Chambers and other
+PDAL contributors and are distributed under PDAL's BSD 3-Clause license. The
+algorithm citation retained by upstream is K. Zhang et al., "A progressive
+morphological filter for removing nonground measurements from airborne LIDAR
+data," IEEE Transactions on Geoscience and Remote Sensing 41(4), 2003.
+
+The exact `filters.hag_nn` option handling, ground/non-ground partition,
+nearest-ground height arithmetic, host repair, and diagnostics in
+`src/pdal/PdgHagNnFilter.cpp` and `src/stages/Neighborhood*` are behaviorally
+derived from upstream `filters/HagNnFilter.*` pinned in
+`cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2016 Bradley J
+Chambers and is distributed under PDAL's BSD 3-Clause license.
+
+The exact return selection, coordinate transform, cloth construction,
+rasterization and void fill, serial constraint/collision simulation, and
+classification in `src/pdal/PdgCsfFilter.cpp` and `src/stages/Csf*` are
+behaviorally derived from upstream `filters/CSFilter.*` and
+`filters/private/csf/*` pinned in `cmake/pdg-oracle.cmake`. `CSFilter.*` is
+Copyright (c) 2019 Bradley J Chambers and is distributed under PDAL's BSD
+3-Clause license. The private cloth-simulation sources are Copyright (c) 2017
+State Key Laboratory of Remote Sensing Science and are distributed under the
+Apache License 2.0 retained in those files. The algorithm citation retained by
+upstream is W. Zhang et al., "An Easy-to-Use Airborne LiDAR Data Filtering
+Method Based on Cloth Simulation," Remote Sensing 8(6):501, 2016.
+
+The exact cell framing and binning, stable per-cell height ordering, strict
+threshold walk, classification, and diagnostics in
+`src/pdal/PdgElmFilter.cpp` and `src/stages/Elm*` are behaviorally derived
+from upstream `filters/ELMFilter.*` pinned in `cmake/pdg-oracle.cmake`. That
+implementation is Copyright (c) 2017 Bradley J Chambers and is distributed
+under PDAL's BSD 3-Clause license. The algorithm citation retained by upstream
+is Z. Chen, B. Devereux, B. Gao, and G. Amable, "Upward-fusion urban DTM
+generating method using airborne Lidar data," ISPRS Journal of Photogrammetry
+and Remote Sensing 72, 121-130, 2012.
+
+The exact Z ordering, sequential skewness-moment recurrence, sign-crossing
+classification, full-record permutation, options, diagnostics, and errors in
+`src/pdal/PdgSkewnessBalancingFilter.cpp` and `src/stages/Skewness.cpp` are
+behaviorally derived from upstream `filters/SkewnessBalancingFilter.*` pinned
+in `cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2019 Bradley
+J Chambers and is distributed under PDAL's BSD 3-Clause license. The algorithm
+citation retained by upstream is M. Bartels and H. Wei, "Threshold-free object
+and ground point separation in LIDAR data," Pattern Recognition Letters 31(10),
+1089-1099, 2010.
+
+The vendored Eigen 3-by-3 tridiagonalization specialization in
+`vendor/eigen/Eigen/src/Eigenvalues/Tridiagonalization.h` is modified by PDG
+only to add Eigen's existing `EIGEN_DEVICE_FUNC` annotation. This permits the
+same fixed-size self-adjoint QR eigensolver used by upstream PDAL to compile
+for CUDA without substituting a numerically different solver. The file remains
+Copyright (c) 2008 Gael Guennebaud and Copyright (c) 2010 Jitse Niesen and is
+distributed under the Mozilla Public License 2.0 stated in that source file.
+
+The exact normal, curvature, orientation, skip-message, covariance, and
+eigendecomposition behavior in `src/pdal/PdgNormalFilter.cpp` and the shared
+neighborhood primitives in `src/index/SpatialIndex*` is behaviorally derived
+from upstream `filters/NormalFilter.cpp` and `pdal/private/MathUtils.cpp` pinned
+in `cmake/pdg-oracle.cmake`. Those files are Copyright (c) 2016-2020 Bradley J
+Chambers and other PDAL contributors and are distributed under PDAL's BSD
+3-Clause license.
+
+The exact eigenvalue, normalization, radius/stride, warning, skip-message,
+covariance, and eigendecomposition behavior in
+`src/pdal/PdgEigenvaluesFilter.cpp` and `src/pdal/PdgNeighborhood.cpp` is
+behaviorally derived from upstream `filters/EigenvaluesFilter.cpp` and
+`pdal/private/MathUtils.cpp` pinned in `cmake/pdg-oracle.cmake`. Those files are
+Copyright (c) 2016-2020 Bradley J Chambers and other PDAL contributors and are
+distributed under PDAL's BSD 3-Clause license.
+
+The exact `filters.hag_delaunay` option handling, ground/non-ground partition,
+three-point seed and winding order, circumradius validity, barycentric
+interpolation, nearest-ground fallback, host repair, and diagnostics in
+`src/pdal/PdgHagDelaunayFilter.cpp` and `src/stages/Neighborhood*` are
+behaviorally derived from upstream `filters/HagDelaunayFilter.*`,
+`filters/private/delaunator.*`, and `pdal/private/MathUtils.*` pinned in
+`cmake/pdg-oracle.cmake`. `HagDelaunayFilter.hpp` and the relevant PDAL math
+sources are Copyright (c) 2016 Bradley J Chambers; the pinned Delaunator
+sources include work by Peter Limkilde Svendsen, Andrew Bell, Martin Dobias,
+and other PDAL contributors. These pinned PDAL sources are distributed under
+PDAL's BSD 3-Clause license.
+
+The exact feature-set expansion, eigenvalue transforms, covariance feature
+formulas, density prerequisite, skip/error behavior, and eigensystem use in
+`src/pdal/PdgCovarianceFeaturesFilter.cpp` is behaviorally derived from
+upstream `filters/CovarianceFeaturesFilter.cpp` pinned in
+`cmake/pdg-oracle.cmake`. That implementation is Copyright (c) 2019, Helix Re
+Inc. and is distributed under PDAL's BSD 3-Clause license.

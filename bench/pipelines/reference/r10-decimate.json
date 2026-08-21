@@ -1,0 +1,11 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "filters.voxelcentroidnearestneighbor", "cell": 2.5 },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

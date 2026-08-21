@@ -1,0 +1,627 @@
+name: GPUPAL
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/gpupal.yml"
+      - "CMakeLists.txt"
+      - "CMakePresets.json"
+      - "cmake/**"
+      - "include/pdg/**"
+      - "packages/npm/**"
+      - "scripts/pdg/**"
+      - "src/**"
+      - "tests/**"
+  push:
+    branches: [main, gpu-main]
+  workflow_dispatch:
+    inputs:
+      gpu_runtime:
+        description: "Run tests on the self-hosted RTX 4090 runner"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gpupal-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host-core:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            clang-format cmake g++ libcurl4-openssl-dev libgdal-dev \
+            libgeotiff-dev liblzma-dev libproj-dev libsqlite3-dev \
+            libxml2-dev libzstd-dev ninja-build python3 zlib1g-dev
+      - name: Check generated dimensions
+        run: python3 scripts/pdg/generate_dimensions.py --check
+      - name: Test npm installer scaffold
+        run: npm test --prefix packages/npm
+      - name: Check C++ formatting
+        run: >-
+          find include/pdg src tests/unit -type f
+          \( -name '*.hpp' -o -name '*.cpp' -o -name '*.cu' \)
+          ! -path '*/generated/*' -print0 |
+          xargs -0 clang-format --dry-run --Werror
+      - name: Configure
+        run: cmake --preset pdg-host-debug
+      - name: Build
+        run: cmake --build --preset pdg-host-debug
+      - name: Unit tests
+        run: ctest --preset pdg-host-debug
+      - name: Build pinned oracle and differential support
+        run: cmake --build build/pdg-host-debug --target pdg_differential_prerequisites
+      - name: Exact fallback differential tests
+        run: ctest --test-dir build/pdg-host-debug -L differential --output-on-failure
+
+  upstream-pdal-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake g++ libcurl4-openssl-dev libgdal-dev libgeotiff-dev \
+            liblzma-dev libproj-dev libsqlite3-dev libxml2-dev \
+            libzstd-dev ninja-build python3 zlib1g-dev
+      - name: Configure published PDAL tests
+        run: cmake --preset pdal-upstream-tests
+      - name: Build published PDAL tests
+        run: cmake --build --preset pdal-upstream-tests
+      - name: Run published PDAL tests sequentially
+        run: ctest --preset pdal-upstream-tests
+
+  host-sanitizers:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake g++ libcurl4-openssl-dev libgdal-dev libgeotiff-dev \
+            liblzma-dev libproj-dev libsqlite3-dev libxml2-dev \
+            libzstd-dev ninja-build python3 zlib1g-dev
+      - name: Configure
+        run: cmake --preset pdg-host-sanitize
+      - name: Build with leak detection
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+        run: >-
+          cmake --build build/pdg-host-sanitize --target
+          pdg_cli pdg_unit_tests pdg_check_dimensions
+          pdg_differential_prerequisites
+      - name: ASan and UBSan tests
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+        run: ctest --test-dir build/pdg-host-sanitize -L pdg --output-on-failure
+      - name: Exact ordinal process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/ordinal_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact locate process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/locate_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact transformation process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/transformation_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact robust-statistics process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/robust_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact ordering process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/ordering_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact Morton process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/morton_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact groupby process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/groupby_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact returns and merge process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/returns_merge_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact divider and splitter process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/divider_splitter_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact color interpolation process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/colorinterp_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact statistics process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/stats_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact information process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/info_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact expression statistics process matrix under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          python3 tests/differential/expressionstats_matrix.py \
+            --oracle build/pdg-host-sanitize/bin/pdal \
+            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --differential scripts/pdg/differential.py \
+            --fixture-root test/data \
+            --work-dir build/pdg-host-sanitize/tests/differential \
+            --frozen-time-library \
+              build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+            --oracle-preload "$asan_library" \
+            --candidate-preload "$asan_library"
+      - name: Exact neighborhood process matrices under ASan and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1:abort_on_error=1
+        run: |
+          asan_library="$(g++ -print-file-name=libasan.so)"
+          for matrix in outlier normal eigenvalues covariancefeatures nndistance; do
+            python3 "tests/differential/${matrix}_matrix.py" \
+              --oracle build/pdg-host-sanitize/bin/pdal \
+              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --differential scripts/pdg/differential.py \
+              --fixture-root test/data \
+              --work-dir build/pdg-host-sanitize/tests/differential \
+              --frozen-time-library \
+                build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+              --oracle-preload "$asan_library" \
+              --candidate-preload "$asan_library"
+          done
+          env PDG_DISABLE_NATIVE=1 \
+            PDG_REQUIRE_HYBRID=1 \
+            PDG_DISABLE_CUDA_HYBRID=1 \
+            python3 scripts/pdg/differential.py \
+              --oracle build/pdg-host-sanitize/bin/pdal \
+              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --case pdg_hybrid_neighborhood_resident_host_asan_exact \
+              --work-dir \
+                build/pdg-host-sanitize/tests/differential/asan-resident \
+              --frozen-time-library \
+                build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+              --oracle-preload "$asan_library" \
+              --candidate-preload "$asan_library" \
+              --seed-file input.las=test/data/las/simple.las \
+              --seed-file \
+                pipeline.json=test/data/pdg/hybrid-neighborhood-resident.json \
+              -- pipeline pipeline.json
+          env PDG_DISABLE_NATIVE=1 \
+            PDG_REQUIRE_HYBRID=1 \
+            PDG_DISABLE_CUDA_HYBRID=1 \
+            python3 scripts/pdg/differential.py \
+              --oracle build/pdg-host-sanitize/bin/pdal \
+              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --case pdg_hybrid_nndistance_resident_host_asan_exact \
+              --work-dir \
+                build/pdg-host-sanitize/tests/differential/asan-nndistance \
+              --frozen-time-library \
+                build/pdg-host-sanitize/lib/libpdg_frozen_time.so \
+              --oracle-preload "$asan_library" \
+              --candidate-preload "$asan_library" \
+              --seed-file input.las=test/data/las/simple.las \
+              --seed-file \
+                pipeline.json=test/data/pdg/hybrid-nndistance-resident.json \
+              -- pipeline pipeline.json
+
+  cuda-compile:
+    runs-on: ubuntu-24.04
+    container: nvidia/cuda:12.6.3-devel-ubuntu24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            cmake g++ libcurl4-openssl-dev libgdal-dev libgeotiff-dev \
+            liblzma-dev libproj-dev libsqlite3-dev libxml2-dev libzstd-dev \
+            ninja-build python3 zlib1g-dev
+      - name: Configure CUDA targets
+        run: cmake --preset pdg-cuda-debug
+      - name: Compile CUDA targets
+        run: cmake --build --preset pdg-cuda-debug
+      - name: Driver-independent unit tests
+        run: ctest --preset pdg-cuda-debug
+
+  gpu-runtime:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.gpu_runtime }}
+    runs-on: [self-hosted, linux, x64, rtx4090]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reference GPU
+        run: nvidia-smi
+      - name: Configure and build release targets
+        run: |
+          cmake --preset pdg-cuda-release \
+            -DPDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR=ON
+          cmake --build --preset pdg-cuda-release
+          cmake --build build/pdg-cuda-release \
+            --target pdg_differential_prerequisites
+      - name: Runtime tests
+        run: |
+          build/pdg-cuda-release/bin/gpupal doctor
+          ctest --test-dir build/pdg-cuda-release --output-on-failure \
+            -E '^pdg_automatic_approximatecoplanar_cuda_exact$'
+      - name: Automatic approximatecoplanar default-selector differential
+        run: >-
+          ctest --test-dir build/pdg-cuda-release --output-on-failure
+          -R '^pdg_automatic_approximatecoplanar_cuda_exact$'
+      - name: Automatic approximatecoplanar default-selector sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            for case_name in laz format6 format8; do
+              run_dir="$(mktemp -d)"
+              compute-sanitizer --target-processes all --launch-timeout 300 \
+                --tool "$tool" --error-exitcode=99 python3 \
+                tests/differential/automatic_approximatecoplanar.py \
+                --oracle build/pdg-cuda-release/bin/pdal \
+                --candidate build/pdg-cuda-release/bin/gpupal \
+                --differential scripts/pdg/differential.py \
+                --fixture-root test/data \
+                --work-dir "$run_dir" \
+                --frozen-time-library \
+                  build/pdg-cuda-release/lib/libpdg_frozen_time.so \
+                --sanitizer-case "$case_name"
+            done
+          done
+      - name: CUDA memcheck and initialization checks
+        run: |
+          compute-sanitizer --tool memcheck --error-exitcode=99 \
+            build/pdg-cuda-release/bin/pdg_unit_tests \
+            --gtest_filter='PdgApproximateCoplanarFilter.*:CudaLasPointIo.*:CudaLasTranslation.*:CudaLasPointProgram.*:CudaFerry.*:CudaAssign.*:CudaCompaction.*:CudaPredicate.*:CudaOrdinal.*:CudaLocate.*:CudaRobust.*:CudaOrdering.*:CudaMorton.*:CudaTransformation.*:CudaColorMap.*:CudaSummary.*:CudaHistogram.*:CudaInformation.*:CudaSpatialIndex.*:CudaNeighborhoodColumns.*:CudaReturnPartition.*:CudaDividerPartition.*:CudaSplitterCells.*:CudaPackedPointBatch.*:ResidentExecutionContextCuda.*'
+          compute-sanitizer --tool initcheck --error-exitcode=99 \
+            build/pdg-cuda-release/bin/pdg_unit_tests \
+            --gtest_filter='PdgApproximateCoplanarFilter.*:CudaLasPointIo.*:CudaLasTranslation.*:CudaLasPointProgram.*:CudaFerry.*:CudaAssign.*:CudaCompaction.*:CudaPredicate.*:CudaOrdinal.*:CudaLocate.*:CudaRobust.*:CudaOrdering.*:CudaMorton.*:CudaTransformation.*:CudaColorMap.*:CudaSummary.*:CudaHistogram.*:CudaInformation.*:CudaSpatialIndex.*:CudaNeighborhoodColumns.*:CudaReturnPartition.*:CudaDividerPartition.*:CudaSplitterCells.*:CudaPackedPointBatch.*:ResidentExecutionContextCuda.*'
+      - name: CUDA race and synchronization checks
+        run: |
+          compute-sanitizer --tool racecheck --error-exitcode=99 \
+            build/pdg-cuda-release/bin/pdg_unit_tests \
+            --gtest_filter='PdgApproximateCoplanarFilter.*:CudaLasPointIo.*:CudaLasTranslation.*:CudaLasPointProgram.*:CudaFerry.*:CudaAssign.*:CudaCompaction.*:CudaPredicate.*:CudaOrdinal.*:CudaLocate.*:CudaRobust.*:CudaOrdering.*:CudaMorton.*:CudaTransformation.*:CudaColorMap.*:CudaSummary.*:CudaHistogram.*:CudaInformation.*:CudaSpatialIndex.*:CudaNeighborhoodColumns.*:CudaReturnPartition.*:CudaDividerPartition.*:CudaSplitterCells.*:CudaPackedPointBatch.*:ResidentExecutionContextCuda.*-CudaLasPointProgram.FusedProgramMatchesHostAcrossFormatsAndChunks:CudaLasTranslation.SupportedFormatMatrixMatchesHostAcrossChunks'
+          compute-sanitizer --tool synccheck --error-exitcode=99 \
+            build/pdg-cuda-release/bin/pdg_unit_tests \
+            --gtest_filter='PdgApproximateCoplanarFilter.*:CudaLasPointIo.*:CudaLasTranslation.*:CudaLasPointProgram.*:CudaFerry.*:CudaAssign.*:CudaCompaction.*:CudaPredicate.*:CudaOrdinal.*:CudaLocate.*:CudaRobust.*:CudaOrdering.*:CudaMorton.*:CudaTransformation.*:CudaColorMap.*:CudaSummary.*:CudaHistogram.*:CudaInformation.*:CudaSpatialIndex.*:CudaNeighborhoodColumns.*:CudaReturnPartition.*:CudaDividerPartition.*:CudaSplitterCells.*:CudaPackedPointBatch.*:ResidentExecutionContextCuda.*'
+      - name: CUDA groupby multi-view integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-groupby-classification.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA returns multi-view integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-returns-all.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA divider multi-view integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-divider-round-robin.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA splitter multi-view integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-splitter-primary.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA color interpolation integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-colorinterp-stream.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_STREAMING_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA statistics integration sanitizers
+        run: |
+          for tool in memcheck initcheck racecheck synccheck; do
+            run_dir="$(mktemp -d)"
+            cp test/data/las/simple.las "$run_dir/input.las"
+            cp test/data/pdg/hybrid-stats-stream.json \
+              "$run_dir/pipeline.json"
+            (
+              cd "$run_dir"
+              compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                PDG_REQUIRE_STREAMING_HYBRID=1 \
+                PDG_REQUIRE_CUDA_HYBRID=1 \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                pipeline pipeline.json
+            )
+          done
+      - name: CUDA metadata integration sanitizers
+        run: |
+          for pipeline in hybrid-info-basic hybrid-expressionstats-basic; do
+            for tool in memcheck initcheck racecheck synccheck; do
+              run_dir="$(mktemp -d)"
+              cp test/data/las/simple.las "$run_dir/input.las"
+              cp "test/data/pdg/$pipeline.json" "$run_dir/pipeline.json"
+              (
+                cd "$run_dir"
+                compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                  env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                  PDG_REQUIRE_CUDA_HYBRID=1 \
+                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                  pipeline pipeline.json --metadata metadata.json
+              )
+            done
+          done
+      - name: CUDA shared spatial-index integration sanitizers
+        run: |
+          for pipeline in \
+            hybrid-outlier-radius hybrid-outlier-statistical hybrid-normal \
+            hybrid-radialdensity \
+            hybrid-eigenvalues hybrid-covariancefeatures \
+            hybrid-covariancefeatures-extended-sqrt \
+            hybrid-approximatecoplanar \
+            hybrid-approximatecoplanar-max \
+            hybrid-approximatecoplanar-ties \
+            hybrid-approximatecoplanar-boundary \
+            hybrid-approximatecoplanar-zero \
+            hybrid-approximatecoplanar-resident \
+            hybrid-neighborhood-resident \
+            hybrid-neighborhood-column-consumer \
+            hybrid-nndistance-resident; do
+            for tool in memcheck initcheck racecheck synccheck; do
+              run_dir="$(mktemp -d)"
+              if [ "$pipeline" = hybrid-outlier-radius ] || \
+                 [ "$pipeline" = hybrid-radialdensity ] || \
+                 [ "$pipeline" = hybrid-approximatecoplanar-ties ]; then
+                cp test/data/pdg/neighborhood-points.csv "$run_dir/input.csv"
+              elif [ "$pipeline" = hybrid-approximatecoplanar-boundary ] || \
+                   [ "$pipeline" = hybrid-approximatecoplanar-zero ]; then
+                cp test/data/pdg/approximatecoplanar-boundary.csv \
+                  "$run_dir/input.csv"
+              else
+                cp test/data/las/simple.las "$run_dir/input.las"
+              fi
+              if [ "$pipeline" = hybrid-approximatecoplanar ]; then
+                spatial_backend=PDG_FORCE_UNIFORM_GRID=1
+              else
+                spatial_backend=PDG_FORCE_MORTON_BVH=1
+              fi
+              extra_guards=()
+              if [ "$pipeline" = hybrid-approximatecoplanar-ties ]; then
+                extra_guards+=(PDG_REQUIRE_NEIGHBORHOOD_TIE_REPAIR=1)
+              fi
+              cp "test/data/pdg/$pipeline.json" "$run_dir/pipeline.json"
+              (
+                cd "$run_dir"
+                compute-sanitizer --tool "$tool" --error-exitcode=99 \
+                  env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
+                  PDG_REQUIRE_CUDA_HYBRID=1 \
+                  PDG_REQUIRE_NEIGHBORHOOD_REUSE=1 \
+                  PDG_REQUIRE_NEIGHBORHOOD_COLUMN_REUSE=1 \
+                  PDG_REQUIRE_NEIGHBORHOOD_COPLANAR_COLUMN_REUSE=1 \
+                  PDG_REQUIRE_NEIGHBORHOOD_EIGENSYSTEM_REUSE=8 \
+                  PDG_SPATIAL_TILE_EDGE=2 \
+                  PDG_REQUIRE_SPATIAL_TILING=1 \
+                  "$spatial_backend" \
+                  "${extra_guards[@]}" \
+                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                  pipeline pipeline.json
+              )
+            done
+          done
+      - name: Exact CUDA CLI differential
+        env:
+          PDG_REQUIRE_CUDA_TRANSLATE: "1"
+        run: >-
+          python3 scripts/pdg/differential.py
+          --oracle build/pdg-cuda-release/bin/pdal
+          --candidate build/pdg-cuda-release/bin/gpupal
+          --case gpu-native-simple
+          --work-dir build/pdg-cuda-release/tests/differential
+          --frozen-time-library
+          build/pdg-cuda-release/lib/libpdg_frozen_time.so
+          -- translate ${{ github.workspace }}/test/data/las/simple.las out.las
+      - name: Exact CUDA fused point-program differential
+        env:
+          PDG_REQUIRE_CUDA_POINT_PROGRAM: "1"
+        run: >-
+          python3 scripts/pdg/differential.py
+          --oracle build/pdg-cuda-release/bin/pdal
+          --candidate build/pdg-cuda-release/bin/gpupal
+          --case gpu-native-assign-ferry-fused
+          --work-dir build/pdg-cuda-release/tests/differential
+          --frozen-time-library
+          build/pdg-cuda-release/lib/libpdg_frozen_time.so
+          --seed-file input.las=${{ github.workspace }}/test/data/las/simple.las
+          --seed-file pipeline.json=${{ github.workspace }}/test/data/pdg/assign-ferry-fused.json
+          -- pipeline pipeline.json

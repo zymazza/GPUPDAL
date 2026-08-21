@@ -1,0 +1,221 @@
+{
+  "schema": "pdg-profile-evidence-v1",
+  "recorded_at_utc": "2026-08-11T23:33:19Z",
+  "source": {
+    "branch": "p3-skewness-resident",
+    "commit": "7ca04e89992d1d2aceb843c88947455eb96e0c0d",
+    "pinned_upstream_commit": "f1e35f5c3e416b8c6a2c39966c8205cfae54afe2",
+    "clean_for_all_measurements": true,
+    "product_code_changed": true
+  },
+  "machine": {
+    "cpu": "AMD Ryzen 9 7900 12-Core Processor",
+    "logical_cpu_count": 24,
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "compute_capability": "8.9",
+    "driver": "610.43.03",
+    "cuda_toolkit": "13.3.73",
+    "nsight_compute": "2026.2.1.0 build 38283040",
+    "kernel": "7.1.3-arch1-2",
+    "storage": "/dev/nvme0n1p3 ext4 rw,relatime",
+    "cache": "warm; one untimed run per executable; no explicit page-cache eviction",
+    "cpu_governor": "powersave"
+  },
+  "build": {
+    "type": "Release",
+    "cxx_compiler": "/usr/bin/c++",
+    "cuda_compiler": "/opt/cuda/bin/nvcc",
+    "cxx_release_flags": "-O3 -DNDEBUG",
+    "cuda_release_flags": "-O3 -DNDEBUG",
+    "pdg_cuda": true
+  },
+  "binaries": {
+    "dispatcher": {
+      "path": "build/pdg-cuda-release/bin/pdg",
+      "bytes": 1838896,
+      "sha256": "0014a770b988dcbc501b3c9e2e057066c784135ee5254aa01fd37b890ceca641"
+    },
+    "engine": {
+      "path": "build/pdg-cuda-release/bin/pdg-engine",
+      "bytes": 11431296,
+      "sha256": "a6875e2abfd92cfae9ee1060d23f5080d967f9aa969741ac00f464d65ed0160c"
+    },
+    "pinned_oracle": {
+      "path": "build/pdal-upstream-tests/bin/pdal",
+      "bytes": 286832,
+      "sha256": "ea66f6a9ebb833fef1ba6d3def99ba0b36385632deeefebe8e6a9c7e034af7a2"
+    },
+    "frozen_time_library": {
+      "path": "build/pdg-cuda-release/lib/libpdg_frozen_time.so",
+      "bytes": 15648,
+      "sha256": "e53dd72fba998bfc9f15184a43f426ce28a02b20e321079b022ac43042fc1690"
+    }
+  },
+  "environment": {
+    "cwd": "/home/zy/dev/pdal-gpu",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "PDG_FROZEN_EPOCH": "1704067200",
+    "PDG_ORACLE_PDAL": "/home/zy/dev/pdal-gpu/build/pdal-upstream-tests/bin/pdal",
+    "candidate_mode": "resident",
+    "candidate_requirements": [
+      "planner_resident_shared_index_direct_las",
+      "direct_extra_double_output",
+      "direct_las_resident_source",
+      "direct_las_record_summary",
+      "no_direct_las_host_xyz",
+      "resident_boundary_accounting"
+    ]
+  },
+  "input": {
+    "path": "build/bench-data/hag-nn-count4-unique-grid-1m.las",
+    "bytes": 40000701,
+    "sha256": "14532b092c348bfa266cccf0d91e73e7cf40ccdebf51a33b79e207439d564d19",
+    "points": 1000002,
+    "las_version": "1.4",
+    "point_format": 7,
+    "record_bytes": 40,
+    "envelope": "five uniquely ordered ground references followed by 999997 query rows in the exact count-five masked-index envelope"
+  },
+  "pipeline": {
+    "shape": "readers.las -> filters.hag_nn(count=5) -> writers.las(extra_dims=all)",
+    "template": {
+      "path": "build/diagnostics/profile-work/b0133-hag-nn-count5.json",
+      "bytes": 257,
+      "sha256": "dff4879bb6b29cd0cb0e823b0555d9dc55ee1330d15b0c857a635fae138fdb02"
+    },
+    "materialized_sha256": "b49c817794df66d1c8f2720c144a22c3798dec9ca08939d8892ee10858a09174",
+    "profile": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-profile.json",
+      "bytes": 407,
+      "sha256": "cdacdbccd42c3cbef316ccaefbb913798205f09d18453d12874abe7d92c436d9"
+    },
+    "unprofiled_attribution": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-unprofiled.json",
+      "bytes": 410,
+      "sha256": "4af42d8de31af00f0114980b74b6d13d19e4db484d5fdfffa889e25e37cce719"
+    }
+  },
+  "commands": {
+    "paired_acceptance": "python3 scripts/pdg/benchmark_translate.py --oracle build/pdal-upstream-tests/bin/pdal --candidate build/pdg-cuda-release/bin/pdg --input build/bench-data/hag-nn-count4-unique-grid-1m.las --pipeline build/diagnostics/profile-work/b0133-hag-nn-count5.json --input-label b0135-hag-nn-count5-direct-current-clean-1m --work-dir build/benchmarks/work-b0135-hag-nn-count5-direct --report build/benchmarks/b0135-hag-nn-count5-direct-current-clean-1m.json --repo-root . --runs 5 --warmups 1 --candidate-mode resident --require-resident-executor planner_resident_shared_index_direct_las --require-direct-extra-double-output --require-direct-las-resident-source --require-direct-las-record-summary --require-no-direct-las-host-xyz --require-resident-boundary-accounting --frozen-time-library build/pdg-cuda-release/lib/libpdg_frozen_time.so --freeze-epoch 1704067200",
+    "ncu_profile": "env LC_ALL=C TZ=UTC LD_PRELOAD=/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdg_frozen_time.so PDG_FROZEN_EPOCH=1704067200 PDG_ORACLE_PDAL=/home/zy/dev/pdal-gpu/build/pdal-upstream-tests/bin/pdal PDG_EXPERIMENTAL_DIRECT_EXTRA_DOUBLE_OUTPUT=1 PDG_REQUIRE_DIRECT_EXTRA_DOUBLE_OUTPUT=1 PDG_EXPERIMENTAL_DIRECT_LAS_RESIDENT_SOURCE=1 PDG_REQUIRE_DIRECT_LAS_RESIDENT_SOURCE=1 PDG_REQUIRE_DIRECT_LAS_RECORD_SUMMARY=1 PDG_REQUIRE_NO_DIRECT_LAS_HOST_XYZ=1 PDG_REQUIRE_RESIDENT_BOUNDARY_ACCOUNTING=1 ncu --set basic --target-processes all --force-overwrite -o build/profiles/b0135-hag-nn-count5-direct-1m build/pdg-cuda-release/bin/pdg resident build/diagnostics/profile-work/b0135-hag-nn-count5-direct-profile.json --stats build/diagnostics/profile-work/b0135-hag-nn-count5-direct-profile-stats.json",
+    "unprofiled_attribution": "env LC_ALL=C TZ=UTC LD_PRELOAD=/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdg_frozen_time.so PDG_FROZEN_EPOCH=1704067200 PDG_ORACLE_PDAL=/home/zy/dev/pdal-gpu/build/pdal-upstream-tests/bin/pdal PDG_EXPERIMENTAL_DIRECT_EXTRA_DOUBLE_OUTPUT=1 PDG_REQUIRE_DIRECT_EXTRA_DOUBLE_OUTPUT=1 PDG_EXPERIMENTAL_DIRECT_LAS_RESIDENT_SOURCE=1 PDG_REQUIRE_DIRECT_LAS_RESIDENT_SOURCE=1 PDG_REQUIRE_DIRECT_LAS_RECORD_SUMMARY=1 PDG_REQUIRE_NO_DIRECT_LAS_HOST_XYZ=1 PDG_REQUIRE_RESIDENT_BOUNDARY_ACCOUNTING=1 build/pdg-cuda-release/bin/pdg resident build/diagnostics/profile-work/b0135-hag-nn-count5-direct-unprofiled.json --stats build/diagnostics/profile-work/b0135-hag-nn-count5-direct-unprofiled-stats.json"
+  },
+  "paired_acceptance": {
+    "report": {
+      "path": "build/benchmarks/b0135-hag-nn-count5-direct-current-clean-1m.json",
+      "bytes": 34232,
+      "sha256": "bbb7eed4772022bed8aeddb49d2d1b96fe88630be79623c09ff3e64ee5b65639"
+    },
+    "oracle_seconds": [
+      1.003117799,
+      1.031458207,
+      1.003485306,
+      1.007641329,
+      1.016408531
+    ],
+    "oracle_median_seconds": 1.007641329,
+    "oracle_p5_seconds": 1.0031913004,
+    "oracle_p95_seconds": 1.0284482718,
+    "candidate_seconds": [
+      0.328438629,
+      0.339856407,
+      0.345717835,
+      0.343845512,
+      0.351480694
+    ],
+    "candidate_median_seconds": 0.343845512,
+    "candidate_p5_seconds": 0.3307221846,
+    "candidate_p95_seconds": 0.3503281222,
+    "speedup": 2.9305059796738013,
+    "candidate_reduction_from_oracle_percent": 65.87619998266267,
+    "exact_output": {
+      "bytes": 48000909,
+      "sha256": "7050b7b8fb73d7303a7986506fcd94286786a5caf4ad9a7977db3b6f39e18f73"
+    },
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "all_return_codes_zero": true
+  },
+  "device_profile": {
+    "report": {
+      "path": "build/profiles/b0135-hag-nn-count5-direct-1m.ncu-rep",
+      "bytes": 1543885,
+      "sha256": "c664d0131e78d75253ee7cd19d8098882a86b55d118ab9061b0badf47c78078e"
+    },
+    "stats": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-profile-stats.json",
+      "bytes": 10295,
+      "sha256": "9f14a3b06da7d5b0720ec3fd073f6475c50ed380e23cd323167935cdd096c046"
+    },
+    "exact_output": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-profile-output.las",
+      "bytes": 48000909,
+      "sha256": "7050b7b8fb73d7303a7986506fcd94286786a5caf4ad9a7977db3b6f39e18f73"
+    },
+    "kernel_launches": 20,
+    "kernel_total_ms": 4.391810,
+    "kernel_percent_of_candidate_median": 1.277262563,
+    "knn_gather_ms": 3.960000,
+    "knn_gather_percent_of_candidate_median": 1.151680002,
+    "hag_projection_ms": 0.090500,
+    "hag_projection_percent_of_candidate_median": 0.026319960,
+    "interpretation": "the current shared masked-index gather and HAG projection kernels are not the complete-process limiter"
+  },
+  "unprofiled_stats_attribution": {
+    "stats": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-unprofiled-stats.json",
+      "bytes": 10304,
+      "sha256": "4e66f701bab5812fb63f82beebd7bcb16cfab59e144c8430b8bcd327d20b6e19"
+    },
+    "exact_output": {
+      "path": "build/diagnostics/profile-work/b0135-hag-nn-count5-direct-unprofiled-output.las",
+      "bytes": 48000909,
+      "sha256": "7050b7b8fb73d7303a7986506fcd94286786a5caf4ad9a7977db3b6f39e18f73"
+    },
+    "command_before_stats_seconds": 0.261765017,
+    "validation_placement_preflight_seconds": 0.164509074,
+    "device_and_profile_seconds": 0.078318602,
+    "initial_placement_seconds": 0.083918022,
+    "plan_and_original_validation_seconds": 0.001858783,
+    "rewrite_and_resident_preflight_seconds": 0.000410147,
+    "executor_selection_seconds": 0.000003520,
+    "rewritten_manager_execution_seconds": 0.081668472,
+    "canonical_las_publication_seconds": 0.014967396,
+    "other_control_seconds": 0.000620075,
+    "publication_full_elimination_ceiling_percent_of_candidate_median": 4.352942085,
+    "manager_full_elimination_ceiling_percent_of_candidate_median": 23.751501517,
+    "manager_reduction_required_for_five_percent_process_gain_percent": 21.051300678,
+    "startup_interpretation": "device/profile plus initial placement is required first CUDA context and actual-free-memory work; B0108 already found that bypassing this attribution moved rather than removed startup and improved complete wall only 3.636364 percent"
+  },
+  "observed_proof": {
+    "executor": "planner_resident_shared_index_direct_las",
+    "pipeline_class": "fused_point_program",
+    "item_count": 1000002,
+    "direct_las_resident_source": true,
+    "direct_las_record_summary": true,
+    "direct_las_host_xyz_mirror": false,
+    "direct_las_output": true,
+    "direct_extra_double_output": true,
+    "terminal_spill_elided": true,
+    "predicted_index_builds": 1,
+    "observed_index_builds": 1,
+    "host_to_device_bytes": 50000100,
+    "device_to_host_bytes": 9000018,
+    "boundary_spill_count": 0,
+    "fallback_boundary_count": 0,
+    "boundary_accounting_matches_prediction": true
+  },
+  "coverage": {
+    "functionally_supported": true,
+    "gpu_native": "partial: the bounded count-five shared masked-2D-index query and ordered HAG projection execute on device; rejected rows and canonical one-binary64 LAS publication retain exact host ownership",
+    "performance_qualified": "yes only for the named explicit direct 1000002-point LAS 1.4 format-7/40-byte count-five fixture on the recorded clean SM89 machine",
+    "automatically_selected": false
+  },
+  "stopping_decision": {
+    "endpoint_sufficiently_optimized": true,
+    "dominant_cost": "required one-shot CUDA context/profile/free-memory placement and exact mixed manager around 4.391810 milliseconds of shared-index and HAG kernels",
+    "reason": "all kernels are only 1.277263 percent of complete wall, canonical publication cannot buy five percent even if eliminated, B0108 already rejected the apparent placement shortcut below five percent, and no independent reusable fraction of the exact shared-index manager is identified above the five-to-ten-percent gate",
+    "next_task": "B0136 measures pinned PDAL HAG-NN count six and an output-shaped control before any implementation, testing whether another bounded extension of the same planner-owned 2D-index and direct-publication envelope has measurable catalog value"
+  }
+}

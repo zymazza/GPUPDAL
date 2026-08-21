@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    {
+      "type": "filters.splitter",
+      "length": 256.0,
+      "origin_x": "REPLACE_TILE_ORIGIN_X",
+      "origin_y": "REPLACE_TILE_ORIGIN_Y",
+      "buffer": 0.0
+    },
+    {
+      "type": "writers.las",
+      "filename": "output-tile-#.laz",
+      "compression": "true"
+    }
+  ]
+}

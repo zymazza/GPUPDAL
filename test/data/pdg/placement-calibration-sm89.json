@@ -1,0 +1,4492 @@
+{
+  "schema": "pdg-placement-calibration-v1",
+  "calibration_id": "sm89-2026-08-17-r6-large-layouts",
+  "description": "Decision-cited standalone round-trip calibration rows available when D0050 froze breadth. These rows calibrate placement only and are not stage acceptance evidence. Extended through B0236 with separately named exact direct-output approximate-coplanar, direct-LAS radiusassign, direct-LAS outlier/NNDistance, direct-LAS same-radius outlier/radialdensity, neighborclassifier, mapped-source/permutation sort and skewness composition ladders, the label/NNDistance hybrid ladder, the mapped-source/direct-double HAG-NN count-one ladder, and the mapped-source/direct-double HAG-Delaunay count-three ladder. B0280 adds independent exact-machine, clean-upstream complete-process rows for the 35,976,465-point VEIL format-6/LAZ extra-dimensions graph and both normal/covariance publications on the 47,478,228-point format-8 AHN4 tile. The embedded envelope ends at that locally observed ceiling rather than copying the shipped profile's rounded 48M class bound; the other ordinary shared-index stage rows and coefficients remain unchanged.",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "compute_capability": "8.9",
+    "driver": "610.43.03",
+    "cuda": "13.3"
+  },
+  "minimum_accuracy": 0.9,
+  "coefficients": {
+    "cuda_startup_ns": 239214115.124614,
+    "host_to_device_ns_per_byte": 0.038850571092396,
+    "device_to_host_ns_per_byte": 0.045576629155188,
+    "packing_ns_per_byte": 0.002759959539676,
+    "index_build_ns_per_byte": 0.008297172727,
+    "synchronization_ns": 1930.0
+  },
+  "coefficient_provenance": {
+    "cuda_startup_ns": "OLS intercept of device-minus-host medians in the six-row B0005 fused round-trip curve.",
+    "host_to_device_ns_per_byte": "B0005 Nsight Systems: 30.729 ms divided by 21,970,934 format-7 records of 36 bytes.",
+    "device_to_host_ns_per_byte": "B0005 Nsight Systems: 36.049 ms divided by 21,970,934 format-7 records of 36 bytes.",
+    "packing_ns_per_byte": "B0005 Nsight Systems: 2.183 ms pack kernel divided by 21,970,934 format-7 records of 36 bytes.",
+    "index_build_ns_per_byte": "Median of 20 synchronized build-wall/persistent-byte ratios in the D0034 grid/BVH reports.",
+    "synchronization_ns": "Median cudaStreamSynchronize duration (1,930 ns, 170 calls) in the retained B0005 profile."
+  },
+  "stage_models": {
+    "fused-point-program": {
+      "host_fixed_ns": 3860.000000477,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 21.972376347771,
+      "device_ns_per_point": 0.0
+    },
+    "simple-ferry": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 1.015529713932
+    },
+    "colorinterp-explicit": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 3095544.799632192,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 58.056861445934
+    },
+    "colorinterp-auto": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 34520948.77750188,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 23.58336491739
+    },
+    "transformation": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 9690019.501705825,
+      "host_ns_per_point": 15.615418991432,
+      "device_ns_per_point": 0.0
+    },
+    "iqr": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 14814790.828565225,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 0.273015050315
+    },
+    "mad": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 18709769.73106096,
+      "host_ns_per_point": 0.503965236615,
+      "device_ns_per_point": 0.0
+    },
+    "sort": {
+      "host_fixed_ns": 72811793.5560519,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 11.446822573828,
+      "device_ns_per_point": 0.0
+    },
+    "sort-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 793.782365,
+      "device_ns_per_point": 58.74206627340533,
+      "minimum_device_points": 600000,
+      "maximum_device_points": 16000000
+    },
+    "skewness-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 953.993317777778,
+      "device_ns_per_point": 290.879214148791,
+      "minimum_device_points": 450000,
+      "maximum_device_points": 16000000
+    },
+    "hag-nn-count1-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 923.5390448076193,
+      "device_ns_per_point": 229.06845240043793,
+      "minimum_device_points": 450000,
+      "maximum_device_points": 16000002,
+      "calibrated": true
+    },
+    "hag-delaunay-count3-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 823.250610498779,
+      "device_ns_per_point": 185.91405462266016,
+      "minimum_device_points": 500001,
+      "maximum_device_points": 16000002
+    },
+    "morton": {
+      "host_fixed_ns": 5486827.052324653,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 233.72375070336,
+      "device_ns_per_point": 0.0
+    },
+    "groupby": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 70215040.87074247,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 7.687851327383
+    },
+    "returns-merge": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 13003910.340386555,
+      "host_ns_per_point": 7.612194578857,
+      "device_ns_per_point": 0.0
+    },
+    "divider": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 31050475.306348428,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 1.686108156052
+    },
+    "splitter": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 39175859.04089631,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 3.220492080382
+    },
+    "stats": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 112386157.84642076,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 279.96793178578
+    },
+    "info": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 4438911.466160834,
+      "host_ns_per_point": 0.0,
+      "device_ns_per_point": 27.882203133235
+    },
+    "expressionstats-1": {
+      "host_fixed_ns": 51773318.62461388,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 83.171651907949,
+      "device_ns_per_point": 0.0
+    },
+    "expressionstats-2": {
+      "host_fixed_ns": 34643877.12461382,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 190.728398657949,
+      "device_ns_per_point": 0.0
+    },
+    "expressionstats-3": {
+      "host_fixed_ns": 33971180.62461439,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 278.358706657949,
+      "device_ns_per_point": 0.0
+    },
+    "approximatecoplanar": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 173014060.03622097,
+      "host_ns_per_point": 4256.005557780218,
+      "device_ns_per_point": 1019.5148811130455,
+      "minimum_device_points": 131072
+    },
+    "approximatecoplanar-direct-compose": {
+      "host_fixed_ns": 87387779.74090123,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 3385.876023673574,
+      "device_ns_per_point": 0.0,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 16000000
+    },
+    "ordered-point-program": {
+      "host_fixed_ns": 9733181.294258118,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 366.606724345247,
+      "device_ns_per_point": 0.0,
+      "minimum_device_points": 1000000
+    },
+    "lof": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 121343390.77881624,
+      "host_ns_per_point": 9526.749844570424,
+      "device_ns_per_point": 1078.1727489064672,
+      "minimum_device_points": 250000
+    },
+    "normal": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 174287321.01746765,
+      "host_ns_per_point": 4539.955309098323,
+      "device_ns_per_point": 1083.9846298206462,
+      "minimum_device_points": 250000
+    },
+    "eigenvalues": {
+      "host_fixed_ns": 32201923.27978566,
+      "device_fixed_ns": 180968776.82526013,
+      "host_ns_per_point": 4516.448544010281,
+      "device_ns_per_point": 1060.40514681755,
+      "minimum_device_points": 250000
+    },
+    "covariancefeatures": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 154275342.5721225,
+      "host_ns_per_point": 4524.570230601391,
+      "device_ns_per_point": 1086.5715638581526,
+      "minimum_device_points": 250000
+    },
+    "eigen-family-compose": {
+      "host_fixed_ns": 120004600.90127563,
+      "device_fixed_ns": 155357777.57434177,
+      "host_ns_per_point": 14659.538986578957,
+      "device_ns_per_point": 1234.7451449457265,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 16000000
+    },
+    "nndistance": {
+      "host_fixed_ns": 2330246.210784518,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 4396.264753367529,
+      "device_ns_per_point": 990.5971252981246,
+      "minimum_device_points": 250000
+    },
+    "outlier-nndistance-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 75276867.54198201,
+      "host_ns_per_point": 8034.195945434299,
+      "device_ns_per_point": 0.0,
+      "minimum_device_points": 50000,
+      "maximum_device_points": 16000000
+    },
+    "radius-outlier-radialdensity-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 266587419.5420545,
+      "host_ns_per_point": 6228.969755310317,
+      "device_ns_per_point": 0.0,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 4000000
+    },
+    "estimaterank": {
+      "host_fixed_ns": 27127612.124431267,
+      "device_fixed_ns": 193217335.34935838,
+      "host_ns_per_point": 4372.373230856109,
+      "device_ns_per_point": 993.5218764129231,
+      "minimum_device_points": 250000
+    },
+    "optimalneighborhood": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 152741159.5954907,
+      "host_ns_per_point": 6431.156586069055,
+      "device_ns_per_point": 1167.2887542536657,
+      "minimum_device_points": 250000
+    },
+    "rank-optimal-compose": {
+      "host_fixed_ns": 133650155.04406099,
+      "device_fixed_ns": 240029160.187007,
+      "host_ns_per_point": 11448.442351895543,
+      "device_ns_per_point": 1186.5275421400943,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 16000000
+    },
+    "neighborclassifier": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 126610942.40784068,
+      "host_ns_per_point": 3721.0713612740547,
+      "device_ns_per_point": 954.6708793776946,
+      "minimum_device_points": 250000
+    },
+    "neighborclassifier-direct-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 3689.146693032069,
+      "device_ns_per_point": 790.7876247929496,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 16000000
+    },
+    "radiusassign": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 170000000.0,
+      "host_ns_per_point": 1664.610423445786,
+      "device_ns_per_point": 0.0,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 21970934
+    },
+    "radiusassign-direct": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 66189962.889582455,
+      "host_ns_per_point": 1985.1180564323188,
+      "device_ns_per_point": 67.0868094224532,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 16000000
+    },
+    "normal-covariancefeatures-compose": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 8428.236852266,
+      "device_ns_per_point": 1087.699620198,
+      "minimum_device_points": 50000,
+      "maximum_device_points": 47478228
+    },
+    "normal-covariancefeatures-compose-extradims": {
+      "host_fixed_ns": 0.0,
+      "device_fixed_ns": 0.0,
+      "host_ns_per_point": 8428.236852266,
+      "device_ns_per_point": 1087.699620198,
+      "minimum_device_points": 250000,
+      "maximum_device_points": 47478228
+    }
+  },
+  "pipelines": {
+    "fused": [
+      "input.las",
+      {
+        "type": "filters.assign",
+        "value": [
+          "Scratch = Intensity * 2 - 1",
+          "Classification = 7 WHERE Scratch >= 1000 && ReturnNumber >= 1"
+        ]
+      },
+      {
+        "type": "filters.ferry",
+        "dimensions": "Classification=>UserData"
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "PointSourceId = Scratch / 2 WHERE Scratch <= 131070",
+          "ReturnNumber = UserData WHERE UserData >= 1 && UserData <= 15"
+        ]
+      },
+      "output.las"
+    ],
+    "ferry": [
+      "input.las",
+      {
+        "type": "filters.ferry",
+        "dimensions": "Intensity=>PointSourceId"
+      },
+      "output.las"
+    ],
+    "color_explicit": [
+      "input.las",
+      {
+        "type": "filters.colorinterp",
+        "dimension": "Z",
+        "minimum": 400.0,
+        "maximum": 600.0,
+        "clamp": true,
+        "ramp": "heat_map"
+      },
+      "output.las"
+    ],
+    "color_auto": [
+      "input.las",
+      {
+        "type": "filters.colorinterp",
+        "dimension": "Z",
+        "clamp": true,
+        "ramp": "heat_map"
+      },
+      "output.las"
+    ],
+    "transformation": [
+      "input.las",
+      {
+        "type": "filters.transformation",
+        "matrix": "1 0.125 0 10.25 0.0625 1 0 -20.5 0 0 1 3.75 0 0 0 1"
+      },
+      "output.las"
+    ],
+    "iqr": [
+      "input.las",
+      {
+        "type": "filters.iqr",
+        "dimension": "Z",
+        "k": 1.5
+      },
+      "output.las"
+    ],
+    "mad": [
+      "input.las",
+      {
+        "type": "filters.mad",
+        "dimension": "Z",
+        "k": 2.0,
+        "mad_multiplier": 1.4862
+      },
+      "output.las"
+    ],
+    "sort": [
+      "input.las",
+      {
+        "type": "filters.sort",
+        "dimension": "Classification",
+        "order": "ASC",
+        "algorithm": "STABLE"
+      },
+      "output.las"
+    ],
+    "sort-direct-compose": {
+      "pipeline": [
+        {
+          "type": "readers.las",
+          "filename": "input.las"
+        },
+        {
+          "type": "filters.sort",
+          "dimension": "Z",
+          "order": "ASC",
+          "algorithm": "NORMAL"
+        },
+        {
+          "type": "writers.las",
+          "filename": "output.las",
+          "extra_dims": "all"
+        }
+      ]
+    },
+    "skewness-direct-compose": {
+      "pipeline": [
+        {
+          "type": "readers.las",
+          "filename": "input.las"
+        },
+        {
+          "type": "filters.skewnessbalancing"
+        },
+        {
+          "type": "writers.las",
+          "filename": "output.las",
+          "extra_dims": "all"
+        }
+      ]
+    },
+    "hag-nn-count1-direct-compose": {
+      "pipeline": [
+        {
+          "type": "readers.las",
+          "filename": "input.las"
+        },
+        {
+          "type": "filters.hag_nn",
+          "count": 1
+        },
+        {
+          "type": "writers.las",
+          "filename": "output.las",
+          "extra_dims": "all"
+        }
+      ]
+    },
+    "hag-delaunay-count3-direct-compose": {
+      "pipeline": [
+        {
+          "type": "readers.las",
+          "filename": "input.las"
+        },
+        {
+          "type": "filters.hag_delaunay",
+          "count": 3
+        },
+        {
+          "type": "writers.las",
+          "filename": "output.las",
+          "extra_dims": "all"
+        }
+      ]
+    },
+    "morton": [
+      "input.las",
+      {
+        "type": "filters.mortonorder"
+      },
+      "output.las"
+    ],
+    "groupby": [
+      "input.las",
+      {
+        "type": "filters.groupby",
+        "dimension": "Classification"
+      },
+      "output#.las"
+    ],
+    "returns": [
+      "input.las",
+      {
+        "type": "filters.returns",
+        "groups": "first,intermediate,last,only"
+      },
+      {
+        "type": "filters.merge"
+      },
+      "output.las"
+    ],
+    "divider": [
+      "input.las",
+      {
+        "type": "filters.divider",
+        "mode": "round_robin",
+        "count": 17
+      },
+      "output#.las"
+    ],
+    "splitter": [
+      "input.las",
+      {
+        "type": "filters.splitter",
+        "length": 250.0
+      },
+      "output#.las"
+    ],
+    "stats": [
+      "input.las",
+      {
+        "type": "filters.stats",
+        "dimensions": [
+          "X",
+          "Y",
+          "Z",
+          "Intensity",
+          "Classification",
+          "GpsTime"
+        ]
+      },
+      "output.las"
+    ],
+    "info": [
+      "input.las",
+      {
+        "type": "filters.info"
+      },
+      "output.las"
+    ],
+    "expressionstats_1": [
+      "input.las",
+      {
+        "type": "filters.expressionstats",
+        "dimension": "Classification",
+        "expressions": [
+          "Classification == 0"
+        ]
+      },
+      "output.las"
+    ],
+    "expressionstats_2": [
+      "input.las",
+      {
+        "type": "filters.expressionstats",
+        "dimension": "Classification",
+        "expressions": [
+          "Classification == 0",
+          "Classification == 1"
+        ]
+      },
+      "output.las"
+    ],
+    "expressionstats_3": [
+      "input.las",
+      {
+        "type": "filters.expressionstats",
+        "dimension": "Classification",
+        "expressions": [
+          "Classification == 0",
+          "Classification == 1",
+          "Classification == 2"
+        ]
+      },
+      "output.las"
+    ],
+    "approximatecoplanar": [
+      "input.las",
+      {
+        "type": "filters.approximatecoplanar",
+        "knn": 8
+      },
+      "output.las"
+    ],
+    "approximatecoplanar-direct-compose": [
+      "input.las",
+      {
+        "type": "filters.approximatecoplanar",
+        "knn": 8
+      },
+      {
+        "type": "filters.ferry",
+        "dimensions": "Coplanar=>UserData"
+      },
+      "output.las"
+    ],
+    "ordered-expression": [
+      {
+        "type": "readers.las",
+        "filename": "input.las"
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "Scratch = Intensity * 2 - 1",
+          "Classification = 7 WHERE Scratch >= 1000 && ReturnNumber >= 1"
+        ]
+      },
+      {
+        "type": "filters.ferry",
+        "dimensions": "Classification=>UserData"
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "PointSourceId = Scratch / 2 WHERE Scratch <= 131070",
+          "ReturnNumber = UserData WHERE UserData >= 1 && UserData <= 15"
+        ]
+      },
+      {
+        "type": "filters.expression",
+        "expression": "Intensity <= 10000"
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "UserData = 3 WHERE Classification == 7"
+        ]
+      },
+      {
+        "type": "writers.las",
+        "filename": "output.las"
+      }
+    ],
+    "lof": [
+      "input.las",
+      {
+        "type": "filters.lof",
+        "minpts": 10
+      },
+      "output.las"
+    ],
+    "normal": [
+      "input.las",
+      {
+        "type": "filters.normal",
+        "knn": 8
+      },
+      "output.las"
+    ],
+    "eigenvalues": [
+      "input.las",
+      {
+        "type": "filters.eigenvalues",
+        "knn": 8
+      },
+      "output.las"
+    ],
+    "covariancefeatures": [
+      "input.las",
+      {
+        "type": "filters.covariancefeatures",
+        "knn": 8
+      },
+      "output.las"
+    ],
+    "eigen-family-compose": [
+      "input.las",
+      {
+        "type": "filters.normal",
+        "knn": 12,
+        "always_up": false
+      },
+      {
+        "type": "filters.eigenvalues",
+        "knn": 12,
+        "normalize": true
+      },
+      {
+        "type": "filters.covariancefeatures",
+        "knn": 12,
+        "mode": "raw",
+        "feature_set": "dimensionality"
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "Classification = Linearity * 10",
+          "Intensity = Curvature * 1000",
+          "UserData = Eigenvalue0 * 100"
+        ]
+      },
+      "output.las"
+    ],
+    "nndistance": [
+      "input.las",
+      {
+        "type": "filters.nndistance",
+        "k": 10
+      },
+      "output.las"
+    ],
+    "estimaterank": [
+      "input.las",
+      {
+        "type": "filters.estimaterank",
+        "knn": 8
+      },
+      {
+        "type": "filters.assign",
+        "value": "UserData = 1 WHERE Rank >= 3"
+      },
+      "output.las"
+    ],
+    "optimalneighborhood": [
+      "input.las",
+      {
+        "type": "filters.optimalneighborhood",
+        "min_k": 10,
+        "max_k": 14
+      },
+      {
+        "type": "filters.assign",
+        "value": "UserData = 1 WHERE OptimalKNN >= 12"
+      },
+      "output.las"
+    ],
+    "rank-optimal-compose": [
+      "input.las",
+      {
+        "type": "filters.estimaterank",
+        "knn": 14,
+        "thresh": 0.01
+      },
+      {
+        "type": "filters.optimalneighborhood",
+        "min_k": 10,
+        "max_k": 14
+      },
+      {
+        "type": "filters.assign",
+        "value": [
+          "Classification = Rank",
+          "Intensity = OptimalKNN",
+          "PointSourceId = OptimalRadius"
+        ]
+      },
+      "output.las"
+    ],
+    "outlier-nndistance-direct-compose": [
+      "input.las",
+      {
+        "type": "filters.outlier",
+        "method": "statistical",
+        "mean_k": 8,
+        "multiplier": 2.0,
+        "class": 7
+      },
+      {
+        "type": "filters.nndistance",
+        "mode": "kth",
+        "k": 10
+      },
+      "output.las"
+    ],
+    "radius-outlier-radialdensity-direct-compose": [
+      "input.las",
+      {
+        "type": "filters.outlier",
+        "method": "radius",
+        "radius": 1.01,
+        "min_k": 2,
+        "class": 7
+      },
+      {
+        "type": "filters.radialdensity",
+        "radius": 1.01
+      },
+      {
+        "type": "filters.assign",
+        "value": "UserData = 1 WHERE RadialDensity >= 0.2"
+      },
+      "output.las"
+    ],
+    "neighborclassifier": [
+      "input.las",
+      {
+        "type": "filters.neighborclassifier",
+        "k": 7
+      },
+      "output.las"
+    ],
+    "neighborclassifier-direct-compose": [
+      "input.las",
+      {
+        "type": "filters.neighborclassifier",
+        "k": 7
+      },
+      "output.las"
+    ],
+    "radiusassign": [
+      "input.las",
+      {
+        "type": "filters.radiusassign",
+        "radius": 2.0,
+        "src_domain": "ReturnNumber[1:1]",
+        "reference_domain": "ReturnNumber[2:15]",
+        "is3d": true,
+        "update_expression": "UserData = 9"
+      },
+      "output.las"
+    ],
+    "radiusassign-direct": [
+      "input.las",
+      {
+        "type": "filters.radiusassign",
+        "radius": 2.0,
+        "src_domain": "ReturnNumber[1:1]",
+        "reference_domain": "ReturnNumber[2:15]",
+        "is3d": true,
+        "update_expression": "UserData = 9"
+      },
+      "output.las"
+    ],
+    "normal-covariancefeatures-compose": [
+      "input.las",
+      {
+        "type": "filters.normal",
+        "knn": 8
+      },
+      {
+        "type": "filters.covariancefeatures",
+        "knn": 8,
+        "feature_set": "Dimensionality"
+      },
+      "output.las"
+    ],
+    "normal-covariancefeatures-compose-extradims": [
+      {
+        "type": "readers.las",
+        "filename": "input.laz"
+      },
+      {
+        "type": "filters.normal",
+        "knn": 8
+      },
+      {
+        "type": "filters.covariancefeatures",
+        "knn": 8,
+        "feature_set": "Dimensionality"
+      },
+      {
+        "type": "writers.las",
+        "filename": "output.laz",
+        "compression": "true",
+        "extra_dims": "all"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "fused-1m",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.046079625,
+      "device_seconds": 0.274787041,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-break-even-1m-dirty.json",
+        "sha256": "45fb182afa223c96ed57ed5faa9b76781200b0cdad1c48b8bcf0c890440dd1c2",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "fused-4m",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.154321647,
+      "device_seconds": 0.301903012,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-break-even-4000000-dirty.json",
+        "sha256": "3dc7405bdab484118a8c38966db44c7d131262dc8e3c5025d4a76bea98ed3b8e",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "fused-8m",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.294565004,
+      "device_seconds": 0.353810861,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-break-even-8000000-dirty.json",
+        "sha256": "b5b34a9e81fb67930890854665e1c0b5c36321644216fa9c068cee3f081a05ec",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "fused-12m",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 12000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.429353657,
+      "device_seconds": 0.419536169,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-break-even-12000000-dirty.json",
+        "sha256": "54a7dc5ea2a523e3569443b5487dfe6881fcee7219c317e584fe11b7a5e4b0da",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "fused-16m",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.570192109,
+      "device_seconds": 0.476976779,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-break-even-16000000-dirty.json",
+        "sha256": "d7f91af47dfc15e2aaa1acd79e0bbe63bb69077beed0e93e2afb4083edea86a5",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "fused-21970934",
+      "model": "fused-point-program",
+      "pipeline": "fused",
+      "input_points": 21970934,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.750134534,
+      "device_seconds": 0.52551724,
+      "report": {
+        "path": "build/benchmarks/gpu-host-streamed-full-dirty.json",
+        "sha256": "ba611bc8aee96477d3848051439293d6bf6e6ba000f03a308d2a771256e2b6ca",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "ferry-21970934",
+      "model": "simple-ferry",
+      "pipeline": "ferry",
+      "input_points": 21970934,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.323496707,
+      "device_seconds": 0.594809874,
+      "report": {
+        "path": "build/benchmarks/gpu-host-break-even-simple-ferry-full-dirty.json",
+        "sha256": "9df3a72ef1065702e8488f9351b0a4e5168941a94da3587b49e5a870a24d4cf8",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "color-explicit-250k",
+      "model": "colorinterp-explicit",
+      "pipeline": "color_explicit",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.1356846895,
+      "device_seconds": 0.392766446,
+      "report": {
+        "path": "build/benchmarks/colorinterp-adklr-250k-cuda-clean-bd5841356-10x.json",
+        "sha256": "d7fd79bed6139e2dcfd73a78c644d59de53b52769afa31f1004a209ee241ef9f",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "color-explicit-21970934",
+      "model": "colorinterp-explicit",
+      "pipeline": "color_explicit",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.684137814,
+      "device_seconds": 7.223975305,
+      "report": {
+        "path": "build/benchmarks/colorinterp-adklr-22m-cuda-clean-bd5841356-trial.json",
+        "sha256": "fb46d8fb0575495d3f6cf30ae5dbdfac108f1d1f11181cb7ddb77a5d00671548",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "color-auto-4m",
+      "model": "colorinterp-auto",
+      "pipeline": "color_auto",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.152217781,
+      "device_seconds": 1.524354504,
+      "report": {
+        "path": "build/benchmarks/colorinterp-autorange-adklr-4m-cuda-clean-bd5841356-5x.json",
+        "sha256": "89b3b7dd0315e8b4c5144a93a2879382352d6e386f85ca8407373b153d612797",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "color-auto-21970934",
+      "model": "colorinterp-auto",
+      "pipeline": "color_auto",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.603790155,
+      "device_seconds": 6.417638133,
+      "report": {
+        "path": "build/benchmarks/colorinterp-autorange-adklr-22m-cuda-clean-bd5841356-trial.json",
+        "sha256": "e83885a698e23dab52560af575d6f3a3176c73e94becf5a9e11a9fdf36795247",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "transformation-250k",
+      "model": "transformation",
+      "pipeline": "transformation",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.134659698,
+      "device_seconds": 0.3774374805,
+      "report": {
+        "path": "build/benchmarks/transformation-adklr-250k-cuda-clean-bd5841356-10x.json",
+        "sha256": "0d8ed65346a08bd918dfbb279d1322beec170195dc08ed0173f5d1cfa03dce0f",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "transformation-4m",
+      "model": "transformation",
+      "pipeline": "transformation",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.13863091,
+      "device_seconds": 1.337340354,
+      "report": {
+        "path": "build/benchmarks/transformation-adklr-4m-cuda-clean-bd5841356-5x.json",
+        "sha256": "4ddf8928df41b1faf7e6286fd95525104a747cfa14499b2c6786be7ff11ec2b1",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "transformation-21970934",
+      "model": "transformation",
+      "pipeline": "transformation",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.502338261,
+      "device_seconds": 5.456101103,
+      "report": {
+        "path": "build/benchmarks/transformation-adklr-22m-cuda-clean-bd5841356-trial.json",
+        "sha256": "8f7df80f035ba1a5c515751110e72ea6d4b17ef11a3b8c527a06a9623a085655",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "iqr-250k",
+      "model": "iqr",
+      "pipeline": "iqr",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.1281847905,
+      "device_seconds": 0.367619305,
+      "report": {
+        "path": "build/benchmarks/iqr-adklr-250k-cuda-clean-bd5841356-10x.json",
+        "sha256": "306e39c1a2e4b11b12d6890b900cb33f79fc1dfac12632e58da6ef75e13194e6",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "iqr-4m",
+      "model": "iqr",
+      "pipeline": "iqr",
+      "input_points": 4000000,
+      "output_points": 3999999,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.091857712,
+      "device_seconds": 1.367097633,
+      "report": {
+        "path": "build/benchmarks/iqr-adklr-4m-cuda-clean-bd5841356-5x.json",
+        "sha256": "1190f0fb50395fbee530ec729864598040c31259afe2007d97a8fc76612e9751",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "iqr-21970934",
+      "model": "iqr",
+      "pipeline": "iqr",
+      "input_points": 21970934,
+      "output_points": 20612822,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.185021376,
+      "device_seconds": 5.45366037,
+      "report": {
+        "path": "build/benchmarks/iqr-adklr-22m-cuda-clean-bd5841356-trial.json",
+        "sha256": "8ba34d48ba0d6be591da4178911d3eaf8c228866042cc17a84253d6e1eb4d353",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "mad-4m",
+      "model": "mad",
+      "pipeline": "mad",
+      "input_points": 4000000,
+      "output_points": 3427628,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.0356415,
+      "device_seconds": 1.293716907,
+      "report": {
+        "path": "build/benchmarks/mad-adklr-4m-cuda-clean-bd5841356-5x.json",
+        "sha256": "1a0326aa8f6004fab13e239e746506b1b5a8db39f9c094e407cd9959c9db9205",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "mad-21970934",
+      "model": "mad",
+      "pipeline": "mad",
+      "input_points": 21970934,
+      "output_points": 18911254,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 4.842528473,
+      "device_seconds": 5.10091182,
+      "report": {
+        "path": "build/benchmarks/mad-adklr-22m-cuda-clean-bd5841356-trial.json",
+        "sha256": "23b40a88c50acd6cbf6a735a609b9ddc3ae56bfc1a53e92d77430f620822e379",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "sort-250k",
+      "model": "sort",
+      "pipeline": "sort",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.197427123,
+      "device_seconds": 0.413625134,
+      "report": {
+        "path": "build/benchmarks/sort-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "e2a6bc2fce8f5ef994345f7c392903ef76152be38851934c97365d446c5813d9",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "sort-1m",
+      "model": "sort",
+      "pipeline": "sort",
+      "input_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.540236262,
+      "device_seconds": 0.586569325,
+      "report": {
+        "path": "build/benchmarks/sort-adklr-1m-cuda-dirty-trial.json",
+        "sha256": "a8e80f2bd8bb4a49828289e69a060f65ebbff5e50e70c29e5c56001e6a391803",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "sort-4m",
+      "model": "sort",
+      "pipeline": "sort",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.1343809615,
+      "device_seconds": 1.3214124385,
+      "reports": [
+        {
+          "path": "build/benchmarks/sort-adklr-4m-host-dirty-10x.json",
+          "sha256": "76ae68dfa7bd55b539bc9953c14d00f860f769f12fb1d1ed411f6d4f5520bed4"
+        },
+        {
+          "path": "build/benchmarks/sort-adklr-4m-cuda-dirty-10x.json",
+          "sha256": "dd9a11c8d1193799c68f156ad4faa08e646de0292fa59e98bbbf02f9a769b370"
+        }
+      ],
+      "evidence_status": "decision-cited-diagnostic"
+    },
+    {
+      "id": "sort-21970934",
+      "model": "sort",
+      "pipeline": "sort",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.294636497,
+      "device_seconds": 5.215133558,
+      "reports": [
+        {
+          "path": "build/benchmarks/sort-adklr-22m-host-dirty-5x.json",
+          "sha256": "06b49df3b37bcb131041f43832bb26d240ef4d74a65a6d52aa1bcb1ae4fefef2"
+        },
+        {
+          "path": "build/benchmarks/sort-adklr-22m-cuda-dirty-5x.json",
+          "sha256": "f6718cd1c2f1d2eb223b62e991afef430b72ab501ab67b76d5abd16439cf096b"
+        }
+      ],
+      "evidence_status": "decision-cited-diagnostic"
+    },
+    {
+      "id": "morton-1m",
+      "model": "morton",
+      "pipeline": "morton",
+      "input_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.5869478355,
+      "device_seconds": 0.601893174,
+      "report": {
+        "path": "build/benchmarks/morton-adklr-1m-cuda-clean-940d68218-10x.json",
+        "sha256": "fba6d1e89bb05d608f2ba818be4ee0d6a78439d67baa53dcc18356add044b491",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "morton-1.5m",
+      "model": "morton",
+      "pipeline": "morton",
+      "input_points": 1500000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.8546158385,
+      "device_seconds": 0.7480762685,
+      "report": {
+        "path": "build/benchmarks/morton-adklr-1.5m-cuda-clean-940d68218-10x.json",
+        "sha256": "12ea1cbfa5e7ac54021653f30b54b0969c063b0dabd83f36447a86991cc92a2e",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "morton-2m",
+      "model": "morton",
+      "pipeline": "morton",
+      "input_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.169191809,
+      "device_seconds": 0.9065439575,
+      "report": {
+        "path": "build/benchmarks/morton-adklr-2m-cuda-clean-940d68218-10x.json",
+        "sha256": "0e58aa509060cfbcf9e0d40203edbb8ff8b8f6bf1298216caf8896a5fc71468c",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "morton-4m",
+      "model": "morton",
+      "pipeline": "morton",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 2.1930431415,
+      "device_seconds": 1.5056299195,
+      "reports": [
+        {
+          "path": "build/benchmarks/morton-adklr-4m-host-clean-940d68218-10x.json",
+          "sha256": "c16ce81783daee83532322e70d88e6e4a33f7d4d7b6cd1a97f1611ca739f5a8a"
+        },
+        {
+          "path": "build/benchmarks/morton-adklr-4m-cuda-clean-940d68218-10x.json",
+          "sha256": "412e3872242e42a937294002dfe51d0a8a93c5331e420b5b2e1f2c57abe32093"
+        }
+      ],
+      "evidence_status": "accepted-clean"
+    },
+    {
+      "id": "groupby-250k",
+      "model": "groupby",
+      "pipeline": "groupby",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.154369651,
+      "device_seconds": 0.465875175,
+      "report": {
+        "path": "build/benchmarks/groupby-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "92f30b2c30aa9727f549ec1baee36569fd1599737ebc87667874bcf4f129e0d6",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "groupby-21970934",
+      "model": "groupby",
+      "pipeline": "groupby",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.18329331,
+      "device_seconds": 5.674502239,
+      "report": {
+        "path": "build/benchmarks/groupby-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "7d142068a0a0a5d907605bd8b30a0edd819e4c05755c425d1729f5f4da6e1dd2",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "returns-250k",
+      "model": "returns-merge",
+      "pipeline": "returns",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.152494526,
+      "device_seconds": 0.402948781,
+      "report": {
+        "path": "build/benchmarks/returns-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "30c2611e7bda7e338cfa5dedff6ef4edbfd96e56a715c62c9f5ad7607eddf097",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "returns-21970934",
+      "model": "returns-merge",
+      "pipeline": "returns",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.307211356,
+      "device_seconds": 5.403723439,
+      "report": {
+        "path": "build/benchmarks/returns-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "1f8640e83c8775d9d6acd2d1960c5856af1539f651c097e24221515f8aa0e922",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "divider-250k",
+      "model": "divider",
+      "pipeline": "divider",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.151165645,
+      "device_seconds": 0.421996455,
+      "report": {
+        "path": "build/benchmarks/divider-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "e13bd0088b825cf3fae62ac8b868ca926a2e19e28e2f4139e9a7c490238a8c87",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "divider-21970934",
+      "model": "divider",
+      "pipeline": "divider",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 6.279775396,
+      "device_seconds": 6.599102273,
+      "report": {
+        "path": "build/benchmarks/divider-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "af9fac2978baa209f7862bc5cc2ff195dd853afe679628cdafe428651d02b0cf",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "splitter-250k",
+      "model": "splitter",
+      "pipeline": "splitter",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.153761168,
+      "device_seconds": 0.43325636,
+      "report": {
+        "path": "build/benchmarks/splitter-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "2bf965dd5e31d9931e97bce126e50068eeaf19e4f7edec736bc21a79c30e45de",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "splitter-21970934",
+      "model": "splitter",
+      "pipeline": "splitter",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.171192568,
+      "device_seconds": 5.54601401,
+      "report": {
+        "path": "build/benchmarks/splitter-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "505d1014a1fca482e6d90cf76cb3cb7b2f2d8423745175cde7ebd88c85625129",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "stats-250k",
+      "model": "stats",
+      "pipeline": "stats",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.178443379,
+      "device_seconds": 0.600429132,
+      "report": {
+        "path": "build/benchmarks/stats-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "a3d240baad0457214a90a1cbef431f2dfa312cdd03a22fa8f5da5a441839845c",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "stats-21970934",
+      "model": "stats",
+      "pipeline": "stats",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.74616623,
+      "device_seconds": 12.282804913,
+      "report": {
+        "path": "build/benchmarks/stats-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "f9480623c9e883db97e47951f386e9a75bfb3f1a802b5d4d71ac5e5f7cfbf667",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "info-250k",
+      "model": "info",
+      "pipeline": "info",
+      "input_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.181734004,
+      "device_seconds": 0.432644231,
+      "report": {
+        "path": "build/benchmarks/info-adklr-250000-cuda-dirty-trial.json",
+        "sha256": "bb8ca1e9153f2f031abd7597527fc27828302224e9359e92908aecdd773c30ea",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "info-21970934",
+      "model": "info",
+      "pipeline": "info",
+      "input_points": 21970934,
+      "input_record_bytes": 30,
+      "output_record_bytes": 36,
+      "host_seconds": 5.350336791,
+      "device_seconds": 6.231079896,
+      "report": {
+        "path": "build/benchmarks/info-adklr-22m-cuda-dirty-trial.json",
+        "sha256": "4ffd8644bb8f017f6b959f772fa0fdb045e59f0f33721883260c47beaca6c9e3",
+        "status": "decision-cited-diagnostic"
+      }
+    },
+    {
+      "id": "expressionstats-3-500k",
+      "model": "expressionstats-3",
+      "pipeline": "expressionstats_3",
+      "input_points": 500000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.374333162,
+      "device_seconds": 0.440519387,
+      "reports": [
+        {
+          "path": "build/benchmarks/expressionstats-triple-simple-adklr-500k-persistent-host-control-clean-d70ae78b5-5x.json",
+          "sha256": "5743f5c9f29ea64d75bdcf73a9c42e2f0641fe5c9151ab269b0ec1a784ef35ae"
+        },
+        {
+          "path": "build/benchmarks/expressionstats-triple-simple-adklr-500k-persistent-forced-clean-9cb5da992-5x.json",
+          "sha256": "3aa9fab114dd0c96b7a27dd021c5d34d15296efca77c758e24140299c13dbf92"
+        }
+      ],
+      "evidence_status": "accepted-clean"
+    },
+    {
+      "id": "expressionstats-3-1m",
+      "model": "expressionstats-3",
+      "pipeline": "expressionstats_3",
+      "input_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.64988545,
+      "device_seconds": 0.5770111055,
+      "report": {
+        "path": "build/benchmarks/expressionstats-triple-simple-adklr-1m-persistent-auto-clean-d70ae78b5-10x.json",
+        "sha256": "80344ab4e948011a65b7a7cb99d013608458211738769f4e77476469826cfd40",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "expressionstats-2-1m",
+      "model": "expressionstats-2",
+      "pipeline": "expressionstats_2",
+      "input_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.559840867,
+      "device_seconds": 0.573924134,
+      "reports": [
+        {
+          "path": "build/benchmarks/expressionstats-double-simple-adklr-1m-persistent-host-control-clean-d70ae78b5-5x.json",
+          "sha256": "8705f08306d21989399a7be30001f92ad89bfbfa78b95f01094e60a2d121f851"
+        },
+        {
+          "path": "build/benchmarks/expressionstats-double-simple-adklr-1m-persistent-forced-clean-9cb5da992-5x.json",
+          "sha256": "44cbf3838543dd525bf6233f183ecd4942a7e7a5c36abb55ad54ebee4799b560"
+        }
+      ],
+      "evidence_status": "accepted-clean"
+    },
+    {
+      "id": "expressionstats-2-2m",
+      "model": "expressionstats-2",
+      "pipeline": "expressionstats_2",
+      "input_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.009874732,
+      "device_seconds": 0.833467168,
+      "report": {
+        "path": "build/benchmarks/expressionstats-double-simple-adklr-2m-persistent-auto-clean-d70ae78b5-10x.json",
+        "sha256": "f9ba5a3d5fa543ea756dafd5a4bca0fac849fcdeff9f2b553e329bb251053fb8",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "expressionstats-1-2m",
+      "model": "expressionstats-1",
+      "pipeline": "expressionstats_1",
+      "input_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.816751391,
+      "device_seconds": 0.838327879,
+      "reports": [
+        {
+          "path": "build/benchmarks/expressionstats-single-adklr-2m-persistent-host-control-clean-d70ae78b5-5x.json",
+          "sha256": "c0495a7098b36c3580d8f1569add69276f718a2faea6bc11a7c423e6e0d768a7"
+        },
+        {
+          "path": "build/benchmarks/expressionstats-single-adklr-2m-persistent-forced-clean-9cb5da992-5x.json",
+          "sha256": "3b3c50492017b7c35f2f2c3f3e4ac968e318e441a071b40dcb5eac919a0075d5"
+        }
+      ],
+      "evidence_status": "accepted-clean"
+    },
+    {
+      "id": "expressionstats-1-4m",
+      "model": "expressionstats-1",
+      "pipeline": "expressionstats_1",
+      "input_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.5125596775,
+      "device_seconds": 1.368267997,
+      "report": {
+        "path": "build/benchmarks/expressionstats-single-adklr-4m-persistent-auto-clean-d70ae78b5-10x.json",
+        "sha256": "8942e969c56bbc322cf0e263d298ec35b052c737d63cc67ac78a1847ca4c8196",
+        "status": "accepted-clean"
+      }
+    },
+    {
+      "id": "ordered-expression-1m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 1000000,
+      "output_points": 697021,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.398748036,
+      "device_seconds": 0.262536349,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-1m-e48e67ad6.json",
+        "sha256": "08c4a458c2c61eb8de4c2ebfdc5fec02bab01e6803f602e0c76d593a7a126453",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "ordered-expression-2m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 2000000,
+      "output_points": 1412416,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.782943539,
+      "device_seconds": 0.278605294,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-2m-e48e67ad6.json",
+        "sha256": "5e2d22ce10208b069b3fec582bba3764dfe8c5c7b6ad4d8b5fa07c1600bcc191",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "ordered-expression-4m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 4000000,
+      "output_points": 2800142,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.540953103,
+      "device_seconds": 0.307441998,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-4m-e48e67ad6.json",
+        "sha256": "639adc2462e5466f8a2d55511f0aeedb89e54bcdb64feb1d6580542c8707ed41",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "ordered-expression-8m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 8000000,
+      "output_points": 5483175,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 3.048855116,
+      "device_seconds": 0.358546874,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-8m-e48e67ad6.json",
+        "sha256": "25f5d9b3f08f96c3f65ee97f545918dd4017b4b484cbce820cbb6691bb2b76de",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "ordered-expression-16m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 16000000,
+      "output_points": 10904767,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 6.029598105,
+      "device_seconds": 0.396416898,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-16m-e48e67ad6.json",
+        "sha256": "166ce1ff0ac742c00011ea0ea1ecbb41dd2cc2108b48c10800ac7e2f3b98680c",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "ordered-expression-22m",
+      "model": "ordered-point-program",
+      "pipeline": "ordered-expression",
+      "input_points": 21970934,
+      "output_points": 14671481,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.264460086,
+      "device_seconds": 0.46114782,
+      "report": {
+        "path": "build/benchmarks/ordered-cal-22m-e48e67ad6.json",
+        "sha256": "af31e4430d3a0143e5073dd59ca82422e698578a51b77e3c3a6c9d8320cc7f49",
+        "status": "clean-forced-ordered-cuda"
+      }
+    },
+    {
+      "id": "resident-coplanar-250k",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.037202125,
+      "device_seconds": 0.513965703,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-250k.json",
+        "sha256": "28b05db614d70e1a074278c2f026f72aed6ac5fe1debce9f34738abd88ec2381",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-coplanar-1m",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.310755176,
+      "device_seconds": 1.221319198,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-1m.json",
+        "sha256": "f04b6e13438635f466d38d9bd58c2459797f54e40321309e3053ed0280bd5910",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-coplanar-2m",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.384093741,
+      "device_seconds": 2.090830202,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-2m.json",
+        "sha256": "e50a2056177960b63abd35cea3fed35f568134344b050782ab87edcd4f1001a2",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-coplanar-4m",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 17.048004011,
+      "device_seconds": 4.215774784,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-4m.json",
+        "sha256": "2c3922cb5ec7bb2913c05e14a59e9564543414c3298fc49d86efafe4b42f35d0",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-coplanar-8m",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 33.973964312,
+      "device_seconds": 8.370767347,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-8m.json",
+        "sha256": "7170b62ec5658f0b031763ce271982781315bcc4a80dce1413f2b96dd3bc52c9",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-coplanar-16m",
+      "model": "approximatecoplanar",
+      "pipeline": "approximatecoplanar",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 68.088945306,
+      "device_seconds": 16.485267161,
+      "report": {
+        "path": "build/benchmarks/resident-cal-coplanar-16m.json",
+        "sha256": "7c00f01f0d6ff7a2ca980d8a8a8eddd883617129614c23ead54b5602c5786bea",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-250k",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.911352105,
+      "device_seconds": 0.510940387,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-250k.json",
+        "sha256": "59d8362ed5701fb9d2b0cd57a58a352a754bf96ddc1b2f55424f29f49f182f06",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-1m",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.627012509,
+      "device_seconds": 1.225905983,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-1m.json",
+        "sha256": "91f4029903011fee98606ddd4ab0d09fec2225942f61fd29b75ebb695cb1833e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-2m",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 17.819817329,
+      "device_seconds": 2.231034314,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-2m.json",
+        "sha256": "37374af8277c441438adbe212008c6e0cacc0fdc375aae144de46e852184d5da",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-4m",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 35.728364005,
+      "device_seconds": 4.311797257,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-4m.json",
+        "sha256": "8d7c5d0229d959bf5f94ab91df02a61f4b822dfb56d9f1bde690ade2c2e5adba",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-8m",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 75.419709091,
+      "device_seconds": 8.725889689,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-8m.json",
+        "sha256": "cca3b3f9c41610edc156fa12aa819c084f2c15d04d09a6db2eba6c6dffc2b5a1",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-lof-16m",
+      "model": "lof",
+      "pipeline": "lof",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 151.433403157,
+      "device_seconds": 17.415391118,
+      "report": {
+        "path": "build/benchmarks/resident-cal-lof-16m.json",
+        "sha256": "f03dce37e7b3dcbfacf70cd10eca82491d5bd2347be9afb71f15912f6013dd08",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-250k",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.110275717,
+      "device_seconds": 0.512301288,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-250k.json",
+        "sha256": "c3fc9832987c040afb2b38b6024c58d5b4386248725e6ff43471f5e44bb9790c",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-1m",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.456258715,
+      "device_seconds": 1.26872258,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-1m.json",
+        "sha256": "6d58b9eb576ca295c8ab97164bf2c99c87b98ec0117c5223cb3f494159d23751",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-2m",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 9.048625711,
+      "device_seconds": 2.241156598,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-2m.json",
+        "sha256": "08f69d52e840fd409d835d1bdb1f6ccdf95fa34f28e697ca3baee7951945420d",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-4m",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 18.136808136,
+      "device_seconds": 4.446830605,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-4m.json",
+        "sha256": "39caf17b69947bf1b5e0d3d3d6943e7d11adc3a329a01c3d598ca48560bd665f",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-8m",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 36.410973849,
+      "device_seconds": 8.96664594,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-8m.json",
+        "sha256": "af8fd294d80c18c31b07acc8a686b6ecfe07041f290a4c542652fac9d4b60d36",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-16m",
+      "model": "normal",
+      "pipeline": "normal",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 72.559787895,
+      "device_seconds": 17.484586597,
+      "report": {
+        "path": "build/benchmarks/resident-cal-normal-16m.json",
+        "sha256": "07a9dc56da04d1cd433bd1a6f6098a8e62a7878d80ce87403fe17c796cb7ce66",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-250k",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.08283692,
+      "device_seconds": 0.500869637,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-250k.json",
+        "sha256": "8a44894c35c904659ba795c30969bf5fd0624f96be0c0837b873c5c3532f545e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-1m",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.455324954,
+      "device_seconds": 1.211609423,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-1m.json",
+        "sha256": "9151795fc7ddd5911b9ef4a7955bf4a4d4f5434c50f1039b85d2edfe18d456a6",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-2m",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.98488098,
+      "device_seconds": 2.211964649,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-2m.json",
+        "sha256": "73d92257521803b45ac68656035c8e40b0dbbdde2c5fcf9afe8508982d1276f1",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-4m",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 18.400846871,
+      "device_seconds": 4.444515657,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-4m.json",
+        "sha256": "df4ee98f760f88045ff7b3ff3c90d62a7c9eafe5f82c34e2a3dc807e7602d647",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-8m",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 36.179382878,
+      "device_seconds": 8.736417528,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-8m.json",
+        "sha256": "b22f5b6f5463a817e79c795499c5c52fa9d06f7b5780855e97f89992938a7ce9",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigenvalues-16m",
+      "model": "eigenvalues",
+      "pipeline": "eigenvalues",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 72.228955937,
+      "device_seconds": 17.118096605,
+      "report": {
+        "path": "build/benchmarks/resident-cal-eigenvalues-16m.json",
+        "sha256": "433da4e395057a9f89396b0de682989eab7535e92f32a59988b2e0868a2dbdd6",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-250k",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.100652688,
+      "device_seconds": 0.501198151,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-250k.json",
+        "sha256": "ece118571433cf43e02f4da3b6a1fb7649b05886fea1845887686367ef0796ab",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-1m",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.449880806,
+      "device_seconds": 1.24362859,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-1m.json",
+        "sha256": "a7782a7fe1d33a4759e77d7ffbfcdb270ea8079acba62630428a9c03ab08a0bd",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-2m",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.987917746,
+      "device_seconds": 2.264019597,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-2m.json",
+        "sha256": "055c8de32bb16e02184eb8c6ba1add81ae31701688666733998b4d81a5492c37",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-4m",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 18.224412182,
+      "device_seconds": 4.453233933,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-4m.json",
+        "sha256": "9cba459f69be23f94b35dfa1809864672baa7c61fe7641f541c78035f9c6eb54",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-8m",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 36.269460886,
+      "device_seconds": 8.875364385,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-8m.json",
+        "sha256": "b37704e5719a329f02ed9d430b444be213b75a86cbdbae65c3d3137a8497b7b2",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-covariancefeatures-16m",
+      "model": "covariancefeatures",
+      "pipeline": "covariancefeatures",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 72.327052243,
+      "device_seconds": 17.54356877,
+      "report": {
+        "path": "build/benchmarks/resident-cal-covariancefeatures-16m.json",
+        "sha256": "77b1f605f9e832b2966030ff79683ec49abb6c601b946bd10b9559b8b42006a0",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-250k",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.068513202,
+      "device_seconds": 0.38036933,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-250k.json",
+        "sha256": "d821b4d76a754a204f46b2251c1d64e18bc19969c4b7f8abe62d2853b927cd9a",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-1m",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.292071593,
+      "device_seconds": 0.691903999,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-1m.json",
+        "sha256": "4f4d304e8bd93d4dfb0fae3ae95ad4f3be40288c6aab4ac280f9bee6626c0e24",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-2m",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.711015127,
+      "device_seconds": 1.069216155,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-2m.json",
+        "sha256": "ce794720f23909d270b7fe0cb3e4e9db6642c8c17d5032dbf2dcb2f620592861",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-4m",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 17.796686999,
+      "device_seconds": 3.890478907,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-4m.json",
+        "sha256": "822c927d423fad184c9db56a87efb178fb8f2ec28f2e693a951e98a30e53564e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-8m",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 35.269700011,
+      "device_seconds": 7.86277477,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-8m.json",
+        "sha256": "0644c7803e343d86d0b63f755f69c8298b446772595a957013e547d650967582",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-nndistance-16m",
+      "model": "nndistance",
+      "pipeline": "nndistance",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 70.259268088,
+      "device_seconds": 15.530913611,
+      "report": {
+        "path": "build/benchmarks/resident-cal-nndistance-16m.json",
+        "sha256": "90ae9bc9945099114dd133cec9b9779c57aa869a8a21233e9a835e0d4ad72537",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-250k",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.063572855,
+      "device_seconds": 0.506842839,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-250k.json",
+        "sha256": "35e3bbaefa7d8ed1b3da07d338086ee4c86780d9d60cb6f3932350f874f1fada",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-1m",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.300113266,
+      "device_seconds": 1.18299313,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-1m.json",
+        "sha256": "f0c2263bc9e8130210e880fd3efe3fc632c8e167c14c5ba4bf1e8fd6d69be9ed",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-2m",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.634451122,
+      "device_seconds": 2.090721728,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-2m.json",
+        "sha256": "a63bcd1b8cdd954ab3d7ea176270a4b5a8eb1cc0fbb906350c7d16b3346ab8bd",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-4m",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 17.623321971,
+      "device_seconds": 4.101725308,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-4m.json",
+        "sha256": "952a8eec3ad4843209c412bc2c69d1422db699d47296693658769b858322259d",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-8m",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 35.384429056,
+      "device_seconds": 8.275028268,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-8m.json",
+        "sha256": "05629288a86bf8679b013a47e0c429a87a17840ae93abdf9ca4643918b5afeda",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-estimaterank-16m",
+      "model": "estimaterank",
+      "pipeline": "estimaterank",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 69.793540867,
+      "device_seconds": 16.049551377,
+      "report": {
+        "path": "build/benchmarks/resident-cal-estimaterank-16m.json",
+        "sha256": "fc41065425964fa958b7e6e553905bfe82bf4826bc2485705b09ea04c4f8094f",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-250k",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.561298504,
+      "device_seconds": 0.51557912,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-250k.json",
+        "sha256": "51060364f8ac94065c9a94706bf2bad8354f361de6c880b0e4f48b9f0ffcda29",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-1m",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 6.348026672,
+      "device_seconds": 1.377645855,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-1m.json",
+        "sha256": "14320c77ab007bdbb32851e37a938b7ffaeba15630e079b705b27cf73c24219f",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-2m",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 12.768473675,
+      "device_seconds": 2.438993871,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-2m.json",
+        "sha256": "8f093a46c6642e9c1e57ff10d6e984c2be072c3c8b461ea29499db77e204839e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-4m",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 25.7355479,
+      "device_seconds": 4.70639876,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-4m.json",
+        "sha256": "f9b792d031da05fbdc170be97483083525bf42fa75e35a74922aa4371dfea9cf",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-8m",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 51.378613511,
+      "device_seconds": 9.501023523,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-8m.json",
+        "sha256": "88fe382232fd3455c9185d22aa38259bec20647d00543abd8b216300b661e3c0",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-optimalneighborhood-16m",
+      "model": "optimalneighborhood",
+      "pipeline": "optimalneighborhood",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 102.836325458,
+      "device_seconds": 18.854579399,
+      "report": {
+        "path": "build/benchmarks/resident-cal-optimalneighborhood-16m.json",
+        "sha256": "c664137a4039b7e52011a0a3f12799188e9c092345dda9ace2c6962a24c8f54e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-250k",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.894699828,
+      "device_seconds": 0.45605238,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-250k.json",
+        "sha256": "19c45215e377358807b0cacffd52a7afdef4c24cb61769b7373076da7215d505",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-1m",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 3.631720743,
+      "device_seconds": 1.091374083,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-1m.json",
+        "sha256": "3617145595ebdc2ab9f4f48a54b683a0f6286082c0a59eecd242df6d77d724d3",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-2m",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 7.277836291,
+      "device_seconds": 1.899114207,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-2m.json",
+        "sha256": "512a7ab8bfb9df6452f1e866367bb8f51f2eda189d3a8c02a58452ad5ce7234e",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-4m",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 15.016897625,
+      "device_seconds": 3.949603773,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-4m.json",
+        "sha256": "8e483f8f02ae67290425f68e39d2e623fb724d60782de46b99f47b800d833344",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-8m",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 29.569610246,
+      "device_seconds": 7.799347626,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-8m.json",
+        "sha256": "c57412f3ae8aa8f3db991b8be2b4ce1fb2f8bddd334d05f84c11920107d07b34",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-neighborclassifier-16m",
+      "model": "neighborclassifier",
+      "pipeline": "neighborclassifier",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 59.503425623,
+      "device_seconds": 15.397638566,
+      "report": {
+        "path": "build/benchmarks/resident-cal-neighborclassifier-16m.json",
+        "sha256": "8ed8ef1fdd3986ac67aeba742a0764323ccacdbfb7ca3ad589483b812c299e68",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-50k-host-control",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.191140173,
+      "device_seconds": 0.27904779,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-50k.json",
+        "sha256": "d6522d0381e8f11451141d1d6e597c9f616eef31821e4766ec048a14e564d44c",
+        "status": "host-control-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-250k",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.884708957,
+      "device_seconds": 0.377746985,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-250k.json",
+        "sha256": "a7249f48a3dcf393026f3ee3c3d6abd59e52bc87862fc36a6df7c445ab5b0254",
+        "status": "clean-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-1m",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 3.60555809500147,
+      "device_seconds": 0.8962922989994695,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-control.json",
+        "sha256": "d3d93b94500cbd7788641c343ae54599b33bff4ac1d09281a8d0edfd9b9dafa4",
+        "status": "clean-direct-mapped-source-output-nine-pair"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-2m",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 7.294373237,
+      "device_seconds": 1.579124252,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-2m.json",
+        "sha256": "c665716ca1db6a55d0a4d14bbd05518c71573b11784f67b60ee1975186ceb698",
+        "status": "clean-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-4m",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 14.87636521,
+      "device_seconds": 3.244244044,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-4m.json",
+        "sha256": "7465b1d6f5b164b5e388364f9dbd35d55fd890430c63bf0346648f95777e9d3b",
+        "status": "clean-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-8m",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 29.606741392,
+      "device_seconds": 6.513475941,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-8m.json",
+        "sha256": "b02ef048176ab26fbdf8a6fb9622e1f09c83a5799f22a57bf3922bf9aab15f45",
+        "status": "clean-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "direct-neighborclassifier-compose-16m",
+      "model": "neighborclassifier-direct-compose",
+      "pipeline": "neighborclassifier-direct-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 58.965920013,
+      "device_seconds": 13.038339633,
+      "report": {
+        "path": "build/benchmarks/b0231-neighborclassifier-direct-16m.json",
+        "sha256": "81f195120b9f3519e6c27bf5100f3eeed7be5d22beb1c5d00c246368e43729d7",
+        "status": "clean-direct-mapped-source-output"
+      }
+    },
+    {
+      "id": "resident-radiusassign-250k",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.471359155,
+      "device_seconds": 0.35588474,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-250k.json",
+        "sha256": "66173f2d849c800d56738462604b63370fe9fc19a4c547feb6c6a0383bd26188",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-1m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.899099864,
+      "device_seconds": 0.644410386,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-1m.json",
+        "sha256": "6500f356a97c6593ef2450a39f2b642aca002cf7191f5875c0067228f4fe3e63",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-2m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 3.940458307,
+      "device_seconds": 1.045489297,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-2m.json",
+        "sha256": "f8725d458bdb43b39dd4df55ded22149deff8e6af155283ae1be789876ee5140",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-4m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 7.937036074,
+      "device_seconds": 1.721033165,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-4m.json",
+        "sha256": "850ea87f5d2ae5663fc1a40ed97d19afc7adc592580c74a643f786f8c5d5ed30",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-8m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 15.846777349,
+      "device_seconds": 3.170344542,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-8m.json",
+        "sha256": "0ed134c5a5eb82d06bcd74ecf88a3d16ffeeb7bfd9a6a322b1404c3260f24982",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-16m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 31.955543051,
+      "device_seconds": 6.100228363,
+      "report": {
+        "path": "build/benchmarks/resident-cal-radiusassign-16m.json",
+        "sha256": "74d781a1e552d28f13f42415e44bfe2016e0ff0834e78a432ab35eaad3d7ff35",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-radiusassign-22m",
+      "model": "radiusassign",
+      "pipeline": "radiusassign",
+      "input_points": 21970934,
+      "output_points": 21970934,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 44.460714151,
+      "device_seconds": 8.079814078,
+      "report": {
+        "path": "build/benchmarks/resident-radiusassign-22m.json",
+        "sha256": "55e6c109652f5910e2c2775082852a38fa8b800a1887f5564537fb125df2814b",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "direct-radiusassign-50k-host-control",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.154305791,
+      "device_seconds": 0.430580179,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-50k.json",
+        "sha256": "98a56a64c769425adc51973e6bef11228c0df93b004cb54da253f23a7fea24c2",
+        "status": "clean-direct-radiusassign-host-control"
+      }
+    },
+    {
+      "id": "direct-radiusassign-250k",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.504814312,
+      "device_seconds": 0.331352186,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-250k.json",
+        "sha256": "da560e0cfe977f533c10b640a25af13e32779ecff0595943c7d974d5a1903f65",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "direct-radiusassign-1m",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.951242721,
+      "device_seconds": 0.388072548,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-1m.json",
+        "sha256": "dd34e9ccb9a6a785d1efcc1d4fcf0040439fb23d64185cc3aebf315989b81235",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "direct-radiusassign-2m",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 4.000031577,
+      "device_seconds": 0.462615141,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-2m.json",
+        "sha256": "287c7505bd42024a3a0f51c75a3f30cf0a0089feb55cde3e595b2d3bbb3eec72",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "direct-radiusassign-4m",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 7.924508606,
+      "device_seconds": 0.544995722,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-4m.json",
+        "sha256": "2af5aea1ff8b8e9c5e7835a00c5f334a271fd64ee49b7de153c6c300f243efcf",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "direct-radiusassign-8m",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 15.782843931,
+      "device_seconds": 0.822483327,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-8m.json",
+        "sha256": "70071d55c9c0c89d786a7b2f7e7e685bd020c584b8fdc2ece7c0e14f690b3c75",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "direct-radiusassign-16m",
+      "model": "radiusassign-direct",
+      "pipeline": "radiusassign-direct",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 31.785048257,
+      "device_seconds": 1.418427803,
+      "report": {
+        "path": "build/benchmarks/b0083-direct-radiusassign-16m.json",
+        "sha256": "285c5cac825c48967ab0a8bc2fe9b11b03266179684eaceb4fde20d8dd0c5474",
+        "status": "clean-direct-radiusassign-calibration"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-50k-host-control",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.727312991,
+      "device_seconds": 1.016269861,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-50k.json",
+        "sha256": "8b0ce0b4210c2765c48ccdfa85df04365634a31dacf3662aa160fbffc07ae5b9",
+        "status": "clean-resident-host-negative-control"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-250k",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 3.558135917,
+      "device_seconds": 0.555378153,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-250k.json",
+        "sha256": "00daaedc9a057cc9e87eeb72212a002211b9b185f5f569325b1d6da545415294",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-1m",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 14.542379779,
+      "device_seconds": 1.483116793,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-1m.json",
+        "sha256": "b345ef9aa3267441dfb75765c3bb6b8b64190b9c9bb89aa4d4f7f0bea68e5b08",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-2m",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 29.230554671,
+      "device_seconds": 2.559036038,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-2m.json",
+        "sha256": "4990a98f0fb5630a99f84dca0ce796f9a93c0d02bcb3ba2b52797dbfc490ad55",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-4m",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 58.813275086,
+      "device_seconds": 4.936067175,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-4m.json",
+        "sha256": "1556d9856a966703e5acbb63ff6466242e49bf6c9525a75a79896f932b631b93",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-8m",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 118.569671473,
+      "device_seconds": 10.031681767,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-8m.json",
+        "sha256": "3a89dadda136d20faea77dd7a10958a763cef4046dce407a919f165ab8ca6b90",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-eigen-family-compose-16m",
+      "model": "eigen-family-compose",
+      "pipeline": "eigen-family-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 234.11660401,
+      "device_seconds": 19.952652519,
+      "report": {
+        "path": "build/benchmarks/b0074-eigen-family-resident-16m.json",
+        "sha256": "8d0100a30c62f668e33ea6425bb3e8eb5abe6496607a42ef2cf70294199b540b",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-50k-host-control",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.587703366,
+      "device_seconds": 0.841822039,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-50k.json",
+        "sha256": "5181c3fe62cb700ca713bd5562002200a8097983e25039cd649c935c9c1031ae",
+        "status": "clean-resident-host-negative-control"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-250k",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 2.797981394,
+      "device_seconds": 0.574080308,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-250k.json",
+        "sha256": "9097968eb413e4e65bc8a2bd8b23fa61b3cd686b4e5b843d5f2001e5be57be74",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-1m",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 11.319112954,
+      "device_seconds": 1.385002176,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-1m.json",
+        "sha256": "1187a7f03400f34039ea33698e2579d6baa31d3cb81708e2d7a66982df5d6995",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-2m",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 23.032930067,
+      "device_seconds": 2.533902484,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-2m.json",
+        "sha256": "5687c632e7e90ab4f8f922fb56d5c4291bddb6eb334699223e97469666013a0b",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-4m",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 46.158491776,
+      "device_seconds": 4.915883561,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-4m.json",
+        "sha256": "5fe5a5265a66cf48048feb23957e15056f9c99a49b3ff656a8e3466d23caa198",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-8m",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 92.252853791,
+      "device_seconds": 9.980446794,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-8m.json",
+        "sha256": "75610bc7e78b2a57eb8f2de1d867164a1ebb923a7569e34865be80462f3b27a0",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-rank-optimal-compose-16m",
+      "model": "rank-optimal-compose",
+      "pipeline": "rank-optimal-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 183.004354445,
+      "device_seconds": 19.12984533,
+      "report": {
+        "path": "build/benchmarks/b0079-rank-optimal-resident-16m.json",
+        "sha256": "0bff51dad43443ecc2ee75117803cb65194b95f661498f07ec546b6b8d4537d8",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-10k-host-control",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 10000,
+      "output_points": 10000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.114203629,
+      "device_seconds": 0.296638388,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-10k.json",
+        "sha256": "e2f617e08fe0dc4442ace4e80d0e298e2ad4af8f7c130f12e24d54cd937e3130",
+        "status": "clean-direct-composition-host-control"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-25k-host-control",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 25000,
+      "output_points": 25000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.222007192,
+      "device_seconds": 0.293038282,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-25k.json",
+        "sha256": "4f5d59ebe014e98d5334d153fdc39d417ef64b5fa9dbe780653a8b1058378e2f",
+        "status": "clean-direct-composition-host-control"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-50k",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.406308057,
+      "device_seconds": 0.279246287,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-50k.json",
+        "sha256": "cf897347cc1456c83fd5bfb5fe3d8fc3acd22c1e74493f0aa88b996896ca7c2a",
+        "status": "clean-direct-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-250k",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.952857807,
+      "device_seconds": 0.35690286,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-250k.json",
+        "sha256": "43aa4b44d191489450710aae11d06272b4def4b2ea7fb391284c87adafa370dc",
+        "status": "clean-direct-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-1m",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 7.908564568,
+      "device_seconds": 0.375804547,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-1m.json",
+        "sha256": "49189f7a57c411666c2a165e0c0c69acc4874e95f2638ab4afe519d7df1b41a6",
+        "status": "clean-direct-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-2m",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 16.147565554,
+      "device_seconds": 0.460879474,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-2m.json",
+        "sha256": "e0cb183c26cfad0d7059aab212d9912960c3a31668cc12de5be3c07fa41dc16d",
+        "status": "clean-direct-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-4m",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 32.809776349,
+      "device_seconds": 0.672899645,
+      "report": {
+        "path": "build/benchmarks/b0091-nnd-parallel-repair-4m-df1cd54f6.json",
+        "sha256": "c943e6d49ea7b42f45643dcc427bbc0d88c8b9eed1fbef23f9204fabc8366c8e",
+        "status": "clean-direct-composition-repaired-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-8m",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 65.018190913,
+      "device_seconds": 1.183155372,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-8m-f5d0140fc.json",
+        "sha256": "ba8bc13b609443230a9dc0e2205d65778d61933260bf7cccdd3cd9772c890dc2",
+        "status": "clean-direct-composition-repaired-calibration"
+      }
+    },
+    {
+      "id": "direct-outlier-nndistance-compose-16m",
+      "model": "outlier-nndistance-direct-compose",
+      "pipeline": "outlier-nndistance-direct-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 129.9350067,
+      "device_seconds": 1.746029118,
+      "report": {
+        "path": "build/benchmarks/b0089-outlier-nndistance-direct-16m-f5d0140fc.json",
+        "sha256": "c667f7b1b57ab3e0580b1284b0bf647f70010c1590435ed46d20cd8569cab939",
+        "status": "clean-direct-composition-repaired-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-50k-host-control",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.21422793,
+      "device_seconds": 0.442069327,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-50k-bd4c65a50.json",
+        "sha256": "72549fefd2e2a8e2d60a992defc72da21796aca0aa8d931c6ba29eaafcd1baf6",
+        "status": "clean-direct-output-composition-host-control"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-250k",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 1.012767812,
+      "device_seconds": 0.408924223,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-250k-bd4c65a50.json",
+        "sha256": "97fa9c9b0eb55401ec5396afa076b152f272437f6aa50ec7be4f98ab2b6c80ab",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-1m",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 4.105950924,
+      "device_seconds": 0.966533809,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-1m-bd4c65a50.json",
+        "sha256": "bd57aa7b45d5b7a3391d074b80be5871dee63e5ef8a8929043130bd74f5dce1e",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-2m",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.335641588,
+      "device_seconds": 1.690520031,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-2m-bd4c65a50.json",
+        "sha256": "95de8065e3ddd9597ceeb5f91c88b0a33adac165229d5a74e3af3217e9d419db",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-4m",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 16.870793486,
+      "device_seconds": 3.347157741,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-4m-bd4c65a50.json",
+        "sha256": "9c413bf647be1a23db54a6cfee4f14d6692e355d59106c4455dabc374bf2b3d1",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-8m",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 33.736672415,
+      "device_seconds": 6.730872188,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-8m-bd4c65a50.json",
+        "sha256": "b333f291fec0d55229ec23d06240df64474cc649255b96867c6eeab0bbac391f",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-approximatecoplanar-compose-16m",
+      "model": "approximatecoplanar-direct-compose",
+      "pipeline": "approximatecoplanar-direct-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 67.227446891,
+      "device_seconds": 13.316071118,
+      "report": {
+        "path": "build/benchmarks/b0096-coplanar-direct-16m-bd4c65a50.json",
+        "sha256": "7407e524b86a3eb518cda57fe399c550f98cd679a9f49ca75c036b2d0e5a4a38",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-radius-outlier-radialdensity-compose-250k",
+      "model": "radius-outlier-radialdensity-direct-compose",
+      "pipeline": "radius-outlier-radialdensity-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.481850334,
+      "device_seconds": 0.296328608,
+      "report": {
+        "path": "build/benchmarks/b0127-radius-composition-direct-250k.json",
+        "sha256": "5c7d2057342829143dbab29bb1841b9c1872e3e5f6289cfada413c216bcc0ffc",
+        "status": "clean-direct-same-radius-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-radius-outlier-radialdensity-compose-1m",
+      "model": "radius-outlier-radialdensity-direct-compose",
+      "pipeline": "radius-outlier-radialdensity-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 5.926227766,
+      "device_seconds": 0.372796165,
+      "report": {
+        "path": "build/benchmarks/b0126-radius-composition-direct-1m.json",
+        "sha256": "9cad1dcc94b91880eaf88a15ae69d307d312a19f2a12c67e6ce072f01263071c",
+        "status": "clean-direct-same-radius-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-radius-outlier-radialdensity-compose-4m",
+      "model": "radius-outlier-radialdensity-direct-compose",
+      "pipeline": "radius-outlier-radialdensity-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 24.998481202,
+      "device_seconds": 0.561267127,
+      "report": {
+        "path": "build/benchmarks/b0127-radius-composition-direct-4m.json",
+        "sha256": "202fac676512fe00279e69cafe30f4af7e232f396bec4733222a1580806549ba",
+        "status": "clean-direct-same-radius-composition-calibration"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-50k",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 0.416621,
+      "device_seconds": 0.28569338499801233,
+      "report": {
+        "path": "build/benchmarks/b0187-normal-covariancefeatures-resident-50k.json",
+        "sha256": "8b754748f7014634dc5c98838d608447640f712157390832ba0ca222bcb35696",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-250k",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 2.033201367012225,
+      "device_seconds": 0.5251920950249769,
+      "report": {
+        "path": "build/benchmarks/b0187-normal-covariancefeatures-resident-250k.json",
+        "sha256": "b3306c96e9604dc8f208e30de5126beaceaa605657fa67fc4b78abd41662a578",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-1m",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 8.246457743982319,
+      "device_seconds": 1.298437824996654,
+      "report": {
+        "path": "build/benchmarks/b0187-normal-covariancefeatures-resident-1m.json",
+        "sha256": "0c294829c4cf846b4dddf8d0d89017273c523d2c8e211cc3d0df90c20956b495",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-2m",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 16.834735226992052,
+      "device_seconds": 2.3554937860462815,
+      "report": {
+        "path": "build/benchmarks/b0187-normal-covariancefeatures-resident-2m.json",
+        "sha256": "f013bb130f722742e3e40c7c1eaf79de04c5c8f90c45b103cd40379c13a90c0a",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-4m",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "host_seconds": 33.77393742202548,
+      "device_seconds": 4.652130707981996,
+      "report": {
+        "path": "build/benchmarks/b0187-normal-covariancefeatures-resident-4m.json",
+        "sha256": "62ee110f7efbf0d669d4640e5db6fea70ab97d6deb5745d9b0f930384c827492",
+        "status": "clean-resident-shared-index"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-ahn4-47478228",
+      "model": "normal-covariancefeatures-compose",
+      "pipeline": "normal-covariancefeatures-compose",
+      "input_points": 47478228,
+      "output_points": 47478228,
+      "input_point_format": 8,
+      "input_record_bytes": 44,
+      "input_compressed": true,
+      "output_point_format": 7,
+      "output_record_bytes": 36,
+      "output_compressed": false,
+      "host_seconds": 367.2125988530024,
+      "device_seconds": 20.128839349999907,
+      "report": {
+        "path": "docs/reports/b0285-ahn4-plain-explicit-tuple.json",
+        "sha256": "9ff201040215a8c85f64c7479d5e1a44d0f871183882ea85e47e4df959dddd27",
+        "pipeline_sha256": "6a11a0d24982bbad689ea6d31cca24c19fe5c005804d9262eb3e4112086b1151",
+        "input_sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec",
+        "output_sha256": "fefb4689775fe1e1877836843ee0580573d6ed110e73c3e2f94f392ca824a6ec",
+        "status": "independent-clean-upstream-complete-process-upper-envelope"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-extradims-veil-35976465",
+      "model": "normal-covariancefeatures-compose-extradims",
+      "pipeline": "normal-covariancefeatures-compose-extradims",
+      "input_points": 35976465,
+      "output_points": 35976465,
+      "input_point_format": 6,
+      "input_record_bytes": 30,
+      "input_compressed": true,
+      "output_point_format": 7,
+      "output_record_bytes": 100,
+      "output_compressed": true,
+      "host_seconds": 313.31744553799945,
+      "device_seconds": 20.18999183000051,
+      "report": {
+        "path": "docs/reports/b0285-veil-r6-explicit-tuple.json",
+        "sha256": "b50eeeec11deeef1ea6141d555353c7fa08aabea9390b4c352e247df8c823de5",
+        "pipeline_sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+        "input_sha256": "73fb5a0e6d3fffe3a2c82f91ff9ee50b88475f65d94805db498d64d987ddbe3f",
+        "output_sha256": "c0a0f44f80e01c9a31cf57b0f2cda8f328c6cb4a8afeedafd55c27fefe9ba36b",
+        "status": "independent-clean-upstream-complete-process-qualification"
+      }
+    },
+    {
+      "id": "resident-normal-covariancefeatures-compose-extradims-ahn4-47478228",
+      "model": "normal-covariancefeatures-compose-extradims",
+      "pipeline": "normal-covariancefeatures-compose-extradims",
+      "input_points": 47478228,
+      "output_points": 47478228,
+      "input_point_format": 8,
+      "input_record_bytes": 44,
+      "input_compressed": true,
+      "output_point_format": 7,
+      "output_record_bytes": 120,
+      "output_compressed": true,
+      "host_seconds": 412.8661295480015,
+      "device_seconds": 30.87571179600127,
+      "report": {
+        "path": "docs/reports/b0285-ahn4-r6-explicit-tuple.json",
+        "sha256": "c11e5f906ae494c4ad3ef0c97a3f5444e4aaf7b186b25505d30abef5b1252986",
+        "pipeline_sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+        "input_sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec",
+        "output_sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+        "status": "independent-clean-upstream-complete-process-upper-envelope"
+      }
+    },
+    {
+      "id": "direct-sort-compose-50k-host-control",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.046282013,
+      "device_seconds": 0.240528806,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-50k.json",
+        "sha256": "6d6c1f55c1f761e74ef329956c01f19e9875cfd8023e85287263aaaae7782ca9",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-sort-compose-100k-host-control",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 100000,
+      "output_points": 100000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.074723894,
+      "device_seconds": 0.228030060,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-100k.json",
+        "sha256": "17d3e5a3362bcd7c225053427f32cb48e17a41b785aa47d3d9dabff8f0f64d27",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-sort-compose-250k-host-control",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.174998067,
+      "device_seconds": 0.248016094,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-250k.json",
+        "sha256": "10cfa53d8880f16a7c74797fb1eab4474119319dacc63c66174bfd9950ad0751",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-sort-compose-600k",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 600000,
+      "output_points": 600000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.476269419,
+      "device_seconds": 0.263308170,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-600k.json",
+        "sha256": "10010f65162917b45602ca373b2f9dc9cd4172f43b825671a358fa0bf8117f83",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-650k",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 650000,
+      "output_points": 650000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.529229267,
+      "device_seconds": 0.264869757,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-650k.json",
+        "sha256": "7310071bb34f8a70a51c57d2b160d870321ec9dcb399c557314772fb209ed7c2",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-750k",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 750000,
+      "output_points": 750000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.644786293,
+      "device_seconds": 0.278841114,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-v2-750k.json",
+        "sha256": "d4cb02a655e822c449628986b884d7834b3388fa36d9bad3c28bdad21028de39",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-1m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.968441050,
+      "device_seconds": 0.298635459,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-control.json",
+        "sha256": "61d83a2f93b7da3810df8b561b430a3f7f3b99f491f3b0be896fb15a7162f9a2",
+        "status": "clean-direct-mapped-source-permutation-output-nine-pair"
+      }
+    },
+    {
+      "id": "direct-sort-compose-2m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.941302672,
+      "device_seconds": 0.348230039,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-2m.json",
+        "sha256": "f8421d9165614088cc909df260a715c8c13fe55fe9f228b5a8eafaa1c945695a",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-4m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 3.933121282,
+      "device_seconds": 0.457323899,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-4m.json",
+        "sha256": "546250caf08f8d379c464530201f9d1c5f0474135301e373c35969287d7cce9b",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-8m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 7.827810382,
+      "device_seconds": 0.666548159,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-8m.json",
+        "sha256": "d4b3cc1288c8c9413fbc6ea447dcdffbec80286f2747d9fe66fa362ca347e964",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-sort-compose-16m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 15.626980025,
+      "device_seconds": 1.054342876,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-direct-16m.json",
+        "sha256": "21ffb656b65dfe29805049af184fb59f4946a14699af097b75a01b0d1ece2964",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "automatic-sort-compose-600k",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 600000,
+      "output_points": 600000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.479521949,
+      "device_seconds": 0.260259720,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-public-final-600k.json",
+        "sha256": "8a2c0abcd1975a5fc46d7eeb8ee7f74a18db23ad51830ce832af0c065dd7ee22",
+        "status": "clean-final-automatic-public-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "automatic-sort-compose-1m",
+      "model": "sort-direct-compose",
+      "pipeline": "sort-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.957272628,
+      "device_seconds": 0.292997214,
+      "report": {
+        "path": "build/benchmarks/b0232-sort-public-final-1m.json",
+        "sha256": "82160d54f59441227de0e72c2d6759d92fc1d9e914bd31b4052c0b28cfd057de",
+        "status": "clean-final-automatic-public-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-50k-host-control",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 50000,
+      "output_points": 50000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.061236366,
+      "device_seconds": 0.329644260,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-50k.json",
+        "sha256": "2cfe422b54740d32bc39c5c4e788af82f6e000da43f6f7a22afd6c44735cdcd7",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-100k-host-control",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 100000,
+      "output_points": 100000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.100133277,
+      "device_seconds": 0.340594296,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-100k.json",
+        "sha256": "0da77c96e19f37ac33f6d04a88eda700d63a0d583d9c6c8e13b8499e27ecd9c5",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-250k-host-control",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 250000,
+      "output_points": 250000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.263659801,
+      "device_seconds": 0.362537789,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-250k.json",
+        "sha256": "7c24fe09dfaabd53fd865b912b690bbcdc413f04b48caef9527ab55ab684c8d7",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-300k-host-control",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 300000,
+      "output_points": 300000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.314683364,
+      "device_seconds": 0.375856674,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-300k.json",
+        "sha256": "12b0c727fd0d2dc0bab026c2b6fdee0c4f13b13bef170456bfb7a999663cf0b4",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-450k",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 450000,
+      "output_points": 450000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.598685018,
+      "device_seconds": 0.406555974,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-450k.json",
+        "sha256": "e8e2fd3eb119bd5f0fed74dabc08e7731d0e3f9135d3c61899a28f684ae38b6e",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-500k",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 500000,
+      "output_points": 500000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.746460421,
+      "device_seconds": 0.405451205,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-500k.json",
+        "sha256": "279c9803c0f3ffb783dbbef4c1b1b9229534d9d5d763c07286b2e8a58e24792d",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-1m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.978815575,
+      "device_seconds": 0.510699352,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-1m.json",
+        "sha256": "0fc7b652421b7fb67d7901a215d6c1b786616e882c387f423f1ee2bfd1a336e4",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-2m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 2000000,
+      "output_points": 2000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 3.858184194,
+      "device_seconds": 0.682155408,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-2m.json",
+        "sha256": "ccbb20892a5e8d995745b67c647cc8f9839e78edb420ca679625bbaf7f6fdd81",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-4m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 4000000,
+      "output_points": 4000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 7.750243158,
+      "device_seconds": 1.032453481,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-4m.json",
+        "sha256": "d2248d20b3c89305a4de2ca1e8d2ec6a19a294c731e4dcdf18752940e144f97f",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-8m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 8000000,
+      "output_points": 8000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 15.890088597,
+      "device_seconds": 1.732829223,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-8m.json",
+        "sha256": "1db7fccbd134a64dc740fd7ec01cbea98ada3d483bcf394eb5710884b73e2060",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-skewness-compose-16m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 16000000,
+      "output_points": 16000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 31.446474669,
+      "device_seconds": 3.171871290,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-direct-16m.json",
+        "sha256": "90553b79b905871a30556f96cac4065d141205a027ede30153def039431a771a",
+        "status": "clean-direct-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "automatic-skewness-compose-450k",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 450000,
+      "output_points": 450000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.426585922,
+      "device_seconds": 0.355435716,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-public-final-current-450k.json",
+        "sha256": "14f9156ee780bb19820252c53d5167132d06b51f5f8004cabd85e57432521b37",
+        "status": "clean-final-automatic-public-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "automatic-skewness-compose-1m",
+      "model": "skewness-direct-compose",
+      "pipeline": "skewness-direct-compose",
+      "input_points": 1000000,
+      "output_points": 1000000,
+      "input_record_bytes": 36,
+      "output_record_bytes": 36,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.328755181,
+      "device_seconds": 0.429877805,
+      "report": {
+        "path": "build/benchmarks/b0234-skewness-public-final-current-1m.json",
+        "sha256": "19ecb4b30e33895c77b6fa52de6acff99b0443d7e707d2438d2b0d0dfadfd189",
+        "status": "clean-final-automatic-public-mapped-source-permutation-output"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-50k-host-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 50001,
+      "output_points": 50001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.06439767,
+      "device_seconds": 0.298417389,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-50k.json",
+        "sha256": "4237badabd14f51b72f98cfdb4d68dbbadc86bcb3380607c04699f79f6e6d4e0",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-100k-host-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 100002,
+      "output_points": 100002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.105251323,
+      "device_seconds": 0.318144442,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-100k.json",
+        "sha256": "9d4e224c4c70c3be4d7f000fd69cca2f18f3da24e3cc9e1d6d2172553861703d",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-250k-host-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 250002,
+      "output_points": 250002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.252602159,
+      "device_seconds": 0.310642642,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-250k.json",
+        "sha256": "0931196e2e9dae53792374886ebe330d67dcfcb9958e51d06d84072864bbdc28",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-300k-direction-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 300000,
+      "output_points": 300000,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.326506971,
+      "device_seconds": 0.324351932,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-300k.json",
+        "sha256": "c0b2bb88f262e23499da0ff9316e903e1f7d20be6b08665ebbfd5e28c9e91988",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-350k-host-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 350001,
+      "output_points": 350001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.293233014,
+      "device_seconds": 0.327432668,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-350k.json",
+        "sha256": "85cc1f18a2e7ed1bd59875329a83d8d2acba4fede26f674164be9d4cf7638d5e",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-400k-direction-control",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 400002,
+      "output_points": 400002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.353633337,
+      "device_seconds": 0.320237215,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-400k.json",
+        "sha256": "2e749ab21ddc2673e6db2df3a8a2bc2161bd0065bfcdf2abc4c914827643015b",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-450k",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 450000,
+      "output_points": 450000,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.422778769,
+      "device_seconds": 0.343318101,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-450k.json",
+        "sha256": "1af41a42e4461175d33343743e2426658c72e09a7e324b80aab78a2fdfca84bd",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-500k",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 500001,
+      "output_points": 500001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.492750166,
+      "device_seconds": 0.326465617,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-500k.json",
+        "sha256": "c9cd24d78807ba7a41a9c4209a4a1b77d7713b6b5e436621e182e526b48211c1",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-1m",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 1000002,
+      "output_points": 1000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.945751869,
+      "device_seconds": 0.36954741,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-1m.json",
+        "sha256": "8f6b499b38f38dc199e83bd5649c9318447ebc03222c570444b32180e669131a",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-2m",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 2000001,
+      "output_points": 2000001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.887854406,
+      "device_seconds": 0.485446112,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-2m.json",
+        "sha256": "a813e53207cf426cb1eca04082dfa2a8db9e49a9ac14d4427e70f6e2117fa2d0",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-4m",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 4000002,
+      "output_points": 4000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 3.778099759,
+      "device_seconds": 0.675470148,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-4m.json",
+        "sha256": "7d11a0aeea6115a324f31f08bd3f72c611841c7b6e2d8c91969872af2ee6ec46",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-8m",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 8000001,
+      "output_points": 8000001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 7.388313282,
+      "device_seconds": 0.977747415,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-8m.json",
+        "sha256": "0d6a72812344398bd7b1e14367c9ebbf99381c6dc17b4335309745598e638ac3",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-nn-count1-compose-16m",
+      "model": "hag-nn-count1-direct-compose",
+      "pipeline": "hag-nn-count1-direct-compose",
+      "input_points": 16000002,
+      "output_points": 16000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 15.257520175,
+      "device_seconds": 1.735326344,
+      "report": {
+        "path": "build/benchmarks/b0235-hag-nn-count1-direct-16m.json",
+        "sha256": "2274db86ccf6b93985fa9ed3e7653b8e9292a4e274116efeb630627cbe53b7d3",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-50k-host-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 50001,
+      "output_points": 50001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.059085237,
+      "device_seconds": 0.291924157,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-50k.json",
+        "sha256": "eb71f5e9b5d6675029ab7a0c1c2f132b2af94d404c5ee7ada7221d220a5b45c1",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-100k-host-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 100002,
+      "output_points": 100002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.096295523,
+      "device_seconds": 0.280844588,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-100k.json",
+        "sha256": "7ddeda5a538e9def320f31b6adf69643e7bdff902b99557d640bf6b21f67dae6",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-250k-host-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 250002,
+      "output_points": 250002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.21992626,
+      "device_seconds": 0.310985361,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-250k.json",
+        "sha256": "618307e575e613affb2c67e0459e618100ffdaf59edbf75193430ca8775ef8b4",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-300k-direction-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 300000,
+      "output_points": 300000,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.276969501,
+      "device_seconds": 0.317761027,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-300k.json",
+        "sha256": "71a3d3951ddd6c89b727558f2ae234e8a1568663724a212395ab5e252e64ddaa",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-350k-host-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 350001,
+      "output_points": 350001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.277753203,
+      "device_seconds": 0.291650991,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-350k.json",
+        "sha256": "dcaeda5c59d3e1955335da6987c10e2783fa363aa1eb87edf2f94c2f5400a46f",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-400k-direction-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 400002,
+      "output_points": 400002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.321219731,
+      "device_seconds": 0.300712524,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-400k.json",
+        "sha256": "bf56e86a9e386ce3541cc21d4b9adff5373c823327c62c1911b6eac986e2927f",
+        "status": "outside-automatic-envelope-direction-control"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-450k",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 450000,
+      "output_points": 450000,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.373522333,
+      "device_seconds": 0.323898622,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-450k.json",
+        "sha256": "fe401b8e2b43fdac6f52c209bf97d63e07cd9a36a28c776622731aaaff546131",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-500k",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 500001,
+      "output_points": 500001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.421285526,
+      "device_seconds": 0.330328013,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-500k.json",
+        "sha256": "23658273be3e0d3b0ba890bf4d5533bfe95e29618ac67c8ad4f0d2d281a165e6",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-550k",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 550002,
+      "output_points": 550002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.468296306,
+      "device_seconds": 0.336485668,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-550k.json",
+        "sha256": "b0f0694f4ebe46248b19170ce84d99bd52d5ee20790a98747f09919975dda98e",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-600k-direction-control",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 600000,
+      "output_points": 600000,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.531435402,
+      "device_seconds": 0.349533137,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-600k.json",
+        "sha256": "916d77edc8c00aa24c626cb6da5ea2e3db35b0dc43254a8f17847e4aed698801",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-1m",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 1000002,
+      "output_points": 1000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 0.823252257,
+      "device_seconds": 0.354515553,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-1m.json",
+        "sha256": "e0b6d3bcb0eb3b07e9d887fd1b0d4e7f6d4251fa192d8c4a2935017d37ef660f",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-2m",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 2000001,
+      "output_points": 2000001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 1.686474277,
+      "device_seconds": 0.483789223,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-2m.json",
+        "sha256": "5865e1df0a3ac4b3df0cbd84bf7e0c21e266088618399f0d888a4dd5a2dddc36",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-4m",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 4000002,
+      "output_points": 4000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 3.355871895,
+      "device_seconds": 0.671204817,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-4m.json",
+        "sha256": "8139c55f1f362871d83bd9d85feece09668e515b47d74bfe2ecd50ffeb297dbb",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-8m",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 8000001,
+      "output_points": 8000001,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 6.712724279,
+      "device_seconds": 1.013079168,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-8m.json",
+        "sha256": "bb4ae3c8a46bec45bd5cf0a557fc09765a04c972be8e6535a799893cd7412a08",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    },
+    {
+      "id": "direct-hag-delaunay-count3-compose-16m",
+      "model": "hag-delaunay-count3-direct-compose",
+      "pipeline": "hag-delaunay-count3-direct-compose",
+      "input_points": 16000002,
+      "output_points": 16000002,
+      "input_record_bytes": 40,
+      "output_record_bytes": 48,
+      "intrinsic_single_lane_executor": true,
+      "host_seconds": 13.48187073,
+      "device_seconds": 1.802460261,
+      "report": {
+        "path": "build/benchmarks/b0236-hag-delaunay-direct-16m.json",
+        "sha256": "08d2b89096338c6e785060538ca599205e4339faaa9e482fdd1b303cd53b587f",
+        "status": "clean-direct-output-composition-calibration"
+      }
+    }
+  ]
+}

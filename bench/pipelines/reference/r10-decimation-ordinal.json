@@ -1,0 +1,23 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.laz"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([REPLACE_MINX,REPLACE_MAXX],[REPLACE_MINY,REPLACE_MAXY])"
+    },
+    {
+      "type": "filters.decimation",
+      "step": 4.0,
+      "offset": 0,
+      "limit": 50000
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

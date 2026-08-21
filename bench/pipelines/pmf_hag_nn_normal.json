@@ -1,0 +1,31 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.pmf",
+      "cell_size": 1.0,
+      "initial_distance": 20.0,
+      "max_distance": 20.0,
+      "max_window_size": 3.0,
+      "returns": []
+    },
+    {
+      "type": "filters.hag_nn",
+      "count": 4
+    },
+    {
+      "type": "filters.normal",
+      "knn": 8
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las",
+      "dataformat_id": 7,
+      "extra_dims": "all",
+      "minor_version": 4
+    }
+  ]
+}

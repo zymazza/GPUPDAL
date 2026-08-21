@@ -1,0 +1,298 @@
+{
+ "schema": "pdg-local-placement-profile-v1",
+ "id": "generic-cuda-sm80plus-cuda13.3",
+ "created_utc": "2026-08-17T16:04:22Z",
+ "tier": "generic",
+ "applies": {
+  "minimum_compute_capability": "8.0",
+  "minimum_device_memory_bytes": 12240656793
+ },
+ "machine": {
+  "device_name": "any CUDA device",
+  "compute_capability": "8.0",
+  "driver": "any",
+  "cuda": "13.3",
+  "cpu_model": "conservative intersection of the shipped profiles",
+  "logical_cpus": 0,
+  "pdg_version": "0.1.0-dev"
+ },
+ "coefficients": {
+  "cuda_startup_ns": 314735968.0,
+  "host_to_device_ns_per_byte": 0.2283034771680832,
+  "device_to_host_ns_per_byte": 0.154520645737648,
+  "packing_ns_per_byte": 0.002759959539676,
+  "index_build_ns_per_byte": 0.0202035625,
+  "synchronization_ns": 9974.5
+ },
+ "stage_models": {
+  "eigen-family-compose": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 7639.520294416417,
+   "device_fixed_ns": 1122016871.0000103,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000
+  },
+  "estimaterank": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 2118.2908713169218,
+   "device_fixed_ns": 501279111.99999875,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000
+  },
+  "fused-point-program": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 406.25777412681373,
+   "device_fixed_ns": 333997246.83333397,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000
+  },
+  "lof": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 8070.73336594017,
+   "device_fixed_ns": 14448084261.768066,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 250000,
+   "maximum_device_points": 16000000
+  },
+  "nndistance": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 1628.7544943129801,
+   "device_fixed_ns": 3560995506.4990478,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 16000000
+  },
+  "normal-covariancefeatures-compose": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 3920.9965593246334,
+   "device_fixed_ns": 1977574804.797937,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000
+  },
+  "radiusassign": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 1777.9602350684434,
+   "device_fixed_ns": 132876546.83333461,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000
+  },
+  "rank-optimal-compose": {
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 6776.120869614164,
+   "device_fixed_ns": 862949523.3333334,
+   "device_ns_per_point": 0.0,
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000
+  }
+ },
+ "summaries": [
+  {
+   "model": "eigen-family-compose",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "estimaterank",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "fused-point-program",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "lof",
+   "minimum_device_points": 250000,
+   "maximum_device_points": 16000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "nndistance",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 16000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "normal-covariancefeatures-compose",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "radiusassign",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  },
+  {
+   "model": "rank-optimal-compose",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 0.0,
+   "device_seconds_at_maximum": 0.0,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 3.0,
+   "from_profiles": [
+    "shipped-a10-sm86-cuda13.3",
+    "shipped-a100-sm80-cuda13.3",
+    "shipped-l40s-sm89-cuda13.3",
+    "shipped-rtx3060-sm86-cuda13.3",
+    "shipped-rtx3090-sm86-cuda13.3",
+    "shipped-rtx4060ti-sm89-cuda13.3",
+    "shipped-rtx4080-sm89-cuda13.3",
+    "shipped-rtx4090-sm89-cuda13.3",
+    "shipped-rtx5090-sm120-cuda13.3",
+    "shipped-rtxa6000-sm86-cuda13.3"
+   ]
+  }
+ ],
+ "evidence": {
+  "shipping_margin": 3.0,
+  "from_profiles": [
+   "shipped-a10-sm86-cuda13.3",
+   "shipped-a100-sm80-cuda13.3",
+   "shipped-l40s-sm89-cuda13.3",
+   "shipped-rtx3060-sm86-cuda13.3",
+   "shipped-rtx3090-sm86-cuda13.3",
+   "shipped-rtx4060ti-sm89-cuda13.3",
+   "shipped-rtx4080-sm89-cuda13.3",
+   "shipped-rtx4090-sm89-cuda13.3",
+   "shipped-rtx5090-sm120-cuda13.3",
+   "shipped-rtxa6000-sm86-cuda13.3"
+  ],
+  "device_memory_bytes": {
+   "shipped-rtx3060-sm86-cuda13.3": 12884901888,
+   "shipped-rtx4060ti-sm89-cuda13.3": 17175674880,
+   "shipped-rtx4080-sm89-cuda13.3": 17171480576,
+   "shipped-rtx4090-sm89-cuda13.3": 25757220864,
+   "shipped-rtx5090-sm120-cuda13.3": 34190917632,
+   "shipped-a10-sm86-cuda13.3": 24146608128,
+   "shipped-rtxa6000-sm86-cuda13.3": 51527024640,
+   "shipped-l40s-sm89-cuda13.3": 48305799168,
+   "shipped-rtx3090-sm86-cuda13.3": 0,
+   "shipped-a100-sm80-cuda13.3": 42949672960
+  }
+ }
+}

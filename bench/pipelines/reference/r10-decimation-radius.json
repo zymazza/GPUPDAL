@@ -1,0 +1,21 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.laz"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([REPLACE_MINX,REPLACE_MAXX],[REPLACE_MINY,REPLACE_MAXY])"
+    },
+    {
+      "type": "filters.sample",
+      "radius": 1.0
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

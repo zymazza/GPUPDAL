@@ -1,0 +1,67 @@
+Wed Aug 19 03:11:36 UTC 2026
+4619609db561
+NVIDIA GeForce RTX 3090, 580.126.09, 24576 MiB
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        43 bits physical, 48 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               96
+On-line CPU(s) list:                  0-95
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD EPYC 7R32 48-Core Processor
+CPU family:                           23
+Model:                                49
+Thread(s) per core:                   2
+Core(s) per socket:                   48
+Socket(s):                            1
+Stepping:                             0
+Frequency boost:                      enabled
+CPU(s) scaling MHz:                   84%
+CPU max MHz:                          2800.0000
+CPU min MHz:                          1500.0000
+BogoMIPS:                             5599.80
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr rdpru wbnoinvd amd_ppin arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip rdpid overflow_recov succor smca sev sev_es ibpb_exit_to_user
+Virtualization:                       AMD-V
+L1d cache:                            1.5 MiB (48 instances)
+L1i cache:                            1.5 MiB (48 instances)
+L2 cache:                             24 MiB (48 instances)
+L3 cache:                             192 MiB (12 instances)
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-95
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Mitigation; untrained return thunk; SMT enabled with STIBP protection
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+Vulnerability Vmscape:                Mitigation; IBPB before exit to userspace
+               total        used        free      shared  buff/cache   available
+Mem:           125Gi        17Gi        15Gi        49Mi        93Gi       108Gi
+Swap:          8.0Gi       622Mi       7.4Gi
+3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd  /workspace/reproof/payload/candidate/bin/pdg
+6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39  /workspace/reproof/payload/oracle/bin/pdal
+01443c1245f81843766b7b6250fefe3d22fd0d48b513378ba4b25219608312f6  /workspace/reproof/release-manifest.json
+pdg 0.1.0-dev
+device_name: NVIDIA GeForce RTX 3090
+compute_capability: 8.6
+driver: 580.126.09
+cuda: 13.3
+cpu_model: AMD EPYC 7R32 48-Core Processor
+logical_cpus: 96
+embedded_profile: applies (shipped-rtx3090-sm86-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtx3090-sm86-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtx3090-sm86-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtx3090.json
+active_profile_sha256: dde8c7e4b1032fe44b5b8f7c9a444e4d37b6a2605622185744bbdffaccbb0bd6

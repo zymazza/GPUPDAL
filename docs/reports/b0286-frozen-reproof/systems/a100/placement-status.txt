@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA A100-SXM4-40GB
+compute_capability: 8.0
+driver: 590.48.01
+cuda: 13.3
+cpu_model: AMD EPYC 7T83 64-Core Processor
+logical_cpus: 256
+embedded_profile: applies (shipped-a100-sm80-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-a100-sm80-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-a100-sm80-cuda13.3
+active_profile_tier: shipped
+active_profile_source: a100.json
+active_profile_sha256: b18b3c9eba40a632b39a84c0a61d44f0411a443c0ef9d45228c5bb2b51bdc120

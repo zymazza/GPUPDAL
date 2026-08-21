@@ -1,0 +1,8 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.assign","value":"Scratch = Intensity * 2"},
+  {"type":"filters.mad","dimension":"Scratch","k":2.5,
+   "mad_multiplier":1.4862},
+  {"type":"filters.assign","value":"Classification = 12"},
+  {"type":"writers.las","filename":"out.las"}
+]

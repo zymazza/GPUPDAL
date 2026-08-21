@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA RTX A6000
+compute_capability: 8.6
+driver: 580.159.03
+cuda: 13.3
+cpu_model: Intel(R) Xeon(R) CPU E5-2699 v4 @ 2.20GHz
+logical_cpus: 88
+embedded_profile: applies (shipped-rtxa6000-sm86-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtxa6000-sm86-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtxa6000-sm86-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtxa6000.json
+active_profile_sha256: b0c844b4f43a33c3daa8acc56e149a78761753ed5b7f732f7c0a097f74c3d843

@@ -1,0 +1,18 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "feature_set": "dimensionality",
+      "knn": 12,
+      "type": "filters.covariancefeatures"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

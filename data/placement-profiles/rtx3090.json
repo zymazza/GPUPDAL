@@ -1,0 +1,708 @@
+{
+ "schema": "pdg-local-placement-profile-v1",
+ "id": "shipped-rtx3090-sm86-cuda13.3",
+ "created_utc": "2026-08-17T16:04:22Z",
+ "tier": "shipped",
+ "machine": {
+  "compute_capability": "8.6",
+  "cpu_model": "Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz",
+  "cuda": "13.3",
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "driver": "595.71.05",
+  "logical_cpus": 80,
+  "pdg_version": "0.1.0-dev"
+ },
+ "coefficients": {
+  "cuda_startup_ns": 293111727.0,
+  "device_to_host_ns_per_byte": 0.11202920973300934,
+  "host_to_device_ns_per_byte": 0.2283034771680832,
+  "index_build_ns_per_byte": 0.009463796875,
+  "packing_ns_per_byte": 0.002759959539676,
+  "synchronization_ns": 6205.5
+ },
+ "stage_models": {
+  "approximatecoplanar": {
+   "device_fixed_ns": 996156839.4999987,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 4701.567460427194,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "covariancefeatures": {
+   "device_fixed_ns": 178389960.83333397,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 2689.6045548813,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "eigen-family-compose": {
+   "device_fixed_ns": 1122016871.0000103,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 12243.344495941476,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 250000
+  },
+  "eigenvalues": {
+   "device_fixed_ns": 292007046.8333327,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 2732.761794346292,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "estimaterank": {
+   "device_fixed_ns": 358601878.49999875,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 3390.8029728750234,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "fused-point-program": {
+   "device_fixed_ns": 333997246.83333397,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 1246.5221925758246,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 4000000
+  },
+  "lof": {
+   "device_fixed_ns": 14152560290.123486,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 25701.07290560396,
+   "maximum_device_points": 48000000,
+   "minimum_device_points": 250000
+  },
+  "nndistance": {
+   "device_fixed_ns": 3560995506.4990478,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 3389.809206621921,
+   "maximum_device_points": 48000000,
+   "minimum_device_points": 1000000
+  },
+  "normal": {
+   "device_fixed_ns": 231983886.1666673,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 2556.3269026908238,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "normal-covariancefeatures-compose": {
+   "device_fixed_ns": 0.0,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 7336198807.308154,
+   "host_ns_per_point": 6105.110349991,
+   "maximum_device_points": 48000000,
+   "minimum_device_points": 250000
+  },
+  "normal-covariancefeatures-compose-extradims": {
+   "device_fixed_ns": 10250196145.31228,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 7930.404202536588,
+   "maximum_device_points": 48000000,
+   "minimum_device_points": 1000000
+  },
+  "optimalneighborhood": {
+   "device_fixed_ns": 333410850.16666794,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 4947.860275021019,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "radiusassign": {
+   "device_fixed_ns": 132876546.83333461,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 3782.174624014483,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 1000000
+  },
+  "rank-optimal-compose": {
+   "device_fixed_ns": 469320425.8333333,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 9235.502428307778,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 250000
+  },
+  "simple-ferry": {
+   "device_fixed_ns": 260081731.16666636,
+   "device_ns_per_point": 0.0,
+   "host_fixed_ns": 0.0,
+   "host_ns_per_point": 438.70421941499495,
+   "maximum_device_points": 4000000,
+   "minimum_device_points": 4000000
+  }
+ },
+ "summaries": [
+  {
+   "model": "approximatecoplanar",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 27.023096039,
+   "device_seconds_at_maximum": 9.464173309,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.174,
+    "1000000": 1.841,
+    "4000000": 2.855
+   }
+  },
+  {
+   "model": "covariancefeatures",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 19.255741656,
+   "device_seconds_at_maximum": 9.000622595,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.238,
+    "1000000": 1.842,
+    "4000000": 2.139
+   }
+  },
+  {
+   "model": "eigen-family-compose",
+   "minimum_device_points": 250000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 64.882095375,
+   "device_seconds_at_maximum": 17.276678539,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 2.36,
+    "1000000": 3.19,
+    "4000000": 3.755
+   }
+  },
+  {
+   "model": "eigenvalues",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 18.353297158,
+   "device_seconds_at_maximum": 8.022239009,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.206,
+    "1000000": 1.814,
+    "4000000": 2.288
+   }
+  },
+  {
+   "model": "estimaterank",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 19.211408807,
+   "device_seconds_at_maximum": 6.31291438,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.283,
+    "1000000": 2.345,
+    "4000000": 3.043
+   }
+  },
+  {
+   "model": "fused-point-program",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 5.408611637,
+   "device_seconds_at_maximum": 1.043645956,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 0.658,
+    "1000000": 1.629,
+    "4000000": 5.182
+   }
+  },
+  {
+   "model": "lof",
+   "minimum_device_points": 250000,
+   "maximum_device_points": 48000000,
+   "host_seconds_at_maximum": 1324.563889332,
+   "device_seconds_at_maximum": 102.436567679,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 4.441,
+    "1000000": 8.566,
+    "4000000": 11.661,
+    "16000000": 12.258,
+    "48000000": 12.931
+   }
+  },
+  {
+   "model": "nndistance",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 48000000,
+   "host_seconds_at_maximum": 205.291918514,
+   "device_seconds_at_maximum": 44.027450973,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.304,
+    "1000000": 2.576,
+    "4000000": 3.595,
+    "16000000": 3.566,
+    "48000000": 4.663
+   }
+  },
+  {
+   "model": "normal",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 18.329059947,
+   "device_seconds_at_maximum": 8.653442511,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.185,
+    "1000000": 1.736,
+    "4000000": 2.118
+   }
+  },
+  {
+   "model": "normal-covariancefeatures-compose",
+   "minimum_device_points": 250000,
+   "maximum_device_points": 48000000,
+   "host_seconds_at_maximum": 518.311513598,
+   "device_seconds_at_maximum": 225.55499984,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.817,
+    "1000000": 2.512,
+    "4000000": 3.611,
+    "16000000": 2.656,
+    "48000000": 2.298
+   }
+  },
+  {
+   "model": "normal-covariancefeatures-compose-extradims",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 48000000,
+   "host_seconds_at_maximum": 577.382307769,
+   "device_seconds_at_maximum": 199.341583175,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.653,
+    "1000000": 2.389,
+    "4000000": 2.712,
+    "16000000": 2.648,
+    "48000000": 2.896
+   }
+  },
+  {
+   "model": "optimalneighborhood",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 29.245773789,
+   "device_seconds_at_maximum": 10.101638078,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.603,
+    "1000000": 2.396,
+    "4000000": 2.895
+   }
+  },
+  {
+   "model": "radiusassign",
+   "minimum_device_points": 1000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 21.449780533,
+   "device_seconds_at_maximum": 6.748558383,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 1.541,
+    "1000000": 2.291,
+    "4000000": 3.178
+   }
+  },
+  {
+   "model": "rank-optimal-compose",
+   "minimum_device_points": 250000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 50.899443672,
+   "device_seconds_at_maximum": 14.7550696,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 2.067,
+    "1000000": 3.207,
+    "4000000": 3.45
+   }
+  },
+  {
+   "model": "simple-ferry",
+   "minimum_device_points": 4000000,
+   "maximum_device_points": 4000000,
+   "host_seconds_at_maximum": 2.158772331,
+   "device_seconds_at_maximum": 0.971807884,
+   "byte_exact": true,
+   "device_wins_somewhere": true,
+   "shipping_margin": 1.7,
+   "measured_speedups": {
+    "250000": 0.29,
+    "1000000": 0.899,
+    "4000000": 2.221
+   }
+  }
+ ],
+ "evidence": {
+  "source_profile_id": "local-NVIDIA-GeForce-RTX-3090-2026-08-17T06-30-29Z",
+  "source_created_utc": "2026-08-17T06:30:29Z",
+  "shipping_margin": 1.7,
+  "dropped_models": [],
+  "measured_cases": {
+   "normal-covariancefeatures-compose": {
+    "250000": {
+     "host_seconds": 2.083634621,
+     "device_seconds": 1.147039893,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 8.526435207,
+     "device_seconds": 3.394507079,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 46.542856215,
+     "device_seconds": 12.890024522,
+     "byte_exact": true
+    },
+    "16000000": {
+     "host_seconds": 199.751253601,
+     "device_seconds": 75.197973028,
+     "byte_exact": true
+    },
+    "48000000": {
+     "host_seconds": 518.311513598,
+     "device_seconds": 225.55499984,
+     "byte_exact": true
+    }
+   },
+   "normal-covariancefeatures-compose-extradims": {
+    "250000": {
+     "host_seconds": 2.119916618,
+     "device_seconds": 1.28252485,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 8.725566622,
+     "device_seconds": 3.652702326,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 34.997928058,
+     "device_seconds": 12.905250844,
+     "byte_exact": true
+    },
+    "16000000": {
+     "host_seconds": 143.723354518,
+     "device_seconds": 54.278471125,
+     "byte_exact": true
+    },
+    "48000000": {
+     "host_seconds": 577.382307769,
+     "device_seconds": 199.341583175,
+     "byte_exact": true
+    }
+   },
+   "lof": {
+    "250000": {
+     "host_seconds": 3.953406657,
+     "device_seconds": 0.890284255,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 18.431771903,
+     "device_seconds": 2.151775956,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 83.648902208,
+     "device_seconds": 7.17348669,
+     "byte_exact": true
+    },
+    "16000000": {
+     "host_seconds": 423.523077351,
+     "device_seconds": 34.550851591,
+     "byte_exact": true
+    },
+    "48000000": {
+     "host_seconds": 1324.563889332,
+     "device_seconds": 102.436567679,
+     "byte_exact": true
+    }
+   },
+   "nndistance": {
+    "250000": {
+     "host_seconds": 0.819135945,
+     "device_seconds": 0.628116251,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 3.329215049,
+     "device_seconds": 1.29248056,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 13.488749752,
+     "device_seconds": 3.751658353,
+     "byte_exact": true
+    },
+    "16000000": {
+     "host_seconds": 57.975743821,
+     "device_seconds": 16.260034536,
+     "byte_exact": true
+    },
+    "48000000": {
+     "host_seconds": 205.291918514,
+     "device_seconds": 44.027450973,
+     "byte_exact": true
+    }
+   },
+   "covariancefeatures": {
+    "250000": {
+     "host_seconds": 1.227862025,
+     "device_seconds": 0.991529856,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 4.72552908,
+     "device_seconds": 2.565293816,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 19.255741656,
+     "device_seconds": 9.000622595,
+     "byte_exact": true
+    }
+   },
+   "normal": {
+    "250000": {
+     "host_seconds": 1.143256476,
+     "device_seconds": 0.965026009,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 4.569864527,
+     "device_seconds": 2.632515386,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 18.329059947,
+     "device_seconds": 8.653442511,
+     "byte_exact": true
+    }
+   },
+   "eigenvalues": {
+    "250000": {
+     "host_seconds": 1.094152686,
+     "device_seconds": 0.907055109,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 4.509459488,
+     "device_seconds": 2.485499244,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 18.353297158,
+     "device_seconds": 8.022239009,
+     "byte_exact": true
+    }
+   },
+   "eigen-family-compose": {
+    "250000": {
+     "host_seconds": 3.649185196,
+     "device_seconds": 1.546317665,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 14.907657433,
+     "device_seconds": 4.673290547,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 64.882095375,
+     "device_seconds": 17.276678539,
+     "byte_exact": true
+    }
+   },
+   "estimaterank": {
+    "250000": {
+     "host_seconds": 1.151358886,
+     "device_seconds": 0.897698385,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 4.634404303,
+     "device_seconds": 1.976572195,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 19.211408807,
+     "device_seconds": 6.31291438,
+     "byte_exact": true
+    }
+   },
+   "optimalneighborhood": {
+    "250000": {
+     "host_seconds": 1.764257502,
+     "device_seconds": 1.100790558,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 7.283795008,
+     "device_seconds": 3.040109006,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 29.245773789,
+     "device_seconds": 10.101638078,
+     "byte_exact": true
+    }
+   },
+   "rank-optimal-compose": {
+    "250000": {
+     "host_seconds": 3.003394236,
+     "device_seconds": 1.452786735,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 12.28765276,
+     "device_seconds": 3.831893865,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 50.899443672,
+     "device_seconds": 14.7550696,
+     "byte_exact": true
+    }
+   },
+   "neighborclassifier": {
+    "250000": {
+     "host_seconds": 0.309040917,
+     "device_seconds": 0.772401428,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 1.133555565,
+     "device_seconds": 1.721756208,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 4.788700652,
+     "device_seconds": 6.813253188,
+     "byte_exact": true
+    }
+   },
+   "approximatecoplanar": {
+    "250000": {
+     "host_seconds": 1.091478655,
+     "device_seconds": 0.929745198,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 6.696664088,
+     "device_seconds": 3.637896409,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 27.023096039,
+     "device_seconds": 9.464173309,
+     "byte_exact": true
+    }
+   },
+   "radiusassign": {
+    "250000": {
+     "host_seconds": 1.745623357,
+     "device_seconds": 1.133020748,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 5.734495769,
+     "device_seconds": 2.502893234,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 21.449780533,
+     "device_seconds": 6.748558383,
+     "byte_exact": true
+    }
+   },
+   "fused-point-program": {
+    "250000": {
+     "host_seconds": 0.455079663,
+     "device_seconds": 0.691475866,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 1.335977787,
+     "device_seconds": 0.820037059,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 5.408611637,
+     "device_seconds": 1.043645956,
+     "byte_exact": true
+    }
+   },
+   "simple-ferry": {
+    "250000": {
+     "host_seconds": 0.196191501,
+     "device_seconds": 0.677265728,
+     "byte_exact": true
+    },
+    "1000000": {
+     "host_seconds": 0.619204046,
+     "device_seconds": 0.688528666,
+     "byte_exact": true
+    },
+    "4000000": {
+     "host_seconds": 2.158772331,
+     "device_seconds": 0.971807884,
+     "byte_exact": true
+    }
+   }
+  },
+  "source_evidence_summary": {
+   "engine": "/workspace/pdal-gpu/build/pdg-cuda-release/bin/pdg-engine",
+   "sizes": [
+    16000000,
+    48000000
+   ],
+   "cgroup_cpu_max": "960000 100000"
+  }
+ }
+}

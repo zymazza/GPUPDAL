@@ -1,0 +1,171 @@
+{
+  "version": 8,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "pdg-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "cacheVariables": {
+        "WITH_PDG": "ON",
+        "PDG_BUILD_TESTS": "ON",
+        "WITH_TESTS": "OFF",
+        "WITH_GCS": "OFF",
+        "WITH_BACKTRACE": "OFF",
+        "BUILD_PLUGIN_ARROW": "OFF",
+        "BUILD_PLUGIN_TILEDB": "OFF",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "pdg-host-debug",
+      "displayName": "PDG host debug",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdg-host-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PDG_ENABLE_CUDA": "OFF",
+        "PDG_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "pdg-cuda-debug",
+      "displayName": "PDG CUDA debug",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdg-cuda-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PDG_ENABLE_CUDA": "ON",
+        "PDG_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "pdg-host-sanitize",
+      "displayName": "PDG host ASan and UBSan",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdg-host-sanitize",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PDG_ENABLE_CUDA": "OFF",
+        "PDG_WARNINGS_AS_ERRORS": "ON",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+        "CMAKE_C_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "pdg-host-release",
+      "displayName": "PDG host release",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdg-host-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PDG_ENABLE_CUDA": "OFF",
+        "PDG_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "pdal-upstream-tests",
+      "displayName": "Published upstream PDAL test suite",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdal-upstream-tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PDG_ENABLE_CUDA": "OFF",
+        "PDG_BUILD_TESTS": "OFF",
+        "WITH_TESTS": "ON"
+      }
+    },
+    {
+      "name": "pdg-cuda-release",
+      "displayName": "PDG CUDA release",
+      "inherits": "pdg-base",
+      "binaryDir": "${sourceDir}/build/pdg-cuda-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PDG_ENABLE_CUDA": "ON",
+        "PDG_WARNINGS_AS_ERRORS": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "pdg-host-debug",
+      "configurePreset": "pdg-host-debug",
+      "targets": ["pdg_cli", "pdg_unit_tests", "pdg_check_dimensions"]
+    },
+    {
+      "name": "pdg-cuda-debug",
+      "configurePreset": "pdg-cuda-debug",
+      "targets": ["pdg_cli", "pdg_unit_tests", "pdg_check_dimensions"]
+    },
+    {
+      "name": "pdg-host-sanitize",
+      "configurePreset": "pdg-host-sanitize",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=0:halt_on_error=1"
+      },
+      "targets": ["pdg_cli", "pdg_unit_tests", "pdg_check_dimensions"]
+    },
+    {
+      "name": "pdg-host-release",
+      "configurePreset": "pdg-host-release",
+      "targets": ["pdg_cli", "pdg_unit_tests", "pdg_check_dimensions"]
+    },
+    {
+      "name": "pdal-upstream-tests",
+      "configurePreset": "pdal-upstream-tests"
+    },
+    {
+      "name": "pdg-cuda-release",
+      "configurePreset": "pdg-cuda-release",
+      "targets": ["pdg_cli", "pdg_unit_tests", "pdg_check_dimensions"]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "pdg-host-debug",
+      "configurePreset": "pdg-host-debug",
+      "output": {"outputOnFailure": true},
+      "filter": {"include": {"label": "pdg"}}
+    },
+    {
+      "name": "pdg-cuda-debug",
+      "configurePreset": "pdg-cuda-debug",
+      "output": {"outputOnFailure": true},
+      "filter": {"include": {"label": "pdg"}}
+    },
+    {
+      "name": "pdg-host-sanitize",
+      "configurePreset": "pdg-host-sanitize",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=0:halt_on_error=1"
+      },
+      "output": {"outputOnFailure": true},
+      "filter": {"include": {"label": "pdg"}}
+    },
+    {
+      "name": "pdg-host-release",
+      "configurePreset": "pdg-host-release",
+      "output": {"outputOnFailure": true},
+      "filter": {"include": {"label": "pdg"}}
+    },
+    {
+      "name": "pdal-upstream-tests",
+      "configurePreset": "pdal-upstream-tests",
+      "output": {"outputOnFailure": true},
+      "execution": {"jobs": 1}
+    },
+    {
+      "name": "pdg-cuda-release",
+      "configurePreset": "pdg-cuda-release",
+      "output": {"outputOnFailure": true},
+      "filter": {"include": {"label": "pdg"}}
+    }
+  ]
+}

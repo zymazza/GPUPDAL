@@ -1,0 +1,49 @@
+{
+  "name": "gpupal",
+  "version": "0.0.0-development",
+  "description": "Installer for the GPUPAL point-cloud command",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zymazza/GPUPAL.git"
+  },
+  "homepage": "https://github.com/zymazza/GPUPAL#readme",
+  "bugs": {
+    "url": "https://github.com/zymazza/GPUPAL/issues"
+  },
+  "bin": {
+    "gpupal": "bin/gpupal.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "LICENSE.txt",
+    "README.md",
+    "native-manifest.json"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "prepack": "node scripts/validate-package.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "point-cloud",
+    "pdal",
+    "cuda",
+    "lidar",
+    "geospatial"
+  ]
+}

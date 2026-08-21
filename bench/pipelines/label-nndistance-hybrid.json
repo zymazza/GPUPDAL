@@ -1,0 +1,24 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.label_duplicates",
+      "dimensions": "Classification"
+    },
+    {
+      "type": "filters.nndistance",
+      "k": 10
+    },
+    {
+      "type": "filters.assign",
+      "value": "UserData = Duplicate"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

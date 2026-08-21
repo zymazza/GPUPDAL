@@ -1,0 +1,18 @@
+{
+    "name": "readers.las",
+    "id": "0",
+    "description": "Las Reader",
+    "options":
+    {
+        "Option":
+        {
+            "Name": "filename",
+            "Value": ".\/apps\/simple.las"
+        }
+    },
+    "NumPoints": "1065",
+    "Bounds": "([635620, 638983], [848900, 853535], [406.59, 586.38])",
+    "SRS": "",
+    "Compression": "false"
+}
+

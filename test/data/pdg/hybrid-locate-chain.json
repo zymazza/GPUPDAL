@@ -1,0 +1,7 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.assign","value":"Scratch = Intensity * 2"},
+  {"type":"filters.locate","dimension":"Scratch","minmax":"max"},
+  {"type":"filters.assign","value":"Classification = 8"},
+  {"type":"writers.las","filename":"out.las"}
+]

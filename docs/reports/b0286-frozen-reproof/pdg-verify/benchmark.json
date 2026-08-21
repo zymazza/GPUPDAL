@@ -1,0 +1,372 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "pdg-verify-r6",
+  "pipeline": {
+    "path": "/workspace/reproof/pdg-verify-v1/verification-r6.json",
+    "sha256": "95b5cf917102092e6be7375e21eb7fc5df999de8b0f15c9a1fbbeea3fb967c3f",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/pdg-verify-v1/benchmark-work/pdg-verify-r6-oracle.json",
+        "sha256": "f9de8a874b7317ef7e53a11d3a6aa0dfa385c8b44c86ea2993030046f69e92b8"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/pdg-verify-v1/benchmark-work/pdg-verify-r6-candidate.json",
+        "sha256": "016d6765019664544fb72638fcb82a255f2d501454dd5e992fbdbb35f4670ce6"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/pdg-verify-v1/verification-input.las",
+      "bytes": 9000375,
+      "sha256": "84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/pdg-verify-v1/verification-input.las",
+        "bytes": 9000375,
+        "sha256": "84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/pdg-verify-v1/verification-input.las",
+        "bytes": 9000375,
+        "sha256": "84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/pdg-verify-v1/verification-input.las",
+        "bytes": 9000375,
+        "sha256": "84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9"
+      }
+    ],
+    "used_input_bytes": 9000375,
+    "extent": {
+      "minx": 0,
+      "maxx": 1000,
+      "miny": 0,
+      "maxy": 1000,
+      "points": 250000
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-6.5.0-41-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 4090",
+      "compute_capability": "8.9",
+      "driver": "595.71.05",
+      "cuda": "13.3",
+      "cpu_model": "Intel(R) Core(TM) i5-14500",
+      "logical_cpus": "20",
+      "embedded_profile": "applies (shipped-rtx4090-sm89-cuda13.3)",
+      "local_profile_path": "/root/.config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx4090-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-rtx4090-sm89-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        1.4810867419000715,
+        1.4860430059488863,
+        2.008665116969496
+      ],
+      "median_seconds": 1.4860430059488863,
+      "minimum_seconds": 1.4810867419000715,
+      "maximum_seconds": 2.008665116969496,
+      "peak_rss_bytes": [
+        95256576,
+        95678464,
+        95236096
+      ],
+      "median_peak_rss_bytes": 95256576,
+      "output_bytes": [
+        4522867,
+        4522867,
+        4522867
+      ],
+      "median_output_bytes": 4522867,
+      "points_per_second": 168232.00876368108,
+      "input_mib_per_second": 5.77602831221167,
+      "output_mib_per_second": 2.902568820117813,
+      "compression_ratio_input_to_output": 1.9899711842068317
+    },
+    "candidate": {
+      "seconds": [
+        1.8923357499297708,
+        2.378629839979112,
+        1.4826553161256015
+      ],
+      "median_seconds": 1.8923357499297708,
+      "minimum_seconds": 1.4826553161256015,
+      "maximum_seconds": 2.378629839979112,
+      "peak_rss_bytes": [
+        181469184,
+        181604352,
+        181981184
+      ],
+      "median_peak_rss_bytes": 181604352,
+      "output_bytes": [
+        4522867,
+        4522867,
+        4522867
+      ],
+      "median_output_bytes": 4522867,
+      "points_per_second": 132111.86228938395,
+      "input_mib_per_second": 4.535889826022393,
+      "output_mib_per_second": 2.279374627140805,
+      "compression_ratio_input_to_output": 1.9899711842068317
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 0.7852956358320858,
+    "resolution": {
+      "paired_speedups": [
+        0.7826765107381384,
+        0.6247474831821398,
+        1.3547755133124508
+      ],
+      "paired_mean": 0.9207331690775763,
+      "paired_spread": 0.730028030130311,
+      "candidate_faster_in": 1,
+      "pairs": 3,
+      "paired_standard_error": 0.22175809784378023,
+      "interval_half_width": 0.44351619568756045,
+      "resolvable": false
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d"
+    ],
+    "candidate_artifact_sha256": [
+      "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 1.2138824979774654,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 95424512,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.7558631671126932,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 181145600,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.4810867419000715,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 95256576,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 1.8923357499297708,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 181469184,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 2.378629839979112,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 181604352,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 1.4860430059488863,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 95678464,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 2.008665116969496,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 95236096,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 1.4826553161256015,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 181981184,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 4522867,
+          "sha256": "b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d",
+          "las_point_count": 250000
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

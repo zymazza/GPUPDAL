@@ -1,0 +1,15 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "type": "filters.info"
+    },
+    {
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

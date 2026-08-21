@@ -1,0 +1,5 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.iqr","dimension":"Z"},
+  {"type":"writers.las","filename":"out.las"}
+]

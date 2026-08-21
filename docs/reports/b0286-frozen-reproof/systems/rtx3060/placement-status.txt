@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA GeForce RTX 3060
+compute_capability: 8.6
+driver: 580.159.03
+cuda: 13.3
+cpu_model: 12th Gen Intel(R) Core(TM) i5-12400F
+logical_cpus: 12
+embedded_profile: applies (shipped-rtx3060-sm86-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtx3060-sm86-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtx3060-sm86-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtx3060.json
+active_profile_sha256: 84f557f7029b9ac4779b46a9de89baf5ab43d1b3870ca9c83916e36823725c57

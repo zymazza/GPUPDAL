@@ -1,0 +1,22 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Scratch = Intensity * 2",
+        "Classification = Scratch / 2 WHERE Intensity <= 255",
+        "PointSourceId = Classification + 1",
+        "X = X + 0.01",
+        "ReturnNumber = 2 WHERE Classification >= 0"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

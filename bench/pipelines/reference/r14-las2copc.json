@@ -1,0 +1,11 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.las" },
+    {
+      "type": "writers.copc",
+      "filename": "output.copc.laz",
+      "threads": 1,
+      "fixed_seed": true
+    }
+  ]
+}

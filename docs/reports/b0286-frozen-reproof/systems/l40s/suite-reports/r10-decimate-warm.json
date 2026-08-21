@@ -1,0 +1,372 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "r10-decimate",
+  "pipeline": {
+    "path": "/workspace/reproof/results-v3/shadow-repo/bench/pipelines/reference/r10-decimate.json",
+    "sha256": "32e59b80257037eaabc0d9d71f6ea1fafe4494196c92f1856ae89618366986b5",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/results-v3/suite-work/r10-decimate/warm/r10-decimate-oracle.json",
+        "sha256": "db7bd0ae0a8ade814da5c437c6aa4972b658514cf2700ff1b8e6e041500c80e1"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/results-v3/suite-work/r10-decimate/warm/r10-decimate-candidate.json",
+        "sha256": "884310d7f686abd50e4a48b93af28689da674101a4e645cfed4dca50846a3d14"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+      "bytes": 6747641,
+      "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    ],
+    "used_input_bytes": 6747641,
+    "extent": {
+      "minx": 184500,
+      "maxx": 185999.99,
+      "miny": 494923.21,
+      "maxy": 494999.99,
+      "points": 1000000
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-5.15.0-186-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/evidence/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA L40S",
+      "compute_capability": "8.9",
+      "driver": "580.65.06",
+      "cuda": "13.3",
+      "cpu_model": "Intel(R) Xeon(R) Gold 6430",
+      "logical_cpus": "128",
+      "embedded_profile": "applies (shipped-l40s-sm89-cuda13.3)",
+      "local_profile_path": "/workspace/reproof/results-v3/clean-config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-l40s-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-l40s-sm89-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        0.6578274660278112,
+        0.660374395083636,
+        0.6582681520376354
+      ],
+      "median_seconds": 0.6582681520376354,
+      "minimum_seconds": 0.6578274660278112,
+      "maximum_seconds": 0.660374395083636,
+      "peak_rss_bytes": [
+        155381760,
+        155512832,
+        155738112
+      ],
+      "median_peak_rss_bytes": 155512832,
+      "output_bytes": [
+        1189864,
+        1189864,
+        1189864
+      ],
+      "median_output_bytes": 1189864,
+      "points_per_second": 1519137.7509371387,
+      "input_mib_per_second": 9.77573029791949,
+      "output_mib_per_second": 1.7238305290995288,
+      "compression_ratio_input_to_output": 5.670934661440299
+    },
+    "candidate": {
+      "seconds": [
+        0.6587163738440722,
+        0.6602192278951406,
+        0.6634060789365321
+      ],
+      "median_seconds": 0.6602192278951406,
+      "minimum_seconds": 0.6587163738440722,
+      "maximum_seconds": 0.6634060789365321,
+      "peak_rss_bytes": [
+        153325568,
+        155299840,
+        157663232
+      ],
+      "median_peak_rss_bytes": 155299840,
+      "output_bytes": [
+        1189864,
+        1189864,
+        1189864
+      ],
+      "median_output_bytes": 1189864,
+      "points_per_second": 1514648.4042703842,
+      "input_mib_per_second": 9.74684111904089,
+      "output_mib_per_second": 1.7187362755763784,
+      "compression_ratio_input_to_output": 5.670934661440299
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 0.9970448060658192,
+    "resolution": {
+      "paired_speedups": [
+        0.9986505454372211,
+        1.0002350237344497,
+        0.9922552309030195
+      ],
+      "paired_mean": 0.99704693335823,
+      "paired_spread": 0.007979792831430244,
+      "candidate_faster_in": 1,
+      "pairs": 3,
+      "paired_standard_error": 0.002439122259000202,
+      "interval_half_width": 0.004878244518000404,
+      "resolvable": false
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74"
+    ],
+    "candidate_artifact_sha256": [
+      "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 0.6594249228946865,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155729920,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 0.6584598168265074,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155279360,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 0.6578274660278112,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155381760,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 0.6587163738440722,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 153325568,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 0.6602192278951406,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155299840,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 0.660374395083636,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155512832,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 0.6582681520376354,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 155738112,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 0.6634060789365321,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 157663232,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 1189864,
+          "sha256": "3b3f920f1f3781aab1fa66e13e73cf06723a45bf98a4ee0a59ff86ce04b99d74",
+          "las_point_count": 122162
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

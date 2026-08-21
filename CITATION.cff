@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: >-
+  Cite the exact GPUPAL release or commit. The contributor list and DOI will
+  be finalized before v0.1.0; also cite upstream PDAL when appropriate.
+type: software
+title: GPUPAL
+version: 0.1.0-dev
+abstract: >-
+  GPUPAL (GPU Pointcloud Abstraction Library) provides a PDAL-compatible
+  command that conservatively selects exact CPU and CUDA point-cloud
+  processing implementations using measured end-to-end performance.
+repository-code: https://github.com/zymazza/GPUPAL
+license: BSD-3-Clause
+authors:
+  - name: GPUPAL contributors
+keywords:
+  - point clouds
+  - PDAL
+  - CUDA
+  - lidar
+  - geospatial
+references:
+  - type: software
+    title: PDAL
+    authors:
+      - name: PDAL contributors
+    url: https://pdal.org/
+    repository-code: https://github.com/PDAL/PDAL
+    doi: 10.5281/zenodo.2616780

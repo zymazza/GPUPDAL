@@ -1,0 +1,12 @@
+GPUPAL's preferred citation is pending maintainer approval before v0.1.0.
+Until named authors and any DOI are confirmed, cite the exact GPUPAL commit and
+repository URL:
+
+  GPUPAL contributors (2026). GPUPAL: GPU Pointcloud Abstraction Library.
+  https://github.com/zymazza/GPUPAL, commit <full commit SHA>.
+
+GPUPAL is derived from and retains the upstream PDAL implementation. When your
+work relies on PDAL itself, also use PDAL's official citation:
+
+  PDAL contributors (2026). PDAL: The Point Data Abstraction Library.
+  https://pdal.org/. https://doi.org/10.5281/zenodo.10884408

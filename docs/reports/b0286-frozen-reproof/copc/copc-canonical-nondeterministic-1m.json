@@ -1,0 +1,261 @@
+{
+  "candidate": {
+    "bytes": 7002864,
+    "canonical_records": {
+      "point_count": 1000000,
+      "record_bytes": 36,
+      "sorted_records_sha256": "40f0919627ac9f02e9d9311fb54b9c347980dbd7667d1741768b882bad133f51"
+    },
+    "copc_info": {
+      "center": [
+        185249.995,
+        495673.205,
+        1117.4349999999954
+      ],
+      "gps_time_maximum": 209845068.68444085,
+      "gps_time_minimum": 209843430.93528032,
+      "halfsize": 749.9949999999953,
+      "spacing": 10.204013605442114
+    },
+    "header": {
+      "bounds": {
+        "maxx": 185999.99,
+        "maxy": 494999.99,
+        "maxz": 500.41,
+        "minx": 184500.0,
+        "miny": 494923.21,
+        "minz": 367.44
+      },
+      "creation_day": 1,
+      "creation_year": 2024,
+      "file_source_id": 0,
+      "generating_software": "PDAL 2.10.0 (f1e35f)",
+      "global_encoding": 16,
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "point_count": 1000000,
+      "point_format": 7,
+      "points_by_return": [
+        545148,
+        227100,
+        121651,
+        77873,
+        23717,
+        4095,
+        397,
+        18,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "project_id_hex": "00000000000000000000000000000000",
+      "record_bytes": 36,
+      "scale": [
+        0.01,
+        0.01,
+        0.01
+      ],
+      "system_identifier": "PDAL",
+      "version": "1.4"
+    },
+    "hierarchy": {
+      "errors": [],
+      "node_count": 38,
+      "nodes_sha256": "12d2708d9e548695186657db48607d0c79734176092e9f13f57ac2cd36901832",
+      "page_count": 1,
+      "point_count_sum": 1000000,
+      "point_ranges": 38,
+      "valid": true
+    },
+    "path": "/tmp/pdg-copc-canonical-evidence-v4/copc-canonical-nondeterministic-1m-3vz4en2n/candidate/output.copc.laz",
+    "queries": {
+      "center-window": {
+        "records": {
+          "point_count": 291617,
+          "record_bytes": 36,
+          "sorted_records_sha256": "dc18110e9c15e952850ee6735c5248240d0adc5c6c6db10b40d0a90ee1712e3a"
+        },
+        "request": {
+          "bounds": "([184874.9975,185624.99249999999],[494942.40500000003,494980.79499999998],[367.44,500.41000000000003])",
+          "id": "center-window"
+        }
+      },
+      "coarse-resolution": {
+        "records": {
+          "point_count": 3555,
+          "record_bytes": 36,
+          "sorted_records_sha256": "fcc9c15cfc75d6a794ac7d112a932ff765d534c14f49ac16ae062a0ea081f0e6"
+        },
+        "request": {
+          "id": "coarse-resolution",
+          "resolution": 40.816054421768456
+        }
+      }
+    },
+    "semantic_records": [],
+    "sha256": "d434d6e6788894fe651d7a1694eb9ca1b239b3afc77640cb62a2e6ceaba632ee"
+  },
+  "differences": [],
+  "oracle": {
+    "bytes": 7013299,
+    "canonical_records": {
+      "point_count": 1000000,
+      "record_bytes": 36,
+      "sorted_records_sha256": "40f0919627ac9f02e9d9311fb54b9c347980dbd7667d1741768b882bad133f51"
+    },
+    "copc_info": {
+      "center": [
+        185249.995,
+        495673.205,
+        1117.4349999999954
+      ],
+      "gps_time_maximum": 209845068.68444085,
+      "gps_time_minimum": 209843430.93528032,
+      "halfsize": 749.9949999999953,
+      "spacing": 10.204013605442114
+    },
+    "header": {
+      "bounds": {
+        "maxx": 185999.99,
+        "maxy": 494999.99,
+        "maxz": 500.41,
+        "minx": 184500.0,
+        "miny": 494923.21,
+        "minz": 367.44
+      },
+      "creation_day": 1,
+      "creation_year": 2024,
+      "file_source_id": 0,
+      "generating_software": "PDAL 2.10.0 (f1e35f)",
+      "global_encoding": 16,
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "point_count": 1000000,
+      "point_format": 7,
+      "points_by_return": [
+        545148,
+        227100,
+        121651,
+        77873,
+        23717,
+        4095,
+        397,
+        18,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "project_id_hex": "00000000000000000000000000000000",
+      "record_bytes": 36,
+      "scale": [
+        0.01,
+        0.01,
+        0.01
+      ],
+      "system_identifier": "PDAL",
+      "version": "1.4"
+    },
+    "hierarchy": {
+      "errors": [],
+      "node_count": 38,
+      "nodes_sha256": "926de67e86952b00277cea1edc6f4d0c9ca764c15fb59b7196ff71c47e574c83",
+      "page_count": 1,
+      "point_count_sum": 1000000,
+      "point_ranges": 38,
+      "valid": true
+    },
+    "path": "/tmp/pdg-copc-canonical-evidence-v4/copc-canonical-nondeterministic-1m-3vz4en2n/oracle/output.copc.laz",
+    "queries": {
+      "center-window": {
+        "records": {
+          "point_count": 291617,
+          "record_bytes": 36,
+          "sorted_records_sha256": "dc18110e9c15e952850ee6735c5248240d0adc5c6c6db10b40d0a90ee1712e3a"
+        },
+        "request": {
+          "bounds": "([184874.9975,185624.99249999999],[494942.40500000003,494980.79499999998],[367.44,500.41000000000003])",
+          "id": "center-window"
+        }
+      },
+      "coarse-resolution": {
+        "records": {
+          "point_count": 3552,
+          "record_bytes": 36,
+          "sorted_records_sha256": "81e86d5d9299524a649c8d74172304d2074e9692d5599f6508bcfcd216454d9f"
+        },
+        "request": {
+          "id": "coarse-resolution",
+          "resolution": 40.816054421768456
+        }
+      }
+    },
+    "semantic_records": [],
+    "sha256": "3d764e840047a06e1999ffd645dc612b34bb6dc2c8580b43418f3bc9748719d9"
+  },
+  "physical_differences": [
+    {
+      "actual": "12d2708d9e548695186657db48607d0c79734176092e9f13f57ac2cd36901832",
+      "expected": "926de67e86952b00277cea1edc6f4d0c9ca764c15fb59b7196ff71c47e574c83",
+      "field": "hierarchy.nodes_sha256"
+    },
+    {
+      "actual": {
+        "records": {
+          "point_count": 3555,
+          "record_bytes": 36,
+          "sorted_records_sha256": "fcc9c15cfc75d6a794ac7d112a932ff765d534c14f49ac16ae062a0ea081f0e6"
+        },
+        "request": {
+          "id": "coarse-resolution",
+          "resolution": 40.816054421768456
+        }
+      },
+      "expected": {
+        "records": {
+          "point_count": 3552,
+          "record_bytes": 36,
+          "sorted_records_sha256": "81e86d5d9299524a649c8d74172304d2074e9692d5599f6508bcfcd216454d9f"
+        },
+        "request": {
+          "id": "coarse-resolution",
+          "resolution": 40.816054421768456
+        }
+      },
+      "field": "queries.coarse-resolution"
+    }
+  ],
+  "policy": {
+    "diagnostic_only": [
+      "hierarchy.nodes_sha256",
+      "queries.coarse-resolution"
+    ],
+    "semantic": [
+      "header",
+      "semantic_records",
+      "copc_info",
+      "hierarchy.valid",
+      "hierarchy.page_count",
+      "hierarchy.node_count",
+      "hierarchy.point_count_sum",
+      "hierarchy.point_ranges",
+      "canonical_records",
+      "queries.center-window"
+    ]
+  },
+  "schema": "pdg-copc-canonical-v1",
+  "semantic_equal": true
+}
