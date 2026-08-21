@@ -1,0 +1,7 @@
+{
+  "pipeline": [
+    {"type":"readers.las","filename":"input.las"},
+    {"type":"filters.iqr","dimension":"Z","k":1.5},
+    {"type":"writers.las","filename":"output.las"}
+  ]
+}

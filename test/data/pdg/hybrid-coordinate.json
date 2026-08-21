@@ -1,0 +1,25 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.sort",
+      "dimensions": "X",
+      "algorithm": "STABLE"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "X = X + 0.01",
+        "Z = X * 0.5 + Y",
+        "Classification = 9 WHERE Z >= 1000"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

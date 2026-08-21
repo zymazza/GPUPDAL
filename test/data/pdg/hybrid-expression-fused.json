@@ -1,0 +1,33 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.sort",
+      "dimensions": "X",
+      "algorithm": "STABLE"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Scratch = Intensity * 2"
+    },
+    {
+      "type": "filters.expression",
+      "expression": "Scratch >= 100 && Scratch < 300"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Classification = 5 WHERE Scratch >= 100"
+    },
+    {
+      "type": "filters.ferry",
+      "dimensions": "Classification=>UserData"
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

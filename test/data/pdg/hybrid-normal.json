@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.normal",
+      "knn": 12
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las",
+      "extra_dims": "all"
+    }
+  ]
+}

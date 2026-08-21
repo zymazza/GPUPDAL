@@ -1,0 +1,25 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    {
+      "type": "filters.reprojection",
+      "in_srs": "EPSG:28992",
+      "out_srs": "EPSG:3857"
+    },
+    {
+      "type": "filters.colorization",
+      "raster": "input.orthophoto.tif",
+      "dimensions": "Red:1:1.0, Green:2:1.0, Blue:3:1.0"
+    },
+    {
+      "type": "filters.reprojection",
+      "in_srs": "EPSG:3857",
+      "out_srs": "EPSG:28992"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

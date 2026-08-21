@@ -1,0 +1,4120 @@
+{
+  "benchmark_rule": "No build, install, profile conversion, or payload mutation after this manifest is created.",
+  "creation_environment": {
+    "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "metadata": {
+    "build_type": "Release",
+    "candidate_install_prefix": "/workspace/reproof/payload/candidate",
+    "container_image": "nvidia/cuda:13.3.1-devel-ubuntu24.04",
+    "cuda_architectures": "all",
+    "oracle_commit": "f1e35f5c3e416b8c6a2c39966c8205cfae54afe2",
+    "oracle_install_prefix": "/workspace/reproof/payload/oracle",
+    "portable_architecture_guard": true,
+    "release_id": "pdg-1.7-reproof-a7391d105b71",
+    "schema": "pdg-frozen-build-metadata-v1",
+    "source_archive_sha256": "a7391d105b710efe63476bdeb23c38527362a806227b400a75c37f0a60203026",
+    "source_commit": "cc12b04eb0a02f082270ed8a7d0689c44a31c7fc"
+  },
+  "metadata_source_sha256": "e0a5a025bb3895dc5f5ccb705db4d9e2e766577dd01bb9d21587cc0e6db6bfc3",
+  "payload": {
+    "bytes": 307012410,
+    "file_count": 813,
+    "files": [
+      {
+        "bytes": 283600,
+        "path": "candidate/bin/pdal",
+        "sha256": "8c4844ab16662f409933d4d7f7a04ad701b40873a12a638a15dc6e1ff312590c"
+      },
+      {
+        "bytes": 840,
+        "path": "candidate/bin/pdal-config",
+        "sha256": "8606f92cb9071d256dc41dca2cdef32a9d70d43c9d3485ac7ee3211fcf4a014d"
+      },
+      {
+        "bytes": 200000,
+        "path": "candidate/bin/pdg",
+        "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd"
+      },
+      {
+        "bytes": 106579624,
+        "path": "candidate/bin/pdg-engine",
+        "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+      },
+      {
+        "bytes": 1989,
+        "path": "candidate/include/pdal/Artifact.hpp",
+        "sha256": "4fd4dc2585f90b4137ed822af6826cb644d9966b435dbfb8b44d5678fa334bed"
+      },
+      {
+        "bytes": 3509,
+        "path": "candidate/include/pdal/ArtifactManager.hpp",
+        "sha256": "d2265562cb054b75ca65be1fa758655adcfb19df33dde2b0cfad45e5683c40f8"
+      },
+      {
+        "bytes": 1980,
+        "path": "candidate/include/pdal/BatchStreamable.hpp",
+        "sha256": "d52bac9676db94613702c3e45f2d66b12dddca40ae02789b170f62a6e4870f00"
+      },
+      {
+        "bytes": 2784,
+        "path": "candidate/include/pdal/DbReader.hpp",
+        "sha256": "9c1e3ec112ceeb15431bdff195cdb3b50047c1a69dbec02c17a9192954a02327"
+      },
+      {
+        "bytes": 3353,
+        "path": "candidate/include/pdal/DbWriter.hpp",
+        "sha256": "a95b33359ffe110072b88f0bf14beb71619a0ddc85a18e656d5ab7c83b07b667"
+      },
+      {
+        "bytes": 3123,
+        "path": "candidate/include/pdal/DimDetail.hpp",
+        "sha256": "7f1e0065b439d0908556c70a2427750adb1a85fc684d77a31f2f31b5a39a979b"
+      },
+      {
+        "bytes": 2472,
+        "path": "candidate/include/pdal/DimType.hpp",
+        "sha256": "251cf42e5512b1b9c2181375e52e14d7f081a2a2d35daa5bf5e6e22b344bd85e"
+      },
+      {
+        "bytes": 8086,
+        "path": "candidate/include/pdal/DimUtil.hpp",
+        "sha256": "6df94a19aea300d82f9517bb49ed36f7ab13d8161f8191ea03ed4a3c1bcbfb35"
+      },
+      {
+        "bytes": 56024,
+        "path": "candidate/include/pdal/Dimension.hpp",
+        "sha256": "045c4bdeb0d26edfa5d7b74f8aed5cd85931b87c2f5f8db0c6a34c8ee26fc044"
+      },
+      {
+        "bytes": 2925,
+        "path": "candidate/include/pdal/FileSpec.hpp",
+        "sha256": "5e82aa49559a765427142cc6bd1138699058cc8afe20f4b2344c70219660ae0e"
+      },
+      {
+        "bytes": 2828,
+        "path": "candidate/include/pdal/Filter.hpp",
+        "sha256": "d9e7c31c03328bc81a3b3b159c434c469a9ef5daa826c00aa50003572c4c54d8"
+      },
+      {
+        "bytes": 5630,
+        "path": "candidate/include/pdal/FlexWriter.hpp",
+        "sha256": "57e121b7d6b46a76f279deeefa7704af047d1680ae797274ed20d60a7bdcd6da"
+      },
+      {
+        "bytes": 4192,
+        "path": "candidate/include/pdal/Geometry.hpp",
+        "sha256": "848c0d54cfe9c596aec56747545e41ab1eb7b3175e737a24e781c6bd552e3907"
+      },
+      {
+        "bytes": 2619,
+        "path": "candidate/include/pdal/JsonFwd.hpp",
+        "sha256": "f86c6516eebe4ad6b9cfca42c48c9ebe9fc2d00f233b4ff0243c66276f2d28be"
+      },
+      {
+        "bytes": 5737,
+        "path": "candidate/include/pdal/KDIndex.hpp",
+        "sha256": "efbbb03866b6a8d26400e68ea8b816b6067a3d67ec0b77df61dd6bde6d95781b"
+      },
+      {
+        "bytes": 4713,
+        "path": "candidate/include/pdal/Kernel.hpp",
+        "sha256": "bae21128113340f4ee299f7c8d5f7daf64c8bc430fd05c0a884f0808413c184a"
+      },
+      {
+        "bytes": 5727,
+        "path": "candidate/include/pdal/Log.hpp",
+        "sha256": "a5bd836eb8357a167a426f7a25bb94111f3d05c82bee9b4ff35653106b038022"
+      },
+      {
+        "bytes": 3144,
+        "path": "candidate/include/pdal/Mesh.hpp",
+        "sha256": "e775fd61d896e4766b3ba16faac57c381d0ec918dbc9e1bb2ce433a7bd1e9db8"
+      },
+      {
+        "bytes": 21407,
+        "path": "candidate/include/pdal/Metadata.hpp",
+        "sha256": "10bb8447c3f94ffa67440b8f450912340a2a7ba819972e3b2f097a848c37f4fb"
+      },
+      {
+        "bytes": 6214,
+        "path": "candidate/include/pdal/Options.hpp",
+        "sha256": "269ab078e2857c3b1b26a6fc55b7cc8dcaf51b486fe75fe5142ae8f6498ac50f"
+      },
+      {
+        "bytes": 7617,
+        "path": "candidate/include/pdal/PDALUtils.hpp",
+        "sha256": "2350ceb07774ccc6181fdafa880e2d487b4558b0b8217fa27245b4b04c696fe9"
+      },
+      {
+        "bytes": 4139,
+        "path": "candidate/include/pdal/PipelineExecutor.hpp",
+        "sha256": "a1b2c1452a809446c8f00112681c2cc1d23cf21252dbd0788e3b6cb01b166655"
+      },
+      {
+        "bytes": 6521,
+        "path": "candidate/include/pdal/PipelineManager.hpp",
+        "sha256": "db07ba19338f21b12b575a1168c359005dbc21e3a64601c759b8752ab9ddd4e8"
+      },
+      {
+        "bytes": 2470,
+        "path": "candidate/include/pdal/PipelineReaderJSON.hpp",
+        "sha256": "dd8441a1a599772f93517b1ebf187118af37d9fdf14384b27da8abbfa3bfa322"
+      },
+      {
+        "bytes": 2151,
+        "path": "candidate/include/pdal/PipelineWriter.hpp",
+        "sha256": "9254942b078278fc24f77244afc90a114b2f4271d099a453b0f373e87cb7c6d7"
+      },
+      {
+        "bytes": 2594,
+        "path": "candidate/include/pdal/PluginDirectory.hpp",
+        "sha256": "e2ea4ffc8f76bbfd8d67d9d61061c40ed4e01a015ebd31d63c82a8f5748d0012"
+      },
+      {
+        "bytes": 2935,
+        "path": "candidate/include/pdal/PluginHelper.hpp",
+        "sha256": "bdbe11837fc8c06527cef6e36577b48f1bb3d2a6a18ef3e1d84ed34ece55648a"
+      },
+      {
+        "bytes": 2622,
+        "path": "candidate/include/pdal/PluginInfo.hpp",
+        "sha256": "d893efcff08c396bed2c6f0815f7f33a8616ec2ed795bff48b073c8f0d3332ec"
+      },
+      {
+        "bytes": 5143,
+        "path": "candidate/include/pdal/PluginManager.hpp",
+        "sha256": "13f0f93b08a1797b0d54ea2d677b48ce8d18b852343f3b8f1bbd5119e9c447b9"
+      },
+      {
+        "bytes": 1836,
+        "path": "candidate/include/pdal/PointContainer.hpp",
+        "sha256": "edd7eefde77cb192a041f338d5aea9d39e1f16d75645666b4730466f97d56555"
+      },
+      {
+        "bytes": 8481,
+        "path": "candidate/include/pdal/PointLayout.hpp",
+        "sha256": "b9bf51ed20ae4d1ddfd9ed0f27b70eb557de37cb7f9cbcbd7ff06270552b79ee"
+      },
+      {
+        "bytes": 14410,
+        "path": "candidate/include/pdal/PointRef.hpp",
+        "sha256": "37341c7a1d1c12707c31b0a691e888505cc20695f58671345bc2639541e5e332"
+      },
+      {
+        "bytes": 9873,
+        "path": "candidate/include/pdal/PointTable.hpp",
+        "sha256": "a228b74aca70880c4b514bd8d401974717a77cd61c52e16c6bd05c3584a35a19"
+      },
+      {
+        "bytes": 23412,
+        "path": "candidate/include/pdal/PointView.hpp",
+        "sha256": "7314f6282484dcffa892f37d37ec3a832911ef9aa7c5369adab49fda4a9b7cb4"
+      },
+      {
+        "bytes": 3799,
+        "path": "candidate/include/pdal/Polygon.hpp",
+        "sha256": "045c8600ba0adc6e532ff96feb44d2e743458bd625f8640453dea8c533664b68"
+      },
+      {
+        "bytes": 5818,
+        "path": "candidate/include/pdal/QuadIndex.hpp",
+        "sha256": "e3f7ae41085b066b6f83f4d84fe8d335d6faf0ce828d936dbeddba8400f8476e"
+      },
+      {
+        "bytes": 3179,
+        "path": "candidate/include/pdal/QuickInfo.hpp",
+        "sha256": "e57c8566ed2fb35e9b836c9d84ac54b392deb9ae8d9f0616eb147252c3cfd1ea"
+      },
+      {
+        "bytes": 3264,
+        "path": "candidate/include/pdal/Reader.hpp",
+        "sha256": "da1c8e8a0e2d2b64544ec49d9781be2e94183ecceac3286e08a40fa9bfd2b6b0"
+      },
+      {
+        "bytes": 3029,
+        "path": "candidate/include/pdal/Scaling.hpp",
+        "sha256": "f25172ed95728338048adc23bb034c645625eed3834b47c4cf22ac5f60ac4873"
+      },
+      {
+        "bytes": 7073,
+        "path": "candidate/include/pdal/SpatialReference.hpp",
+        "sha256": "5b8f39f016e96a2f5b496fdcf7381800dee342666617927b434ed92793452846"
+      },
+      {
+        "bytes": 2767,
+        "path": "candidate/include/pdal/SrsBounds.hpp",
+        "sha256": "f5b4719fd370fb280afb08a9633c2be6d08718ce00c0e3198fc2739a7e70b5ba"
+      },
+      {
+        "bytes": 15355,
+        "path": "candidate/include/pdal/Stage.hpp",
+        "sha256": "8b6fc1efa2184f477447a16f2576d25b747e8fc8ad1e0a2f9e5b8526a25a7ec1"
+      },
+      {
+        "bytes": 2411,
+        "path": "candidate/include/pdal/StageExtensions.hpp",
+        "sha256": "9ac066ac6446d2163fd422572ddae48ec64f563d22fa47ae29da0d439f1fb72b"
+      },
+      {
+        "bytes": 3818,
+        "path": "candidate/include/pdal/StageFactory.hpp",
+        "sha256": "dce25b1a19c747f0e8c9c6542356727c963878e07811487d3976184babfc6841"
+      },
+      {
+        "bytes": 2012,
+        "path": "candidate/include/pdal/StageWrapper.hpp",
+        "sha256": "7c6499cbe3d8e01022effc5b7e5b57ecd44d9835cee998e82eca0d2836496b69"
+      },
+      {
+        "bytes": 5533,
+        "path": "candidate/include/pdal/Streamable.hpp",
+        "sha256": "c884092a484cc5d0dc4af692ab7c8c7f5a277bacb9a12d0323c9a3c1c2f8fb93"
+      },
+      {
+        "bytes": 2577,
+        "path": "candidate/include/pdal/SubcommandKernel.hpp",
+        "sha256": "20ae7ea589b73cdeb39795862c7787254da7ee9be226de46534379b168589395"
+      },
+      {
+        "bytes": 3895,
+        "path": "candidate/include/pdal/Writer.hpp",
+        "sha256": "fa86e59337e2aac53ae3629e100e11dac05742b3a3a96dfffdc1d5dddda622d5"
+      },
+      {
+        "bytes": 4579,
+        "path": "candidate/include/pdal/XMLSchema.hpp",
+        "sha256": "83778cc246c35865ddd09012c1a3caa0ce533ac5570a240a3f3e13c5b6d8a01f"
+      },
+      {
+        "bytes": 2738,
+        "path": "candidate/include/pdal/compression/Compression.hpp",
+        "sha256": "85ffe28c0ac1328b38af374461906aa08cc6b3de41cc814f251dfa073f89abab"
+      },
+      {
+        "bytes": 2532,
+        "path": "candidate/include/pdal/compression/DeflateCompression.hpp",
+        "sha256": "4c64932ddf0e9e40dab12d903ff1a4dee6548220e59cd58b77faeccf40816234"
+      },
+      {
+        "bytes": 2314,
+        "path": "candidate/include/pdal/compression/GzipCompression.hpp",
+        "sha256": "0cee0340b2d88dd98adc818c542150b7321cdd3bbd1302634eec784092d118a9"
+      },
+      {
+        "bytes": 3558,
+        "path": "candidate/include/pdal/compression/LazPerfVlrCompression.hpp",
+        "sha256": "a00b2e983554e7651f353a7e955acd8e1d1bfabee99d552950800908514ffe20"
+      },
+      {
+        "bytes": 2501,
+        "path": "candidate/include/pdal/compression/LzmaCompression.hpp",
+        "sha256": "db0464d4780ca90435957e1757827aa3a2073403ed16b14a0851784ce80c7959"
+      },
+      {
+        "bytes": 2574,
+        "path": "candidate/include/pdal/compression/ZstdCompression.hpp",
+        "sha256": "d46a9eada5e4924c4da7e5f1ebfd789ccf91a426461fdeedc7b68ab50340de79"
+      },
+      {
+        "bytes": 2470,
+        "path": "candidate/include/pdal/filters/ApproximateCoplanarFilter.hpp",
+        "sha256": "e8e6cdb192c2bc2f31d2f8e0559c362a42ac7a7c77625f0c8dcd600261624fea"
+      },
+      {
+        "bytes": 2436,
+        "path": "candidate/include/pdal/filters/AssignFilter.hpp",
+        "sha256": "3e8d6fe672bc30c6975fe4fd20c600e98702935feb9a6c139db4f6d1a1624637"
+      },
+      {
+        "bytes": 2567,
+        "path": "candidate/include/pdal/filters/CSFilter.hpp",
+        "sha256": "c01a72cceda77067bf223b302cfdbb6910f1f1808870a8b15e7c4022cfaf00d8"
+      },
+      {
+        "bytes": 4220,
+        "path": "candidate/include/pdal/filters/ChipperFilter.hpp",
+        "sha256": "8e64e1e45d5ac83fabecb1ca963fa2a5db600c52fca692d81ba8feb41027872e"
+      },
+      {
+        "bytes": 2438,
+        "path": "candidate/include/pdal/filters/ClusterFilter.hpp",
+        "sha256": "017f1016f9b85654589cd18fb314c1498dc8238c86b09ebb94365d162f97a434"
+      },
+      {
+        "bytes": 28116,
+        "path": "candidate/include/pdal/filters/ColorInterpRamps.hpp",
+        "sha256": "b5146a3c24eb589da451cf8d7510aeb5f40b3fb7c131ff2d50882993bb9943ff"
+      },
+      {
+        "bytes": 3533,
+        "path": "candidate/include/pdal/filters/ColorinterpFilter.hpp",
+        "sha256": "026f60e48b32ae005bbf90c145bb1abb3922aa91241dd2fd45b5a21bf02a260d"
+      },
+      {
+        "bytes": 3311,
+        "path": "candidate/include/pdal/filters/ColorizationFilter.hpp",
+        "sha256": "ced9bc36bd604dc9a8332e4d4a65753ec606ce7ceba10f3f38324bac27d7812a"
+      },
+      {
+        "bytes": 2944,
+        "path": "candidate/include/pdal/filters/CovarianceFeaturesFilter.hpp",
+        "sha256": "c8ea620d5bb7315c95367da455ffdf3618322c10799da97caaaf63724e2801fa"
+      },
+      {
+        "bytes": 3795,
+        "path": "candidate/include/pdal/filters/CropFilter.hpp",
+        "sha256": "1907d8850f99d77cdb18790e7e8b1618b3b532d27538ff3cf1fcb14b86095eda"
+      },
+      {
+        "bytes": 2482,
+        "path": "candidate/include/pdal/filters/DBSCANFilter.hpp",
+        "sha256": "5684a1120da8f85535d3b38fea226a968905ea1b96e8fed880c27d11c4db17a5"
+      },
+      {
+        "bytes": 2692,
+        "path": "candidate/include/pdal/filters/DEMFilter.hpp",
+        "sha256": "86b49168c41fcf66dcec5cf76065a0194c4191e3b28c0de99b3ac825b3435e08"
+      },
+      {
+        "bytes": 2674,
+        "path": "candidate/include/pdal/filters/DecimationFilter.hpp",
+        "sha256": "6b60fc228cdd0d652f4a677dd979991311edd635c4460cf07ac75f34d5ed8232"
+      },
+      {
+        "bytes": 2170,
+        "path": "candidate/include/pdal/filters/DelaunayFilter.hpp",
+        "sha256": "057faeadc0a3c30dc9d20ec23d1f1beef2fde22c2277f9ca844bb63de7f3fd60"
+      },
+      {
+        "bytes": 2757,
+        "path": "candidate/include/pdal/filters/DividerFilter.hpp",
+        "sha256": "6514d4d0b15dac41aa84c5703de2f7ebfc65caea64fa141053dcb01422fb6253"
+      },
+      {
+        "bytes": 2458,
+        "path": "candidate/include/pdal/filters/ELMFilter.hpp",
+        "sha256": "cfa456699dbd9e1d4b6f2ab8191c15cebdab32191490b94a8e747b44b37b335d"
+      },
+      {
+        "bytes": 2452,
+        "path": "candidate/include/pdal/filters/EigenvaluesFilter.hpp",
+        "sha256": "e65c78eecb509986070c13a4e4b1b8ce1639da148cc38e2472da5bd5793f4abb"
+      },
+      {
+        "bytes": 2396,
+        "path": "candidate/include/pdal/filters/EstimateRankFilter.hpp",
+        "sha256": "3ec027ad90d912a034ba64dc63e256a7c5f075450a6765568205ed46d6a1830c"
+      },
+      {
+        "bytes": 2518,
+        "path": "candidate/include/pdal/filters/ExpressionFilter.hpp",
+        "sha256": "54da6fb90e781cc498acc7542b61740bd8fb45933cea0731823b1c0aac3285b7"
+      },
+      {
+        "bytes": 2760,
+        "path": "candidate/include/pdal/filters/ExpressionStatsFilter.hpp",
+        "sha256": "2395e36f181b4a8e216367cee35a0fb8b5331e4a9e4d4016ac81dbde3029b941"
+      },
+      {
+        "bytes": 2504,
+        "path": "candidate/include/pdal/filters/FaceRasterFilter.hpp",
+        "sha256": "195b6b138e54cf10caf289d6deb5ab10a50a4056a043528b1ead749c8452cfff"
+      },
+      {
+        "bytes": 2363,
+        "path": "candidate/include/pdal/filters/FarthestPointSamplingFilter.hpp",
+        "sha256": "a64806c2f9a096fbe126c6f4d08aa904ba58e9292735597bb1c337011811af03"
+      },
+      {
+        "bytes": 2887,
+        "path": "candidate/include/pdal/filters/FerryFilter.hpp",
+        "sha256": "acb8e55cef6719e8967e24270dbe33fe5c176aaff28902433893b6f6b892b930"
+      },
+      {
+        "bytes": 2752,
+        "path": "candidate/include/pdal/filters/GeomDistanceFilter.hpp",
+        "sha256": "548e368e278d8693b2a4c030871fc006022d842e3a0548b988247c5323f95d5e"
+      },
+      {
+        "bytes": 2824,
+        "path": "candidate/include/pdal/filters/GeoreferenceFilter.hpp",
+        "sha256": "087a833fc2f293e51b2aedfe8e49cc54711a2e65ed217813ea047d6045e930ef"
+      },
+      {
+        "bytes": 3305,
+        "path": "candidate/include/pdal/filters/GpsTimeConvert.hpp",
+        "sha256": "896694edbd83308b41f5bb30f87d3f7810c72c08b51257710dc2ac2deab40dfc"
+      },
+      {
+        "bytes": 15465,
+        "path": "candidate/include/pdal/filters/GreedyProjection.hpp",
+        "sha256": "bc83dab3c88c356f91a088ade7d49e1170658c753c891d1f159da798fa15aa91"
+      },
+      {
+        "bytes": 1497,
+        "path": "candidate/include/pdal/filters/GridDecimationFilter.hpp",
+        "sha256": "b6112fd25912f16a05563d2cd4798ca8152cb2f2c1dba96e2acd57edd46ca996"
+      },
+      {
+        "bytes": 2483,
+        "path": "candidate/include/pdal/filters/GroupByFilter.hpp",
+        "sha256": "51eaabd26b17e38de05903079af88464f83a65669bc22e3c2ca3504e8f9753cd"
+      },
+      {
+        "bytes": 2660,
+        "path": "candidate/include/pdal/filters/H3Filter.hpp",
+        "sha256": "9403916ee377b907695b28295b56f1614a53d20aa0c4c64e8d68e75d73b9f1bd"
+      },
+      {
+        "bytes": 2516,
+        "path": "candidate/include/pdal/filters/HagDelaunayFilter.hpp",
+        "sha256": "99705478da022758778bba0efe49a074701208d1fdf3a0e27a9db8c0e0ac87a1"
+      },
+      {
+        "bytes": 2800,
+        "path": "candidate/include/pdal/filters/HagDemFilter.hpp",
+        "sha256": "51aee5adbf3e14061d34986eca8cb34d7e5a39da6cd91ed0297343e7243b707c"
+      },
+      {
+        "bytes": 2506,
+        "path": "candidate/include/pdal/filters/HagNnFilter.hpp",
+        "sha256": "30414cda07a7ad2883589e7d640d0adba8e5415baed11670b0c3372b32162a4b"
+      },
+      {
+        "bytes": 2444,
+        "path": "candidate/include/pdal/filters/HeadFilter.hpp",
+        "sha256": "5647b6d5be95ec451e018907581f8f4c39d823b1d07d8648348e1eea18192b7e"
+      },
+      {
+        "bytes": 3046,
+        "path": "candidate/include/pdal/filters/HexBinFilter.hpp",
+        "sha256": "9969f2801c1a0d2f5cbce7468369666042087a7196fd6ecaa416683806d99bb7"
+      },
+      {
+        "bytes": 2406,
+        "path": "candidate/include/pdal/filters/IQRFilter.hpp",
+        "sha256": "41971fdbcd6650f689f14b3dea0241d395d84a20452c8c4a28be98aaed9f50be"
+      },
+      {
+        "bytes": 3380,
+        "path": "candidate/include/pdal/filters/InfoFilter.hpp",
+        "sha256": "ec17504e7e1368033b7dac35fffa3daac5aa53f08c0e658409d55c5cdeaa1d75"
+      },
+      {
+        "bytes": 2847,
+        "path": "candidate/include/pdal/filters/IterativeClosestPoint.hpp",
+        "sha256": "823c84e377dc8b2e8021e868468f88c0c23a33463f9c496bff259651d3a66d3d"
+      },
+      {
+        "bytes": 2327,
+        "path": "candidate/include/pdal/filters/LOFFilter.hpp",
+        "sha256": "4a0bf194f3d34fe80b74305509b5f7e5c1731c997c54cace2179f2163cf38a6f"
+      },
+      {
+        "bytes": 2455,
+        "path": "candidate/include/pdal/filters/LabelDuplicatesFilter.hpp",
+        "sha256": "0ad7c8bb636f1c008f6553438ca7894413de4ea07da3be1c07d8f25850a8f858"
+      },
+      {
+        "bytes": 2897,
+        "path": "candidate/include/pdal/filters/LiTreeFilter.hpp",
+        "sha256": "b96a83c77bf83a8e8f9d6e0ce1db41bbf4816402f06a8cfd5243cc7af02f669b"
+      },
+      {
+        "bytes": 2511,
+        "path": "candidate/include/pdal/filters/LloydKMeansFilter.hpp",
+        "sha256": "2aa4908ac417262db6b1cbb2c1756af6214dbb5bd69e9fd606dd0bca552f18b7"
+      },
+      {
+        "bytes": 2472,
+        "path": "candidate/include/pdal/filters/LocateFilter.hpp",
+        "sha256": "4146e763d84e1cd6a376ae7280c5c8e2d1d879c851698d29dc4fea02cf0cfa6f"
+      },
+      {
+        "bytes": 3444,
+        "path": "candidate/include/pdal/filters/M3C2Filter.hpp",
+        "sha256": "dd816d1cc31b6f48a8b262d4a7f73140d8ffcc49564970476f7ea4a1323d5655"
+      },
+      {
+        "bytes": 2434,
+        "path": "candidate/include/pdal/filters/MADFilter.hpp",
+        "sha256": "4580231f3b6662cead781db0c81c95ebf1d28033374196bcba3c3944e3a6d35a"
+      },
+      {
+        "bytes": 2354,
+        "path": "candidate/include/pdal/filters/MergeFilter.hpp",
+        "sha256": "a03a87b92f0e4e31a24a549b77b86ed6da154dd38215a7879a85ec05783b25c8"
+      },
+      {
+        "bytes": 2412,
+        "path": "candidate/include/pdal/filters/MiniballFilter.hpp",
+        "sha256": "3a1839490ccb34b6d1eada5c170d8b01dcc3e64885c659eba88671f8532beb0f"
+      },
+      {
+        "bytes": 2478,
+        "path": "candidate/include/pdal/filters/MongoExpressionFilter.hpp",
+        "sha256": "53527ef93ba96ebddb2dcb11012c32ae14edd93bc8a5c070e9978823c246842c"
+      },
+      {
+        "bytes": 2401,
+        "path": "candidate/include/pdal/filters/MortonOrderFilter.hpp",
+        "sha256": "3cf29bcfe14b548467ebe7a93d4544b12a3179e78a3d009b70a224958ba923e0"
+      },
+      {
+        "bytes": 2625,
+        "path": "candidate/include/pdal/filters/NNDistanceFilter.hpp",
+        "sha256": "de30d0e16c652864624cac635cba64f0c87299572de33faa1a1c38386c47001a"
+      },
+      {
+        "bytes": 2875,
+        "path": "candidate/include/pdal/filters/NeighborClassifierFilter.hpp",
+        "sha256": "70f572740b12bff73328890f7a0fbec29110e65a4053eb2fe45be26aef3fd0e5"
+      },
+      {
+        "bytes": 3335,
+        "path": "candidate/include/pdal/filters/NormalFilter.hpp",
+        "sha256": "35b009c07a114e37ee704acf5d8aecbf7d6d710d5e40fabc52b9e3654117e7ea"
+      },
+      {
+        "bytes": 2360,
+        "path": "candidate/include/pdal/filters/OptimalNeighborhoodFilter.hpp",
+        "sha256": "b2a133689ffbdeb48fbb13e1c0bc2eed45776be48ea4ba738f155dacb112e8f2"
+      },
+      {
+        "bytes": 2728,
+        "path": "candidate/include/pdal/filters/OutlierFilter.hpp",
+        "sha256": "98a2d7cbcc256704b9d25c8b4c83b452bc997f2f402bd09edfb386ad030128ed"
+      },
+      {
+        "bytes": 3493,
+        "path": "candidate/include/pdal/filters/OverlayFilter.hpp",
+        "sha256": "4fe619a92b409d326835f0ccd83e883f09a4bce05b23671b97a844b2e7e1f920"
+      },
+      {
+        "bytes": 2568,
+        "path": "candidate/include/pdal/filters/PMFFilter.hpp",
+        "sha256": "18e8685bda4feb81227e7564f6419056b825214c95e4a3d48ada7ee8936faafd"
+      },
+      {
+        "bytes": 2591,
+        "path": "candidate/include/pdal/filters/PlaneFitFilter.hpp",
+        "sha256": "a5ae4a5c8dbd13fa0b1c2d6f5d1cca6ea968c7f24637e2a83e8c67c72adcb57e"
+      },
+      {
+        "bytes": 2372,
+        "path": "candidate/include/pdal/filters/PoissonFilter.hpp",
+        "sha256": "edcb7c3b88157ae668b1b631db0433f239ddb62a51cfc2ea575c58dc13e75c35"
+      },
+      {
+        "bytes": 2982,
+        "path": "candidate/include/pdal/filters/ProjPipelineFilter.hpp",
+        "sha256": "af5d4eee84ba35c79e6dc60d593a58a8a438a594b8e72287353776a7c24c622a"
+      },
+      {
+        "bytes": 2384,
+        "path": "candidate/include/pdal/filters/RadialDensityFilter.hpp",
+        "sha256": "d9ab81568a4c8acb8985ccc6f3660e7bae1ddeac36a4f92fd4e5827e342f23df"
+      },
+      {
+        "bytes": 846,
+        "path": "candidate/include/pdal/filters/RadiusAssignFilter.hpp",
+        "sha256": "50fa390754a62e7b5b198fcebd73b252634ad2206c06f5540fbb414cb57a9baf"
+      },
+      {
+        "bytes": 2608,
+        "path": "candidate/include/pdal/filters/RandomizeFilter.hpp",
+        "sha256": "44fad75a09bc5af67ce1360b1884965d3ee1980d83ff4f572a5cbdaedb2aeda8"
+      },
+      {
+        "bytes": 2516,
+        "path": "candidate/include/pdal/filters/RangeFilter.hpp",
+        "sha256": "c66c9693e2263b099d8a12f908a3b57eba08857d4f7b9939b0280a9e563ce726"
+      },
+      {
+        "bytes": 2481,
+        "path": "candidate/include/pdal/filters/ReciprocityFilter.hpp",
+        "sha256": "0ccd5019af2aab74d993f8e624c852c117ff2e857d80bf7c460c1928fa6c6388"
+      },
+      {
+        "bytes": 2514,
+        "path": "candidate/include/pdal/filters/RelaxationDartThrowing.hpp",
+        "sha256": "a6aa4281f44c91df35e368d6541df528b752fb2ba91798ba4aa04cc86032aef8"
+      },
+      {
+        "bytes": 3512,
+        "path": "candidate/include/pdal/filters/ReprojectionFilter.hpp",
+        "sha256": "2f7b8338cf7e3e3608c6714fa3e6eabf137c679f5fae74382c237130a9613ed8"
+      },
+      {
+        "bytes": 2610,
+        "path": "candidate/include/pdal/filters/ReturnsFilter.hpp",
+        "sha256": "d115366cb093ec85a9a0cfc74ffa9bf3868d5316d5feae9106e60236de080351"
+      },
+      {
+        "bytes": 3484,
+        "path": "candidate/include/pdal/filters/SMRFilter.hpp",
+        "sha256": "3c82b8759c562f386a88e14830209272486b594b2550682c3d9b6e152ea5eace"
+      },
+      {
+        "bytes": 4009,
+        "path": "candidate/include/pdal/filters/SampleFilter.hpp",
+        "sha256": "191e171d5ec12a9c19ca7bcee489558bb79bea7a308f5eebe91fa60d9b038ae0"
+      },
+      {
+        "bytes": 2405,
+        "path": "candidate/include/pdal/filters/SeparateScanLineFilter.hpp",
+        "sha256": "0e23632489a7c9004623aec3e7151957c21cdfcbfa4b1cc7673fed72e4dc65e0"
+      },
+      {
+        "bytes": 2281,
+        "path": "candidate/include/pdal/filters/ShellFilter.hpp",
+        "sha256": "afa79e14d8bbcfffe0040372d960058cf3011ccd5034fea25e23eedf878d6e5e"
+      },
+      {
+        "bytes": 2588,
+        "path": "candidate/include/pdal/filters/SkewnessBalancingFilter.hpp",
+        "sha256": "24dfafffef9a3209a5900c69971b51187c7e8dc1fc0973e6d0624007654f143c"
+      },
+      {
+        "bytes": 2793,
+        "path": "candidate/include/pdal/filters/SortFilter.hpp",
+        "sha256": "9790053f81fcabe2c10ef78b6a9c3158e42bbef24295c56f30abb6d967d55754"
+      },
+      {
+        "bytes": 2428,
+        "path": "candidate/include/pdal/filters/SparseSurfaceFilter.hpp",
+        "sha256": "c8523c96d9df1d9a13290ccf4d6bc454521ea1aa07b0abb5578b229a0de1ec64"
+      },
+      {
+        "bytes": 3463,
+        "path": "candidate/include/pdal/filters/SplitterFilter.hpp",
+        "sha256": "15896fe3790ee35bdf4367fc423ce3536d64e16dae62314462de78d78f6c8b10"
+      },
+      {
+        "bytes": 7497,
+        "path": "candidate/include/pdal/filters/StatsFilter.hpp",
+        "sha256": "9be44c7ec8cd5cc490ec58fd266a4487a52bb995dcb5577edb344d2aa8e6995d"
+      },
+      {
+        "bytes": 2559,
+        "path": "candidate/include/pdal/filters/StraightenFilter.hpp",
+        "sha256": "4e90328e4a9ebe5e9642dcd5771ddde6ed39a5001833f3e54cb1146d42bf6f18"
+      },
+      {
+        "bytes": 2776,
+        "path": "candidate/include/pdal/filters/StreamCallbackFilter.hpp",
+        "sha256": "0bea6e064a1c31018a20b61ab19575b5dad4cd331e7dab4e7d6397034ac0c067"
+      },
+      {
+        "bytes": 2568,
+        "path": "candidate/include/pdal/filters/SupervoxelFilter.hpp",
+        "sha256": "5baa07c5a1679febaa945be28591c3f46c78eb693a7c5acd3737fd4ebca0a941"
+      },
+      {
+        "bytes": 3333,
+        "path": "candidate/include/pdal/filters/TailFilter.hpp",
+        "sha256": "c12ed0c4457768534332a659310a5690ed964cf4009b31e23b21559f1dae1d81"
+      },
+      {
+        "bytes": 3554,
+        "path": "candidate/include/pdal/filters/TransformationFilter.hpp",
+        "sha256": "757ccaf495b5996bc013f1ed32644baf668cec82d9179ea921d488e45760c6dd"
+      },
+      {
+        "bytes": 2505,
+        "path": "candidate/include/pdal/filters/VoxelCenterNearestNeighborFilter.hpp",
+        "sha256": "b6d9eec29f79b4d26e701602b5de5085ed3459c5fca6bf01e054b746f0aade3e"
+      },
+      {
+        "bytes": 2517,
+        "path": "candidate/include/pdal/filters/VoxelCentroidNearestNeighborFilter.hpp",
+        "sha256": "c48d6638a62f41862ceb02235f8e8d05d967c1aaacc07ef9879b642503cc53fb"
+      },
+      {
+        "bytes": 3045,
+        "path": "candidate/include/pdal/filters/VoxelDownsizeFilter.hpp",
+        "sha256": "86fb5895f86caf3e0b7172f761565aa6a55eaeaff3256bdee7166898a1179bc6"
+      },
+      {
+        "bytes": 1999,
+        "path": "candidate/include/pdal/filters/ZsmoothFilter.hpp",
+        "sha256": "c2bd94607b97ea565e4f679c955f4a219ac3e54c0a9d1190e8a9c6be92472ee9"
+      },
+      {
+        "bytes": 8991,
+        "path": "candidate/include/pdal/filters/private/Comparison.hpp",
+        "sha256": "e5471929bdd218b13d4ed3ac6aefc0eb000c663782d84000b94ddddbf422fd9d"
+      },
+      {
+        "bytes": 4457,
+        "path": "candidate/include/pdal/filters/private/DimRange.hpp",
+        "sha256": "7c4c544afdc47adf251e1caa001a970c75015c7834536ab095cf8ea9abc74213"
+      },
+      {
+        "bytes": 2058,
+        "path": "candidate/include/pdal/filters/private/DisjointSet.hpp",
+        "sha256": "35934b32a7799bbf71419617c99d2a12fe297b08cc075b3feee6c69665f0cab4"
+      },
+      {
+        "bytes": 2413,
+        "path": "candidate/include/pdal/filters/private/Point.hpp",
+        "sha256": "0158fda654d575c32a2bb4cc36789e160e5758f6dc0e31212191aa911208bddd"
+      },
+      {
+        "bytes": 6410,
+        "path": "candidate/include/pdal/filters/private/Segmentation.hpp",
+        "sha256": "1d57caf6250d8905a7b89d80abb5bf5768076fadb9dc9ebd689c86da8269508d"
+      },
+      {
+        "bytes": 3595,
+        "path": "candidate/include/pdal/filters/private/delaunator.hpp",
+        "sha256": "4734629d03a25f8f7dd07078664c967e321aefb537623ebadd4ee062d148a49d"
+      },
+      {
+        "bytes": 390,
+        "path": "candidate/include/pdal/filters/private/expr/AssignParser.hpp",
+        "sha256": "fd346256885f46f3910227728c0957bedafc54c8adf2927cb49f6885fc33cc22"
+      },
+      {
+        "bytes": 1244,
+        "path": "candidate/include/pdal/filters/private/expr/AssignStatement.hpp",
+        "sha256": "d44cf7c4fcfabc18bc4dec6dc492f7ad7c63195dd47b8a0aeac27357d3356352"
+      },
+      {
+        "bytes": 914,
+        "path": "candidate/include/pdal/filters/private/expr/BaseParser.hpp",
+        "sha256": "1f7ae77a0d38416baedcf31d897aef7b66860465d5bb1f2d10a9f628a64499c8"
+      },
+      {
+        "bytes": 795,
+        "path": "candidate/include/pdal/filters/private/expr/ConditionalExpression.hpp",
+        "sha256": "662b1f2d02e57f9d55b239317994efa05ab9a92a6c84db4a59c40370effd282f"
+      },
+      {
+        "bytes": 525,
+        "path": "candidate/include/pdal/filters/private/expr/ConditionalParser.hpp",
+        "sha256": "e3d735d783adce70d527869c230806298131613efc458b420e1a2fda874c6a16"
+      },
+      {
+        "bytes": 5631,
+        "path": "candidate/include/pdal/filters/private/expr/Expression.hpp",
+        "sha256": "da50a75470327a988ef8b0de6928845aa365ab510e8f0eb2b1e18af1665d764f"
+      },
+      {
+        "bytes": 294,
+        "path": "candidate/include/pdal/filters/private/expr/IdentExpression.hpp",
+        "sha256": "c725c5c19d51c7d141ac38b163b26ddda8fc823bec8ed8bca7167a872d80dc5e"
+      },
+      {
+        "bytes": 866,
+        "path": "candidate/include/pdal/filters/private/expr/Lexer.hpp",
+        "sha256": "27076af1c2b989137cb8e35666f457d872727dc6bbe61f1ba464d43806d37d00"
+      },
+      {
+        "bytes": 267,
+        "path": "candidate/include/pdal/filters/private/expr/MathExpression.hpp",
+        "sha256": "eed53d67d8c6fb49281253119655c6538235b67149cad825be4f36590bd58b1c"
+      },
+      {
+        "bytes": 592,
+        "path": "candidate/include/pdal/filters/private/expr/MathParser.hpp",
+        "sha256": "47f62b70e143e4e77cee76fbb5210c98d505213cea75e5485508c59948005744"
+      },
+      {
+        "bytes": 2297,
+        "path": "candidate/include/pdal/filters/private/expr/Token.hpp",
+        "sha256": "3472c22b12e4e750ba0cd83e7aa76b11bdce66e9ce923cc4d25eccba7b87b697"
+      },
+      {
+        "bytes": 2427,
+        "path": "candidate/include/pdal/filters/private/georeference/LocalCartesian.hpp",
+        "sha256": "3016939613ced5e326952917fc3d909a96b1a4d8642325a7624c39c3277c5969"
+      },
+      {
+        "bytes": 2491,
+        "path": "candidate/include/pdal/filters/private/georeference/Trajectory.hpp",
+        "sha256": "5f1be6af314751c2ebec8fef45c17c457bdd4d8881d9d0a53799d321bff42323"
+      },
+      {
+        "bytes": 4951,
+        "path": "candidate/include/pdal/filters/private/georeference/Utils.hpp",
+        "sha256": "5788d06c387515bfbecaa176440ab26f166f2b8c4a7d5c4651feb48dab9eb6d1"
+      },
+      {
+        "bytes": 3205,
+        "path": "candidate/include/pdal/filters/private/hexer/BaseGrid.hpp",
+        "sha256": "45bc99d642bc06785c85673718d2e2904df49865af67b2620f132a4b120ddb8d"
+      },
+      {
+        "bytes": 3051,
+        "path": "candidate/include/pdal/filters/private/hexer/H3grid.hpp",
+        "sha256": "47426ecab302a877f3ced1e95127b963df9011b78810dd73dbd30bdd0bb3c1b8"
+      },
+      {
+        "bytes": 1709,
+        "path": "candidate/include/pdal/filters/private/hexer/HexGrid.hpp",
+        "sha256": "d579cfee3d1eda43d25c5a6e0e15aa4153fccf770d9e7353be963b9272382706"
+      },
+      {
+        "bytes": 963,
+        "path": "candidate/include/pdal/filters/private/hexer/HexId.hpp",
+        "sha256": "4e9ba501f4954c0fd0aa4af350d1414a712eb3bf65ae02ea57debbc2f769790e"
+      },
+      {
+        "bytes": 3890,
+        "path": "candidate/include/pdal/filters/private/hexer/Path.hpp",
+        "sha256": "41167b1f7b83bf12b0cdd0531e8d29017d3b6983c789a61ec13e2100fe6ee83f"
+      },
+      {
+        "bytes": 748,
+        "path": "candidate/include/pdal/filters/private/hexer/Point.hpp",
+        "sha256": "78fe561982a49730ef45c32ffb24287c88c1c8a42534b9cb904f6713bbb893ed"
+      },
+      {
+        "bytes": 2174,
+        "path": "candidate/include/pdal/filters/private/hexer/Processor.hpp",
+        "sha256": "9f6f35b469d4470cad0d49b0ef7b72131af86b97746248d10ef56a42f2231460"
+      },
+      {
+        "bytes": 2532,
+        "path": "candidate/include/pdal/filters/private/hexer/Segment.hpp",
+        "sha256": "964a835f2d2be5efe6527923d2022984036c0bc9ea34b04edfee1b11968df409"
+      },
+      {
+        "bytes": 2019,
+        "path": "candidate/include/pdal/filters/private/hexer/exception.hpp",
+        "sha256": "09748fab5bad292046f95025e9e6cddec067ba1137dad297ce91c07f65b5113c"
+      },
+      {
+        "bytes": 9379,
+        "path": "candidate/include/pdal/filters/private/mongoexpression/Comparison.hpp",
+        "sha256": "3ccf77ebfed226ebedfa7009de0e23087906190e1d96e7dafc08952c265d0164"
+      },
+      {
+        "bytes": 2565,
+        "path": "candidate/include/pdal/filters/private/mongoexpression/Expression.hpp",
+        "sha256": "7ee28b281a1d888c5568a19c8b473d118f2a9c898deb2c04eb4d70b5a908fd4b"
+      },
+      {
+        "bytes": 5199,
+        "path": "candidate/include/pdal/filters/private/mongoexpression/LogicGate.hpp",
+        "sha256": "6d726294e743f5e808902a7f82f9a54accaf7621316e363400917cc84113d01e"
+      },
+      {
+        "bytes": 2277,
+        "path": "candidate/include/pdal/filters/private/mongoexpression/Support.hpp",
+        "sha256": "9417c551bf8d4c4d702bff0420655f0d091f2b26de59e82b03820fd4c89846ee"
+      },
+      {
+        "bytes": 2473,
+        "path": "candidate/include/pdal/filters/private/pnp/Grid.hpp",
+        "sha256": "0b615c0253a51f66490f1511e6e44617fa4d50629b77c9ed9c0c95fd1a3fb1e8"
+      },
+      {
+        "bytes": 17144,
+        "path": "candidate/include/pdal/filters/private/pnp/GridPnp.hpp",
+        "sha256": "3e7b76f5aea3915fd128a2b2da4a0be630338ed6a6c2911439a9ee3311c6dd03"
+      },
+      {
+        "bytes": 5975,
+        "path": "candidate/include/pdal/filters/private/pnp/VoxelRayTrace.hpp",
+        "sha256": "d00f3d509fecc38a0e0c5f0921187f3a413c3aa505295d26af812fd774925dff"
+      },
+      {
+        "bytes": 3250,
+        "path": "candidate/include/pdal/filters/private/straighten/Polyline.hpp",
+        "sha256": "65bcf7d8671a541bfa7c4664993af914a97c652ae72ca154a41c6f9cb0d3a055"
+      },
+      {
+        "bytes": 3901,
+        "path": "candidate/include/pdal/filters/private/straighten/Utils.hpp",
+        "sha256": "df78bf8284be1e4ae22f9d38b22131600c0043e72d957d549be7fbe84521b291"
+      },
+      {
+        "bytes": 2843,
+        "path": "candidate/include/pdal/io/BpfCompressor.hpp",
+        "sha256": "20e056a7186d165ed92b2f593ad0e2d528a4c9fa16c97dc56f635a63e53e5bdc"
+      },
+      {
+        "bytes": 7188,
+        "path": "candidate/include/pdal/io/BpfHeader.hpp",
+        "sha256": "3cf2f31a6025328fc74ea80efa060828552dc525c040fc6547f0b7c5f5a701fa"
+      },
+      {
+        "bytes": 4396,
+        "path": "candidate/include/pdal/io/BpfReader.hpp",
+        "sha256": "22e085b57c847ee4ab53d5ba724ad3a3aa2395fcd7a2ff2e505556e5f1257429"
+      },
+      {
+        "bytes": 3509,
+        "path": "candidate/include/pdal/io/BpfWriter.hpp",
+        "sha256": "ca6f817c61d7a8d71a298ec81bfa84cba72dd664c44cb93d370abdaced20e58c"
+      },
+      {
+        "bytes": 2287,
+        "path": "candidate/include/pdal/io/BufferReader.hpp",
+        "sha256": "b9f7a89cfe875c88816875d9e83476ba0f1af103605010a55e6d9c6d7a25903f"
+      },
+      {
+        "bytes": 3948,
+        "path": "candidate/include/pdal/io/CopcReader.hpp",
+        "sha256": "153907dd4e7ad12ea8df0e965e1fadf0c435705d4f7173819a59eaf8f6a70e4c"
+      },
+      {
+        "bytes": 2857,
+        "path": "candidate/include/pdal/io/CopcWriter.hpp",
+        "sha256": "6a1a3f76ebc8fb87b399f5a9ca25243eb30083d48b85c5d23257568d5882c39d"
+      },
+      {
+        "bytes": 3242,
+        "path": "candidate/include/pdal/io/EptAddonWriter.hpp",
+        "sha256": "417b885c71aadd67f4c02ea073bdfbd835243bf6d61f8e89bda9b792db687c19"
+      },
+      {
+        "bytes": 3992,
+        "path": "candidate/include/pdal/io/EptReader.hpp",
+        "sha256": "ca9b52206644b09a6f296611c2a711c4f1bd49d73ecbb27bf9953602f9b0c1b2"
+      },
+      {
+        "bytes": 3871,
+        "path": "candidate/include/pdal/io/EsriReader.hpp",
+        "sha256": "8152c51d8a0c9377003fd466a238104da0fe6dad81cecfdacc42c160538912dc"
+      },
+      {
+        "bytes": 5488,
+        "path": "candidate/include/pdal/io/FauxReader.hpp",
+        "sha256": "b58ff69263baee8076bf26eb70b3ab9a1306784cc6b89a9dda720f5082b1b62f"
+      },
+      {
+        "bytes": 6712,
+        "path": "candidate/include/pdal/io/FbiHeader.hpp",
+        "sha256": "36f3cbed9ce3036a20fb11b7f844480c17a6a51d777742c53a38aa3fae1e6e0c"
+      },
+      {
+        "bytes": 2980,
+        "path": "candidate/include/pdal/io/FbiReader.hpp",
+        "sha256": "f54228508b829db65635cb5fa4aeab405d1024d93322668d220cede7a414515f"
+      },
+      {
+        "bytes": 2243,
+        "path": "candidate/include/pdal/io/FbiWriter.hpp",
+        "sha256": "4af53375334935ce9f7f35850ff8cb26f90fba7f516a8ed8aa64bb104d69ddcd"
+      },
+      {
+        "bytes": 3719,
+        "path": "candidate/include/pdal/io/GDALReader.hpp",
+        "sha256": "81c653f839e7912d8a697ac3ba26d1bc80cf40f5e50606faabf66af6901fa8d2"
+      },
+      {
+        "bytes": 4259,
+        "path": "candidate/include/pdal/io/GDALWriter.hpp",
+        "sha256": "6af15272c670845e86ba5f3386162f03f4058ba10002db2f478f30ebc7150978"
+      },
+      {
+        "bytes": 3045,
+        "path": "candidate/include/pdal/io/GltfWriter.hpp",
+        "sha256": "e11aad2bbecaa6d1aab87ed517dfb629510294b7e9451bd7426193c4d8931efe"
+      },
+      {
+        "bytes": 5427,
+        "path": "candidate/include/pdal/io/HeaderVal.hpp",
+        "sha256": "011eecef80b8ce4f0cdb10f3f9fc73cbc0cd6e3f4f80da609b76e6e085a94d4d"
+      },
+      {
+        "bytes": 1976,
+        "path": "candidate/include/pdal/io/I3SReader.hpp",
+        "sha256": "a031dd30c719cf1e08cd22d38552a5b86cb3484d3884350c20adde6a68a75b2a"
+      },
+      {
+        "bytes": 4606,
+        "path": "candidate/include/pdal/io/Ilvis2MetadataReader.hpp",
+        "sha256": "a499e0a4993a054c00bf65671f10a97b53f1ef1e7645c04559c16aef812052a3"
+      },
+      {
+        "bytes": 3404,
+        "path": "candidate/include/pdal/io/Ilvis2Reader.hpp",
+        "sha256": "090d69b5293b1bbb587c2406afca543041fefb8885c3f2ae3268e09ee12ca90e"
+      },
+      {
+        "bytes": 10632,
+        "path": "candidate/include/pdal/io/LasHeader.hpp",
+        "sha256": "8dd00401b2a88c2f95ec726b34fa813cf8a45f044f60884acf1fc3599ef10208"
+      },
+      {
+        "bytes": 4943,
+        "path": "candidate/include/pdal/io/LasReader.hpp",
+        "sha256": "342f1d42da4d78f8889179088f8243668c784a01d94d1b910ff17c83949e900c"
+      },
+      {
+        "bytes": 3293,
+        "path": "candidate/include/pdal/io/LasVLR.hpp",
+        "sha256": "b1b975f626a9e59593d5b513d7eb7be235defb050b37e5a13de148fee4827cca"
+      },
+      {
+        "bytes": 6415,
+        "path": "candidate/include/pdal/io/LasWriter.hpp",
+        "sha256": "04e965f01253ceed30df1ced877f3f3a4699e0b589379e87d255ed1de6c79553"
+      },
+      {
+        "bytes": 7272,
+        "path": "candidate/include/pdal/io/MemoryViewReader.hpp",
+        "sha256": "aa502afe05b3877a162205c364bf170503ddc4f19f7557faa1dc4e6465dea694"
+      },
+      {
+        "bytes": 2145,
+        "path": "candidate/include/pdal/io/NullWriter.hpp",
+        "sha256": "32a69221947074d5c70047f1223f44fd9a702c907647cf909a613beb74f3a376"
+      },
+      {
+        "bytes": 3158,
+        "path": "candidate/include/pdal/io/OGRWriter.hpp",
+        "sha256": "991ed4c9cd29d8a785a92bad9dcf9d330b4b365acceeb249871bdc490690a526"
+      },
+      {
+        "bytes": 3496,
+        "path": "candidate/include/pdal/io/ObjReader.hpp",
+        "sha256": "b968d0a6005401b055c36f0924de0bfe526fe40ab9abbb2010c0ca205d8c4f7c"
+      },
+      {
+        "bytes": 3933,
+        "path": "candidate/include/pdal/io/OptechCommon.hpp",
+        "sha256": "ba031e5059f1ab0f1f36fc6d689e673b4f34f0b5fda6d751802fc70e16abc76e"
+      },
+      {
+        "bytes": 3068,
+        "path": "candidate/include/pdal/io/OptechReader.hpp",
+        "sha256": "58561cd2cf6160c9a1d0f7d710d64a8c5ab5c757eeedd4126456a2b0e32d75dc"
+      },
+      {
+        "bytes": 1885,
+        "path": "candidate/include/pdal/io/OptechRotationMatrix.hpp",
+        "sha256": "b8aad2c1c6fcf63436ce32f33c1f3093fb0a2f49eb6baa8e9ab009f0c8caeb55"
+      },
+      {
+        "bytes": 3625,
+        "path": "candidate/include/pdal/io/PcdHeader.hpp",
+        "sha256": "f523d80b973124b6ece30cd203da7eeab666af1578ac8c4cf950b76771a7b8a3"
+      },
+      {
+        "bytes": 2668,
+        "path": "candidate/include/pdal/io/PcdReader.hpp",
+        "sha256": "2d53b25e39ddadadd1fea1f81ec7e20c39f3807eaba2c9795850ec8a708e8462"
+      },
+      {
+        "bytes": 3086,
+        "path": "candidate/include/pdal/io/PcdWriter.hpp",
+        "sha256": "ab25717bf67eb34ca44ce522dfd29f1a99785d8dd0c5273b348720db6903b2f2"
+      },
+      {
+        "bytes": 4847,
+        "path": "candidate/include/pdal/io/PlyReader.hpp",
+        "sha256": "88854b99bfdb0b2ca335e555c38cf04b7f2668d9180df8c9e3b23a6b1d4eac01"
+      },
+      {
+        "bytes": 3988,
+        "path": "candidate/include/pdal/io/PlyWriter.hpp",
+        "sha256": "4d51351adb00c6553603db966002d9a3bdda4832921effa9b522988b0ea7fa99"
+      },
+      {
+        "bytes": 3291,
+        "path": "candidate/include/pdal/io/PtsReader.hpp",
+        "sha256": "032125585d15fd4cafad15192d00fc27513d035a29c30ffa16886ea9aa6b63b3"
+      },
+      {
+        "bytes": 2820,
+        "path": "candidate/include/pdal/io/PtxReader.hpp",
+        "sha256": "509a08c5dbf767845c1e71d0ec19ca643356bc48cf3b545ccfd95b1b7aad651e"
+      },
+      {
+        "bytes": 2895,
+        "path": "candidate/include/pdal/io/QfitReader.hpp",
+        "sha256": "db4a9b0506b3bb028c54d177ff589328e892e8cbc91fbecb08ffb257fe9f2a33"
+      },
+      {
+        "bytes": 2370,
+        "path": "candidate/include/pdal/io/RasterWriter.hpp",
+        "sha256": "66029508283da11a1f05f09c827fde934946b65ecd9f55168796ef7a6abdea3e"
+      },
+      {
+        "bytes": 3471,
+        "path": "candidate/include/pdal/io/SbetCommon.hpp",
+        "sha256": "0651265e5225f061b713febd5e8ab193b11dd4881bbfde4ebc98780eea794a67"
+      },
+      {
+        "bytes": 2634,
+        "path": "candidate/include/pdal/io/SbetReader.hpp",
+        "sha256": "8ebc2026d1fa8c7f69b7178ad15418c7ccb366b84e66ee30d2b975fc3bde9c58"
+      },
+      {
+        "bytes": 2651,
+        "path": "candidate/include/pdal/io/SbetSmrmsgReader.hpp",
+        "sha256": "835d69332d9d4deae364dc16be26801a22437666929dd48568bd3aaa5e6a188e"
+      },
+      {
+        "bytes": 2291,
+        "path": "candidate/include/pdal/io/SbetWriter.hpp",
+        "sha256": "2fc2c430b33a618e636075f877665ee357c4bad75c35c770fe3afdc2cdb190aa"
+      },
+      {
+        "bytes": 1979,
+        "path": "candidate/include/pdal/io/SlpkReader.hpp",
+        "sha256": "dc69d8b8cd66ef89967857057ad755257394a1aa964e3a73e24d2587333237cc"
+      },
+      {
+        "bytes": 2884,
+        "path": "candidate/include/pdal/io/StacReader.hpp",
+        "sha256": "3ee5fe3f50e9b21deda50eeb371bc82b6eb5321e476c1fe112010700c1a275e9"
+      },
+      {
+        "bytes": 3385,
+        "path": "candidate/include/pdal/io/TIndexReader.hpp",
+        "sha256": "8d5c64ef6d95a95971fd83bbe1d878a38d50fb3694d6624ba06c7dbae718fde4"
+      },
+      {
+        "bytes": 3834,
+        "path": "candidate/include/pdal/io/TerrasolidReader.hpp",
+        "sha256": "fbd28b65cc5366cd51a864c54669cb44b527b3de6dc97a52e576f8c0c6f0ffa8"
+      },
+      {
+        "bytes": 4650,
+        "path": "candidate/include/pdal/io/TextReader.hpp",
+        "sha256": "47afc90d8581adf0b792c48881c677fd858ac3ef06daa109615b9cd8aa185467"
+      },
+      {
+        "bytes": 3490,
+        "path": "candidate/include/pdal/io/TextWriter.hpp",
+        "sha256": "f3eb15b6f7b2ba74527fb3f2d7c75787f3e80bdc9001eff65c7d91ba9f670e1b"
+      },
+      {
+        "bytes": 536,
+        "path": "candidate/include/pdal/io/point_types.hpp",
+        "sha256": "1cb94218b2380e2e86a404b4e6e09c15adf3b02f507fa81fa1536ca0f8a24725"
+      },
+      {
+        "bytes": 6629,
+        "path": "candidate/include/pdal/io/private/GDALGrid.hpp",
+        "sha256": "c5885e331f9f2de3551ba11b0e77df033b7c06a89da37ba3e5dfbe7c486d1d2c"
+      },
+      {
+        "bytes": 3025,
+        "path": "candidate/include/pdal/io/private/connector/Connector.hpp",
+        "sha256": "c04e03c52eba9700974006eca3db0c050e794f455348ce28980f3539b775c4d3"
+      },
+      {
+        "bytes": 4105,
+        "path": "candidate/include/pdal/io/private/copc/Entry.hpp",
+        "sha256": "3a502f5ee7d2ef68d06987bc04341124f2a809a1b7a7f1d50f3b36e3fdea1713"
+      },
+      {
+        "bytes": 2625,
+        "path": "candidate/include/pdal/io/private/copc/Info.hpp",
+        "sha256": "14b6d2872d6962c339110d3b29adaaad11ec9fe85c82a08c75785151cf3debe4"
+      },
+      {
+        "bytes": 5579,
+        "path": "candidate/include/pdal/io/private/copc/Key.hpp",
+        "sha256": "4022e1a309e53c67077af030d94d31bff9ca33c44294998da123d9e526e9bba4"
+      },
+      {
+        "bytes": 3061,
+        "path": "candidate/include/pdal/io/private/copc/Tile.hpp",
+        "sha256": "da42eafa575019e3714ba8bf76eeb78edde9724f410486ffe026c36c17b82b7b"
+      },
+      {
+        "bytes": 2263,
+        "path": "candidate/include/pdal/io/private/copcwriter/BuPyramid.hpp",
+        "sha256": "e277e35fbb3b5d24a4ee12db5f0fd9ce34661010b234375f63fdeda85723427e"
+      },
+      {
+        "bytes": 2955,
+        "path": "candidate/include/pdal/io/private/copcwriter/CellManager.hpp",
+        "sha256": "d1ce66bec267ed07b58d30e4809f9d87b53686af1da7e6e05727f2dcc8a94684"
+      },
+      {
+        "bytes": 4469,
+        "path": "candidate/include/pdal/io/private/copcwriter/Common.hpp",
+        "sha256": "4d8540a3e5a5382789a1ec51321f9c5081f6505580ea37e6ed40dc3236157eb7"
+      },
+      {
+        "bytes": 2809,
+        "path": "candidate/include/pdal/io/private/copcwriter/Grid.hpp",
+        "sha256": "655fdc19181a029daadc7e4b1d4a21090053de42a4109a0a358f98ce3302508f"
+      },
+      {
+        "bytes": 2981,
+        "path": "candidate/include/pdal/io/private/copcwriter/GridKey.hpp",
+        "sha256": "8529a70af913d3f0b38db356e7b2a6878344a05bf2378db8095b78f4eca353a8"
+      },
+      {
+        "bytes": 2885,
+        "path": "candidate/include/pdal/io/private/copcwriter/OctantInfo.hpp",
+        "sha256": "bc62ee28c7fc6ab870332cec3b11c141412f14b3af1f63ace384e4809821d033"
+      },
+      {
+        "bytes": 3191,
+        "path": "candidate/include/pdal/io/private/copcwriter/Output.hpp",
+        "sha256": "bce4c8ce13ffa1aa4dbd2192421e4b1c6c304014e9ef9de337e86b2d590ea927"
+      },
+      {
+        "bytes": 2378,
+        "path": "candidate/include/pdal/io/private/copcwriter/Processor.hpp",
+        "sha256": "14077d7d5c1878b1c4c81d7721f4aa73b815932337b52b8b7d8be783a5c8f22e"
+      },
+      {
+        "bytes": 2977,
+        "path": "candidate/include/pdal/io/private/copcwriter/PyramidManager.hpp",
+        "sha256": "0dbbdd18e01177626cfa2c2bba9070768dc8aef6861d441d05f68b2117446353"
+      },
+      {
+        "bytes": 2171,
+        "path": "candidate/include/pdal/io/private/copcwriter/Reprocessor.hpp",
+        "sha256": "281cf6ead9a7e80ac971e3e33efc908ecb97033c3186d04bf5d207995919591d"
+      },
+      {
+        "bytes": 6708,
+        "path": "candidate/include/pdal/io/private/copcwriter/VoxelInfo.hpp",
+        "sha256": "628aaa0ad23663695c6ba31d68d40c68b560c4ba827c3e24972dc016ba37abd0"
+      },
+      {
+        "bytes": 4944,
+        "path": "candidate/include/pdal/io/private/copcwriter/VoxelKey.hpp",
+        "sha256": "fbd323bfe1ff0f7d7928bc1baaab3df8d0bea31f6d898b271c21064163efce4c"
+      },
+      {
+        "bytes": 3716,
+        "path": "candidate/include/pdal/io/private/ept/Addon.hpp",
+        "sha256": "208da7ffe4d1268ec3bb71ef560527e85e7e7f052cbe46fc7397b923479dcd8d"
+      },
+      {
+        "bytes": 2636,
+        "path": "candidate/include/pdal/io/private/ept/Artifact.hpp",
+        "sha256": "162ca157c0a0ad7b6aefb5de474b3a5d59ce806c851fbd498b3837990e20bd2b"
+      },
+      {
+        "bytes": 3724,
+        "path": "candidate/include/pdal/io/private/ept/EptInfo.hpp",
+        "sha256": "a6cdda872228476a4ff24ef937adcd1e8cf894ef20ef28d637436852cb9f5112"
+      },
+      {
+        "bytes": 2256,
+        "path": "candidate/include/pdal/io/private/ept/EptSupport.hpp",
+        "sha256": "bddbe44aed80b356016ff909b2636fcd66b7b9052f706e6d4b27364b42c0e705"
+      },
+      {
+        "bytes": 2735,
+        "path": "candidate/include/pdal/io/private/ept/FixedPointLayout.hpp",
+        "sha256": "40355e137f2283649f23d941ebf918ddb1b259d253d6334a11b3e13b6cdbe41e"
+      },
+      {
+        "bytes": 4729,
+        "path": "candidate/include/pdal/io/private/ept/Key.hpp",
+        "sha256": "378f96c813def5d4e13f056ed6bf51d3aff81b80a7ef764e5f8da3c3ebdc403f"
+      },
+      {
+        "bytes": 2621,
+        "path": "candidate/include/pdal/io/private/ept/Overlap.hpp",
+        "sha256": "c9c7fa1df255f41886e01429bb1d27fb0395f04604261eb34685b8b9bbd3946a"
+      },
+      {
+        "bytes": 3373,
+        "path": "candidate/include/pdal/io/private/ept/TileContents.hpp",
+        "sha256": "4f591f9bccef0ef0892b3586aad1fccddea0b65e71dededb749570185f3958bc"
+      },
+      {
+        "bytes": 2508,
+        "path": "candidate/include/pdal/io/private/ept/VectorPointTable.hpp",
+        "sha256": "98aeae07bcb4876c7645a5124b9c815f394052dfadd8e5b2f6280ef1edc0a7ed"
+      },
+      {
+        "bytes": 4025,
+        "path": "candidate/include/pdal/io/private/esri/EsriUtil.hpp",
+        "sha256": "1b2e0e1c64e4e7c1b45c1e10e514da4e62be192d864e60832153c961e533e3b3"
+      },
+      {
+        "bytes": 2203,
+        "path": "candidate/include/pdal/io/private/esri/Interface.hpp",
+        "sha256": "fa4587ad925c4ceb3fabb3f2eebb98f4344aadec43c3d4baae4195e7cd33333b"
+      },
+      {
+        "bytes": 3402,
+        "path": "candidate/include/pdal/io/private/esri/Obb.hpp",
+        "sha256": "5797863754e08d1a9c9891f680a27edf51f374aedd71051317b7c282cbe28795"
+      },
+      {
+        "bytes": 2652,
+        "path": "candidate/include/pdal/io/private/esri/PageManager.hpp",
+        "sha256": "b2b9d848846f9bd0b5a1997afb025de9dc2e664d2983292c65ab3a49a2c99d69"
+      },
+      {
+        "bytes": 6331,
+        "path": "candidate/include/pdal/io/private/las/ChunkInfo.hpp",
+        "sha256": "818e6305cffac5e7df096aaf0fdcd4aed593da26200af25a321afb2841fcf972"
+      },
+      {
+        "bytes": 3047,
+        "path": "candidate/include/pdal/io/private/las/Geotiff.hpp",
+        "sha256": "fdebce328f768e9576af1864822d29a75b695df2ee472cadabdf6529b6e984f0"
+      },
+      {
+        "bytes": 5677,
+        "path": "candidate/include/pdal/io/private/las/Header.hpp",
+        "sha256": "283b4de3677a0640dfc3931ad83d1d8e426e03141a136254e09e02771e5b2800"
+      },
+      {
+        "bytes": 2729,
+        "path": "candidate/include/pdal/io/private/las/Srs.hpp",
+        "sha256": "7ba1c347fbf67c67252cb372cf181bf789c118cdbad4a753faa2e3e1e5feaa91"
+      },
+      {
+        "bytes": 2887,
+        "path": "candidate/include/pdal/io/private/las/Summary.hpp",
+        "sha256": "b2b9210016514a1f0a1ce0c98edea0f8ea2726144751c92c8ba6749279551806"
+      },
+      {
+        "bytes": 2948,
+        "path": "candidate/include/pdal/io/private/las/Tile.hpp",
+        "sha256": "9a8f5f0240b1652299fd7f6e5aea2e873030de0a09db8518af063780d1ef9204"
+      },
+      {
+        "bytes": 11024,
+        "path": "candidate/include/pdal/io/private/las/Utils.hpp",
+        "sha256": "fee9664ef4ed3ff40ceccd165771a736bbd35b5c8e422c5ee2f21e0a5905dc35"
+      },
+      {
+        "bytes": 7906,
+        "path": "candidate/include/pdal/io/private/las/Vlr.hpp",
+        "sha256": "38cabbbe79a0519e8e16a9ffe4386d5172d996c9efaef78706cd2bf289d0bb17"
+      },
+      {
+        "bytes": 3461,
+        "path": "candidate/include/pdal/io/private/stac/Catalog.hpp",
+        "sha256": "d749957b4a5b5b0266456701d934d06d164e42b589e517fdd5eee0cf00695a9a"
+      },
+      {
+        "bytes": 2141,
+        "path": "candidate/include/pdal/io/private/stac/Collection.hpp",
+        "sha256": "f1cc11086f0571a53a992110ee8cfb89a0dc1b5400b1b474364e263e9bf7bcf6"
+      },
+      {
+        "bytes": 3804,
+        "path": "candidate/include/pdal/io/private/stac/Item.hpp",
+        "sha256": "e76c17ced2f024d98d91ac39942169d482d5e8b15500953edf565f27c18d37a2"
+      },
+      {
+        "bytes": 2451,
+        "path": "candidate/include/pdal/io/private/stac/ItemCollection.hpp",
+        "sha256": "4baa306eb9828febbfe1a0cd52c09d574a6935e34f1eb826324dd5836797a17d"
+      },
+      {
+        "bytes": 4033,
+        "path": "candidate/include/pdal/io/private/stac/Utils.hpp",
+        "sha256": "a4ef5d4f471424f043636b3ed3f0d4aecf845bd55a9fc008e8144d971d043722"
+      },
+      {
+        "bytes": 2313,
+        "path": "candidate/include/pdal/kernels/ChamferKernel.hpp",
+        "sha256": "e37a4a5ac4f17b89699181ed479d4d86f1fbd770fd297afe8dadf6177f0a0d89"
+      },
+      {
+        "bytes": 3052,
+        "path": "candidate/include/pdal/kernels/DeltaKernel.hpp",
+        "sha256": "cb19270cb13018ef383b372ec958c654125af8501aa0110598b1df0925d34d00"
+      },
+      {
+        "bytes": 2431,
+        "path": "candidate/include/pdal/kernels/DensityKernel.hpp",
+        "sha256": "62a1c44494a680370ffa47ffdb74f057248e6ebf754ae7f34d8eb81858edab5a"
+      },
+      {
+        "bytes": 6133,
+        "path": "candidate/include/pdal/kernels/EvalKernel.hpp",
+        "sha256": "45a3e5a8e2acda6ded520a33ee86212252d8a1ca323d0b894578775b7ee0d17d"
+      },
+      {
+        "bytes": 2311,
+        "path": "candidate/include/pdal/kernels/GroundKernel.hpp",
+        "sha256": "3b6ba519f2375703ba79a2c87627f39159a1ffd151fc1019c2e3a52ce991d777"
+      },
+      {
+        "bytes": 2283,
+        "path": "candidate/include/pdal/kernels/HausdorffKernel.hpp",
+        "sha256": "9673b00cb49b1d59a1f64111c701cbdc102c9c3f808b90df7651eab787d6fccc"
+      },
+      {
+        "bytes": 3455,
+        "path": "candidate/include/pdal/kernels/InfoKernel.hpp",
+        "sha256": "d1f994f0d96b959e97d84ecd56c06fa7d29df7e3f6cecb78a58af666262896de"
+      },
+      {
+        "bytes": 2120,
+        "path": "candidate/include/pdal/kernels/MergeKernel.hpp",
+        "sha256": "babb2983ecec4a00260c31ee12020265f408b8c2e3d67a95a62708a791e0265f"
+      },
+      {
+        "bytes": 2574,
+        "path": "candidate/include/pdal/kernels/PipelineKernel.hpp",
+        "sha256": "4ba7b1f2b18a23c9c34442c089a794af93cf86d37e00f904da26de072f2925e9"
+      },
+      {
+        "bytes": 2268,
+        "path": "candidate/include/pdal/kernels/RandomKernel.hpp",
+        "sha256": "71ba8ff0c2ace9c4a10392c13f0864e8aa4d97928661c80a9cc8f37fd2701d6c"
+      },
+      {
+        "bytes": 2167,
+        "path": "candidate/include/pdal/kernels/SortKernel.hpp",
+        "sha256": "4e68b113f48bd3d14b60d9dd9f281992111239e476932a807da481a36e6e15df"
+      },
+      {
+        "bytes": 2225,
+        "path": "candidate/include/pdal/kernels/SplitKernel.hpp",
+        "sha256": "5def6ae40c1203660a966505745c611a30786e53a397abdb58630abe2223c1dc"
+      },
+      {
+        "bytes": 4536,
+        "path": "candidate/include/pdal/kernels/TIndexKernel.hpp",
+        "sha256": "c1d9cd8cbc95b49b0723e8ec1abffb96dcb6e8834cf2dcd227fc5682dbe107b8"
+      },
+      {
+        "bytes": 2786,
+        "path": "candidate/include/pdal/kernels/TileKernel.hpp",
+        "sha256": "027cda1baea0caad2322669cbf77ad3ba79a286311b538f8ebe7a3002a769c8c"
+      },
+      {
+        "bytes": 2692,
+        "path": "candidate/include/pdal/kernels/TranslateKernel.hpp",
+        "sha256": "b5cd727699bf968f490a84e58488c6c66a5d1bfbcf78af919078378009496750"
+      },
+      {
+        "bytes": 2531,
+        "path": "candidate/include/pdal/kernels/private/PointlessLas.hpp",
+        "sha256": "a3f1de9b31e655f66ac2557f11a0b25a96deab3ce044070dd282155cee5ee458"
+      },
+      {
+        "bytes": 2541,
+        "path": "candidate/include/pdal/kernels/private/density/OGR.hpp",
+        "sha256": "6730373a128dcb2cfbbcce027ae20784c821fe9ddffda9440a61cd32a0e61af1"
+      },
+      {
+        "bytes": 7722,
+        "path": "candidate/include/pdal/kernels/private/stac/StacInfo.hpp",
+        "sha256": "0cf497ce70793ab0a332db5de1830aa3a0963d3e6b62356925f284a8a9525b1b"
+      },
+      {
+        "bytes": 1963,
+        "path": "candidate/include/pdal/pdal.hpp",
+        "sha256": "9c6d4b66f87be711b279a4295f867f7d534bc52f62b1a412f3e0efb92ad0a402"
+      },
+      {
+        "bytes": 2500,
+        "path": "candidate/include/pdal/pdal_config.hpp",
+        "sha256": "675c72ca89f0eb98e537bf0cf6803caf06a64c4d61e4a60285f0f5ff2d497257"
+      },
+      {
+        "bytes": 1983,
+        "path": "candidate/include/pdal/pdal_export.hpp",
+        "sha256": "7241d419e5e316e1d7192deb9a6efed776a361637921f1556fa85661ace4a8eb"
+      },
+      {
+        "bytes": 924,
+        "path": "candidate/include/pdal/pdal_features.hpp",
+        "sha256": "76322a5a9c792497efd082ab9763afa376c8b177eea46cb07492fdeb338ed6ef"
+      },
+      {
+        "bytes": 2274,
+        "path": "candidate/include/pdal/pdal_internal.hpp",
+        "sha256": "1db502bac63689544b1963d0d9068cf2f5234de7092ffde6de93d556f18c5966"
+      },
+      {
+        "bytes": 3002,
+        "path": "candidate/include/pdal/pdal_test_main.hpp",
+        "sha256": "e8e8fe63a7f10cea941731efc491c952318cfa552620facfdb697eeccb6fe287"
+      },
+      {
+        "bytes": 8291,
+        "path": "candidate/include/pdal/pdal_types.hpp",
+        "sha256": "0db99a4ce690cbece68e759ebb105a890aaaab3052f5f043102dab469b2dd155"
+      },
+      {
+        "bytes": 2537,
+        "path": "candidate/include/pdal/private/DynamicLibrary.hpp",
+        "sha256": "1faf45a8b5b1cd48b38e45782fb2176c24afae6e437e325aa0e526f4c1a74f8c"
+      },
+      {
+        "bytes": 2002,
+        "path": "candidate/include/pdal/private/FileSpecHelper.hpp",
+        "sha256": "471e1de25396a0f6651b1d5f6f21e521a9f0b7330b9cee21692953ad16ee09dc"
+      },
+      {
+        "bytes": 7659,
+        "path": "candidate/include/pdal/private/HostNeighborhoodWorkers.hpp",
+        "sha256": "df7850f26942bad90db94c54dc30046ad4c2432b0a965c6b4796e86f7a7a3de3"
+      },
+      {
+        "bytes": 5881,
+        "path": "candidate/include/pdal/private/HostSlotPool.hpp",
+        "sha256": "e64f70122ed2b76f9f0a31dbe97a2b5c4da8e31670e7ae703d5f82617b7f91d1"
+      },
+      {
+        "bytes": 19864,
+        "path": "candidate/include/pdal/private/KDImpl.hpp",
+        "sha256": "d1df91caad9eeb48d77452ba1344b49ea660c783d67c91e0f3cdc0e40f7bde9d"
+      },
+      {
+        "bytes": 12627,
+        "path": "candidate/include/pdal/private/MathUtils.hpp",
+        "sha256": "429161ac6893e1c72536c173d82c65d2ddc9ffe180a989f7eb282938fded8c61"
+      },
+      {
+        "bytes": 2138,
+        "path": "candidate/include/pdal/private/OGRSpec.hpp",
+        "sha256": "fdd2e73170ecb5fa4c673e9a732727e7e8aaafaed9df4c67b848027ae3175366"
+      },
+      {
+        "bytes": 4105,
+        "path": "candidate/include/pdal/private/PointGrid.hpp",
+        "sha256": "3d5dc605159a120b10f4ba3eaa9e4a07b1278bfc1ec3fb9b25726199d83f700a"
+      },
+      {
+        "bytes": 7386,
+        "path": "candidate/include/pdal/private/Raster.hpp",
+        "sha256": "d30dd182ea625a9c0618ed9ca1d3e396618aa35c946d9f2b59c49a1f29f94ce6"
+      },
+      {
+        "bytes": 3981,
+        "path": "candidate/include/pdal/private/SrsTransform.hpp",
+        "sha256": "e50ae1594eee2bae3b7faa071e2657a159af3b2b25c92edd98edb17534cc150b"
+      },
+      {
+        "bytes": 2168,
+        "path": "candidate/include/pdal/private/StageRunner.hpp",
+        "sha256": "46bcd97a71bfd25a5376beb73f06ef4b1a2300c3918acd513db2eeed6588d61f"
+      },
+      {
+        "bytes": 3878,
+        "path": "candidate/include/pdal/private/gdal/ErrorHandler.hpp",
+        "sha256": "021e195bb5ee1138def0249d111d900d3359d07654efb17eecfeb845b0479b88"
+      },
+      {
+        "bytes": 2327,
+        "path": "candidate/include/pdal/private/gdal/GDALError.hpp",
+        "sha256": "a27951d1f8d23744cb6a815a60c37d8f583a6e76c0e357a0dc706f5fd4c2c890"
+      },
+      {
+        "bytes": 3443,
+        "path": "candidate/include/pdal/private/gdal/GDALUtils.hpp",
+        "sha256": "d98ab074d912c47b1578eeace1a7383d73c4287d2987dd36aaf4d6faa2856fb7"
+      },
+      {
+        "bytes": 19157,
+        "path": "candidate/include/pdal/private/gdal/Raster.hpp",
+        "sha256": "c7e8340c7e5beb910d24dd4b267fae44bcacf5c425093d009ee127509463951d"
+      },
+      {
+        "bytes": 2504,
+        "path": "candidate/include/pdal/private/gdal/SpatialRef.hpp",
+        "sha256": "28aa3780bab9a29995380d7df1bb4111097a9b910b819e796e01dc337518614a"
+      },
+      {
+        "bytes": 3193,
+        "path": "candidate/include/pdal/util/Algorithm.hpp",
+        "sha256": "49fb5e8d196e26f8cc28b34a9588c43f7bbcf019a30d51f9932f260561265e5c"
+      },
+      {
+        "bytes": 2117,
+        "path": "candidate/include/pdal/util/Backtrace.hpp",
+        "sha256": "7ff37d64697c1b6ee2046c20deae8e9442eaca0b2544380705284548c81fbd7b"
+      },
+      {
+        "bytes": 23144,
+        "path": "candidate/include/pdal/util/Bounds.hpp",
+        "sha256": "2993ae012efaf01715cb40fba2b06f675af2f0b850dd97dc868e82f5ec98b33c"
+      },
+      {
+        "bytes": 4288,
+        "path": "candidate/include/pdal/util/Charbuf.hpp",
+        "sha256": "f59a95a2c2159527a62d196e4f59aceb8a541c26f3685c8c6d6de2f5ef078868"
+      },
+      {
+        "bytes": 17527,
+        "path": "candidate/include/pdal/util/Extractor.hpp",
+        "sha256": "659700dbffd01090f32f721d75c863db9992f99ab9c5755a346fa6b225c89df2"
+      },
+      {
+        "bytes": 10094,
+        "path": "candidate/include/pdal/util/FileUtils.hpp",
+        "sha256": "6e26d9368bb138e4aedc031d54f651bf039ca5f8fab24d3aae4b618cb4c9aeb1"
+      },
+      {
+        "bytes": 2901,
+        "path": "candidate/include/pdal/util/Georeference.hpp",
+        "sha256": "cded9f1110cd0220f1df625d3810ffb0adf60ddf726be7cef074916f9b5e8dd6"
+      },
+      {
+        "bytes": 18518,
+        "path": "candidate/include/pdal/util/IStream.hpp",
+        "sha256": "5b3ad21749e957edac29f1de0cee103fef98af8d5def72995c123ccd7c4f8943"
+      },
+      {
+        "bytes": 7841,
+        "path": "candidate/include/pdal/util/Inserter.hpp",
+        "sha256": "c28d316b6880d108217fedb7eb3473311c094054b273407d1bb0126418e7e8bb"
+      },
+      {
+        "bytes": 2417,
+        "path": "candidate/include/pdal/util/NullOStream.hpp",
+        "sha256": "d3a9a87c85971fde57ea653e4a56674a8e8ed33e109b1bb2e810963d02f71aba"
+      },
+      {
+        "bytes": 9006,
+        "path": "candidate/include/pdal/util/OStream.hpp",
+        "sha256": "09300eaaae3641845b8e86c47e4711ae64c5290b4b698be11a831d4dce8ef9a9"
+      },
+      {
+        "bytes": 50825,
+        "path": "candidate/include/pdal/util/ProgramArgs.hpp",
+        "sha256": "19714d350c647748c973093644949a6df0a41be799f52890b25bd124403dfa63"
+      },
+      {
+        "bytes": 2261,
+        "path": "candidate/include/pdal/util/Random.hpp",
+        "sha256": "18c51a967278d38580bd0007b20e0cbe0556c9df31e95558ad82ccceaa6cbf21"
+      },
+      {
+        "bytes": 5488,
+        "path": "candidate/include/pdal/util/ThreadPool.hpp",
+        "sha256": "335b081626bfebd905b29d0c6275a0bf961991dc6c9543024ab0d00e8ea10883"
+      },
+      {
+        "bytes": 34951,
+        "path": "candidate/include/pdal/util/Utils.hpp",
+        "sha256": "4676853bd6d183e513aa31e99e5c98ebf858f0551e61a44dff26614cedf0d280"
+      },
+      {
+        "bytes": 8132,
+        "path": "candidate/include/pdal/util/Uuid.hpp",
+        "sha256": "0a5118470cb5a78a9874c371700094fa18ed304fb4d4c72265cec79cea852d8a"
+      },
+      {
+        "bytes": 2799,
+        "path": "candidate/include/pdal/util/VSIIO.hpp",
+        "sha256": "9fc834fd1fe42f9eb85d8d23b82e8f427f880789ceab4eaad8f4de7151b5f038"
+      },
+      {
+        "bytes": 2697,
+        "path": "candidate/include/pdal/util/pdal_util_export.hpp",
+        "sha256": "b69c4d10706b7ac886e975cf73201b0ea70f7fb8835cb6bb308cb05f18f4cd5b"
+      },
+      {
+        "bytes": 2365,
+        "path": "candidate/include/pdal/util/pdal_util_internal.hpp",
+        "sha256": "8d7aa1f8d93c873ddf53ef373be19c189483618a6e911b02658f3c1a867da1c9"
+      },
+      {
+        "bytes": 3352,
+        "path": "candidate/include/pdal/util/portable_endian.hpp",
+        "sha256": "ba000c0deef3977a47598af791f0575f4ef8550acef1066c2f9e6a34681344d1"
+      },
+      {
+        "bytes": 2145,
+        "path": "candidate/include/pdal/util/private/BacktraceImpl.hpp",
+        "sha256": "2faca05a0db4fa2640cdb42b8a828d59dd49febbde86c2cd6eb486b5063325e9"
+      },
+      {
+        "bytes": 6247,
+        "path": "candidate/include/pdal/util/private/JsonSupport.hpp",
+        "sha256": "1e5c02065f844ff46125dd6bee24b1fb3f2c672f2200c700a80d578c6bdbdaec"
+      },
+      {
+        "bytes": 1532,
+        "path": "candidate/include/pdg/CalibrationProbes.hpp",
+        "sha256": "f85fa2424315c2f1dfa877724dcacc6b02b0fb19668c54d28b118da14a3febf3"
+      },
+      {
+        "bytes": 655,
+        "path": "candidate/include/pdg/Compaction.hpp",
+        "sha256": "76ab27d7263e89f50eb2dd5788117e72f2ead77ba1eb6455de3c3c330c01edab"
+      },
+      {
+        "bytes": 960,
+        "path": "candidate/include/pdg/Coordinate.hpp",
+        "sha256": "b679423331448111a855ce17a237549f3e84352ff53e6b1fb875d0d013824935"
+      },
+      {
+        "bytes": 984,
+        "path": "candidate/include/pdg/Cuda.hpp",
+        "sha256": "1ff3b5df2bc925694d78a4e471471e6b54f68e27e69d1f18e0b63fcb802419b1"
+      },
+      {
+        "bytes": 3436,
+        "path": "candidate/include/pdg/Dimension.hpp",
+        "sha256": "768bd46414b6c7ea8cb6cd12e068cbd76fd99a0c58c3c589b7b062d9675976d0"
+      },
+      {
+        "bytes": 3254,
+        "path": "candidate/include/pdg/ExecutionStats.hpp",
+        "sha256": "b93217100b70224cd4132cf2047427443760176d721d626a9ea6701c74eb2634"
+      },
+      {
+        "bytes": 1647,
+        "path": "candidate/include/pdg/Expression.hpp",
+        "sha256": "38ca9a5687539fdc30e11f0e09bed6198279a3a4b8ae4314b8b2ed0e849dde93"
+      },
+      {
+        "bytes": 989,
+        "path": "candidate/include/pdg/FastMode.hpp",
+        "sha256": "126e55d78c3088e70ab4618ac3db738abc680d8acfc0f92e380d27a99523052d"
+      },
+      {
+        "bytes": 6394,
+        "path": "candidate/include/pdg/Hybrid.hpp",
+        "sha256": "384f7c784f8a2bf784ed68f0b19b6917226a1086b20e6522ee285dfbe884cfb4"
+      },
+      {
+        "bytes": 9091,
+        "path": "candidate/include/pdg/LocalProfile.hpp",
+        "sha256": "e6646bef7a8649f9c78384df9c65672d4049e8dd90f7da9c853e1ad657f2c190"
+      },
+      {
+        "bytes": 2800,
+        "path": "candidate/include/pdg/Memory.hpp",
+        "sha256": "34fbb5c668be1e2144bf9b04a06cd45a3f6d43ab272735ddf561c243f4c138c4"
+      },
+      {
+        "bytes": 1725,
+        "path": "candidate/include/pdg/PackedPointBatch.hpp",
+        "sha256": "29738afb8ae488206a92d84b3ddf2d88223afb180dcbd8fcaf2cbb058637c807"
+      },
+      {
+        "bytes": 9867,
+        "path": "candidate/include/pdg/Placement.hpp",
+        "sha256": "d27283141d9298fed72d2137dab00e55653ffe774054793a990e699e87a14656"
+      },
+      {
+        "bytes": 2121,
+        "path": "candidate/include/pdg/PlacementCalibration.hpp",
+        "sha256": "dc2702fe3d9ba0147ee66f5b513aa39495305cd3261988eb27a37d17a7b58dd5"
+      },
+      {
+        "bytes": 12642,
+        "path": "candidate/include/pdg/Plan.hpp",
+        "sha256": "af3af4568f6d215817f492edf781d94623f15c367df1030fc524632394e6880b"
+      },
+      {
+        "bytes": 4790,
+        "path": "candidate/include/pdg/PointBatch.hpp",
+        "sha256": "54111cf015a8959d1e561879a4c154766f62c93351cc1c44bf67a647076e8a1e"
+      },
+      {
+        "bytes": 1389,
+        "path": "candidate/include/pdg/ResidentPipeline.hpp",
+        "sha256": "4534d45a916b8ab529c183328669a6f5ae26972bfb292be51912f8a31283a870"
+      },
+      {
+        "bytes": 8159,
+        "path": "candidate/include/pdg/RuntimePlacement.hpp",
+        "sha256": "d00ef376357c4c536caaf0f7533f8ff9daeeafd0f0f3ef1f22486fabaaf5968a"
+      },
+      {
+        "bytes": 2061,
+        "path": "candidate/include/pdg/Scheduler.hpp",
+        "sha256": "be56da4b8ae337ee0e67cb32a41837b1d084ab191f40aedab55d390f9cea94ab"
+      },
+      {
+        "bytes": 2232,
+        "path": "candidate/include/pdg/SyntheticCloud.hpp",
+        "sha256": "21d34d2e727391283084bc8d434132b70d1ce175c2b64feae897d531ea7a7f66"
+      },
+      {
+        "bytes": 409,
+        "path": "candidate/include/pdg/Version.hpp",
+        "sha256": "86a2ab734d51ebf876b68071cd111933902f311f1077704c65c106c66e338007"
+      },
+      {
+        "bytes": 3151,
+        "path": "candidate/include/pdg/generated/Dimensions.hpp",
+        "sha256": "9f3752b7a3a7f4f3f0b55d2d5376ba02c4107934d72cc70d977aca9236b300e2"
+      },
+      {
+        "bytes": 10151,
+        "path": "candidate/include/pdg/index/RasterGrid.hpp",
+        "sha256": "e3812238e59b43172ed5f66184c62b786263000f154276b565cf30730d081fd6"
+      },
+      {
+        "bytes": 30172,
+        "path": "candidate/include/pdg/index/SpatialIndex.hpp",
+        "sha256": "efdb6f0bee63729ffcf37b629f94cf0ee627fabb87155c47858818100f9771d1"
+      },
+      {
+        "bytes": 7304,
+        "path": "candidate/include/pdg/index/SpatialTile.hpp",
+        "sha256": "5bc519e0ac942d0e4a52a846326a6e1b5b7f16990eafbd936f74de39ab2b2ec8"
+      },
+      {
+        "bytes": 3627,
+        "path": "candidate/include/pdg/io/Las.hpp",
+        "sha256": "3401b8cde4c712b74dbe550d1c978f72678535929421a4aaaa894478867f63de"
+      },
+      {
+        "bytes": 2086,
+        "path": "candidate/include/pdg/io/LasCuda.hpp",
+        "sha256": "997db8bd3d7795f5e879e126344656cf64ccd2fb162d733d00ff08ca851197c7"
+      },
+      {
+        "bytes": 748,
+        "path": "candidate/include/pdg/io/LasFerry.hpp",
+        "sha256": "500e9bfbdbfb988c67f3b044e21b10fb868008a960013f0ff8bfa417cd11ee94"
+      },
+      {
+        "bytes": 1766,
+        "path": "candidate/include/pdg/io/LasPointProgram.hpp",
+        "sha256": "7f58df6a0e2cac08a21aee4466309aec2ebbf2ec2431d46b4f40a511188a4957"
+      },
+      {
+        "bytes": 3767,
+        "path": "candidate/include/pdg/io/LasTranslate.hpp",
+        "sha256": "6b838da57d8235acb8a0d691a6082036a985b4904a55b009a65208a67c6575df"
+      },
+      {
+        "bytes": 4504,
+        "path": "candidate/include/pdg/io/LasTranslateCuda.hpp",
+        "sha256": "2e05d36ffdd2adaf4bff97c87ced1a72c725677ca62037fa6d0c2c617c37c543"
+      },
+      {
+        "bytes": 1778,
+        "path": "candidate/include/pdg/stages/Assign.hpp",
+        "sha256": "dbb308cdba590bd24b2f848581d6be2601b27e599dc0fed1b327f037948a5321"
+      },
+      {
+        "bytes": 1353,
+        "path": "candidate/include/pdg/stages/ColorMap.hpp",
+        "sha256": "557bf3978622afc965d6e5e96e0e603f94bf2d913285cd8f4d624336895cd07c"
+      },
+      {
+        "bytes": 459,
+        "path": "candidate/include/pdg/stages/Crop.hpp",
+        "sha256": "cd6144718ef489c4b1d3f641b6aebfd45d327fb113677eaa763a9f149d2f61ad"
+      },
+      {
+        "bytes": 2119,
+        "path": "candidate/include/pdg/stages/Csf.hpp",
+        "sha256": "666bebe007ee3749ee021df12b1e0277cb19bbb24d9bcf5bfc983741b4e865ca"
+      },
+      {
+        "bytes": 1581,
+        "path": "candidate/include/pdg/stages/Elm.hpp",
+        "sha256": "5d50f8f5ff836c63cbb8bdac91b73deb725ef9c276aac699520fde06f8d2f798"
+      },
+      {
+        "bytes": 2136,
+        "path": "candidate/include/pdg/stages/Expression.hpp",
+        "sha256": "ebdcd1cab8f680cadd2ebc574d924be00983fb54a6daeadfe87d98ece99f25cf"
+      },
+      {
+        "bytes": 1053,
+        "path": "candidate/include/pdg/stages/Ferry.hpp",
+        "sha256": "01ac5bd234cd4eba39c0ebd0ef40f168621d741541341d65a85183132cbd29f2"
+      },
+      {
+        "bytes": 161,
+        "path": "candidate/include/pdg/stages/Grouping.hpp",
+        "sha256": "421e817e7d65d3238acfdeb4d40f60bcb9005ac5da9d0c3c3dbf5e43f64db039"
+      },
+      {
+        "bytes": 1439,
+        "path": "candidate/include/pdg/stages/Histogram.hpp",
+        "sha256": "3d50e03e28c58030037b4391b6a6bac561427dcded0df599f1412af745f4c7d3"
+      },
+      {
+        "bytes": 1344,
+        "path": "candidate/include/pdg/stages/Information.hpp",
+        "sha256": "a27c318c4bff23971340b67aa87b4cc6adb9c308e02f8f5ca35ecad4fa1f40df"
+      },
+      {
+        "bytes": 1042,
+        "path": "candidate/include/pdg/stages/LabelDuplicates.hpp",
+        "sha256": "824feae4834d63dbe595a250b6f9e4d952d1647614046ccabe6dbedcf443225d"
+      },
+      {
+        "bytes": 1387,
+        "path": "candidate/include/pdg/stages/Locate.hpp",
+        "sha256": "3cc198b2879493cf41c30470ef96b724e5826b9e9d4cb154517bccbb88d67729"
+      },
+      {
+        "bytes": 338,
+        "path": "candidate/include/pdg/stages/Metadata.hpp",
+        "sha256": "d06bdb009c046638ce42336c4ab201faaa71c225699f615875c6aaf4a24ab4b1"
+      },
+      {
+        "bytes": 1318,
+        "path": "candidate/include/pdg/stages/Morton.hpp",
+        "sha256": "166e22d88053a6ba24cd3df6622f47cba7b31c7785e272ed02165834cc4dc60e"
+      },
+      {
+        "bytes": 8137,
+        "path": "candidate/include/pdg/stages/Neighborhood.hpp",
+        "sha256": "d93f1cbf2629023c2d1e56c171aa6b3d320affbf942e8f15aaf8f9ff636a56fe"
+      },
+      {
+        "bytes": 2508,
+        "path": "candidate/include/pdg/stages/Ordering.hpp",
+        "sha256": "961b7b7199e07646f624b9aa694dbc003fdbf29d072c2d127cf3ccbed00d2d67"
+      },
+      {
+        "bytes": 2058,
+        "path": "candidate/include/pdg/stages/Ordinal.hpp",
+        "sha256": "07047711b55c3bb3ed8d4cd1e088bfe1a352da31d407ea382d5765d2d9ac8e13"
+      },
+      {
+        "bytes": 3094,
+        "path": "candidate/include/pdg/stages/Partition.hpp",
+        "sha256": "f36aeb52cedd380774ceee77c53ec7c2a67d3aeea4269e7e9bd3b480fb783b47"
+      },
+      {
+        "bytes": 4599,
+        "path": "candidate/include/pdg/stages/Pmf.hpp",
+        "sha256": "258ecf77b43d9c0d84727bb089dbf0e891a5d57e2035de5728e17573826c16e1"
+      },
+      {
+        "bytes": 563,
+        "path": "candidate/include/pdg/stages/Range.hpp",
+        "sha256": "3852e8f11b547600e3019b644f25d5a5362e577499b88f5a5c693ed860a93f25"
+      },
+      {
+        "bytes": 1023,
+        "path": "candidate/include/pdg/stages/Robust.hpp",
+        "sha256": "ee0acfbb933f07eb9cdc22bbceed90201456bb51a16956a00cdd69d6262cc86d"
+      },
+      {
+        "bytes": 1627,
+        "path": "candidate/include/pdg/stages/Skewness.hpp",
+        "sha256": "d08d3845cf8e6ca240b6e174dd7582a50052892653ecd1ae70937471769575aa"
+      },
+      {
+        "bytes": 3220,
+        "path": "candidate/include/pdg/stages/Smrf.hpp",
+        "sha256": "6b4e005902c43dbfd6d65e971465337e7939aa7db1bb98561b2f9f5bb97e4853"
+      },
+      {
+        "bytes": 2786,
+        "path": "candidate/include/pdg/stages/Summary.hpp",
+        "sha256": "dd90c232987499e8cd193f71b597d0fdde0ef198080a438f25b730d191fe6b15"
+      },
+      {
+        "bytes": 778,
+        "path": "candidate/include/pdg/stages/Transformation.hpp",
+        "sha256": "2c36a6d8d8abcd7998989282799616e7c16cb8d988ae04b8fa551aebd8328d34"
+      },
+      {
+        "bytes": 1874,
+        "path": "candidate/lib/cmake/PDAL/PDALConfig.cmake",
+        "sha256": "02b144bb224f2c3e6aae1100c25e59e64fb9d0b58a5096356ef2e3571c0ddd7a"
+      },
+      {
+        "bytes": 1862,
+        "path": "candidate/lib/cmake/PDAL/PDALConfigVersion.cmake",
+        "sha256": "3fc8d3b7f57294e0241ea072407ea317f60555aa1eb42fbd70803d2f0bcb72dd"
+      },
+      {
+        "bytes": 889,
+        "path": "candidate/lib/cmake/PDAL/PDALTargets-release.cmake",
+        "sha256": "3321f1b39d6f81464ed6be77e5893bdfd0f3f5140f16ad4c7c95bad04f4be8b4"
+      },
+      {
+        "bytes": 3910,
+        "path": "candidate/lib/cmake/PDAL/PDALTargets.cmake",
+        "sha256": "a6edbe359cc2c4fda66a7dbeb22cda301d4b42d0a46ff43ffa8e420a0bdb6de1"
+      },
+      {
+        "bytes": 1270,
+        "path": "candidate/lib/cmake/PDAL/pluginmacros.cmake",
+        "sha256": "c412ffcedb938774db8fb51216a676d8723407048e8d9185fc514115e5c2ba08"
+      },
+      {
+        "bytes": 78408,
+        "path": "candidate/lib/libpdal_plugin_kernel_fauxplugin.so",
+        "sha256": "47079e93a41a17b2e1519b746cc6158457649608a1bfbc8cd6b721ec374202a3"
+      },
+      {
+        "bytes": 78408,
+        "path": "candidate/lib/libpdal_plugin_kernel_fauxplugin.so.20",
+        "sha256": "47079e93a41a17b2e1519b746cc6158457649608a1bfbc8cd6b721ec374202a3"
+      },
+      {
+        "bytes": 78408,
+        "path": "candidate/lib/libpdal_plugin_kernel_fauxplugin.so.20.0.0",
+        "sha256": "47079e93a41a17b2e1519b746cc6158457649608a1bfbc8cd6b721ec374202a3"
+      },
+      {
+        "bytes": 14465968,
+        "path": "candidate/lib/libpdalcpp.so",
+        "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+      },
+      {
+        "bytes": 14465968,
+        "path": "candidate/lib/libpdalcpp.so.20",
+        "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+      },
+      {
+        "bytes": 14465968,
+        "path": "candidate/lib/libpdalcpp.so.20.0.0",
+        "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+      },
+      {
+        "bytes": 109614428,
+        "path": "candidate/lib/libpdg.a",
+        "sha256": "98752c6157222a86f31654315ef91e5467f78034a1154a1d5851f379e7cc7750"
+      },
+      {
+        "bytes": 361,
+        "path": "candidate/lib/pkgconfig/pdal.pc",
+        "sha256": "2fbecb62063f572eca1373934bedbb0946cfbcb1184ce93b5335ca50ea125e1c"
+      },
+      {
+        "bytes": 15792,
+        "path": "candidate/libexec/pdg/libpdg_frozen_time.so",
+        "sha256": "79dc1d7c80611aef4c946feaa91fb50c5eef0892e62891c98e29c40466ec7ac2"
+      },
+      {
+        "bytes": 53265,
+        "path": "candidate/libexec/pdg/pdg-benchmark-reference.py",
+        "sha256": "b7ad3b5a12332d64d94b95fb6319be359cd75ed73f9b319fd0747972290ce345"
+      },
+      {
+        "bytes": 17982,
+        "path": "candidate/libexec/pdg/pdg-verify.py",
+        "sha256": "95eaa8a205e4f2c976a87e7127fcdadaf056130eaca0a0bd1fd310c13d3aac01"
+      },
+      {
+        "bytes": 51309,
+        "path": "evidence/CMakeCache.txt",
+        "sha256": "d7485c57095091ee9caf0b10be32c876183e2d4ce7c269b4a0cf51da5734b614"
+      },
+      {
+        "bytes": 4316,
+        "path": "evidence/bench/3dep/preregistration-v1.json",
+        "sha256": "8ed11f6fc095362ae3cdbab413777845102fab8025ed84f60e2e5f9b6580da93"
+      },
+      {
+        "bytes": 35962,
+        "path": "evidence/bench/3dep/study.py",
+        "sha256": "00fadfac6427baf620d240ba38f00969127fba3d449c9b620bd530063eb80ba9"
+      },
+      {
+        "bytes": 17093,
+        "path": "evidence/bench/pipelines/reference/OPPORTUNITY.md",
+        "sha256": "4756bbde1d73ba0a3461e75f58b377506cb49a72c32d71897fd0c704feb7c002"
+      },
+      {
+        "bytes": 16163,
+        "path": "evidence/bench/pipelines/reference/README.md",
+        "sha256": "f687939996902c713e883a06d7d7aa6406b07b64ede2a8f127abcdc942d3e967"
+      },
+      {
+        "bytes": 26226,
+        "path": "evidence/bench/pipelines/reference/manifest.json",
+        "sha256": "51a0826954a2d9ba01e8e09e49fe0b88895832b09fd5ff90991fc1117802fe55"
+      },
+      {
+        "bytes": 426,
+        "path": "evidence/bench/pipelines/reference/r1-translate.json",
+        "sha256": "2f1eeb903ef56b0a6e5b55e70579c7a861cd65a94d7dd826e7c7b5a7bce12a09"
+      },
+      {
+        "bytes": 250,
+        "path": "evidence/bench/pipelines/reference/r10-decimate.json",
+        "sha256": "32e59b80257037eaabc0d9d71f6ea1fafe4494196c92f1856ae89618366986b5"
+      },
+      {
+        "bytes": 493,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-density-aware.json",
+        "sha256": "50f0e573dcd9f310866d50ad72ca92661e5b5160d21a7dbae983ddc035ba84b6"
+      },
+      {
+        "bytes": 603,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-grid.json",
+        "sha256": "0f4f84b55a5fc2c3ed1f9182d9d8484f763e8bca54349187955bab85e9d9db3a"
+      },
+      {
+        "bytes": 424,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-ordinal.json",
+        "sha256": "16e3b0badc18eb4f81c99f3bfce09865386ca8635fc222df09d875932edba1d6"
+      },
+      {
+        "bytes": 381,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-radius.json",
+        "sha256": "f326952e51e3ff4e0f82e963312aaafb03fcad3c166edb19b6fcf88bd6fcf684"
+      },
+      {
+        "bytes": 367,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-voxel-center-nearestneighbor.json",
+        "sha256": "40a2fe7f1fd2d31b27cb1b667cf844aab3882547472bb553ffe6969be59a56b4"
+      },
+      {
+        "bytes": 410,
+        "path": "evidence/bench/pipelines/reference/r10-decimation-voxel.json",
+        "sha256": "162a194eacf12d4cf8be476ec4f76a8fa3e4bff2094a52c91510009c66fa3d14"
+      },
+      {
+        "bytes": 442,
+        "path": "evidence/bench/pipelines/reference/r11-classify-refine.json",
+        "sha256": "ad5796112de28d2773010c370910c825d77f95fb17a2ffce717c26af0b8a28a1"
+      },
+      {
+        "bytes": 364,
+        "path": "evidence/bench/pipelines/reference/r12-tile.json",
+        "sha256": "92ada530b28cc2f44d105b050dd59253d33fc55f7588e84f395fe7b01d62328b"
+      },
+      {
+        "bytes": 324,
+        "path": "evidence/bench/pipelines/reference/r13-merge.json",
+        "sha256": "fee5cc69929de4b32b018ad4bcf0a948c2ea8e5e119e733a5463e5a93e3d543e"
+      },
+      {
+        "bytes": 159,
+        "path": "evidence/bench/pipelines/reference/r14-convert-compress.json",
+        "sha256": "a73c4f4bd6cab1393b3eac64f1f36ba920a9936cfbd441173ef25212b4e8f308"
+      },
+      {
+        "bytes": 195,
+        "path": "evidence/bench/pipelines/reference/r14-copc2las.json",
+        "sha256": "0c2d6723831835b3ef98be04195c7ad6bc5aa1e2cd9c9553869aaa55dbacf063"
+      },
+      {
+        "bytes": 224,
+        "path": "evidence/bench/pipelines/reference/r14-copc2laz.json",
+        "sha256": "396cc906b8812779be155b4960f3cea834aa3db46604de71075be61f47bb0d47"
+      },
+      {
+        "bytes": 204,
+        "path": "evidence/bench/pipelines/reference/r14-las2copc.json",
+        "sha256": "622c626e5c021e1320d9eb921d3fe9ed617e3cbf695a01e8381f72e9f8083547"
+      },
+      {
+        "bytes": 204,
+        "path": "evidence/bench/pipelines/reference/r14-laz2copc.json",
+        "sha256": "927b9ce10838dc3f15c09766b4e96a91e19c056c63f4d0f0648f09bbd217814a"
+      },
+      {
+        "bytes": 136,
+        "path": "evidence/bench/pipelines/reference/r14-laz2las.json",
+        "sha256": "58424f84acf7a98295117ca49fab4274cb8b8528ab2490b3c2e1f0409fbf62e9"
+      },
+      {
+        "bytes": 159,
+        "path": "evidence/bench/pipelines/reference/r14-laz2laz.json",
+        "sha256": "cf660fee3615c3b973610df96b0f0aa270e14c00ed333d65e2eeab161e02c17f"
+      },
+      {
+        "bytes": 268,
+        "path": "evidence/bench/pipelines/reference/r2-ground-normalize.json",
+        "sha256": "ce0870bb645cf75e18cdfdd796e65f1a030fa145528ccb28b94dbebb34e28e36"
+      },
+      {
+        "bytes": 276,
+        "path": "evidence/bench/pipelines/reference/r3-dtm.json",
+        "sha256": "748e6a26faaf3507d89a891103796869b001ec21d7a5ae720f9ff9d2cc6f4c85"
+      },
+      {
+        "bytes": 367,
+        "path": "evidence/bench/pipelines/reference/r4-denoise-thin.json",
+        "sha256": "6ae78d2547f6bee1656ae8be1ec30fd029d25b748398ee4dc1816fb04e28e4dd"
+      },
+      {
+        "bytes": 340,
+        "path": "evidence/bench/pipelines/reference/r5-copc-query.json",
+        "sha256": "eadeaded1eee34e515d0a869542fc6649eb7902159433073cc2238f49a37f6d1"
+      },
+      {
+        "bytes": 313,
+        "path": "evidence/bench/pipelines/reference/r6-features.json",
+        "sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70"
+      },
+      {
+        "bytes": 532,
+        "path": "evidence/bench/pipelines/reference/r7-dsm.json",
+        "sha256": "a21c7b5a5d0d2d3cc80c93afba9e60c777d423c4c5ee80afe020a00bc98eb668"
+      },
+      {
+        "bytes": 549,
+        "path": "evidence/bench/pipelines/reference/r8-colorize.json",
+        "sha256": "22397eecb8aefba3721ac9f13ec619255dd367f03cc0a922a4ab0fd14cf0bd1d"
+      },
+      {
+        "bytes": 353,
+        "path": "evidence/bench/pipelines/reference/r9-polygon-clip.json",
+        "sha256": "8a42b11e0d29dbe0b3c3e951e802fce4fb29951dea7807eef92bc30a07b5a5c9"
+      },
+      {
+        "bytes": 1305,
+        "path": "evidence/bench/remote/reproof-evidence-amendment-v1.json",
+        "sha256": "ebf42464d219ea0f6ff9e641d968315d319b6c3b1055f5f0e3eb504c49ddd50b"
+      },
+      {
+        "bytes": 7032,
+        "path": "evidence/bench/remote/vast_release_reproof.sh",
+        "sha256": "b508c9ee9e494d4e59c4761dfd8afc6726116b14f5b05c73006431451a9e5721"
+      },
+      {
+        "bytes": 608,
+        "path": "evidence/build-metadata.json",
+        "sha256": "e0a5a025bb3895dc5f5ccb705db4d9e2e766577dd01bb9d21587cc0e6db6bfc3"
+      },
+      {
+        "bytes": 1360,
+        "path": "evidence/data/placement-profiles/README.md",
+        "sha256": "330ee7a910eb6d9eba117f9e2ba0a5a0cf9fb51361a7d919b52c6a3a811fcb2e"
+      },
+      {
+        "bytes": 17835,
+        "path": "evidence/data/placement-profiles/a10.json",
+        "sha256": "39113c8787b7d8e79574f3bee9efa1b06593c672c1883a4017cb74f3d408632c"
+      },
+      {
+        "bytes": 17841,
+        "path": "evidence/data/placement-profiles/a100.json",
+        "sha256": "b18b3c9eba40a632b39a84c0a61d44f0411a443c0ef9d45228c5bb2b51bdc120"
+      },
+      {
+        "bytes": 8976,
+        "path": "evidence/data/placement-profiles/generic-cuda.json",
+        "sha256": "86937b94c3710a95b996b6abd06b5660b35492eef723ef68020ae0f782545429"
+      },
+      {
+        "bytes": 17813,
+        "path": "evidence/data/placement-profiles/l40s.json",
+        "sha256": "0a3ef45694722c4a33fc7a59e619c1752e1b6aff5a02b2df94566fea22b7ade5"
+      },
+      {
+        "bytes": 17289,
+        "path": "evidence/data/placement-profiles/rtx3060.json",
+        "sha256": "84f557f7029b9ac4779b46a9de89baf5ab43d1b3870ca9c83916e36823725c57"
+      },
+      {
+        "bytes": 17879,
+        "path": "evidence/data/placement-profiles/rtx3090.json",
+        "sha256": "dde8c7e4b1032fe44b5b8f7c9a444e4d37b6a2605622185744bbdffaccbb0bd6"
+      },
+      {
+        "bytes": 17252,
+        "path": "evidence/data/placement-profiles/rtx4060ti.json",
+        "sha256": "038d12e9d7fb46c47f9d77e97ecf6513b83ee43494d007389f57d08e715b0b4d"
+      },
+      {
+        "bytes": 17220,
+        "path": "evidence/data/placement-profiles/rtx4080.json",
+        "sha256": "d5fecb01269ebcf2064bca322d6924c75b3275d32426f0e91ed4f2b76c5818ed"
+      },
+      {
+        "bytes": 17860,
+        "path": "evidence/data/placement-profiles/rtx4090.json",
+        "sha256": "1bf342e4eb40673ee9ba192a4e1a877861a1d566e1880ca1a2119c4789c7a466"
+      },
+      {
+        "bytes": 17852,
+        "path": "evidence/data/placement-profiles/rtx5090.json",
+        "sha256": "26803f32f5f2c53e373fa9ffb26f6b7209178cc8f4da99bcd2d62b90cd956357"
+      },
+      {
+        "bytes": 17265,
+        "path": "evidence/data/placement-profiles/rtxa6000.json",
+        "sha256": "b0c844b4f43a33c3daa8acc56e149a78761753ed5b7f732f7c0a097f74c3d843"
+      },
+      {
+        "bytes": 15792,
+        "path": "evidence/libpdg_frozen_time.so",
+        "sha256": "e5a503b6677bf1805b38325a8812c160560bfc3119b6360f34e2b6c5c709883f"
+      },
+      {
+        "bytes": 10259,
+        "path": "evidence/scripts/pdg/artifact_manifest.py",
+        "sha256": "d72658678ee839cdfe822bd19e3283ae858e9ac195b85a4baa2ba504334d3da7"
+      },
+      {
+        "bytes": 53265,
+        "path": "evidence/scripts/pdg/benchmark_reference.py",
+        "sha256": "b7ad3b5a12332d64d94b95fb6319be359cd75ed73f9b319fd0747972290ce345"
+      },
+      {
+        "bytes": 8113,
+        "path": "evidence/scripts/pdg/prepare_reference_fixtures.py",
+        "sha256": "7526a59d508c850bccec187b1aaedfd7409fdc194fc52c6b68a27cffb553e351"
+      },
+      {
+        "bytes": 36211,
+        "path": "evidence/scripts/pdg/reference_suite.py",
+        "sha256": "0ef6526134b41a0ad305f1cce7dea22178791a834db43dd0a63946b6754ed701"
+      },
+      {
+        "bytes": 283600,
+        "path": "oracle/bin/pdal",
+        "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39"
+      },
+      {
+        "bytes": 825,
+        "path": "oracle/bin/pdal-config",
+        "sha256": "e98f8af51caefb0c6649df45995402876c900aa18053dd343ab2e481abc01960"
+      },
+      {
+        "bytes": 1989,
+        "path": "oracle/include/pdal/Artifact.hpp",
+        "sha256": "4fd4dc2585f90b4137ed822af6826cb644d9966b435dbfb8b44d5678fa334bed"
+      },
+      {
+        "bytes": 3509,
+        "path": "oracle/include/pdal/ArtifactManager.hpp",
+        "sha256": "d2265562cb054b75ca65be1fa758655adcfb19df33dde2b0cfad45e5683c40f8"
+      },
+      {
+        "bytes": 2784,
+        "path": "oracle/include/pdal/DbReader.hpp",
+        "sha256": "9c1e3ec112ceeb15431bdff195cdb3b50047c1a69dbec02c17a9192954a02327"
+      },
+      {
+        "bytes": 3353,
+        "path": "oracle/include/pdal/DbWriter.hpp",
+        "sha256": "a95b33359ffe110072b88f0bf14beb71619a0ddc85a18e656d5ab7c83b07b667"
+      },
+      {
+        "bytes": 3123,
+        "path": "oracle/include/pdal/DimDetail.hpp",
+        "sha256": "7f1e0065b439d0908556c70a2427750adb1a85fc684d77a31f2f31b5a39a979b"
+      },
+      {
+        "bytes": 2472,
+        "path": "oracle/include/pdal/DimType.hpp",
+        "sha256": "251cf42e5512b1b9c2181375e52e14d7f081a2a2d35daa5bf5e6e22b344bd85e"
+      },
+      {
+        "bytes": 8086,
+        "path": "oracle/include/pdal/DimUtil.hpp",
+        "sha256": "6df94a19aea300d82f9517bb49ed36f7ab13d8161f8191ea03ed4a3c1bcbfb35"
+      },
+      {
+        "bytes": 56031,
+        "path": "oracle/include/pdal/Dimension.hpp",
+        "sha256": "cb6c16b52db18ecd407e6f2f50cf6bb9a8619c17078a1e27cf776ce7dd4060f5"
+      },
+      {
+        "bytes": 2925,
+        "path": "oracle/include/pdal/FileSpec.hpp",
+        "sha256": "5e82aa49559a765427142cc6bd1138699058cc8afe20f4b2344c70219660ae0e"
+      },
+      {
+        "bytes": 2828,
+        "path": "oracle/include/pdal/Filter.hpp",
+        "sha256": "d9e7c31c03328bc81a3b3b159c434c469a9ef5daa826c00aa50003572c4c54d8"
+      },
+      {
+        "bytes": 5630,
+        "path": "oracle/include/pdal/FlexWriter.hpp",
+        "sha256": "57e121b7d6b46a76f279deeefa7704af047d1680ae797274ed20d60a7bdcd6da"
+      },
+      {
+        "bytes": 4192,
+        "path": "oracle/include/pdal/Geometry.hpp",
+        "sha256": "848c0d54cfe9c596aec56747545e41ab1eb7b3175e737a24e781c6bd552e3907"
+      },
+      {
+        "bytes": 2619,
+        "path": "oracle/include/pdal/JsonFwd.hpp",
+        "sha256": "f86c6516eebe4ad6b9cfca42c48c9ebe9fc2d00f233b4ff0243c66276f2d28be"
+      },
+      {
+        "bytes": 5147,
+        "path": "oracle/include/pdal/KDIndex.hpp",
+        "sha256": "d5deb8d66cdb0519201b8dc64f47e67d1cb20be3b08968feed89f8e8e8f4ada5"
+      },
+      {
+        "bytes": 4713,
+        "path": "oracle/include/pdal/Kernel.hpp",
+        "sha256": "bae21128113340f4ee299f7c8d5f7daf64c8bc430fd05c0a884f0808413c184a"
+      },
+      {
+        "bytes": 5727,
+        "path": "oracle/include/pdal/Log.hpp",
+        "sha256": "a5bd836eb8357a167a426f7a25bb94111f3d05c82bee9b4ff35653106b038022"
+      },
+      {
+        "bytes": 3144,
+        "path": "oracle/include/pdal/Mesh.hpp",
+        "sha256": "e775fd61d896e4766b3ba16faac57c381d0ec918dbc9e1bb2ce433a7bd1e9db8"
+      },
+      {
+        "bytes": 21407,
+        "path": "oracle/include/pdal/Metadata.hpp",
+        "sha256": "10bb8447c3f94ffa67440b8f450912340a2a7ba819972e3b2f097a848c37f4fb"
+      },
+      {
+        "bytes": 6214,
+        "path": "oracle/include/pdal/Options.hpp",
+        "sha256": "269ab078e2857c3b1b26a6fc55b7cc8dcaf51b486fe75fe5142ae8f6498ac50f"
+      },
+      {
+        "bytes": 7617,
+        "path": "oracle/include/pdal/PDALUtils.hpp",
+        "sha256": "2350ceb07774ccc6181fdafa880e2d487b4558b0b8217fa27245b4b04c696fe9"
+      },
+      {
+        "bytes": 4139,
+        "path": "oracle/include/pdal/PipelineExecutor.hpp",
+        "sha256": "a1b2c1452a809446c8f00112681c2cc1d23cf21252dbd0788e3b6cb01b166655"
+      },
+      {
+        "bytes": 6521,
+        "path": "oracle/include/pdal/PipelineManager.hpp",
+        "sha256": "db07ba19338f21b12b575a1168c359005dbc21e3a64601c759b8752ab9ddd4e8"
+      },
+      {
+        "bytes": 2470,
+        "path": "oracle/include/pdal/PipelineReaderJSON.hpp",
+        "sha256": "dd8441a1a599772f93517b1ebf187118af37d9fdf14384b27da8abbfa3bfa322"
+      },
+      {
+        "bytes": 2151,
+        "path": "oracle/include/pdal/PipelineWriter.hpp",
+        "sha256": "9254942b078278fc24f77244afc90a114b2f4271d099a453b0f373e87cb7c6d7"
+      },
+      {
+        "bytes": 2594,
+        "path": "oracle/include/pdal/PluginDirectory.hpp",
+        "sha256": "e2ea4ffc8f76bbfd8d67d9d61061c40ed4e01a015ebd31d63c82a8f5748d0012"
+      },
+      {
+        "bytes": 2935,
+        "path": "oracle/include/pdal/PluginHelper.hpp",
+        "sha256": "bdbe11837fc8c06527cef6e36577b48f1bb3d2a6a18ef3e1d84ed34ece55648a"
+      },
+      {
+        "bytes": 2622,
+        "path": "oracle/include/pdal/PluginInfo.hpp",
+        "sha256": "d893efcff08c396bed2c6f0815f7f33a8616ec2ed795bff48b073c8f0d3332ec"
+      },
+      {
+        "bytes": 5143,
+        "path": "oracle/include/pdal/PluginManager.hpp",
+        "sha256": "13f0f93b08a1797b0d54ea2d677b48ce8d18b852343f3b8f1bbd5119e9c447b9"
+      },
+      {
+        "bytes": 1836,
+        "path": "oracle/include/pdal/PointContainer.hpp",
+        "sha256": "edd7eefde77cb192a041f338d5aea9d39e1f16d75645666b4730466f97d56555"
+      },
+      {
+        "bytes": 8481,
+        "path": "oracle/include/pdal/PointLayout.hpp",
+        "sha256": "b9bf51ed20ae4d1ddfd9ed0f27b70eb557de37cb7f9cbcbd7ff06270552b79ee"
+      },
+      {
+        "bytes": 14410,
+        "path": "oracle/include/pdal/PointRef.hpp",
+        "sha256": "37341c7a1d1c12707c31b0a691e888505cc20695f58671345bc2639541e5e332"
+      },
+      {
+        "bytes": 9547,
+        "path": "oracle/include/pdal/PointTable.hpp",
+        "sha256": "1120c0d3296bc825c1cb80c92bdbd2b6de11593fc9ef05547e996a3bfd8c9fd8"
+      },
+      {
+        "bytes": 20699,
+        "path": "oracle/include/pdal/PointView.hpp",
+        "sha256": "ce27feaf5cdab248e039192f9242a4776518e6db7e5f24ecf5bca2703f6ef11f"
+      },
+      {
+        "bytes": 3799,
+        "path": "oracle/include/pdal/Polygon.hpp",
+        "sha256": "045c8600ba0adc6e532ff96feb44d2e743458bd625f8640453dea8c533664b68"
+      },
+      {
+        "bytes": 5818,
+        "path": "oracle/include/pdal/QuadIndex.hpp",
+        "sha256": "e3f7ae41085b066b6f83f4d84fe8d335d6faf0ce828d936dbeddba8400f8476e"
+      },
+      {
+        "bytes": 3179,
+        "path": "oracle/include/pdal/QuickInfo.hpp",
+        "sha256": "e57c8566ed2fb35e9b836c9d84ac54b392deb9ae8d9f0616eb147252c3cfd1ea"
+      },
+      {
+        "bytes": 3264,
+        "path": "oracle/include/pdal/Reader.hpp",
+        "sha256": "da1c8e8a0e2d2b64544ec49d9781be2e94183ecceac3286e08a40fa9bfd2b6b0"
+      },
+      {
+        "bytes": 3029,
+        "path": "oracle/include/pdal/Scaling.hpp",
+        "sha256": "f25172ed95728338048adc23bb034c645625eed3834b47c4cf22ac5f60ac4873"
+      },
+      {
+        "bytes": 7073,
+        "path": "oracle/include/pdal/SpatialReference.hpp",
+        "sha256": "5b8f39f016e96a2f5b496fdcf7381800dee342666617927b434ed92793452846"
+      },
+      {
+        "bytes": 2767,
+        "path": "oracle/include/pdal/SrsBounds.hpp",
+        "sha256": "f5b4719fd370fb280afb08a9633c2be6d08718ce00c0e3198fc2739a7e70b5ba"
+      },
+      {
+        "bytes": 15355,
+        "path": "oracle/include/pdal/Stage.hpp",
+        "sha256": "8b6fc1efa2184f477447a16f2576d25b747e8fc8ad1e0a2f9e5b8526a25a7ec1"
+      },
+      {
+        "bytes": 2411,
+        "path": "oracle/include/pdal/StageExtensions.hpp",
+        "sha256": "9ac066ac6446d2163fd422572ddae48ec64f563d22fa47ae29da0d439f1fb72b"
+      },
+      {
+        "bytes": 3818,
+        "path": "oracle/include/pdal/StageFactory.hpp",
+        "sha256": "dce25b1a19c747f0e8c9c6542356727c963878e07811487d3976184babfc6841"
+      },
+      {
+        "bytes": 2012,
+        "path": "oracle/include/pdal/StageWrapper.hpp",
+        "sha256": "7c6499cbe3d8e01022effc5b7e5b57ecd44d9835cee998e82eca0d2836496b69"
+      },
+      {
+        "bytes": 4265,
+        "path": "oracle/include/pdal/Streamable.hpp",
+        "sha256": "740f9dac0a046d7d2f1b2702c4546e7c4b7e89ef55582c559608c1e0da3a7ea8"
+      },
+      {
+        "bytes": 2577,
+        "path": "oracle/include/pdal/SubcommandKernel.hpp",
+        "sha256": "20ae7ea589b73cdeb39795862c7787254da7ee9be226de46534379b168589395"
+      },
+      {
+        "bytes": 3895,
+        "path": "oracle/include/pdal/Writer.hpp",
+        "sha256": "fa86e59337e2aac53ae3629e100e11dac05742b3a3a96dfffdc1d5dddda622d5"
+      },
+      {
+        "bytes": 4579,
+        "path": "oracle/include/pdal/XMLSchema.hpp",
+        "sha256": "83778cc246c35865ddd09012c1a3caa0ce533ac5570a240a3f3e13c5b6d8a01f"
+      },
+      {
+        "bytes": 2738,
+        "path": "oracle/include/pdal/compression/Compression.hpp",
+        "sha256": "85ffe28c0ac1328b38af374461906aa08cc6b3de41cc814f251dfa073f89abab"
+      },
+      {
+        "bytes": 2532,
+        "path": "oracle/include/pdal/compression/DeflateCompression.hpp",
+        "sha256": "4c64932ddf0e9e40dab12d903ff1a4dee6548220e59cd58b77faeccf40816234"
+      },
+      {
+        "bytes": 2314,
+        "path": "oracle/include/pdal/compression/GzipCompression.hpp",
+        "sha256": "0cee0340b2d88dd98adc818c542150b7321cdd3bbd1302634eec784092d118a9"
+      },
+      {
+        "bytes": 3370,
+        "path": "oracle/include/pdal/compression/LazPerfVlrCompression.hpp",
+        "sha256": "27b995bd7eafb45a8817135c02f2dc618a25e14acd83507024d88ff6c213948e"
+      },
+      {
+        "bytes": 2501,
+        "path": "oracle/include/pdal/compression/LzmaCompression.hpp",
+        "sha256": "db0464d4780ca90435957e1757827aa3a2073403ed16b14a0851784ce80c7959"
+      },
+      {
+        "bytes": 2574,
+        "path": "oracle/include/pdal/compression/ZstdCompression.hpp",
+        "sha256": "d46a9eada5e4924c4da7e5f1ebfd789ccf91a426461fdeedc7b68ab50340de79"
+      },
+      {
+        "bytes": 2470,
+        "path": "oracle/include/pdal/filters/ApproximateCoplanarFilter.hpp",
+        "sha256": "e8e6cdb192c2bc2f31d2f8e0559c362a42ac7a7c77625f0c8dcd600261624fea"
+      },
+      {
+        "bytes": 2436,
+        "path": "oracle/include/pdal/filters/AssignFilter.hpp",
+        "sha256": "3e8d6fe672bc30c6975fe4fd20c600e98702935feb9a6c139db4f6d1a1624637"
+      },
+      {
+        "bytes": 2567,
+        "path": "oracle/include/pdal/filters/CSFilter.hpp",
+        "sha256": "c01a72cceda77067bf223b302cfdbb6910f1f1808870a8b15e7c4022cfaf00d8"
+      },
+      {
+        "bytes": 4220,
+        "path": "oracle/include/pdal/filters/ChipperFilter.hpp",
+        "sha256": "8e64e1e45d5ac83fabecb1ca963fa2a5db600c52fca692d81ba8feb41027872e"
+      },
+      {
+        "bytes": 2438,
+        "path": "oracle/include/pdal/filters/ClusterFilter.hpp",
+        "sha256": "017f1016f9b85654589cd18fb314c1498dc8238c86b09ebb94365d162f97a434"
+      },
+      {
+        "bytes": 28116,
+        "path": "oracle/include/pdal/filters/ColorInterpRamps.hpp",
+        "sha256": "b5146a3c24eb589da451cf8d7510aeb5f40b3fb7c131ff2d50882993bb9943ff"
+      },
+      {
+        "bytes": 3533,
+        "path": "oracle/include/pdal/filters/ColorinterpFilter.hpp",
+        "sha256": "026f60e48b32ae005bbf90c145bb1abb3922aa91241dd2fd45b5a21bf02a260d"
+      },
+      {
+        "bytes": 3311,
+        "path": "oracle/include/pdal/filters/ColorizationFilter.hpp",
+        "sha256": "ced9bc36bd604dc9a8332e4d4a65753ec606ce7ceba10f3f38324bac27d7812a"
+      },
+      {
+        "bytes": 2944,
+        "path": "oracle/include/pdal/filters/CovarianceFeaturesFilter.hpp",
+        "sha256": "c8ea620d5bb7315c95367da455ffdf3618322c10799da97caaaf63724e2801fa"
+      },
+      {
+        "bytes": 3795,
+        "path": "oracle/include/pdal/filters/CropFilter.hpp",
+        "sha256": "1907d8850f99d77cdb18790e7e8b1618b3b532d27538ff3cf1fcb14b86095eda"
+      },
+      {
+        "bytes": 2482,
+        "path": "oracle/include/pdal/filters/DBSCANFilter.hpp",
+        "sha256": "5684a1120da8f85535d3b38fea226a968905ea1b96e8fed880c27d11c4db17a5"
+      },
+      {
+        "bytes": 2692,
+        "path": "oracle/include/pdal/filters/DEMFilter.hpp",
+        "sha256": "86b49168c41fcf66dcec5cf76065a0194c4191e3b28c0de99b3ac825b3435e08"
+      },
+      {
+        "bytes": 2674,
+        "path": "oracle/include/pdal/filters/DecimationFilter.hpp",
+        "sha256": "6b60fc228cdd0d652f4a677dd979991311edd635c4460cf07ac75f34d5ed8232"
+      },
+      {
+        "bytes": 2170,
+        "path": "oracle/include/pdal/filters/DelaunayFilter.hpp",
+        "sha256": "057faeadc0a3c30dc9d20ec23d1f1beef2fde22c2277f9ca844bb63de7f3fd60"
+      },
+      {
+        "bytes": 2757,
+        "path": "oracle/include/pdal/filters/DividerFilter.hpp",
+        "sha256": "6514d4d0b15dac41aa84c5703de2f7ebfc65caea64fa141053dcb01422fb6253"
+      },
+      {
+        "bytes": 2458,
+        "path": "oracle/include/pdal/filters/ELMFilter.hpp",
+        "sha256": "cfa456699dbd9e1d4b6f2ab8191c15cebdab32191490b94a8e747b44b37b335d"
+      },
+      {
+        "bytes": 2452,
+        "path": "oracle/include/pdal/filters/EigenvaluesFilter.hpp",
+        "sha256": "e65c78eecb509986070c13a4e4b1b8ce1639da148cc38e2472da5bd5793f4abb"
+      },
+      {
+        "bytes": 2396,
+        "path": "oracle/include/pdal/filters/EstimateRankFilter.hpp",
+        "sha256": "3ec027ad90d912a034ba64dc63e256a7c5f075450a6765568205ed46d6a1830c"
+      },
+      {
+        "bytes": 2518,
+        "path": "oracle/include/pdal/filters/ExpressionFilter.hpp",
+        "sha256": "54da6fb90e781cc498acc7542b61740bd8fb45933cea0731823b1c0aac3285b7"
+      },
+      {
+        "bytes": 2760,
+        "path": "oracle/include/pdal/filters/ExpressionStatsFilter.hpp",
+        "sha256": "2395e36f181b4a8e216367cee35a0fb8b5331e4a9e4d4016ac81dbde3029b941"
+      },
+      {
+        "bytes": 2504,
+        "path": "oracle/include/pdal/filters/FaceRasterFilter.hpp",
+        "sha256": "195b6b138e54cf10caf289d6deb5ab10a50a4056a043528b1ead749c8452cfff"
+      },
+      {
+        "bytes": 2363,
+        "path": "oracle/include/pdal/filters/FarthestPointSamplingFilter.hpp",
+        "sha256": "a64806c2f9a096fbe126c6f4d08aa904ba58e9292735597bb1c337011811af03"
+      },
+      {
+        "bytes": 2887,
+        "path": "oracle/include/pdal/filters/FerryFilter.hpp",
+        "sha256": "acb8e55cef6719e8967e24270dbe33fe5c176aaff28902433893b6f6b892b930"
+      },
+      {
+        "bytes": 2752,
+        "path": "oracle/include/pdal/filters/GeomDistanceFilter.hpp",
+        "sha256": "548e368e278d8693b2a4c030871fc006022d842e3a0548b988247c5323f95d5e"
+      },
+      {
+        "bytes": 2824,
+        "path": "oracle/include/pdal/filters/GeoreferenceFilter.hpp",
+        "sha256": "087a833fc2f293e51b2aedfe8e49cc54711a2e65ed217813ea047d6045e930ef"
+      },
+      {
+        "bytes": 3305,
+        "path": "oracle/include/pdal/filters/GpsTimeConvert.hpp",
+        "sha256": "896694edbd83308b41f5bb30f87d3f7810c72c08b51257710dc2ac2deab40dfc"
+      },
+      {
+        "bytes": 15465,
+        "path": "oracle/include/pdal/filters/GreedyProjection.hpp",
+        "sha256": "bc83dab3c88c356f91a088ade7d49e1170658c753c891d1f159da798fa15aa91"
+      },
+      {
+        "bytes": 1497,
+        "path": "oracle/include/pdal/filters/GridDecimationFilter.hpp",
+        "sha256": "b6112fd25912f16a05563d2cd4798ca8152cb2f2c1dba96e2acd57edd46ca996"
+      },
+      {
+        "bytes": 2483,
+        "path": "oracle/include/pdal/filters/GroupByFilter.hpp",
+        "sha256": "51eaabd26b17e38de05903079af88464f83a65669bc22e3c2ca3504e8f9753cd"
+      },
+      {
+        "bytes": 2660,
+        "path": "oracle/include/pdal/filters/H3Filter.hpp",
+        "sha256": "9403916ee377b907695b28295b56f1614a53d20aa0c4c64e8d68e75d73b9f1bd"
+      },
+      {
+        "bytes": 2516,
+        "path": "oracle/include/pdal/filters/HagDelaunayFilter.hpp",
+        "sha256": "99705478da022758778bba0efe49a074701208d1fdf3a0e27a9db8c0e0ac87a1"
+      },
+      {
+        "bytes": 2800,
+        "path": "oracle/include/pdal/filters/HagDemFilter.hpp",
+        "sha256": "51aee5adbf3e14061d34986eca8cb34d7e5a39da6cd91ed0297343e7243b707c"
+      },
+      {
+        "bytes": 2506,
+        "path": "oracle/include/pdal/filters/HagNnFilter.hpp",
+        "sha256": "30414cda07a7ad2883589e7d640d0adba8e5415baed11670b0c3372b32162a4b"
+      },
+      {
+        "bytes": 2444,
+        "path": "oracle/include/pdal/filters/HeadFilter.hpp",
+        "sha256": "5647b6d5be95ec451e018907581f8f4c39d823b1d07d8648348e1eea18192b7e"
+      },
+      {
+        "bytes": 3046,
+        "path": "oracle/include/pdal/filters/HexBinFilter.hpp",
+        "sha256": "9969f2801c1a0d2f5cbce7468369666042087a7196fd6ecaa416683806d99bb7"
+      },
+      {
+        "bytes": 2406,
+        "path": "oracle/include/pdal/filters/IQRFilter.hpp",
+        "sha256": "41971fdbcd6650f689f14b3dea0241d395d84a20452c8c4a28be98aaed9f50be"
+      },
+      {
+        "bytes": 3380,
+        "path": "oracle/include/pdal/filters/InfoFilter.hpp",
+        "sha256": "ec17504e7e1368033b7dac35fffa3daac5aa53f08c0e658409d55c5cdeaa1d75"
+      },
+      {
+        "bytes": 2847,
+        "path": "oracle/include/pdal/filters/IterativeClosestPoint.hpp",
+        "sha256": "823c84e377dc8b2e8021e868468f88c0c23a33463f9c496bff259651d3a66d3d"
+      },
+      {
+        "bytes": 2327,
+        "path": "oracle/include/pdal/filters/LOFFilter.hpp",
+        "sha256": "4a0bf194f3d34fe80b74305509b5f7e5c1731c997c54cace2179f2163cf38a6f"
+      },
+      {
+        "bytes": 2455,
+        "path": "oracle/include/pdal/filters/LabelDuplicatesFilter.hpp",
+        "sha256": "0ad7c8bb636f1c008f6553438ca7894413de4ea07da3be1c07d8f25850a8f858"
+      },
+      {
+        "bytes": 2897,
+        "path": "oracle/include/pdal/filters/LiTreeFilter.hpp",
+        "sha256": "b96a83c77bf83a8e8f9d6e0ce1db41bbf4816402f06a8cfd5243cc7af02f669b"
+      },
+      {
+        "bytes": 2511,
+        "path": "oracle/include/pdal/filters/LloydKMeansFilter.hpp",
+        "sha256": "2aa4908ac417262db6b1cbb2c1756af6214dbb5bd69e9fd606dd0bca552f18b7"
+      },
+      {
+        "bytes": 2472,
+        "path": "oracle/include/pdal/filters/LocateFilter.hpp",
+        "sha256": "4146e763d84e1cd6a376ae7280c5c8e2d1d879c851698d29dc4fea02cf0cfa6f"
+      },
+      {
+        "bytes": 3444,
+        "path": "oracle/include/pdal/filters/M3C2Filter.hpp",
+        "sha256": "dd816d1cc31b6f48a8b262d4a7f73140d8ffcc49564970476f7ea4a1323d5655"
+      },
+      {
+        "bytes": 2434,
+        "path": "oracle/include/pdal/filters/MADFilter.hpp",
+        "sha256": "4580231f3b6662cead781db0c81c95ebf1d28033374196bcba3c3944e3a6d35a"
+      },
+      {
+        "bytes": 2354,
+        "path": "oracle/include/pdal/filters/MergeFilter.hpp",
+        "sha256": "a03a87b92f0e4e31a24a549b77b86ed6da154dd38215a7879a85ec05783b25c8"
+      },
+      {
+        "bytes": 2412,
+        "path": "oracle/include/pdal/filters/MiniballFilter.hpp",
+        "sha256": "3a1839490ccb34b6d1eada5c170d8b01dcc3e64885c659eba88671f8532beb0f"
+      },
+      {
+        "bytes": 2478,
+        "path": "oracle/include/pdal/filters/MongoExpressionFilter.hpp",
+        "sha256": "53527ef93ba96ebddb2dcb11012c32ae14edd93bc8a5c070e9978823c246842c"
+      },
+      {
+        "bytes": 2401,
+        "path": "oracle/include/pdal/filters/MortonOrderFilter.hpp",
+        "sha256": "3cf29bcfe14b548467ebe7a93d4544b12a3179e78a3d009b70a224958ba923e0"
+      },
+      {
+        "bytes": 2625,
+        "path": "oracle/include/pdal/filters/NNDistanceFilter.hpp",
+        "sha256": "de30d0e16c652864624cac635cba64f0c87299572de33faa1a1c38386c47001a"
+      },
+      {
+        "bytes": 2661,
+        "path": "oracle/include/pdal/filters/NeighborClassifierFilter.hpp",
+        "sha256": "685dd68e8ed4022d3196f04a4869a979657e69849d0d2e6a68b251034a6ea34f"
+      },
+      {
+        "bytes": 3335,
+        "path": "oracle/include/pdal/filters/NormalFilter.hpp",
+        "sha256": "35b009c07a114e37ee704acf5d8aecbf7d6d710d5e40fabc52b9e3654117e7ea"
+      },
+      {
+        "bytes": 2360,
+        "path": "oracle/include/pdal/filters/OptimalNeighborhoodFilter.hpp",
+        "sha256": "b2a133689ffbdeb48fbb13e1c0bc2eed45776be48ea4ba738f155dacb112e8f2"
+      },
+      {
+        "bytes": 2728,
+        "path": "oracle/include/pdal/filters/OutlierFilter.hpp",
+        "sha256": "98a2d7cbcc256704b9d25c8b4c83b452bc997f2f402bd09edfb386ad030128ed"
+      },
+      {
+        "bytes": 3493,
+        "path": "oracle/include/pdal/filters/OverlayFilter.hpp",
+        "sha256": "4fe619a92b409d326835f0ccd83e883f09a4bce05b23671b97a844b2e7e1f920"
+      },
+      {
+        "bytes": 2568,
+        "path": "oracle/include/pdal/filters/PMFFilter.hpp",
+        "sha256": "18e8685bda4feb81227e7564f6419056b825214c95e4a3d48ada7ee8936faafd"
+      },
+      {
+        "bytes": 2591,
+        "path": "oracle/include/pdal/filters/PlaneFitFilter.hpp",
+        "sha256": "a5ae4a5c8dbd13fa0b1c2d6f5d1cca6ea968c7f24637e2a83e8c67c72adcb57e"
+      },
+      {
+        "bytes": 2372,
+        "path": "oracle/include/pdal/filters/PoissonFilter.hpp",
+        "sha256": "edcb7c3b88157ae668b1b631db0433f239ddb62a51cfc2ea575c58dc13e75c35"
+      },
+      {
+        "bytes": 2982,
+        "path": "oracle/include/pdal/filters/ProjPipelineFilter.hpp",
+        "sha256": "af5d4eee84ba35c79e6dc60d593a58a8a438a594b8e72287353776a7c24c622a"
+      },
+      {
+        "bytes": 2384,
+        "path": "oracle/include/pdal/filters/RadialDensityFilter.hpp",
+        "sha256": "d9ab81568a4c8acb8985ccc6f3660e7bae1ddeac36a4f92fd4e5827e342f23df"
+      },
+      {
+        "bytes": 846,
+        "path": "oracle/include/pdal/filters/RadiusAssignFilter.hpp",
+        "sha256": "50fa390754a62e7b5b198fcebd73b252634ad2206c06f5540fbb414cb57a9baf"
+      },
+      {
+        "bytes": 2608,
+        "path": "oracle/include/pdal/filters/RandomizeFilter.hpp",
+        "sha256": "44fad75a09bc5af67ce1360b1884965d3ee1980d83ff4f572a5cbdaedb2aeda8"
+      },
+      {
+        "bytes": 2516,
+        "path": "oracle/include/pdal/filters/RangeFilter.hpp",
+        "sha256": "c66c9693e2263b099d8a12f908a3b57eba08857d4f7b9939b0280a9e563ce726"
+      },
+      {
+        "bytes": 2481,
+        "path": "oracle/include/pdal/filters/ReciprocityFilter.hpp",
+        "sha256": "0ccd5019af2aab74d993f8e624c852c117ff2e857d80bf7c460c1928fa6c6388"
+      },
+      {
+        "bytes": 2514,
+        "path": "oracle/include/pdal/filters/RelaxationDartThrowing.hpp",
+        "sha256": "a6aa4281f44c91df35e368d6541df528b752fb2ba91798ba4aa04cc86032aef8"
+      },
+      {
+        "bytes": 3002,
+        "path": "oracle/include/pdal/filters/ReprojectionFilter.hpp",
+        "sha256": "583a5f05c13d5d84d5ab9bfb926a6dca43678308f9a4e0300770b911db8b3fa1"
+      },
+      {
+        "bytes": 2610,
+        "path": "oracle/include/pdal/filters/ReturnsFilter.hpp",
+        "sha256": "d115366cb093ec85a9a0cfc74ffa9bf3868d5316d5feae9106e60236de080351"
+      },
+      {
+        "bytes": 3484,
+        "path": "oracle/include/pdal/filters/SMRFilter.hpp",
+        "sha256": "3c82b8759c562f386a88e14830209272486b594b2550682c3d9b6e152ea5eace"
+      },
+      {
+        "bytes": 3039,
+        "path": "oracle/include/pdal/filters/SampleFilter.hpp",
+        "sha256": "4fc0390754e9524e5b39b8e1e58eaa7f78a7d51472f78fa1293f05a13fa7fd16"
+      },
+      {
+        "bytes": 2405,
+        "path": "oracle/include/pdal/filters/SeparateScanLineFilter.hpp",
+        "sha256": "0e23632489a7c9004623aec3e7151957c21cdfcbfa4b1cc7673fed72e4dc65e0"
+      },
+      {
+        "bytes": 2281,
+        "path": "oracle/include/pdal/filters/ShellFilter.hpp",
+        "sha256": "afa79e14d8bbcfffe0040372d960058cf3011ccd5034fea25e23eedf878d6e5e"
+      },
+      {
+        "bytes": 2588,
+        "path": "oracle/include/pdal/filters/SkewnessBalancingFilter.hpp",
+        "sha256": "24dfafffef9a3209a5900c69971b51187c7e8dc1fc0973e6d0624007654f143c"
+      },
+      {
+        "bytes": 2793,
+        "path": "oracle/include/pdal/filters/SortFilter.hpp",
+        "sha256": "9790053f81fcabe2c10ef78b6a9c3158e42bbef24295c56f30abb6d967d55754"
+      },
+      {
+        "bytes": 2428,
+        "path": "oracle/include/pdal/filters/SparseSurfaceFilter.hpp",
+        "sha256": "c8523c96d9df1d9a13290ccf4d6bc454521ea1aa07b0abb5578b229a0de1ec64"
+      },
+      {
+        "bytes": 3463,
+        "path": "oracle/include/pdal/filters/SplitterFilter.hpp",
+        "sha256": "15896fe3790ee35bdf4367fc423ce3536d64e16dae62314462de78d78f6c8b10"
+      },
+      {
+        "bytes": 7497,
+        "path": "oracle/include/pdal/filters/StatsFilter.hpp",
+        "sha256": "9be44c7ec8cd5cc490ec58fd266a4487a52bb995dcb5577edb344d2aa8e6995d"
+      },
+      {
+        "bytes": 2559,
+        "path": "oracle/include/pdal/filters/StraightenFilter.hpp",
+        "sha256": "4e90328e4a9ebe5e9642dcd5771ddde6ed39a5001833f3e54cb1146d42bf6f18"
+      },
+      {
+        "bytes": 2776,
+        "path": "oracle/include/pdal/filters/StreamCallbackFilter.hpp",
+        "sha256": "0bea6e064a1c31018a20b61ab19575b5dad4cd331e7dab4e7d6397034ac0c067"
+      },
+      {
+        "bytes": 2568,
+        "path": "oracle/include/pdal/filters/SupervoxelFilter.hpp",
+        "sha256": "5baa07c5a1679febaa945be28591c3f46c78eb693a7c5acd3737fd4ebca0a941"
+      },
+      {
+        "bytes": 3333,
+        "path": "oracle/include/pdal/filters/TailFilter.hpp",
+        "sha256": "c12ed0c4457768534332a659310a5690ed964cf4009b31e23b21559f1dae1d81"
+      },
+      {
+        "bytes": 3554,
+        "path": "oracle/include/pdal/filters/TransformationFilter.hpp",
+        "sha256": "757ccaf495b5996bc013f1ed32644baf668cec82d9179ea921d488e45760c6dd"
+      },
+      {
+        "bytes": 2505,
+        "path": "oracle/include/pdal/filters/VoxelCenterNearestNeighborFilter.hpp",
+        "sha256": "b6d9eec29f79b4d26e701602b5de5085ed3459c5fca6bf01e054b746f0aade3e"
+      },
+      {
+        "bytes": 2517,
+        "path": "oracle/include/pdal/filters/VoxelCentroidNearestNeighborFilter.hpp",
+        "sha256": "c48d6638a62f41862ceb02235f8e8d05d967c1aaacc07ef9879b642503cc53fb"
+      },
+      {
+        "bytes": 3045,
+        "path": "oracle/include/pdal/filters/VoxelDownsizeFilter.hpp",
+        "sha256": "86fb5895f86caf3e0b7172f761565aa6a55eaeaff3256bdee7166898a1179bc6"
+      },
+      {
+        "bytes": 1999,
+        "path": "oracle/include/pdal/filters/ZsmoothFilter.hpp",
+        "sha256": "c2bd94607b97ea565e4f679c955f4a219ac3e54c0a9d1190e8a9c6be92472ee9"
+      },
+      {
+        "bytes": 8991,
+        "path": "oracle/include/pdal/filters/private/Comparison.hpp",
+        "sha256": "e5471929bdd218b13d4ed3ac6aefc0eb000c663782d84000b94ddddbf422fd9d"
+      },
+      {
+        "bytes": 4457,
+        "path": "oracle/include/pdal/filters/private/DimRange.hpp",
+        "sha256": "7c4c544afdc47adf251e1caa001a970c75015c7834536ab095cf8ea9abc74213"
+      },
+      {
+        "bytes": 2058,
+        "path": "oracle/include/pdal/filters/private/DisjointSet.hpp",
+        "sha256": "35934b32a7799bbf71419617c99d2a12fe297b08cc075b3feee6c69665f0cab4"
+      },
+      {
+        "bytes": 2413,
+        "path": "oracle/include/pdal/filters/private/Point.hpp",
+        "sha256": "0158fda654d575c32a2bb4cc36789e160e5758f6dc0e31212191aa911208bddd"
+      },
+      {
+        "bytes": 6410,
+        "path": "oracle/include/pdal/filters/private/Segmentation.hpp",
+        "sha256": "1d57caf6250d8905a7b89d80abb5bf5768076fadb9dc9ebd689c86da8269508d"
+      },
+      {
+        "bytes": 3595,
+        "path": "oracle/include/pdal/filters/private/delaunator.hpp",
+        "sha256": "4734629d03a25f8f7dd07078664c967e321aefb537623ebadd4ee062d148a49d"
+      },
+      {
+        "bytes": 390,
+        "path": "oracle/include/pdal/filters/private/expr/AssignParser.hpp",
+        "sha256": "fd346256885f46f3910227728c0957bedafc54c8adf2927cb49f6885fc33cc22"
+      },
+      {
+        "bytes": 1244,
+        "path": "oracle/include/pdal/filters/private/expr/AssignStatement.hpp",
+        "sha256": "d44cf7c4fcfabc18bc4dec6dc492f7ad7c63195dd47b8a0aeac27357d3356352"
+      },
+      {
+        "bytes": 914,
+        "path": "oracle/include/pdal/filters/private/expr/BaseParser.hpp",
+        "sha256": "1f7ae77a0d38416baedcf31d897aef7b66860465d5bb1f2d10a9f628a64499c8"
+      },
+      {
+        "bytes": 795,
+        "path": "oracle/include/pdal/filters/private/expr/ConditionalExpression.hpp",
+        "sha256": "662b1f2d02e57f9d55b239317994efa05ab9a92a6c84db4a59c40370effd282f"
+      },
+      {
+        "bytes": 525,
+        "path": "oracle/include/pdal/filters/private/expr/ConditionalParser.hpp",
+        "sha256": "e3d735d783adce70d527869c230806298131613efc458b420e1a2fda874c6a16"
+      },
+      {
+        "bytes": 5631,
+        "path": "oracle/include/pdal/filters/private/expr/Expression.hpp",
+        "sha256": "da50a75470327a988ef8b0de6928845aa365ab510e8f0eb2b1e18af1665d764f"
+      },
+      {
+        "bytes": 294,
+        "path": "oracle/include/pdal/filters/private/expr/IdentExpression.hpp",
+        "sha256": "c725c5c19d51c7d141ac38b163b26ddda8fc823bec8ed8bca7167a872d80dc5e"
+      },
+      {
+        "bytes": 866,
+        "path": "oracle/include/pdal/filters/private/expr/Lexer.hpp",
+        "sha256": "27076af1c2b989137cb8e35666f457d872727dc6bbe61f1ba464d43806d37d00"
+      },
+      {
+        "bytes": 267,
+        "path": "oracle/include/pdal/filters/private/expr/MathExpression.hpp",
+        "sha256": "eed53d67d8c6fb49281253119655c6538235b67149cad825be4f36590bd58b1c"
+      },
+      {
+        "bytes": 592,
+        "path": "oracle/include/pdal/filters/private/expr/MathParser.hpp",
+        "sha256": "47f62b70e143e4e77cee76fbb5210c98d505213cea75e5485508c59948005744"
+      },
+      {
+        "bytes": 2297,
+        "path": "oracle/include/pdal/filters/private/expr/Token.hpp",
+        "sha256": "3472c22b12e4e750ba0cd83e7aa76b11bdce66e9ce923cc4d25eccba7b87b697"
+      },
+      {
+        "bytes": 2427,
+        "path": "oracle/include/pdal/filters/private/georeference/LocalCartesian.hpp",
+        "sha256": "3016939613ced5e326952917fc3d909a96b1a4d8642325a7624c39c3277c5969"
+      },
+      {
+        "bytes": 2491,
+        "path": "oracle/include/pdal/filters/private/georeference/Trajectory.hpp",
+        "sha256": "5f1be6af314751c2ebec8fef45c17c457bdd4d8881d9d0a53799d321bff42323"
+      },
+      {
+        "bytes": 4951,
+        "path": "oracle/include/pdal/filters/private/georeference/Utils.hpp",
+        "sha256": "5788d06c387515bfbecaa176440ab26f166f2b8c4a7d5c4651feb48dab9eb6d1"
+      },
+      {
+        "bytes": 3205,
+        "path": "oracle/include/pdal/filters/private/hexer/BaseGrid.hpp",
+        "sha256": "45bc99d642bc06785c85673718d2e2904df49865af67b2620f132a4b120ddb8d"
+      },
+      {
+        "bytes": 3051,
+        "path": "oracle/include/pdal/filters/private/hexer/H3grid.hpp",
+        "sha256": "47426ecab302a877f3ced1e95127b963df9011b78810dd73dbd30bdd0bb3c1b8"
+      },
+      {
+        "bytes": 1709,
+        "path": "oracle/include/pdal/filters/private/hexer/HexGrid.hpp",
+        "sha256": "d579cfee3d1eda43d25c5a6e0e15aa4153fccf770d9e7353be963b9272382706"
+      },
+      {
+        "bytes": 963,
+        "path": "oracle/include/pdal/filters/private/hexer/HexId.hpp",
+        "sha256": "4e9ba501f4954c0fd0aa4af350d1414a712eb3bf65ae02ea57debbc2f769790e"
+      },
+      {
+        "bytes": 3890,
+        "path": "oracle/include/pdal/filters/private/hexer/Path.hpp",
+        "sha256": "41167b1f7b83bf12b0cdd0531e8d29017d3b6983c789a61ec13e2100fe6ee83f"
+      },
+      {
+        "bytes": 748,
+        "path": "oracle/include/pdal/filters/private/hexer/Point.hpp",
+        "sha256": "78fe561982a49730ef45c32ffb24287c88c1c8a42534b9cb904f6713bbb893ed"
+      },
+      {
+        "bytes": 2174,
+        "path": "oracle/include/pdal/filters/private/hexer/Processor.hpp",
+        "sha256": "9f6f35b469d4470cad0d49b0ef7b72131af86b97746248d10ef56a42f2231460"
+      },
+      {
+        "bytes": 2532,
+        "path": "oracle/include/pdal/filters/private/hexer/Segment.hpp",
+        "sha256": "964a835f2d2be5efe6527923d2022984036c0bc9ea34b04edfee1b11968df409"
+      },
+      {
+        "bytes": 2019,
+        "path": "oracle/include/pdal/filters/private/hexer/exception.hpp",
+        "sha256": "09748fab5bad292046f95025e9e6cddec067ba1137dad297ce91c07f65b5113c"
+      },
+      {
+        "bytes": 9379,
+        "path": "oracle/include/pdal/filters/private/mongoexpression/Comparison.hpp",
+        "sha256": "3ccf77ebfed226ebedfa7009de0e23087906190e1d96e7dafc08952c265d0164"
+      },
+      {
+        "bytes": 2565,
+        "path": "oracle/include/pdal/filters/private/mongoexpression/Expression.hpp",
+        "sha256": "7ee28b281a1d888c5568a19c8b473d118f2a9c898deb2c04eb4d70b5a908fd4b"
+      },
+      {
+        "bytes": 5199,
+        "path": "oracle/include/pdal/filters/private/mongoexpression/LogicGate.hpp",
+        "sha256": "6d726294e743f5e808902a7f82f9a54accaf7621316e363400917cc84113d01e"
+      },
+      {
+        "bytes": 2277,
+        "path": "oracle/include/pdal/filters/private/mongoexpression/Support.hpp",
+        "sha256": "9417c551bf8d4c4d702bff0420655f0d091f2b26de59e82b03820fd4c89846ee"
+      },
+      {
+        "bytes": 2473,
+        "path": "oracle/include/pdal/filters/private/pnp/Grid.hpp",
+        "sha256": "0b615c0253a51f66490f1511e6e44617fa4d50629b77c9ed9c0c95fd1a3fb1e8"
+      },
+      {
+        "bytes": 17144,
+        "path": "oracle/include/pdal/filters/private/pnp/GridPnp.hpp",
+        "sha256": "3e7b76f5aea3915fd128a2b2da4a0be630338ed6a6c2911439a9ee3311c6dd03"
+      },
+      {
+        "bytes": 5975,
+        "path": "oracle/include/pdal/filters/private/pnp/VoxelRayTrace.hpp",
+        "sha256": "d00f3d509fecc38a0e0c5f0921187f3a413c3aa505295d26af812fd774925dff"
+      },
+      {
+        "bytes": 3250,
+        "path": "oracle/include/pdal/filters/private/straighten/Polyline.hpp",
+        "sha256": "65bcf7d8671a541bfa7c4664993af914a97c652ae72ca154a41c6f9cb0d3a055"
+      },
+      {
+        "bytes": 3901,
+        "path": "oracle/include/pdal/filters/private/straighten/Utils.hpp",
+        "sha256": "df78bf8284be1e4ae22f9d38b22131600c0043e72d957d549be7fbe84521b291"
+      },
+      {
+        "bytes": 2843,
+        "path": "oracle/include/pdal/io/BpfCompressor.hpp",
+        "sha256": "20e056a7186d165ed92b2f593ad0e2d528a4c9fa16c97dc56f635a63e53e5bdc"
+      },
+      {
+        "bytes": 7188,
+        "path": "oracle/include/pdal/io/BpfHeader.hpp",
+        "sha256": "3cf2f31a6025328fc74ea80efa060828552dc525c040fc6547f0b7c5f5a701fa"
+      },
+      {
+        "bytes": 4396,
+        "path": "oracle/include/pdal/io/BpfReader.hpp",
+        "sha256": "22e085b57c847ee4ab53d5ba724ad3a3aa2395fcd7a2ff2e505556e5f1257429"
+      },
+      {
+        "bytes": 3509,
+        "path": "oracle/include/pdal/io/BpfWriter.hpp",
+        "sha256": "ca6f817c61d7a8d71a298ec81bfa84cba72dd664c44cb93d370abdaced20e58c"
+      },
+      {
+        "bytes": 2287,
+        "path": "oracle/include/pdal/io/BufferReader.hpp",
+        "sha256": "b9f7a89cfe875c88816875d9e83476ba0f1af103605010a55e6d9c6d7a25903f"
+      },
+      {
+        "bytes": 3890,
+        "path": "oracle/include/pdal/io/CopcReader.hpp",
+        "sha256": "df7c6d312e5a2bcca3eb42809a05abac326f70ea807850bb24a7d12e0d6a0841"
+      },
+      {
+        "bytes": 2857,
+        "path": "oracle/include/pdal/io/CopcWriter.hpp",
+        "sha256": "6a1a3f76ebc8fb87b399f5a9ca25243eb30083d48b85c5d23257568d5882c39d"
+      },
+      {
+        "bytes": 3242,
+        "path": "oracle/include/pdal/io/EptAddonWriter.hpp",
+        "sha256": "417b885c71aadd67f4c02ea073bdfbd835243bf6d61f8e89bda9b792db687c19"
+      },
+      {
+        "bytes": 3992,
+        "path": "oracle/include/pdal/io/EptReader.hpp",
+        "sha256": "ca9b52206644b09a6f296611c2a711c4f1bd49d73ecbb27bf9953602f9b0c1b2"
+      },
+      {
+        "bytes": 3871,
+        "path": "oracle/include/pdal/io/EsriReader.hpp",
+        "sha256": "8152c51d8a0c9377003fd466a238104da0fe6dad81cecfdacc42c160538912dc"
+      },
+      {
+        "bytes": 5488,
+        "path": "oracle/include/pdal/io/FauxReader.hpp",
+        "sha256": "b58ff69263baee8076bf26eb70b3ab9a1306784cc6b89a9dda720f5082b1b62f"
+      },
+      {
+        "bytes": 6712,
+        "path": "oracle/include/pdal/io/FbiHeader.hpp",
+        "sha256": "36f3cbed9ce3036a20fb11b7f844480c17a6a51d777742c53a38aa3fae1e6e0c"
+      },
+      {
+        "bytes": 2980,
+        "path": "oracle/include/pdal/io/FbiReader.hpp",
+        "sha256": "f54228508b829db65635cb5fa4aeab405d1024d93322668d220cede7a414515f"
+      },
+      {
+        "bytes": 2243,
+        "path": "oracle/include/pdal/io/FbiWriter.hpp",
+        "sha256": "4af53375334935ce9f7f35850ff8cb26f90fba7f516a8ed8aa64bb104d69ddcd"
+      },
+      {
+        "bytes": 3719,
+        "path": "oracle/include/pdal/io/GDALReader.hpp",
+        "sha256": "81c653f839e7912d8a697ac3ba26d1bc80cf40f5e50606faabf66af6901fa8d2"
+      },
+      {
+        "bytes": 3637,
+        "path": "oracle/include/pdal/io/GDALWriter.hpp",
+        "sha256": "20a5dd193fa6796fcc08d1ddf8ff705d3f4b11dca5ec2f2940edfc4607c64f62"
+      },
+      {
+        "bytes": 3045,
+        "path": "oracle/include/pdal/io/GltfWriter.hpp",
+        "sha256": "e11aad2bbecaa6d1aab87ed517dfb629510294b7e9451bd7426193c4d8931efe"
+      },
+      {
+        "bytes": 5427,
+        "path": "oracle/include/pdal/io/HeaderVal.hpp",
+        "sha256": "011eecef80b8ce4f0cdb10f3f9fc73cbc0cd6e3f4f80da609b76e6e085a94d4d"
+      },
+      {
+        "bytes": 1976,
+        "path": "oracle/include/pdal/io/I3SReader.hpp",
+        "sha256": "a031dd30c719cf1e08cd22d38552a5b86cb3484d3884350c20adde6a68a75b2a"
+      },
+      {
+        "bytes": 4606,
+        "path": "oracle/include/pdal/io/Ilvis2MetadataReader.hpp",
+        "sha256": "a499e0a4993a054c00bf65671f10a97b53f1ef1e7645c04559c16aef812052a3"
+      },
+      {
+        "bytes": 3404,
+        "path": "oracle/include/pdal/io/Ilvis2Reader.hpp",
+        "sha256": "090d69b5293b1bbb587c2406afca543041fefb8885c3f2ae3268e09ee12ca90e"
+      },
+      {
+        "bytes": 10632,
+        "path": "oracle/include/pdal/io/LasHeader.hpp",
+        "sha256": "8dd00401b2a88c2f95ec726b34fa813cf8a45f044f60884acf1fc3599ef10208"
+      },
+      {
+        "bytes": 4492,
+        "path": "oracle/include/pdal/io/LasReader.hpp",
+        "sha256": "22ff4b378cc2867e10d77e1a02d6725e8f56dd54e690c49147235489bf487e92"
+      },
+      {
+        "bytes": 3293,
+        "path": "oracle/include/pdal/io/LasVLR.hpp",
+        "sha256": "b1b975f626a9e59593d5b513d7eb7be235defb050b37e5a13de148fee4827cca"
+      },
+      {
+        "bytes": 5523,
+        "path": "oracle/include/pdal/io/LasWriter.hpp",
+        "sha256": "bf2835421e59a30c864eaf8b37235fb7afa83f9c28cff0917afe3739968c5ac8"
+      },
+      {
+        "bytes": 7272,
+        "path": "oracle/include/pdal/io/MemoryViewReader.hpp",
+        "sha256": "aa502afe05b3877a162205c364bf170503ddc4f19f7557faa1dc4e6465dea694"
+      },
+      {
+        "bytes": 2145,
+        "path": "oracle/include/pdal/io/NullWriter.hpp",
+        "sha256": "32a69221947074d5c70047f1223f44fd9a702c907647cf909a613beb74f3a376"
+      },
+      {
+        "bytes": 3158,
+        "path": "oracle/include/pdal/io/OGRWriter.hpp",
+        "sha256": "991ed4c9cd29d8a785a92bad9dcf9d330b4b365acceeb249871bdc490690a526"
+      },
+      {
+        "bytes": 3496,
+        "path": "oracle/include/pdal/io/ObjReader.hpp",
+        "sha256": "b968d0a6005401b055c36f0924de0bfe526fe40ab9abbb2010c0ca205d8c4f7c"
+      },
+      {
+        "bytes": 3933,
+        "path": "oracle/include/pdal/io/OptechCommon.hpp",
+        "sha256": "ba031e5059f1ab0f1f36fc6d689e673b4f34f0b5fda6d751802fc70e16abc76e"
+      },
+      {
+        "bytes": 3068,
+        "path": "oracle/include/pdal/io/OptechReader.hpp",
+        "sha256": "58561cd2cf6160c9a1d0f7d710d64a8c5ab5c757eeedd4126456a2b0e32d75dc"
+      },
+      {
+        "bytes": 1885,
+        "path": "oracle/include/pdal/io/OptechRotationMatrix.hpp",
+        "sha256": "b8aad2c1c6fcf63436ce32f33c1f3093fb0a2f49eb6baa8e9ab009f0c8caeb55"
+      },
+      {
+        "bytes": 3625,
+        "path": "oracle/include/pdal/io/PcdHeader.hpp",
+        "sha256": "f523d80b973124b6ece30cd203da7eeab666af1578ac8c4cf950b76771a7b8a3"
+      },
+      {
+        "bytes": 2668,
+        "path": "oracle/include/pdal/io/PcdReader.hpp",
+        "sha256": "2d53b25e39ddadadd1fea1f81ec7e20c39f3807eaba2c9795850ec8a708e8462"
+      },
+      {
+        "bytes": 3086,
+        "path": "oracle/include/pdal/io/PcdWriter.hpp",
+        "sha256": "ab25717bf67eb34ca44ce522dfd29f1a99785d8dd0c5273b348720db6903b2f2"
+      },
+      {
+        "bytes": 4847,
+        "path": "oracle/include/pdal/io/PlyReader.hpp",
+        "sha256": "88854b99bfdb0b2ca335e555c38cf04b7f2668d9180df8c9e3b23a6b1d4eac01"
+      },
+      {
+        "bytes": 3988,
+        "path": "oracle/include/pdal/io/PlyWriter.hpp",
+        "sha256": "4d51351adb00c6553603db966002d9a3bdda4832921effa9b522988b0ea7fa99"
+      },
+      {
+        "bytes": 3291,
+        "path": "oracle/include/pdal/io/PtsReader.hpp",
+        "sha256": "032125585d15fd4cafad15192d00fc27513d035a29c30ffa16886ea9aa6b63b3"
+      },
+      {
+        "bytes": 2820,
+        "path": "oracle/include/pdal/io/PtxReader.hpp",
+        "sha256": "509a08c5dbf767845c1e71d0ec19ca643356bc48cf3b545ccfd95b1b7aad651e"
+      },
+      {
+        "bytes": 2895,
+        "path": "oracle/include/pdal/io/QfitReader.hpp",
+        "sha256": "db4a9b0506b3bb028c54d177ff589328e892e8cbc91fbecb08ffb257fe9f2a33"
+      },
+      {
+        "bytes": 2370,
+        "path": "oracle/include/pdal/io/RasterWriter.hpp",
+        "sha256": "66029508283da11a1f05f09c827fde934946b65ecd9f55168796ef7a6abdea3e"
+      },
+      {
+        "bytes": 3471,
+        "path": "oracle/include/pdal/io/SbetCommon.hpp",
+        "sha256": "0651265e5225f061b713febd5e8ab193b11dd4881bbfde4ebc98780eea794a67"
+      },
+      {
+        "bytes": 2634,
+        "path": "oracle/include/pdal/io/SbetReader.hpp",
+        "sha256": "8ebc2026d1fa8c7f69b7178ad15418c7ccb366b84e66ee30d2b975fc3bde9c58"
+      },
+      {
+        "bytes": 2651,
+        "path": "oracle/include/pdal/io/SbetSmrmsgReader.hpp",
+        "sha256": "835d69332d9d4deae364dc16be26801a22437666929dd48568bd3aaa5e6a188e"
+      },
+      {
+        "bytes": 2291,
+        "path": "oracle/include/pdal/io/SbetWriter.hpp",
+        "sha256": "2fc2c430b33a618e636075f877665ee357c4bad75c35c770fe3afdc2cdb190aa"
+      },
+      {
+        "bytes": 1979,
+        "path": "oracle/include/pdal/io/SlpkReader.hpp",
+        "sha256": "dc69d8b8cd66ef89967857057ad755257394a1aa964e3a73e24d2587333237cc"
+      },
+      {
+        "bytes": 2884,
+        "path": "oracle/include/pdal/io/StacReader.hpp",
+        "sha256": "3ee5fe3f50e9b21deda50eeb371bc82b6eb5321e476c1fe112010700c1a275e9"
+      },
+      {
+        "bytes": 3385,
+        "path": "oracle/include/pdal/io/TIndexReader.hpp",
+        "sha256": "8d5c64ef6d95a95971fd83bbe1d878a38d50fb3694d6624ba06c7dbae718fde4"
+      },
+      {
+        "bytes": 3834,
+        "path": "oracle/include/pdal/io/TerrasolidReader.hpp",
+        "sha256": "fbd28b65cc5366cd51a864c54669cb44b527b3de6dc97a52e576f8c0c6f0ffa8"
+      },
+      {
+        "bytes": 4650,
+        "path": "oracle/include/pdal/io/TextReader.hpp",
+        "sha256": "47afc90d8581adf0b792c48881c677fd858ac3ef06daa109615b9cd8aa185467"
+      },
+      {
+        "bytes": 3490,
+        "path": "oracle/include/pdal/io/TextWriter.hpp",
+        "sha256": "f3eb15b6f7b2ba74527fb3f2d7c75787f3e80bdc9001eff65c7d91ba9f670e1b"
+      },
+      {
+        "bytes": 536,
+        "path": "oracle/include/pdal/io/point_types.hpp",
+        "sha256": "1cb94218b2380e2e86a404b4e6e09c15adf3b02f507fa81fa1536ca0f8a24725"
+      },
+      {
+        "bytes": 5797,
+        "path": "oracle/include/pdal/io/private/GDALGrid.hpp",
+        "sha256": "df68a517dbd8127d7127cc6ebfefb680177782ee588cb37e0a24619d77dff169"
+      },
+      {
+        "bytes": 3025,
+        "path": "oracle/include/pdal/io/private/connector/Connector.hpp",
+        "sha256": "c04e03c52eba9700974006eca3db0c050e794f455348ce28980f3539b775c4d3"
+      },
+      {
+        "bytes": 4105,
+        "path": "oracle/include/pdal/io/private/copc/Entry.hpp",
+        "sha256": "3a502f5ee7d2ef68d06987bc04341124f2a809a1b7a7f1d50f3b36e3fdea1713"
+      },
+      {
+        "bytes": 2625,
+        "path": "oracle/include/pdal/io/private/copc/Info.hpp",
+        "sha256": "14b6d2872d6962c339110d3b29adaaad11ec9fe85c82a08c75785151cf3debe4"
+      },
+      {
+        "bytes": 5579,
+        "path": "oracle/include/pdal/io/private/copc/Key.hpp",
+        "sha256": "4022e1a309e53c67077af030d94d31bff9ca33c44294998da123d9e526e9bba4"
+      },
+      {
+        "bytes": 2720,
+        "path": "oracle/include/pdal/io/private/copc/Tile.hpp",
+        "sha256": "46956090f1b50f3f2f9e8ef444d1a7be5d37d0a59d62d4ace3edbc8aea5bbb96"
+      },
+      {
+        "bytes": 2263,
+        "path": "oracle/include/pdal/io/private/copcwriter/BuPyramid.hpp",
+        "sha256": "e277e35fbb3b5d24a4ee12db5f0fd9ce34661010b234375f63fdeda85723427e"
+      },
+      {
+        "bytes": 2955,
+        "path": "oracle/include/pdal/io/private/copcwriter/CellManager.hpp",
+        "sha256": "d1ce66bec267ed07b58d30e4809f9d87b53686af1da7e6e05727f2dcc8a94684"
+      },
+      {
+        "bytes": 4469,
+        "path": "oracle/include/pdal/io/private/copcwriter/Common.hpp",
+        "sha256": "4d8540a3e5a5382789a1ec51321f9c5081f6505580ea37e6ed40dc3236157eb7"
+      },
+      {
+        "bytes": 2809,
+        "path": "oracle/include/pdal/io/private/copcwriter/Grid.hpp",
+        "sha256": "655fdc19181a029daadc7e4b1d4a21090053de42a4109a0a358f98ce3302508f"
+      },
+      {
+        "bytes": 2981,
+        "path": "oracle/include/pdal/io/private/copcwriter/GridKey.hpp",
+        "sha256": "8529a70af913d3f0b38db356e7b2a6878344a05bf2378db8095b78f4eca353a8"
+      },
+      {
+        "bytes": 2885,
+        "path": "oracle/include/pdal/io/private/copcwriter/OctantInfo.hpp",
+        "sha256": "bc62ee28c7fc6ab870332cec3b11c141412f14b3af1f63ace384e4809821d033"
+      },
+      {
+        "bytes": 3191,
+        "path": "oracle/include/pdal/io/private/copcwriter/Output.hpp",
+        "sha256": "bce4c8ce13ffa1aa4dbd2192421e4b1c6c304014e9ef9de337e86b2d590ea927"
+      },
+      {
+        "bytes": 2378,
+        "path": "oracle/include/pdal/io/private/copcwriter/Processor.hpp",
+        "sha256": "14077d7d5c1878b1c4c81d7721f4aa73b815932337b52b8b7d8be783a5c8f22e"
+      },
+      {
+        "bytes": 2977,
+        "path": "oracle/include/pdal/io/private/copcwriter/PyramidManager.hpp",
+        "sha256": "0dbbdd18e01177626cfa2c2bba9070768dc8aef6861d441d05f68b2117446353"
+      },
+      {
+        "bytes": 2171,
+        "path": "oracle/include/pdal/io/private/copcwriter/Reprocessor.hpp",
+        "sha256": "281cf6ead9a7e80ac971e3e33efc908ecb97033c3186d04bf5d207995919591d"
+      },
+      {
+        "bytes": 6708,
+        "path": "oracle/include/pdal/io/private/copcwriter/VoxelInfo.hpp",
+        "sha256": "628aaa0ad23663695c6ba31d68d40c68b560c4ba827c3e24972dc016ba37abd0"
+      },
+      {
+        "bytes": 4944,
+        "path": "oracle/include/pdal/io/private/copcwriter/VoxelKey.hpp",
+        "sha256": "fbd323bfe1ff0f7d7928bc1baaab3df8d0bea31f6d898b271c21064163efce4c"
+      },
+      {
+        "bytes": 3716,
+        "path": "oracle/include/pdal/io/private/ept/Addon.hpp",
+        "sha256": "208da7ffe4d1268ec3bb71ef560527e85e7e7f052cbe46fc7397b923479dcd8d"
+      },
+      {
+        "bytes": 2636,
+        "path": "oracle/include/pdal/io/private/ept/Artifact.hpp",
+        "sha256": "162ca157c0a0ad7b6aefb5de474b3a5d59ce806c851fbd498b3837990e20bd2b"
+      },
+      {
+        "bytes": 3724,
+        "path": "oracle/include/pdal/io/private/ept/EptInfo.hpp",
+        "sha256": "a6cdda872228476a4ff24ef937adcd1e8cf894ef20ef28d637436852cb9f5112"
+      },
+      {
+        "bytes": 2256,
+        "path": "oracle/include/pdal/io/private/ept/EptSupport.hpp",
+        "sha256": "bddbe44aed80b356016ff909b2636fcd66b7b9052f706e6d4b27364b42c0e705"
+      },
+      {
+        "bytes": 2735,
+        "path": "oracle/include/pdal/io/private/ept/FixedPointLayout.hpp",
+        "sha256": "40355e137f2283649f23d941ebf918ddb1b259d253d6334a11b3e13b6cdbe41e"
+      },
+      {
+        "bytes": 4729,
+        "path": "oracle/include/pdal/io/private/ept/Key.hpp",
+        "sha256": "378f96c813def5d4e13f056ed6bf51d3aff81b80a7ef764e5f8da3c3ebdc403f"
+      },
+      {
+        "bytes": 2621,
+        "path": "oracle/include/pdal/io/private/ept/Overlap.hpp",
+        "sha256": "c9c7fa1df255f41886e01429bb1d27fb0395f04604261eb34685b8b9bbd3946a"
+      },
+      {
+        "bytes": 3373,
+        "path": "oracle/include/pdal/io/private/ept/TileContents.hpp",
+        "sha256": "4f591f9bccef0ef0892b3586aad1fccddea0b65e71dededb749570185f3958bc"
+      },
+      {
+        "bytes": 2508,
+        "path": "oracle/include/pdal/io/private/ept/VectorPointTable.hpp",
+        "sha256": "98aeae07bcb4876c7645a5124b9c815f394052dfadd8e5b2f6280ef1edc0a7ed"
+      },
+      {
+        "bytes": 4025,
+        "path": "oracle/include/pdal/io/private/esri/EsriUtil.hpp",
+        "sha256": "1b2e0e1c64e4e7c1b45c1e10e514da4e62be192d864e60832153c961e533e3b3"
+      },
+      {
+        "bytes": 2203,
+        "path": "oracle/include/pdal/io/private/esri/Interface.hpp",
+        "sha256": "fa4587ad925c4ceb3fabb3f2eebb98f4344aadec43c3d4baae4195e7cd33333b"
+      },
+      {
+        "bytes": 3402,
+        "path": "oracle/include/pdal/io/private/esri/Obb.hpp",
+        "sha256": "5797863754e08d1a9c9891f680a27edf51f374aedd71051317b7c282cbe28795"
+      },
+      {
+        "bytes": 2652,
+        "path": "oracle/include/pdal/io/private/esri/PageManager.hpp",
+        "sha256": "b2b9d848846f9bd0b5a1997afb025de9dc2e664d2983292c65ab3a49a2c99d69"
+      },
+      {
+        "bytes": 6331,
+        "path": "oracle/include/pdal/io/private/las/ChunkInfo.hpp",
+        "sha256": "818e6305cffac5e7df096aaf0fdcd4aed593da26200af25a321afb2841fcf972"
+      },
+      {
+        "bytes": 3047,
+        "path": "oracle/include/pdal/io/private/las/Geotiff.hpp",
+        "sha256": "fdebce328f768e9576af1864822d29a75b695df2ee472cadabdf6529b6e984f0"
+      },
+      {
+        "bytes": 5677,
+        "path": "oracle/include/pdal/io/private/las/Header.hpp",
+        "sha256": "283b4de3677a0640dfc3931ad83d1d8e426e03141a136254e09e02771e5b2800"
+      },
+      {
+        "bytes": 2729,
+        "path": "oracle/include/pdal/io/private/las/Srs.hpp",
+        "sha256": "7ba1c347fbf67c67252cb372cf181bf789c118cdbad4a753faa2e3e1e5feaa91"
+      },
+      {
+        "bytes": 2554,
+        "path": "oracle/include/pdal/io/private/las/Summary.hpp",
+        "sha256": "8893809e6ff9bcf89b9dd045469d6520f534fc972aaeaf07acf7cd6ce2c3e8b7"
+      },
+      {
+        "bytes": 2487,
+        "path": "oracle/include/pdal/io/private/las/Tile.hpp",
+        "sha256": "c238d6b3b6fc4977a659576653858647930f38f5d5453b77416f1bcca73cc549"
+      },
+      {
+        "bytes": 11024,
+        "path": "oracle/include/pdal/io/private/las/Utils.hpp",
+        "sha256": "fee9664ef4ed3ff40ceccd165771a736bbd35b5c8e422c5ee2f21e0a5905dc35"
+      },
+      {
+        "bytes": 7906,
+        "path": "oracle/include/pdal/io/private/las/Vlr.hpp",
+        "sha256": "38cabbbe79a0519e8e16a9ffe4386d5172d996c9efaef78706cd2bf289d0bb17"
+      },
+      {
+        "bytes": 3461,
+        "path": "oracle/include/pdal/io/private/stac/Catalog.hpp",
+        "sha256": "d749957b4a5b5b0266456701d934d06d164e42b589e517fdd5eee0cf00695a9a"
+      },
+      {
+        "bytes": 2141,
+        "path": "oracle/include/pdal/io/private/stac/Collection.hpp",
+        "sha256": "f1cc11086f0571a53a992110ee8cfb89a0dc1b5400b1b474364e263e9bf7bcf6"
+      },
+      {
+        "bytes": 3804,
+        "path": "oracle/include/pdal/io/private/stac/Item.hpp",
+        "sha256": "e76c17ced2f024d98d91ac39942169d482d5e8b15500953edf565f27c18d37a2"
+      },
+      {
+        "bytes": 2451,
+        "path": "oracle/include/pdal/io/private/stac/ItemCollection.hpp",
+        "sha256": "4baa306eb9828febbfe1a0cd52c09d574a6935e34f1eb826324dd5836797a17d"
+      },
+      {
+        "bytes": 4033,
+        "path": "oracle/include/pdal/io/private/stac/Utils.hpp",
+        "sha256": "a4ef5d4f471424f043636b3ed3f0d4aecf845bd55a9fc008e8144d971d043722"
+      },
+      {
+        "bytes": 2313,
+        "path": "oracle/include/pdal/kernels/ChamferKernel.hpp",
+        "sha256": "e37a4a5ac4f17b89699181ed479d4d86f1fbd770fd297afe8dadf6177f0a0d89"
+      },
+      {
+        "bytes": 3052,
+        "path": "oracle/include/pdal/kernels/DeltaKernel.hpp",
+        "sha256": "cb19270cb13018ef383b372ec958c654125af8501aa0110598b1df0925d34d00"
+      },
+      {
+        "bytes": 2431,
+        "path": "oracle/include/pdal/kernels/DensityKernel.hpp",
+        "sha256": "62a1c44494a680370ffa47ffdb74f057248e6ebf754ae7f34d8eb81858edab5a"
+      },
+      {
+        "bytes": 6133,
+        "path": "oracle/include/pdal/kernels/EvalKernel.hpp",
+        "sha256": "45a3e5a8e2acda6ded520a33ee86212252d8a1ca323d0b894578775b7ee0d17d"
+      },
+      {
+        "bytes": 2311,
+        "path": "oracle/include/pdal/kernels/GroundKernel.hpp",
+        "sha256": "3b6ba519f2375703ba79a2c87627f39159a1ffd151fc1019c2e3a52ce991d777"
+      },
+      {
+        "bytes": 2283,
+        "path": "oracle/include/pdal/kernels/HausdorffKernel.hpp",
+        "sha256": "9673b00cb49b1d59a1f64111c701cbdc102c9c3f808b90df7651eab787d6fccc"
+      },
+      {
+        "bytes": 3455,
+        "path": "oracle/include/pdal/kernels/InfoKernel.hpp",
+        "sha256": "d1f994f0d96b959e97d84ecd56c06fa7d29df7e3f6cecb78a58af666262896de"
+      },
+      {
+        "bytes": 2120,
+        "path": "oracle/include/pdal/kernels/MergeKernel.hpp",
+        "sha256": "babb2983ecec4a00260c31ee12020265f408b8c2e3d67a95a62708a791e0265f"
+      },
+      {
+        "bytes": 2574,
+        "path": "oracle/include/pdal/kernels/PipelineKernel.hpp",
+        "sha256": "4ba7b1f2b18a23c9c34442c089a794af93cf86d37e00f904da26de072f2925e9"
+      },
+      {
+        "bytes": 2268,
+        "path": "oracle/include/pdal/kernels/RandomKernel.hpp",
+        "sha256": "71ba8ff0c2ace9c4a10392c13f0864e8aa4d97928661c80a9cc8f37fd2701d6c"
+      },
+      {
+        "bytes": 2167,
+        "path": "oracle/include/pdal/kernels/SortKernel.hpp",
+        "sha256": "4e68b113f48bd3d14b60d9dd9f281992111239e476932a807da481a36e6e15df"
+      },
+      {
+        "bytes": 2225,
+        "path": "oracle/include/pdal/kernels/SplitKernel.hpp",
+        "sha256": "5def6ae40c1203660a966505745c611a30786e53a397abdb58630abe2223c1dc"
+      },
+      {
+        "bytes": 4536,
+        "path": "oracle/include/pdal/kernels/TIndexKernel.hpp",
+        "sha256": "c1d9cd8cbc95b49b0723e8ec1abffb96dcb6e8834cf2dcd227fc5682dbe107b8"
+      },
+      {
+        "bytes": 2786,
+        "path": "oracle/include/pdal/kernels/TileKernel.hpp",
+        "sha256": "027cda1baea0caad2322669cbf77ad3ba79a286311b538f8ebe7a3002a769c8c"
+      },
+      {
+        "bytes": 2692,
+        "path": "oracle/include/pdal/kernels/TranslateKernel.hpp",
+        "sha256": "b5cd727699bf968f490a84e58488c6c66a5d1bfbcf78af919078378009496750"
+      },
+      {
+        "bytes": 2531,
+        "path": "oracle/include/pdal/kernels/private/PointlessLas.hpp",
+        "sha256": "a3f1de9b31e655f66ac2557f11a0b25a96deab3ce044070dd282155cee5ee458"
+      },
+      {
+        "bytes": 2541,
+        "path": "oracle/include/pdal/kernels/private/density/OGR.hpp",
+        "sha256": "6730373a128dcb2cfbbcce027ae20784c821fe9ddffda9440a61cd32a0e61af1"
+      },
+      {
+        "bytes": 7722,
+        "path": "oracle/include/pdal/kernels/private/stac/StacInfo.hpp",
+        "sha256": "0cf497ce70793ab0a332db5de1830aa3a0963d3e6b62356925f284a8a9525b1b"
+      },
+      {
+        "bytes": 1963,
+        "path": "oracle/include/pdal/pdal.hpp",
+        "sha256": "9c6d4b66f87be711b279a4295f867f7d534bc52f62b1a412f3e0efb92ad0a402"
+      },
+      {
+        "bytes": 2500,
+        "path": "oracle/include/pdal/pdal_config.hpp",
+        "sha256": "675c72ca89f0eb98e537bf0cf6803caf06a64c4d61e4a60285f0f5ff2d497257"
+      },
+      {
+        "bytes": 1983,
+        "path": "oracle/include/pdal/pdal_export.hpp",
+        "sha256": "7241d419e5e316e1d7192deb9a6efed776a361637921f1556fa85661ace4a8eb"
+      },
+      {
+        "bytes": 924,
+        "path": "oracle/include/pdal/pdal_features.hpp",
+        "sha256": "76322a5a9c792497efd082ab9763afa376c8b177eea46cb07492fdeb338ed6ef"
+      },
+      {
+        "bytes": 2274,
+        "path": "oracle/include/pdal/pdal_internal.hpp",
+        "sha256": "1db502bac63689544b1963d0d9068cf2f5234de7092ffde6de93d556f18c5966"
+      },
+      {
+        "bytes": 3002,
+        "path": "oracle/include/pdal/pdal_test_main.hpp",
+        "sha256": "e8e8fe63a7f10cea941731efc491c952318cfa552620facfdb697eeccb6fe287"
+      },
+      {
+        "bytes": 8291,
+        "path": "oracle/include/pdal/pdal_types.hpp",
+        "sha256": "0db99a4ce690cbece68e759ebb105a890aaaab3052f5f043102dab469b2dd155"
+      },
+      {
+        "bytes": 2537,
+        "path": "oracle/include/pdal/private/DynamicLibrary.hpp",
+        "sha256": "1faf45a8b5b1cd48b38e45782fb2176c24afae6e437e325aa0e526f4c1a74f8c"
+      },
+      {
+        "bytes": 2002,
+        "path": "oracle/include/pdal/private/FileSpecHelper.hpp",
+        "sha256": "471e1de25396a0f6651b1d5f6f21e521a9f0b7330b9cee21692953ad16ee09dc"
+      },
+      {
+        "bytes": 13645,
+        "path": "oracle/include/pdal/private/KDImpl.hpp",
+        "sha256": "649404eb138fd8232b8e427ad99dafd2212c9c36b11123f3eca2171ad85a3916"
+      },
+      {
+        "bytes": 12006,
+        "path": "oracle/include/pdal/private/MathUtils.hpp",
+        "sha256": "07e25f9f0b7ea988eef76c742fac5cb885d81ae38a046c99392138b9c897a196"
+      },
+      {
+        "bytes": 2138,
+        "path": "oracle/include/pdal/private/OGRSpec.hpp",
+        "sha256": "fdd2e73170ecb5fa4c673e9a732727e7e8aaafaed9df4c67b848027ae3175366"
+      },
+      {
+        "bytes": 4105,
+        "path": "oracle/include/pdal/private/PointGrid.hpp",
+        "sha256": "3d5dc605159a120b10f4ba3eaa9e4a07b1278bfc1ec3fb9b25726199d83f700a"
+      },
+      {
+        "bytes": 7386,
+        "path": "oracle/include/pdal/private/Raster.hpp",
+        "sha256": "d30dd182ea625a9c0618ed9ca1d3e396618aa35c946d9f2b59c49a1f29f94ce6"
+      },
+      {
+        "bytes": 3548,
+        "path": "oracle/include/pdal/private/SrsTransform.hpp",
+        "sha256": "31e1944b602f5c08bf98b10ae5653a1b34a08787cff90a0aba394e7f0a8bbf55"
+      },
+      {
+        "bytes": 2168,
+        "path": "oracle/include/pdal/private/StageRunner.hpp",
+        "sha256": "46bcd97a71bfd25a5376beb73f06ef4b1a2300c3918acd513db2eeed6588d61f"
+      },
+      {
+        "bytes": 3878,
+        "path": "oracle/include/pdal/private/gdal/ErrorHandler.hpp",
+        "sha256": "021e195bb5ee1138def0249d111d900d3359d07654efb17eecfeb845b0479b88"
+      },
+      {
+        "bytes": 2327,
+        "path": "oracle/include/pdal/private/gdal/GDALError.hpp",
+        "sha256": "a27951d1f8d23744cb6a815a60c37d8f583a6e76c0e357a0dc706f5fd4c2c890"
+      },
+      {
+        "bytes": 3443,
+        "path": "oracle/include/pdal/private/gdal/GDALUtils.hpp",
+        "sha256": "d98ab074d912c47b1578eeace1a7383d73c4287d2987dd36aaf4d6faa2856fb7"
+      },
+      {
+        "bytes": 19157,
+        "path": "oracle/include/pdal/private/gdal/Raster.hpp",
+        "sha256": "c7e8340c7e5beb910d24dd4b267fae44bcacf5c425093d009ee127509463951d"
+      },
+      {
+        "bytes": 2504,
+        "path": "oracle/include/pdal/private/gdal/SpatialRef.hpp",
+        "sha256": "28aa3780bab9a29995380d7df1bb4111097a9b910b819e796e01dc337518614a"
+      },
+      {
+        "bytes": 3193,
+        "path": "oracle/include/pdal/util/Algorithm.hpp",
+        "sha256": "49fb5e8d196e26f8cc28b34a9588c43f7bbcf019a30d51f9932f260561265e5c"
+      },
+      {
+        "bytes": 2117,
+        "path": "oracle/include/pdal/util/Backtrace.hpp",
+        "sha256": "7ff37d64697c1b6ee2046c20deae8e9442eaca0b2544380705284548c81fbd7b"
+      },
+      {
+        "bytes": 23144,
+        "path": "oracle/include/pdal/util/Bounds.hpp",
+        "sha256": "2993ae012efaf01715cb40fba2b06f675af2f0b850dd97dc868e82f5ec98b33c"
+      },
+      {
+        "bytes": 4288,
+        "path": "oracle/include/pdal/util/Charbuf.hpp",
+        "sha256": "f59a95a2c2159527a62d196e4f59aceb8a541c26f3685c8c6d6de2f5ef078868"
+      },
+      {
+        "bytes": 17527,
+        "path": "oracle/include/pdal/util/Extractor.hpp",
+        "sha256": "659700dbffd01090f32f721d75c863db9992f99ab9c5755a346fa6b225c89df2"
+      },
+      {
+        "bytes": 10094,
+        "path": "oracle/include/pdal/util/FileUtils.hpp",
+        "sha256": "6e26d9368bb138e4aedc031d54f651bf039ca5f8fab24d3aae4b618cb4c9aeb1"
+      },
+      {
+        "bytes": 2901,
+        "path": "oracle/include/pdal/util/Georeference.hpp",
+        "sha256": "cded9f1110cd0220f1df625d3810ffb0adf60ddf726be7cef074916f9b5e8dd6"
+      },
+      {
+        "bytes": 18518,
+        "path": "oracle/include/pdal/util/IStream.hpp",
+        "sha256": "5b3ad21749e957edac29f1de0cee103fef98af8d5def72995c123ccd7c4f8943"
+      },
+      {
+        "bytes": 7841,
+        "path": "oracle/include/pdal/util/Inserter.hpp",
+        "sha256": "c28d316b6880d108217fedb7eb3473311c094054b273407d1bb0126418e7e8bb"
+      },
+      {
+        "bytes": 2417,
+        "path": "oracle/include/pdal/util/NullOStream.hpp",
+        "sha256": "d3a9a87c85971fde57ea653e4a56674a8e8ed33e109b1bb2e810963d02f71aba"
+      },
+      {
+        "bytes": 9006,
+        "path": "oracle/include/pdal/util/OStream.hpp",
+        "sha256": "09300eaaae3641845b8e86c47e4711ae64c5290b4b698be11a831d4dce8ef9a9"
+      },
+      {
+        "bytes": 50825,
+        "path": "oracle/include/pdal/util/ProgramArgs.hpp",
+        "sha256": "19714d350c647748c973093644949a6df0a41be799f52890b25bd124403dfa63"
+      },
+      {
+        "bytes": 2261,
+        "path": "oracle/include/pdal/util/Random.hpp",
+        "sha256": "18c51a967278d38580bd0007b20e0cbe0556c9df31e95558ad82ccceaa6cbf21"
+      },
+      {
+        "bytes": 5488,
+        "path": "oracle/include/pdal/util/ThreadPool.hpp",
+        "sha256": "335b081626bfebd905b29d0c6275a0bf961991dc6c9543024ab0d00e8ea10883"
+      },
+      {
+        "bytes": 34951,
+        "path": "oracle/include/pdal/util/Utils.hpp",
+        "sha256": "4676853bd6d183e513aa31e99e5c98ebf858f0551e61a44dff26614cedf0d280"
+      },
+      {
+        "bytes": 8132,
+        "path": "oracle/include/pdal/util/Uuid.hpp",
+        "sha256": "0a5118470cb5a78a9874c371700094fa18ed304fb4d4c72265cec79cea852d8a"
+      },
+      {
+        "bytes": 2799,
+        "path": "oracle/include/pdal/util/VSIIO.hpp",
+        "sha256": "9fc834fd1fe42f9eb85d8d23b82e8f427f880789ceab4eaad8f4de7151b5f038"
+      },
+      {
+        "bytes": 2697,
+        "path": "oracle/include/pdal/util/pdal_util_export.hpp",
+        "sha256": "b69c4d10706b7ac886e975cf73201b0ea70f7fb8835cb6bb308cb05f18f4cd5b"
+      },
+      {
+        "bytes": 2365,
+        "path": "oracle/include/pdal/util/pdal_util_internal.hpp",
+        "sha256": "8d7aa1f8d93c873ddf53ef373be19c189483618a6e911b02658f3c1a867da1c9"
+      },
+      {
+        "bytes": 3352,
+        "path": "oracle/include/pdal/util/portable_endian.hpp",
+        "sha256": "ba000c0deef3977a47598af791f0575f4ef8550acef1066c2f9e6a34681344d1"
+      },
+      {
+        "bytes": 2145,
+        "path": "oracle/include/pdal/util/private/BacktraceImpl.hpp",
+        "sha256": "2faca05a0db4fa2640cdb42b8a828d59dd49febbde86c2cd6eb486b5063325e9"
+      },
+      {
+        "bytes": 6247,
+        "path": "oracle/include/pdal/util/private/JsonSupport.hpp",
+        "sha256": "1e5c02065f844ff46125dd6bee24b1fb3f2c672f2200c700a80d578c6bdbdaec"
+      },
+      {
+        "bytes": 1874,
+        "path": "oracle/lib/cmake/PDAL/PDALConfig.cmake",
+        "sha256": "02b144bb224f2c3e6aae1100c25e59e64fb9d0b58a5096356ef2e3571c0ddd7a"
+      },
+      {
+        "bytes": 1862,
+        "path": "oracle/lib/cmake/PDAL/PDALConfigVersion.cmake",
+        "sha256": "3fc8d3b7f57294e0241ea072407ea317f60555aa1eb42fbd70803d2f0bcb72dd"
+      },
+      {
+        "bytes": 889,
+        "path": "oracle/lib/cmake/PDAL/PDALTargets-release.cmake",
+        "sha256": "3321f1b39d6f81464ed6be77e5893bdfd0f3f5140f16ad4c7c95bad04f4be8b4"
+      },
+      {
+        "bytes": 3910,
+        "path": "oracle/lib/cmake/PDAL/PDALTargets.cmake",
+        "sha256": "a6edbe359cc2c4fda66a7dbeb22cda301d4b42d0a46ff43ffa8e420a0bdb6de1"
+      },
+      {
+        "bytes": 1270,
+        "path": "oracle/lib/cmake/PDAL/pluginmacros.cmake",
+        "sha256": "c412ffcedb938774db8fb51216a676d8723407048e8d9185fc514115e5c2ba08"
+      },
+      {
+        "bytes": 78408,
+        "path": "oracle/lib/libpdal_plugin_kernel_fauxplugin.so",
+        "sha256": "88be76f4840ba4d5aca99b2571ec12e25f136dd745e626db0fce73cfb691f6c9"
+      },
+      {
+        "bytes": 78408,
+        "path": "oracle/lib/libpdal_plugin_kernel_fauxplugin.so.20",
+        "sha256": "88be76f4840ba4d5aca99b2571ec12e25f136dd745e626db0fce73cfb691f6c9"
+      },
+      {
+        "bytes": 78408,
+        "path": "oracle/lib/libpdal_plugin_kernel_fauxplugin.so.20.0.0",
+        "sha256": "88be76f4840ba4d5aca99b2571ec12e25f136dd745e626db0fce73cfb691f6c9"
+      },
+      {
+        "bytes": 14155552,
+        "path": "oracle/lib/libpdalcpp.so",
+        "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+      },
+      {
+        "bytes": 14155552,
+        "path": "oracle/lib/libpdalcpp.so.20",
+        "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+      },
+      {
+        "bytes": 14155552,
+        "path": "oracle/lib/libpdalcpp.so.20.0.0",
+        "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+      },
+      {
+        "bytes": 349,
+        "path": "oracle/lib/pkgconfig/pdal.pc",
+        "sha256": "5455027c51b3976eb399c5e6cb2d6c54647079eecbf2d8be3829d0e539be57ab"
+      }
+    ],
+    "tree_sha256": "ceffa6cd41a6fe7626f86dc4bf080fd0f5b931c03e04ce3e0d4a940bee71b4d7"
+  },
+  "release_id": "pdg-1.7-reproof-a7391d105b71-evidence-v2",
+  "roles": {
+    "candidate": {
+      "bytes": 200000,
+      "path": "candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd"
+    },
+    "candidate_version": {
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f222fab4624e58c43f9d7c91ed95c66ff6bd880bd0177ae42121110bfd6e050",
+      "text": "--------------------------------------------------------------------------------\npdal 2.10.0 (git-version: f1e35f)\n--------------------------------------------------------------------------------\n\n"
+    },
+    "oracle": {
+      "bytes": 283600,
+      "path": "oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39"
+    },
+    "oracle_version": {
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f222fab4624e58c43f9d7c91ed95c66ff6bd880bd0177ae42121110bfd6e050",
+      "text": "--------------------------------------------------------------------------------\npdal 2.10.0 (git-version: f1e35f)\n--------------------------------------------------------------------------------\n\n"
+    }
+  },
+  "schema": "pdg-frozen-release-artifact-v1",
+  "source_commit": "cc12b04eb0a02f082270ed8a7d0689c44a31c7fc"
+}

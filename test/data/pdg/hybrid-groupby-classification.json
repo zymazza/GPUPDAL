@@ -1,0 +1,16 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.groupby",
+      "dimension": "Classification"
+    },
+    {
+      "type": "writers.las",
+      "filename": "group#.las"
+    }
+  ]
+}

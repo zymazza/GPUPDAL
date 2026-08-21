@@ -1,0 +1,16 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([0, 1], [0, 1]"
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

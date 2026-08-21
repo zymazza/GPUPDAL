@@ -1,0 +1,266 @@
+/******************************************************************************
+ * Copyright (c) 2016-2017, 2020 Bradley J Chambers (brad.chambers@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following
+ * conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in
+ *       the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of Hobu, Inc. or Flaxen Geo Consulting nor the
+ *       names of its contributors may be used to endorse or promote
+ *       products derived from this software without specific prior
+ *       written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ ****************************************************************************/
+
+#include "SampleFilter.hpp"
+
+#include <pdal/util/ProgramArgs.hpp>
+
+#include <string>
+
+namespace pdal
+{
+
+using namespace Dimension;
+
+static StaticPluginInfo const s_info{
+    "filters.sample", "Subsampling filter",
+    "https://pdal.org/stages/filters.sample.html"};
+
+CREATE_STATIC_STAGE(SampleFilter, s_info)
+
+std::string SampleFilter::getName() const
+{
+    return s_info.name;
+}
+
+void SampleFilter::addArgs(ProgramArgs& args)
+{
+    m_cellArg = &args.add("cell", "Cell size", m_cell);
+    m_radiusArg = &args.add("radius", "Minimum radius", m_radius);
+    m_dimensionArg = &args.add("dimension", "Emit 1 or 0 whether a point was sampled into this newly created dimension instead of culling points", m_dimensionName);
+    m_originXArg = &args.add("origin_x", "Voxelization origin X (default to first point)", m_originX);
+    m_originYArg = &args.add("origin_y", "Voxelization origin Y (default to first point)", m_originY);
+    m_originZArg = &args.add("origin_z", "Voxelization origin Z (default to first point)", m_originZ);
+    m_dimension = pdal::Dimension::Id::Unknown;
+}
+
+void SampleFilter::prepared(PointTableRef table)
+{
+    if (m_cellArg->set() && m_radiusArg->set())
+        throwError("Must set only one of 'cell' or 'radius'.");
+
+    if (!m_cellArg->set() && !m_radiusArg->set())
+        throwError("Must set 'cell' or 'radius' but not both.");
+
+    PointLayoutPtr layout(table.layout());
+
+    if (m_dimensionArg->set())
+    {
+        m_dimension = layout->registerOrAssignDim(m_dimensionName, Dimension::Type::Unsigned8);
+    }
+
+}
+
+void SampleFilter::ready(PointTableRef)
+{
+    m_populatedVoxels.clear();
+
+    if (m_cellArg->set())
+        m_radius = m_cell / 2.0 * std::sqrt(3.0);
+
+    if (m_radiusArg->set())
+        m_cell = 2.0 * m_radius / std::sqrt(3.0);
+
+    log()->get(LogLevel::Debug)
+        << "cell " << m_cell << ", radius " << m_radius << std::endl;
+
+    m_radiusSqr = m_radius * m_radius;
+}
+
+PointViewSet SampleFilter::run(PointViewPtr view)
+{
+    PointViewPtr output = view->makeNew();
+    for (PointRef point : *view)
+    {
+        if (keepPoint(point))
+        {
+            bool kept = voxelize(point);
+            output->appendPoint(*view, point.pointId());
+        }
+    }
+
+    PointViewSet viewSet;
+    viewSet.insert(output);
+    return viewSet;
+}
+
+bool SampleFilter::voxelize(PointRef& point)
+{
+    double x = point.getFieldAs<double>(Id::X);
+    double y = point.getFieldAs<double>(Id::Y);
+    double z = point.getFieldAs<double>(Id::Z);
+
+    // Use the coordinates of the first point as origin to offset data and
+    // derive integer voxel indices.
+    if (m_populatedVoxels.empty())
+    {
+        if (!m_originXArg->set())
+            m_originX = x;
+        if (!m_originYArg->set())
+            m_originY = y;
+        if (!m_originZArg->set())
+            m_originZ = y;
+    }
+
+    // Get voxel indices for current point.
+    Voxel v = std::make_tuple((int)(std::floor((x - m_originX) / m_cell)),
+                              (int)(std::floor((y - m_originY) / m_cell)),
+                              (int)(std::floor((z - m_originZ) / m_cell)));
+
+    // Check current voxel before any of the neighbors. We will most often have
+    // points that are too close in the point's enclosing voxel, thus saving
+    // cycles.
+    // B0267/D0267: probe once and read the list in place (the upstream code
+    // copied every candidate list); the decisions are unchanged.
+    auto center = m_populatedVoxels.find(v);
+    if (center != m_populatedVoxels.end())
+    {
+        // Get list of coordinates in candidate voxel.
+        const CoordList& coords = center->second;
+        for (Coord const& coord : coords)
+        {
+            // Compute Euclidean distance between current point and
+            // candidate voxel.
+            double xv = std::get<0>(coord);
+            double yv = std::get<1>(coord);
+            double zv = std::get<2>(coord);
+            double distSqr =
+                (xv - x) * (xv - x) + (yv - y) * (yv - y) + (zv - z) * (zv - z);
+
+            // If any point is closer than the minimum radius, we can
+            // immediately return false, as the minimum distance
+            // criterion is violated.
+            if (distSqr < m_radiusSqr)
+                return false;
+        }
+    }
+
+    // B0267/D0267: a neighboring voxel whose axis-aligned box lies farther
+    // than the radius from the point cannot hold a violating coordinate, so
+    // it need not be probed. The box is widened by a generous margin against
+    // the floating-point rounding of the voxel index, so pruning is strictly
+    // conservative and every greedy decision is unchanged.
+    const double margin = 1.0e-8 * m_cell;
+    const auto axisGap = [this, margin](double value, double origin,
+                                        int index)
+    {
+        const double low = origin + static_cast<double>(index) * m_cell -
+                           margin;
+        const double high = origin + static_cast<double>(index + 1) * m_cell +
+                            margin;
+        if (value < low)
+            return low - value;
+        if (value > high)
+            return value - high;
+        return 0.0;
+    };
+
+    // Iterate over immediate neighbors of current voxel, computing minimum
+    // distance between any already added point and the current point.
+    for (int xi = std::get<0>(v) - 1; xi < std::get<0>(v) + 2; ++xi)
+    {
+        const double gx = axisGap(x, m_originX, xi);
+        for (int yi = std::get<1>(v) - 1; yi < std::get<1>(v) + 2; ++yi)
+        {
+            const double gy = axisGap(y, m_originY, yi);
+            for (int zi = std::get<2>(v) - 1; zi < std::get<2>(v) + 2; ++zi)
+            {
+                Voxel candidate = std::make_tuple(xi, yi, zi);
+
+                // We have already visited the center voxel, and can skip it.
+                if (v == candidate)
+                    continue;
+
+                const double gz = axisGap(z, m_originZ, zi);
+                if (gx * gx + gy * gy + gz * gz >= m_radiusSqr)
+                    continue;
+
+                // Check that candidate voxel is occupied.
+                auto occupied = m_populatedVoxels.find(candidate);
+                if (occupied == m_populatedVoxels.end())
+                    continue;
+
+                // Get list of coordinates in candidate voxel.
+                const CoordList& coords = occupied->second;
+                for (Coord const& coord : coords)
+                {
+                    // Compute Euclidean distance between current point and
+                    // candidate voxel.
+                    double xv = std::get<0>(coord);
+                    double yv = std::get<1>(coord);
+                    double zv = std::get<2>(coord);
+                    double distSqr = (xv - x) * (xv - x) + (yv - y) * (yv - y) +
+                                     (zv - z) * (zv - z);
+
+                    // If any point is closer than the minimum radius, we can
+                    // immediately return false, as the minimum distance
+                    // criterion is violated.
+                    if (distSqr < m_radiusSqr)
+                        return false;
+                }
+            }
+        }
+    }
+
+    Coord coord = std::make_tuple(x, y, z);
+    if (center != m_populatedVoxels.end())
+    {
+        center->second.push_back(coord);
+    }
+    else
+    {
+        CoordList coords;
+        coords.push_back(coord);
+        m_populatedVoxels.emplace(v, coords);
+    }
+    return true;
+}
+
+bool SampleFilter::keepPoint(PointRef& point)
+{
+  bool keep = voxelize(point);
+  if (m_dimension != pdal::Dimension::Id::Unknown)
+  {
+    point.setField(m_dimension, keep);
+    keep = true;
+  }
+  return keep;
+}
+
+bool SampleFilter::processOne(PointRef& point)
+{
+    return keepPoint(point);
+}
+
+} // namespace pdal

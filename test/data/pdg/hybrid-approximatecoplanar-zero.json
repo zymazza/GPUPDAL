@@ -1,0 +1,32 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.csv",
+      "type": "readers.text"
+    },
+    {
+      "knn": 6,
+      "thresh1": 24.0,
+      "thresh2": 5.0,
+      "type": "filters.approximatecoplanar"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Coplanar = 7",
+        "X = 0",
+        "Y = 0",
+        "Z = 0"
+      ]
+    },
+    {
+      "knn": 3,
+      "type": "filters.approximatecoplanar"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

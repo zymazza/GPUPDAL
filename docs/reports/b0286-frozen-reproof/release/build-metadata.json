@@ -1,0 +1,13 @@
+{
+  "schema": "pdg-frozen-build-metadata-v1",
+  "source_archive_sha256": "a7391d105b710efe63476bdeb23c38527362a806227b400a75c37f0a60203026",
+  "source_commit": "cc12b04eb0a02f082270ed8a7d0689c44a31c7fc",
+  "oracle_commit": "f1e35f5c3e416b8c6a2c39966c8205cfae54afe2",
+  "release_id": "pdg-1.7-reproof-a7391d105b71",
+  "container_image": "nvidia/cuda:13.3.1-devel-ubuntu24.04",
+  "build_type": "Release",
+  "cuda_architectures": "all",
+  "portable_architecture_guard": true,
+  "candidate_install_prefix": "/workspace/reproof/payload/candidate",
+  "oracle_install_prefix": "/workspace/reproof/payload/oracle"
+}

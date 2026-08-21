@@ -1,0 +1,37 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "always_up": false,
+      "knn": 12,
+      "type": "filters.normal"
+    },
+    {
+      "knn": 12,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "feature_set": "dimensionality",
+      "knn": 12,
+      "mode": "raw",
+      "type": "filters.covariancefeatures"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Classification = Linearity * 10",
+        "Intensity = Curvature * 1000",
+        "UserData = Eigenvalue0 * 100"
+      ]
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

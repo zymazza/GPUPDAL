@@ -1,0 +1,21 @@
+{
+  "schema": "pdg-reproof-evidence-amendment-v1",
+  "created_utc": "2026-08-19T02:00:00Z",
+  "compiled_source_archive_sha256": "a7391d105b710efe63476bdeb23c38527362a806227b400a75c37f0a60203026",
+  "unchanged_binary_roles": {
+    "candidate_sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+    "oracle_sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39"
+  },
+  "reason": "The pre-timing fixture gate rejected a locally modified COPC input carrying a QGIS EVLR. No measured run was accepted. The evidence layer was amended to use a deterministic pinned-oracle COPC derivation regenerated twice byte-identically with frozen time, threads=1, and fixed_seed=true.",
+  "amended_evidence_files": {
+    "bench/pipelines/reference/manifest.json": "51a0826954a2d9ba01e8e09e49fe0b88895832b09fd5ff90991fc1117802fe55",
+    "bench/pipelines/reference/README.md": "f687939996902c713e883a06d7d7aa6406b07b64ede2a8f127abcdc942d3e967",
+    "scripts/pdg/prepare_reference_fixtures.py": "7526a59d508c850bccec187b1aaedfd7409fdc194fc52c6b68a27cffb553e351"
+  },
+  "deterministic_copc_fixture": {
+    "bytes": 7008890,
+    "sha256": "5e32d0dd3091dbe562cfee4f883ddce1a3f2a5d650e2ac62e492ee22faa80fb7",
+    "regeneration_count": 2,
+    "byte_identical_regenerations": true
+  }
+}

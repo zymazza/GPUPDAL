@@ -1,0 +1,34 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.csv",
+      "type": "readers.text"
+    },
+    {
+      "count": 5,
+      "type": "filters.head"
+    },
+    {
+      "knn": 2,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "dimensions": "X=>GpsTime",
+      "type": "filters.ferry"
+    },
+    {
+      "knn": 8,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "dimensions": "Eigenvalue2=>GpsTime",
+      "type": "filters.ferry"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

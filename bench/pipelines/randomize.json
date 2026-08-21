@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.randomize",
+      "seed": 123456789
+    },
+    {
+      "type": "filters.assign",
+      "value": "UserData = Classification"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

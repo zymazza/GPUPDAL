@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.colorinterp",
+      "dimension": "Z",
+      "ramp": "blue_orange"
+    },
+    {
+      "type": "writers.las",
+      "filename": "result.las"
+    }
+  ]
+}

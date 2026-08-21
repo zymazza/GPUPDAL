@@ -1,0 +1,19 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.sort",
+      "dimension": "Z",
+      "order": "ASC",
+      "algorithm": "NORMAL"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las",
+      "extra_dims": "all"
+    }
+  ]
+}

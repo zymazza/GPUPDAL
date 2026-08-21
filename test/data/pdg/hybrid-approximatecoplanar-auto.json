@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "count": 262144,
+      "filename": "input.laz",
+      "type": "readers.las"
+    },
+    {
+      "knn": 8,
+      "thresh1": 30.5,
+      "thresh2": 4.25,
+      "type": "filters.approximatecoplanar"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "feature_set": "dimensionality,omnivariance,anisotropy,eigenentropy,eigenvaluesum,surfacevariation,demantkeverticality",
+      "knn": 12,
+      "mode": "raw",
+      "type": "filters.covariancefeatures"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{"pipeline":[
+  {"type":"readers.las","filename":"input.laz"},
+  {"type":"filters.normal","knn":8},
+  {"type":"filters.covariancefeatures","knn":8,"feature_set":"Dimensionality"},
+  {"type":"writers.las","filename":"output.las","extra_dims":"all"}
+]}

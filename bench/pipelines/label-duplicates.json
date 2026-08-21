@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.label_duplicates",
+      "dimensions": "Classification"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las",
+      "extra_dims": "all"
+    }
+  ]
+}

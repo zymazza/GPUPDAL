@@ -1,0 +1,164 @@
+{
+  "schema": "pdg-measurement-profile-evidence-v1",
+  "slice": "B0136",
+  "date": "2026-08-11",
+  "repository": {
+    "commit": "6c5fca157c47a8280d15725307a36cf3ad80f62c",
+    "branch": "p3-skewness-resident",
+    "worktree": "clean"
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 9 7900",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "sm": 89,
+    "driver": "610.43.03",
+    "cuda": "13.3.73",
+    "build": "Release -O3 -DNDEBUG",
+    "kernel": "7.1.3-arch1-2",
+    "storage": "warm NVMe/ext4",
+    "locale": "C",
+    "timezone": "UTC",
+    "frozen_epoch": 1704067200
+  },
+  "binaries": {
+    "dispatcher": {
+      "path": "build/pdg-cuda-release/bin/pdg",
+      "bytes": 1838896,
+      "sha256": "0014a770b988dcbc501b3c9e2e057066c784135ee5254aa01fd37b890ceca641"
+    },
+    "engine": {
+      "path": "build/pdg-cuda-release/bin/pdg-engine",
+      "bytes": 11431296,
+      "sha256": "a6875e2abfd92cfae9ee1060d23f5080d967f9aa969741ac00f464d65ed0160c"
+    },
+    "oracle": {
+      "path": "build/pdal-upstream-tests/bin/pdal",
+      "bytes": 286832,
+      "sha256": "ea66f6a9ebb833fef1ba6d3def99ba0b36385632deeefebe8e6a9c7e034af7a2",
+      "upstream_commit": "f1e35f5c3e416b8c6a2c39966c8205cfae54afe2"
+    },
+    "frozen_time_library": {
+      "path": "build/pdg-cuda-release/lib/libpdg_frozen_time.so",
+      "bytes": 15648,
+      "sha256": "e53dd72fba998bfc9f15184a43f426ce28a02b20e321079b022ac43042fc1690"
+    }
+  },
+  "input": {
+    "path": "build/bench-data/hag-nn-count4-unique-grid-1m.las",
+    "bytes": 40000701,
+    "points": 1000002,
+    "format": "LAS 1.4 point format 7, 40-byte records, one canonical OffsetTime Extra Bytes descriptor",
+    "sha256": "14532b092c348bfa266cccf0d91e73e7cf40ccdebf51a33b79e207439d564d19",
+    "fixture_recipe": {
+      "path": "bench/pipelines/hag_nn_count4_fixture.json",
+      "bytes": 619,
+      "sha256": "838d0b3971f79162ddd51e18dcb667bc57bcff7a981a189a0b7407b52ccf7fa2",
+      "count_six_property": "ground rows lie on Y == 0 and query X is offset by Y / 5, making the retained sixth and seventh distances distinct"
+    }
+  },
+  "pipelines": {
+    "count_six": {
+      "path": "build/diagnostics/profile-work/b0136-hag-nn-count6.json",
+      "bytes": 257,
+      "sha256": "05287ae1d6271b8a86e9b13ead1cc1319ad7e94419acbdaaacd91ddaf04259bc",
+      "materialized_sha256": "8621d28a4d88e53a2a2a1a118b190bd6f3a552c901297b5416a7d4ba2f6efc75",
+      "shape": "readers.las -> filters.hag_nn(count=6) -> writers.las(extra_dims=all)"
+    },
+    "output_control": {
+      "path": "build/diagnostics/profile-work/b0133-hag-nn-output-control.json",
+      "bytes": 195,
+      "sha256": "d1c5a36933a9700a97f2acf26ae378c1f81e764b67666548e51aaccc893250b7",
+      "materialized_sha256": "957bc739b224678f7b0d4286c126ca570a03d4058724fcca4db0bc5c44d1377c",
+      "shape": "readers.las -> writers.las(extra_dims=all)"
+    },
+    "profile": {
+      "path": "build/diagnostics/profile-work/b0136-hag-nn-count6-pdal-profile.json",
+      "bytes": 405,
+      "sha256": "9cd8b539d59c16c2c590a7e4b72a916a79fd4821355709e7336753f209253a6b"
+    }
+  },
+  "commands": {
+    "count_six_pairs": "python3 scripts/pdg/benchmark_translate.py --oracle build/pdal-upstream-tests/bin/pdal --candidate build/pdg-cuda-release/bin/pdg --input build/bench-data/hag-nn-count4-unique-grid-1m.las --pipeline build/diagnostics/profile-work/b0136-hag-nn-count6.json --input-label b0136-hag-nn-count6-current-clean-1m --work-dir build/benchmarks/work-b0136-hag-nn-count6-default --report build/benchmarks/b0136-hag-nn-count6-current-clean-1m.json --repo-root . --runs 5 --warmups 1 --candidate-mode default --frozen-time-library build/pdg-cuda-release/lib/libpdg_frozen_time.so --freeze-epoch 1704067200",
+    "output_control_pairs": "python3 scripts/pdg/benchmark_translate.py --oracle build/pdal-upstream-tests/bin/pdal --candidate build/pdg-cuda-release/bin/pdg --input build/bench-data/hag-nn-count4-unique-grid-1m.las --pipeline build/diagnostics/profile-work/b0133-hag-nn-output-control.json --input-label b0136-hag-nn-output-control-current-clean-1m --work-dir build/benchmarks/work-b0136-hag-nn-output-control --report build/benchmarks/b0136-hag-nn-output-control-current-clean-1m.json --repo-root . --runs 5 --warmups 1 --candidate-mode default --frozen-time-library build/pdg-cuda-release/lib/libpdg_frozen_time.so --freeze-epoch 1704067200",
+    "cpu_phase_profile": "env LC_ALL=C TZ=UTC LD_PRELOAD=/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdg_frozen_time.so PDG_FROZEN_EPOCH=1704067200 gdb -nx -q -batch -x build/diagnostics/profile-work/b0136-hag-nn-count6-phase-timing.gdb --args build/pdal-upstream-tests/bin/pdal"
+  },
+  "measurements": {
+    "count_six": {
+      "report": {
+        "path": "build/benchmarks/b0136-hag-nn-count6-current-clean-1m.json",
+        "bytes": 17068,
+        "sha256": "3b3c5c9b49aa0812a54fa1429a48016fcc1cd7fff4c9b4915011ad396c1b8b22"
+      },
+      "protocol": "one warmup per executable followed by five alternating exact pairs",
+      "pinned_pdal_seconds": [1.031215364, 1.019913125, 1.018217190, 1.012678029, 1.029633139],
+      "pinned_pdal_median_seconds": 1.019913125,
+      "pinned_pdal_p5_seconds": 1.0137858612,
+      "pinned_pdal_p95_seconds": 1.0308989190,
+      "current_default_delegate_seconds": [1.037580988, 1.043031950, 1.041636052, 1.037664447, 1.045204001],
+      "current_default_delegate_median_seconds": 1.041636052,
+      "current_default_delegate_speedup": 0.9791453771609663,
+      "exact_output": {
+        "bytes": 48000909,
+        "sha256": "675b88f1902a37a659fe6ba837a4e0f6985f3cf54fd676a80df66c757205272c",
+        "all_pairs_match": true
+      }
+    },
+    "output_control": {
+      "report": {
+        "path": "build/benchmarks/b0136-hag-nn-output-control-current-clean-1m.json",
+        "bytes": 17081,
+        "sha256": "1e6500d8e26bd900ca991928fb4a4f3992d170fa01c64ce09b0a9bc6a5fdd3a2"
+      },
+      "protocol": "one warmup per executable followed by five alternating exact pairs",
+      "pinned_pdal_median_seconds": 0.296473777,
+      "pinned_pdal_p5_seconds": 0.2893741016,
+      "pinned_pdal_p95_seconds": 0.3084914790,
+      "current_default_delegate_median_seconds": 0.310959938,
+      "exact_output": {
+        "bytes": 40000701,
+        "sha256": "6876e51cba9a3145a0d16a88aac819971badc771bdc668b6ea30626e8d57af92",
+        "all_pairs_match": true
+      }
+    },
+    "derived_stock_surface": {
+      "stage_above_output_control_seconds": 0.723439348,
+      "stage_above_output_control_fraction_of_pdal_wall_percent": 70.931468
+    },
+    "performance_qualification": false
+  },
+  "cpu_profile": {
+    "kind": "directional optimized-oracle GDB symbol/instruction phase timing",
+    "script": {
+      "path": "build/diagnostics/profile-work/b0136-hag-nn-count6-phase-timing.gdb",
+      "bytes": 2417,
+      "sha256": "2eb1d6113243bf8b2d221adbe354650804bb21e41766b5189ec90687f647b98d"
+    },
+    "log": {
+      "path": "build/diagnostics/profile-work/b0136-hag-nn-count6-phase-timing.log",
+      "bytes": 1706,
+      "sha256": "cdc41e38409cfa7997adb1d52c190abcda36f7d8273d3699960544c7313862f5"
+    },
+    "filter_seconds": 0.768510391,
+    "build_2d_index_seconds": 0.063233061,
+    "post_index_query_projection_seconds": 0.691737660,
+    "build_2d_index_fraction_of_filter_percent": 8.228003,
+    "post_index_query_projection_fraction_of_filter_percent": 90.010190,
+    "profile_output": {
+      "path": "build/diagnostics/profile-work/b0136-hag-nn-count6-pdal-profile-output.las",
+      "bytes": 48000909,
+      "sha256": "675b88f1902a37a659fe6ba837a4e0f6985f3cf54fd676a80df66c757205272c",
+      "matches_paired_oracle": true
+    },
+    "dominant_cost": "post-index HAG-NN neighborhood query and ordered projection; the stock 2D index build is only 8.23 percent of the filter call"
+  },
+  "decision": {
+    "functional_support": "yes through unchanged pinned-PDAL fallback",
+    "gpu_native": false,
+    "performance_qualified": false,
+    "automatically_selected": false,
+    "prototype_gate_cleared": true,
+    "path": "test a bounded count-six extension of the existing mapped LAS source, planner-owned masked 2D index query, exact repair semantics, and generic one-binary64 publisher; do not add a private index or new kernel family",
+    "reason": "The stock stage surface is 0.723439348 seconds, 70.931468 percent of complete wall, and the profiled post-index query/projection owns 90.010190 percent of filter time.",
+    "next_task": "B0137: add count-six proof cases first, then cheaply extend only the strict explicit HAG-NN envelope; retain it only for byte-exact current-binary 5-10 percent complete-process improvement, with no model or automatic selector."
+  }
+}

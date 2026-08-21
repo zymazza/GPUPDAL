@@ -1,0 +1,13 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.copc",
+      "filename": "input.copc.laz",
+      "requests": 1
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

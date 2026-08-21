@@ -1,0 +1,27 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.csv",
+      "type": "readers.text"
+    },
+    {
+      "always_up": false,
+      "knn": 3,
+      "type": "filters.normal"
+    },
+    {
+      "dimensions": "NormalZ=>NormalX",
+      "type": "filters.ferry"
+    },
+    {
+      "knn": 3,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

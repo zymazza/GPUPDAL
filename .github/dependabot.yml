@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/doc"
+    schedule:
+      interval: daily
+    groups:
+      all-actions:
+        patterns:
+          - "*"

@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.colorinterp",
+      "dimension": "Z",
+      "minimum": 400.0,
+      "maximum": 600.0,
+      "clamp": true,
+      "ramp": "heat_map"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

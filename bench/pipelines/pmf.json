@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.pmf",
+      "cell_size": 25.0
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las",
+      "extra_dims": "all"
+    }
+  ]
+}

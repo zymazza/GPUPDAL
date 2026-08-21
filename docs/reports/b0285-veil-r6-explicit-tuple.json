@@ -1,0 +1,247 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "b0285-veil-r6-explicit-tuple",
+  "pipeline": {
+    "path": "bench/pipelines/reference/r6-features.json",
+    "sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+    "materialized": {
+      "oracle": {
+        "path": "/tmp/pdg-audit-b0285-final/veil/b0285-veil-r6-explicit-tuple-oracle.json",
+        "sha256": "f085ececae8521d26c67b8f2b1a9fef7fa38b7c5533e5c6109e29a765632a725"
+      },
+      "candidate": {
+        "path": "/tmp/pdg-audit-b0285-final/veil/b0285-veil-r6-explicit-tuple-candidate.json",
+        "sha256": "38bdd13306d07e7511f484c45141e7dd0d2b8e774b01ca1de27f3ef4e8db826c"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/home/zy/dev/veil/twins/flatirons-demo/data/terrain/lidar/laz/USGS_Lidar_Point_Cloud_CO_DRCOG_2020_B20_w0474n4425.laz",
+      "bytes": 266539183,
+      "sha256": "73fb5a0e6d3fffe3a2c82f91ff9ee50b88475f65d94805db498d64d987ddbe3f"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/home/zy/dev/veil/twins/flatirons-demo/data/terrain/lidar/laz/USGS_Lidar_Point_Cloud_CO_DRCOG_2020_B20_w0474n4425.laz",
+        "bytes": 266539183,
+        "sha256": "73fb5a0e6d3fffe3a2c82f91ff9ee50b88475f65d94805db498d64d987ddbe3f"
+      },
+      "input.laz": {
+        "path": "/home/zy/dev/veil/twins/flatirons-demo/data/terrain/lidar/laz/USGS_Lidar_Point_Cloud_CO_DRCOG_2020_B20_w0474n4425.laz",
+        "bytes": 266539183,
+        "sha256": "73fb5a0e6d3fffe3a2c82f91ff9ee50b88475f65d94805db498d64d987ddbe3f"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/home/zy/dev/veil/twins/flatirons-demo/data/terrain/lidar/laz/USGS_Lidar_Point_Cloud_CO_DRCOG_2020_B20_w0474n4425.laz",
+        "bytes": 266539183,
+        "sha256": "73fb5a0e6d3fffe3a2c82f91ff9ee50b88475f65d94805db498d64d987ddbe3f"
+      }
+    ],
+    "used_input_bytes": 266539183,
+    "extent": {
+      "minx": 474000,
+      "maxx": 474999.999,
+      "miny": 4425000.001,
+      "maxy": 4425999.999,
+      "points": 35976465
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/tmp/pdg-audit-upstream-git-build2/bin/pdal",
+      "sha256": "804a7b160fe57bf6294afb2204e1891cb4f6ad567e56d965bc76479f872cc013",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/tmp/pdg-audit-upstream-git-build2/lib/libpdalcpp.so.20.0.0",
+          "sha256": "0117e264c16bf45f84e9bc1b0eea163edbab643d2e5d8baa98bc55287d617e4e"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/bin/pdg",
+      "sha256": "cf5470c6c065756e038823bf1c668903a7786de5149e125c6b05bab7e4b2d410",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/bin/pdg-engine",
+          "sha256": "4f9f0d62f181461c166840970669279e4f093e55745a1a8c64abdddcf473e1ba"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdalcpp.so.20.0.0",
+          "sha256": "ea113c56be1498e81088c8900f6c15bf86a2deec34c8a3dfccebd440597084d7"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-7.1.3-arch1-2-x86_64-with-glibc2.43",
+    "cache_state": "warm",
+    "cache_eviction": "0 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_REQUIRE_AUTOMATIC_NORMAL_COVARIANCE_RESIDENT": "1"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "build/pdg-cuda-release/lib/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 4090",
+      "compute_capability": "8.9",
+      "driver": "610.43.03",
+      "cuda": "13.3",
+      "cpu_model": "AMD Ryzen 9 7900 12-Core Processor",
+      "logical_cpus": "24",
+      "embedded_profile": "applies (sm89-2026-08-17-r6-large-layouts)",
+      "local_profile_path": "/home/zy/.config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx4090-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "sm89-2026-08-17-r6-large-layouts",
+      "active_profile_tier": "embedded"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        313.31744553799945
+      ],
+      "median_seconds": 313.31744553799945,
+      "minimum_seconds": 313.31744553799945,
+      "maximum_seconds": 313.31744553799945,
+      "peak_rss_bytes": [
+        4907622400
+      ],
+      "median_peak_rss_bytes": 4907622400,
+      "output_bytes": [
+        2178019955
+      ],
+      "median_output_bytes": 2178019955,
+      "points_per_second": 114824.32757047593,
+      "input_mib_per_second": 0.811290838614273,
+      "output_mib_per_second": 6.629447933028935,
+      "compression_ratio_input_to_output": 0.12237683240142766
+    },
+    "candidate": {
+      "seconds": [
+        20.18999183000051
+      ],
+      "median_seconds": 20.18999183000051,
+      "minimum_seconds": 20.18999183000051,
+      "maximum_seconds": 20.18999183000051,
+      "peak_rss_bytes": [
+        10323742720
+      ],
+      "median_peak_rss_bytes": 10323742720,
+      "output_bytes": [
+        2178019955
+      ],
+      "median_output_bytes": 2178019955,
+      "points_per_second": 1781895.9662253165,
+      "input_mib_per_second": 12.589978999659603,
+      "output_mib_per_second": 102.87877821809619,
+      "compression_ratio_input_to_output": 0.12237683240142766
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 15.518453309745176,
+    "resolution": {
+      "paired_speedups": [
+        15.518453309745176
+      ],
+      "paired_mean": 15.518453309745176,
+      "paired_spread": null,
+      "candidate_faster_in": 1,
+      "pairs": 1
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "c0a0f44f80e01c9a31cf57b0f2cda8f328c6cb4a8afeedafd55c27fefe9ba36b"
+    ],
+    "candidate_artifact_sha256": [
+      "c0a0f44f80e01c9a31cf57b0f2cda8f328c6cb4a8afeedafd55c27fefe9ba36b"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 313.31744553799945,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 4907622400,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 2178019955,
+          "sha256": "c0a0f44f80e01c9a31cf57b0f2cda8f328c6cb4a8afeedafd55c27fefe9ba36b",
+          "las_point_count": 35976465
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 20.18999183000051,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 10323742720,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 2178019955,
+          "sha256": "c0a0f44f80e01c9a31cf57b0f2cda8f328c6cb4a8afeedafd55c27fefe9ba36b",
+          "las_point_count": 35976465
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    }
+  ],
+  "qualification": {
+    "model": "normal-covariancefeatures-compose-extradims",
+    "input_point_format": 6,
+    "input_record_bytes": 30,
+    "input_compressed": true,
+    "output_point_format": 7,
+    "output_record_bytes": 100,
+    "output_compressed": true,
+    "required_automatic_resident_route": true
+  }
+}

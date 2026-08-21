@@ -1,0 +1,21 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.expressionstats",
+      "dimension": "Classification",
+      "expressions": [
+        "Classification == 0",
+        "Classification == 1",
+        "Classification == 2"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

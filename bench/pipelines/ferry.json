@@ -1,0 +1,16 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "<input>"
+    },
+    {
+      "type": "filters.ferry",
+      "dimensions": "Intensity=>PointSourceId"
+    },
+    {
+      "type": "writers.las",
+      "filename": "<output>"
+    }
+  ]
+}

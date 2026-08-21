@@ -1,0 +1,5 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
+default_subagent_model = "gpt-5.3-codex-spark"
+default_subagent_reasoning_effort = "low"

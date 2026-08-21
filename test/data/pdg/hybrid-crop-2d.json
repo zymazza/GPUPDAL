@@ -1,0 +1,24 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Scratch = Intensity * 2"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([638000, 638982.55], [849000, 853000])"
+    },
+    {
+      "type": "filters.ferry",
+      "dimensions": "Classification=>UserData"
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

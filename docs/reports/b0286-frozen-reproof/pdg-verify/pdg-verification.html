@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>PDG verification report</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:1100px;margin:3rem auto;padding:0 1rem;color:#18212b}h1{margin-bottom:.25rem}.pass{color:#087830}.fail{color:#b42318}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f5f7;padding:1rem;border-radius:.5rem}dl{display:grid;grid-template-columns:max-content 1fr;gap:.4rem 1rem}dt{font-weight:700}</style>
+</head><body><h1>PDG verification: <span class="pass">PASS</span></h1>
+<p>Portable, author-run local evidence. This artifact is not third-party validation.</p>
+<dl><dt>Exact contract</dt><dd>PASS</dd><dt>Median speedup</dt><dd>0.785x</dd><dt>Schema</dt><dd>pdg-verification-report-v1</dd></dl>
+<h2>Complete JSON evidence</h2><pre>{
+  &quot;binaries&quot;: {
+    &quot;after&quot;: {
+      &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;: {
+        &quot;bytes&quot;: 200000,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;sha256&quot;: &quot;3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;: {
+        &quot;bytes&quot;: 106579624,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;,
+        &quot;sha256&quot;: &quot;8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so&quot;: {
+        &quot;bytes&quot;: 15792,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so&quot;,
+        &quot;sha256&quot;: &quot;79dc1d7c80611aef4c946feaa91fb50c5eef0892e62891c98e29c40466ec7ac2&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/libexec/pdg/pdg-benchmark-reference.py&quot;: {
+        &quot;bytes&quot;: 53265,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/libexec/pdg/pdg-benchmark-reference.py&quot;,
+        &quot;sha256&quot;: &quot;b7ad3b5a12332d64d94b95fb6319be359cd75ed73f9b319fd0747972290ce345&quot;
+      },
+      &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;: {
+        &quot;bytes&quot;: 283600,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+        &quot;sha256&quot;: &quot;6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39&quot;
+      }
+    },
+    &quot;before&quot;: {
+      &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;: {
+        &quot;bytes&quot;: 200000,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;sha256&quot;: &quot;3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;: {
+        &quot;bytes&quot;: 106579624,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;,
+        &quot;sha256&quot;: &quot;8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so&quot;: {
+        &quot;bytes&quot;: 15792,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so&quot;,
+        &quot;sha256&quot;: &quot;79dc1d7c80611aef4c946feaa91fb50c5eef0892e62891c98e29c40466ec7ac2&quot;
+      },
+      &quot;/workspace/reproof/payload/candidate/libexec/pdg/pdg-benchmark-reference.py&quot;: {
+        &quot;bytes&quot;: 53265,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/libexec/pdg/pdg-benchmark-reference.py&quot;,
+        &quot;sha256&quot;: &quot;b7ad3b5a12332d64d94b95fb6319be359cd75ed73f9b319fd0747972290ce345&quot;
+      },
+      &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;: {
+        &quot;bytes&quot;: 283600,
+        &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+        &quot;sha256&quot;: &quot;6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39&quot;
+      }
+    },
+    &quot;benchmark_manifest&quot;: {
+      &quot;candidate&quot;: {
+        &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;runtime_components&quot;: [
+          {
+            &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;,
+            &quot;role&quot;: &quot;engine&quot;,
+            &quot;sha256&quot;: &quot;8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6&quot;
+          },
+          {
+            &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20&quot;,
+            &quot;role&quot;: &quot;loaded_pdal_shared_library&quot;,
+            &quot;sha256&quot;: &quot;9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc&quot;
+          }
+        ],
+        &quot;sha256&quot;: &quot;3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd&quot;
+      },
+      &quot;oracle&quot;: {
+        &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+        &quot;runtime_components&quot;: [
+          {
+            &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20&quot;,
+            &quot;role&quot;: &quot;loaded_pdal_shared_library&quot;,
+            &quot;sha256&quot;: &quot;1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217&quot;
+          }
+        ],
+        &quot;sha256&quot;: &quot;6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39&quot;
+      }
+    },
+    &quot;changed&quot;: []
+  },
+  &quot;conformance&quot;: {
+    &quot;benchmark_returncode&quot;: 0,
+    &quot;comparator&quot;: &quot;byte equality plus streams and exit status&quot;,
+    &quot;failures&quot;: [],
+    &quot;mode&quot;: &quot;default exact&quot;
+  },
+  &quot;created_utc&quot;: &quot;2026-08-19T03:56:52.991215+00:00&quot;,
+  &quot;external_validation&quot;: {
+    &quot;statement&quot;: &quot;This command prepares portable evidence; it does not claim an unrelated party ran it.&quot;,
+    &quot;status&quot;: &quot;not-performed&quot;
+  },
+  &quot;input&quot;: {
+    &quot;artifact&quot;: {
+      &quot;bytes&quot;: 9000375,
+      &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+      &quot;sha256&quot;: &quot;84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9&quot;
+    },
+    &quot;generator_pipeline&quot;: {
+      &quot;bytes&quot;: 399,
+      &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.pipeline.json&quot;,
+      &quot;sha256&quot;: &quot;cad9c32e9e7130a1825e530cc5c49a76442699bceaa8d855bfd2f30b3f49bb93&quot;
+    },
+    &quot;source&quot;: &quot;deterministic readers.faux verification fixture&quot;
+  },
+  &quot;machine&quot;: {
+    &quot;cpu_affinity&quot;: [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    &quot;platform&quot;: &quot;Linux-6.5.0-41-generic-x86_64-with-glibc2.39&quot;,
+    &quot;probes&quot;: {
+      &quot;cpu&quot;: {
+        &quot;command&quot;: [
+          &quot;lscpu&quot;
+        ],
+        &quot;output_truncated&quot;: false,
+        &quot;returncode&quot;: 0,
+        &quot;stderr&quot;: &quot;&quot;,
+        &quot;stderr_bytes&quot;: 0,
+        &quot;stdout&quot;: &quot;Architecture:                       x86_64\nCPU op-mode(s):                     32-bit, 64-bit\nAddress sizes:                      46 bits physical, 48 bits virtual\nByte Order:                         Little Endian\nCPU(s):                             20\nOn-line CPU(s) list:                0-19\nVendor ID:                          GenuineIntel\nModel name:                         Intel(R) Core(TM) i5-14500\nCPU family:                         6\nModel:                              191\nThread(s) per core:                 2\nCore(s) per socket:                 14\nSocket(s):                          1\nStepping:                           2\nCPU(s) scaling MHz:                 23%\nCPU max MHz:                        5000.0000\nCPU min MHz:                        800.0000\nBogoMIPS:                           5222.40\nFlags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq tme rdpid movdiri movdir64b fsrm md_clear serialize pconfig arch_lbr ibt flush_l1d arch_capabilities\nVirtualization:                     VT-x\nL1d cache:                          544 KiB (14 instances)\nL1i cache:                          704 KiB (14 instances)\nL2 cache:                           11.5 MiB (8 instances)\nL3 cache:                           24 MiB (1 instance)\nNUMA node(s):                       1\nNUMA node0 CPU(s):                  0-19\nVulnerability Gather data sampling: Not affected\nVulnerability Itlb multihit:        Not affected\nVulnerability L1tf:                 Not affected\nVulnerability Mds:                  Not affected\nVulnerability Meltdown:             Not affected\nVulnerability Mmio stale data:      Not affected\nVulnerability Retbleed:             Not affected\nVulnerability Spec rstack overflow: Not affected\nVulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                Not affected\nVulnerability Tsx async abort:      Not affected\n&quot;,
+        &quot;stdout_bytes&quot;: 2954
+      },
+      &quot;cuda_compiler&quot;: {
+        &quot;command&quot;: [
+          &quot;nvcc&quot;,
+          &quot;--version&quot;
+        ],
+        &quot;output_truncated&quot;: false,
+        &quot;returncode&quot;: 0,
+        &quot;stderr&quot;: &quot;&quot;,
+        &quot;stderr_bytes&quot;: 0,
+        &quot;stdout&quot;: &quot;nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2026 NVIDIA Corporation\nBuilt on Tue_Jun_09_02:43:40_PM_PDT_2026\nCuda compilation tools, release 13.3, V13.3.73\nBuild cuda_13.3.r13.3/compiler.38244171_0\n&quot;,
+        &quot;stdout_bytes&quot;: 211
+      },
+      &quot;gpu&quot;: {
+        &quot;command&quot;: [
+          &quot;nvidia-smi&quot;,
+          &quot;--query-gpu=name,uuid,driver_version,memory.total,power.limit&quot;,
+          &quot;--format=csv,noheader&quot;
+        ],
+        &quot;output_truncated&quot;: false,
+        &quot;returncode&quot;: 0,
+        &quot;stderr&quot;: &quot;&quot;,
+        &quot;stderr_bytes&quot;: 0,
+        &quot;stdout&quot;: &quot;NVIDIA GeForce RTX 4090, GPU-f25c8678-87da-a266-5e84-e35845fbcc0c, 595.71.05, 24564 MiB, 400.00 W\n&quot;,
+        &quot;stdout_bytes&quot;: 98
+      },
+      &quot;memory&quot;: {
+        &quot;command&quot;: [
+          &quot;free&quot;,
+          &quot;-h&quot;
+        ],
+        &quot;output_truncated&quot;: false,
+        &quot;returncode&quot;: 0,
+        &quot;stderr&quot;: &quot;&quot;,
+        &quot;stderr_bytes&quot;: 0,
+        &quot;stdout&quot;: &quot;               total        used        free      shared  buff/cache   available\nMem:            62Gi       2.3Gi        11Gi        86Mi        49Gi        60Gi\nSwap:          2.0Gi       979Mi       1.0Gi\n&quot;,
+        &quot;stdout_bytes&quot;: 207
+      }
+    },
+    &quot;python&quot;: &quot;3.12.3&quot;
+  },
+  &quot;oracle_provenance&quot;: {
+    &quot;binary&quot;: {
+      &quot;bytes&quot;: 283600,
+      &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+      &quot;sha256&quot;: &quot;6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39&quot;
+    },
+    &quot;configured_override_explicitly_accepted&quot;: true,
+    &quot;expected_version&quot;: &quot;2.10.0&quot;,
+    &quot;limitation&quot;: &quot;The report binds the complete oracle binary hash; commit provenance requires the release artifact manifest or an independently retained build record.&quot;,
+    &quot;source&quot;: &quot;accepted-PDG_ORACLE_PDAL&quot;,
+    &quot;version_matches&quot;: true
+  },
+  &quot;performance&quot;: {
+    &quot;cache_state&quot;: &quot;warm&quot;,
+    &quot;measured_pairs&quot;: 3,
+    &quot;median_speedup&quot;: 0.7852956358320858,
+    &quot;placement_decision&quot;: {
+      &quot;active_profile&quot;: &quot;shipped-rtx4090-sm89-cuda13.3&quot;,
+      &quot;active_profile_tier&quot;: &quot;shipped&quot;,
+      &quot;compute_capability&quot;: &quot;8.9&quot;,
+      &quot;cpu_model&quot;: &quot;Intel(R) Core(TM) i5-14500&quot;,
+      &quot;cuda&quot;: &quot;13.3&quot;,
+      &quot;device_name&quot;: &quot;NVIDIA GeForce RTX 4090&quot;,
+      &quot;driver&quot;: &quot;595.71.05&quot;,
+      &quot;embedded_profile&quot;: &quot;applies (shipped-rtx4090-sm89-cuda13.3)&quot;,
+      &quot;generic_profile&quot;: &quot;generic-cuda-sm80plus-cuda13.3&quot;,
+      &quot;local_profile&quot;: &quot;not-found (no profile file)&quot;,
+      &quot;local_profile_path&quot;: &quot;/root/.config/pdg/placement-profile.json&quot;,
+      &quot;logical_cpus&quot;: &quot;20&quot;,
+      &quot;shipped_profile&quot;: &quot;shipped-rtx4090-sm89-cuda13.3&quot;
+    },
+    &quot;scope&quot;: &quot;whole-process read/compute/write&quot;,
+    &quot;warmups&quot;: 1
+  },
+  &quot;pipeline&quot;: {
+    &quot;bytes&quot;: 395,
+    &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-r6.json&quot;,
+    &quot;sha256&quot;: &quot;95b5cf917102092e6be7375e21eb7fc5df999de8b0f15c9a1fbbeea3fb967c3f&quot;,
+    &quot;source&quot;: &quot;built-in r6 normal/covariance workflow&quot;
+  },
+  &quot;raw_benchmark&quot;: {
+    &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/benchmark.json&quot;,
+    &quot;report&quot;: {
+      &quot;binaries&quot;: {
+        &quot;candidate&quot;: {
+          &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+          &quot;runtime_components&quot;: [
+            {
+              &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/bin/pdg-engine&quot;,
+              &quot;role&quot;: &quot;engine&quot;,
+              &quot;sha256&quot;: &quot;8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6&quot;
+            },
+            {
+              &quot;path&quot;: &quot;/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20&quot;,
+              &quot;role&quot;: &quot;loaded_pdal_shared_library&quot;,
+              &quot;sha256&quot;: &quot;9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc&quot;
+            }
+          ],
+          &quot;sha256&quot;: &quot;3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd&quot;
+        },
+        &quot;oracle&quot;: {
+          &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+          &quot;runtime_components&quot;: [
+            {
+              &quot;path&quot;: &quot;/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20&quot;,
+              &quot;role&quot;: &quot;loaded_pdal_shared_library&quot;,
+              &quot;sha256&quot;: &quot;1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217&quot;
+            }
+          ],
+          &quot;sha256&quot;: &quot;6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39&quot;
+        }
+      },
+      &quot;comparison&quot;: {
+        &quot;artifact_names&quot;: [
+          &quot;output.laz&quot;
+        ],
+        &quot;candidate_artifact_sha256&quot;: [
+          &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+        ],
+        &quot;contract&quot;: &quot;exact&quot;,
+        &quot;exact_artifacts&quot;: true,
+        &quot;exact_outputs&quot;: true,
+        &quot;exact_raster_metadata&quot;: true,
+        &quot;exact_records&quot;: null,
+        &quot;exact_stderr&quot;: true,
+        &quot;exact_stdout&quot;: true,
+        &quot;fast_compared_records&quot;: null,
+        &quot;fast_differing_records&quot;: null,
+        &quot;fast_max_differing_records_fraction&quot;: null,
+        &quot;identical_records&quot;: null,
+        &quot;median_speedup&quot;: 0.7852956358320858,
+        &quot;oracle_artifact_sha256&quot;: [
+          &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+        ],
+        &quot;resolution&quot;: {
+          &quot;candidate_faster_in&quot;: 1,
+          &quot;interval_half_width&quot;: 0.44351619568756045,
+          &quot;paired_mean&quot;: 0.9207331690775763,
+          &quot;paired_speedups&quot;: [
+            0.7826765107381384,
+            0.6247474831821398,
+            1.3547755133124508
+          ],
+          &quot;paired_spread&quot;: 0.730028030130311,
+          &quot;paired_standard_error&quot;: 0.22175809784378023,
+          &quot;pairs&quot;: 3,
+          &quot;resolvable&quot;: false
+        }
+      },
+      &quot;environment&quot;: {
+        &quot;cache_eviction&quot;: &quot;1 untimed warmup(s) per executable; no explicit page-cache eviction&quot;,
+        &quot;cache_state&quot;: &quot;warm&quot;,
+        &quot;candidate_leading_args&quot;: [],
+        &quot;candidate_overrides&quot;: {
+          &quot;PDG_ORACLE_PDAL&quot;: &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;
+        },
+        &quot;candidate_placement_profile&quot;: {
+          &quot;active_profile&quot;: &quot;shipped-rtx4090-sm89-cuda13.3&quot;,
+          &quot;active_profile_tier&quot;: &quot;shipped&quot;,
+          &quot;compute_capability&quot;: &quot;8.9&quot;,
+          &quot;cpu_model&quot;: &quot;Intel(R) Core(TM) i5-14500&quot;,
+          &quot;cuda&quot;: &quot;13.3&quot;,
+          &quot;device_name&quot;: &quot;NVIDIA GeForce RTX 4090&quot;,
+          &quot;driver&quot;: &quot;595.71.05&quot;,
+          &quot;embedded_profile&quot;: &quot;applies (shipped-rtx4090-sm89-cuda13.3)&quot;,
+          &quot;generic_profile&quot;: &quot;generic-cuda-sm80plus-cuda13.3&quot;,
+          &quot;local_profile&quot;: &quot;not-found (no profile file)&quot;,
+          &quot;local_profile_path&quot;: &quot;/root/.config/pdg/placement-profile.json&quot;,
+          &quot;logical_cpus&quot;: &quot;20&quot;,
+          &quot;shipped_profile&quot;: &quot;shipped-rtx4090-sm89-cuda13.3&quot;
+        },
+        &quot;common_overrides&quot;: {},
+        &quot;freeze_environment&quot;: &quot;PDAL_TEST_FROZEN_EPOCH&quot;,
+        &quot;freeze_epoch&quot;: 1704067200,
+        &quot;frozen_time_library&quot;: &quot;/workspace/reproof/payload/candidate/libexec/pdg/libpdg_frozen_time.so&quot;,
+        &quot;peak_ram_measurement&quot;: &quot;2 ms /proc sampling; sum of resident bytes across the public process and its descendants&quot;,
+        &quot;platform&quot;: &quot;Linux-6.5.0-41-generic-x86_64-with-glibc2.39&quot;,
+        &quot;scrubbed_prefixes&quot;: [
+          &quot;PDG_&quot;,
+          &quot;PDAL_TEST_&quot;,
+          &quot;LD_&quot;
+        ],
+        &quot;scrubbed_variables&quot;: [
+          &quot;PDAL_TEST_FROZEN_EPOCH&quot;
+        ]
+      },
+      &quot;failures&quot;: [],
+      &quot;fixture&quot;: {
+        &quot;copc&quot;: null,
+        &quot;extent&quot;: {
+          &quot;maxx&quot;: 1000,
+          &quot;maxy&quot;: 1000,
+          &quot;minx&quot;: 0,
+          &quot;miny&quot;: 0,
+          &quot;points&quot;: 250000
+        },
+        &quot;laz&quot;: {
+          &quot;bytes&quot;: 9000375,
+          &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+          &quot;sha256&quot;: &quot;84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9&quot;
+        },
+        &quot;registered&quot;: {
+          &quot;input.las&quot;: {
+            &quot;bytes&quot;: 9000375,
+            &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+            &quot;sha256&quot;: &quot;84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9&quot;
+          },
+          &quot;input.laz&quot;: {
+            &quot;bytes&quot;: 9000375,
+            &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+            &quot;sha256&quot;: &quot;84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9&quot;
+          }
+        },
+        &quot;used_input_bytes&quot;: 9000375,
+        &quot;used_input_paths&quot;: [
+          {
+            &quot;bytes&quot;: 9000375,
+            &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+            &quot;sha256&quot;: &quot;84bb51b1f58468640fccee28eba358c80c38869851efdbc462dd25b8f75bf4b9&quot;
+          }
+        ]
+      },
+      &quot;label&quot;: &quot;pdg-verify-r6&quot;,
+      &quot;pipeline&quot;: {
+        &quot;materialized&quot;: {
+          &quot;candidate&quot;: {
+            &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/benchmark-work/pdg-verify-r6-candidate.json&quot;,
+            &quot;sha256&quot;: &quot;016d6765019664544fb72638fcb82a255f2d501454dd5e992fbdbb35f4670ce6&quot;
+          },
+          &quot;oracle&quot;: {
+            &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/benchmark-work/pdg-verify-r6-oracle.json&quot;,
+            &quot;sha256&quot;: &quot;f9de8a874b7317ef7e53a11d3a6aa0dfa385c8b44c86ea2993030046f69e92b8&quot;
+          }
+        },
+        &quot;path&quot;: &quot;/workspace/reproof/pdg-verify-v1/verification-r6.json&quot;,
+        &quot;sha256&quot;: &quot;95b5cf917102092e6be7375e21eb7fc5df999de8b0f15c9a1fbbeea3fb967c3f&quot;
+      },
+      &quot;protocol&quot;: &quot;alternating oracle/candidate, outputs removed before each run&quot;,
+      &quot;runs&quot;: [
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;label&quot;: &quot;oracle&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 95424512,
+          &quot;phase&quot;: &quot;warmup&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.2138824979774654,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;label&quot;: &quot;candidate&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 181145600,
+          &quot;phase&quot;: &quot;warmup&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.7558631671126932,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 0,
+          &quot;label&quot;: &quot;oracle&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 95256576,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.4810867419000715,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 0,
+          &quot;label&quot;: &quot;candidate&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 181469184,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.8923357499297708,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 1,
+          &quot;label&quot;: &quot;candidate&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 181604352,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 2.378629839979112,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 1,
+          &quot;label&quot;: &quot;oracle&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 95678464,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.4860430059488863,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 2,
+          &quot;label&quot;: &quot;oracle&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 95236096,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 2.008665116969496,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        },
+        {
+          &quot;artifacts&quot;: [
+            {
+              &quot;bytes&quot;: 4522867,
+              &quot;las_point_count&quot;: 250000,
+              &quot;name&quot;: &quot;output.laz&quot;,
+              &quot;sha256&quot;: &quot;b21d8c77e6abcfe7977f9adac00a8f02461b0d0b0ad709e20a2521393250327d&quot;
+            }
+          ],
+          &quot;iteration&quot;: 2,
+          &quot;label&quot;: &quot;candidate&quot;,
+          &quot;missing_artifact_patterns&quot;: [],
+          &quot;peak_rss_bytes&quot;: 181981184,
+          &quot;phase&quot;: &quot;measured&quot;,
+          &quot;returncode&quot;: 0,
+          &quot;seconds&quot;: 1.4826553161256015,
+          &quot;stderr_head&quot;: &quot;&quot;,
+          &quot;stderr_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+          &quot;stdout_sha256&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;
+        }
+      ],
+      &quot;schema&quot;: &quot;pdg-reference-pipeline-baseline-v1&quot;,
+      &quot;summary&quot;: {
+        &quot;candidate&quot;: {
+          &quot;compression_ratio_input_to_output&quot;: 1.9899711842068317,
+          &quot;input_mib_per_second&quot;: 4.535889826022393,
+          &quot;maximum_seconds&quot;: 2.378629839979112,
+          &quot;median_output_bytes&quot;: 4522867,
+          &quot;median_peak_rss_bytes&quot;: 181604352,
+          &quot;median_seconds&quot;: 1.8923357499297708,
+          &quot;minimum_seconds&quot;: 1.4826553161256015,
+          &quot;output_bytes&quot;: [
+            4522867,
+            4522867,
+            4522867
+          ],
+          &quot;output_mib_per_second&quot;: 2.279374627140805,
+          &quot;peak_rss_bytes&quot;: [
+            181469184,
+            181604352,
+            181981184
+          ],
+          &quot;points_per_second&quot;: 132111.86228938395,
+          &quot;seconds&quot;: [
+            1.8923357499297708,
+            2.378629839979112,
+            1.4826553161256015
+          ]
+        },
+        &quot;oracle&quot;: {
+          &quot;compression_ratio_input_to_output&quot;: 1.9899711842068317,
+          &quot;input_mib_per_second&quot;: 5.77602831221167,
+          &quot;maximum_seconds&quot;: 2.008665116969496,
+          &quot;median_output_bytes&quot;: 4522867,
+          &quot;median_peak_rss_bytes&quot;: 95256576,
+          &quot;median_seconds&quot;: 1.4860430059488863,
+          &quot;minimum_seconds&quot;: 1.4810867419000715,
+          &quot;output_bytes&quot;: [
+            4522867,
+            4522867,
+            4522867
+          ],
+          &quot;output_mib_per_second&quot;: 2.902568820117813,
+          &quot;peak_rss_bytes&quot;: [
+            95256576,
+            95678464,
+            95236096
+          ],
+          &quot;points_per_second&quot;: 168232.00876368108,
+          &quot;seconds&quot;: [
+            1.4810867419000715,
+            1.4860430059488863,
+            2.008665116969496
+          ]
+        }
+      }
+    },
+    &quot;sha256&quot;: &quot;b5ebb1b2728cbe242739936c352ffc51dc3fe7ae84de14e17a80be22d2c7308c&quot;
+  },
+  &quot;rerun&quot;: [
+    &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+    &quot;verify&quot;,
+    &quot;--input&quot;,
+    &quot;/workspace/reproof/pdg-verify-v1/verification-input.las&quot;,
+    &quot;--pipeline&quot;,
+    &quot;/workspace/reproof/pdg-verify-v1/verification-r6.json&quot;,
+    &quot;--output-dir&quot;,
+    &quot;/workspace/reproof/pdg-verify-v1/rerun&quot;,
+    &quot;--runs&quot;,
+    &quot;3&quot;,
+    &quot;--warmups&quot;,
+    &quot;1&quot;,
+    &quot;--cache-state&quot;,
+    &quot;warm&quot;,
+    &quot;--accept-configured-oracle&quot;
+  ],
+  &quot;result&quot;: {
+    &quot;binary_drift_detected&quot;: false,
+    &quot;exact&quot;: true,
+    &quot;median_speedup&quot;: 0.7852956358320858,
+    &quot;valid&quot;: true
+  },
+  &quot;schema&quot;: &quot;pdg-verification-report-v1&quot;,
+  &quot;scope&quot;: &quot;one local complete-process differential verification; not a population study or third-party validation&quot;,
+  &quot;software&quot;: {
+    &quot;candidate_version&quot;: {
+      &quot;command&quot;: [
+        &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;version&quot;
+      ],
+      &quot;output_truncated&quot;: false,
+      &quot;returncode&quot;: 0,
+      &quot;stderr&quot;: &quot;&quot;,
+      &quot;stderr_bytes&quot;: 0,
+      &quot;stdout&quot;: &quot;pdg 0.1.0-dev\noracle-pdal f1e35f5c3e416b8c6a2c39966c8205cfae54afe2\ncuda enabled\n&quot;,
+      &quot;stdout_bytes&quot;: 80
+    },
+    &quot;doctor&quot;: {
+      &quot;command&quot;: [
+        &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;doctor&quot;
+      ],
+      &quot;output_truncated&quot;: false,
+      &quot;returncode&quot;: 0,
+      &quot;stderr&quot;: &quot;&quot;,
+      &quot;stderr_bytes&quot;: 0,
+      &quot;stdout&quot;: &quot;pdg 0.1.0-dev\noracle-pdal f1e35f5c3e416b8c6a2c39966c8205cfae54afe2\ncuda enabled\ncuda_toolkit 13.3\ncuda_runtime 13.3\ncuda_driver 13.3\ndevices 1\n0 NVIDIA GeForce RTX 4090 sm_89 25252724736 memory_pools supported\nplacement_profile shipped-rtx4090-sm89-cuda13.3 (shipped)\nlocal_profile not-found /root/.config/pdg/placement-profile.json\n&quot;,
+      &quot;stdout_bytes&quot;: 333
+    },
+    &quot;oracle_version&quot;: {
+      &quot;command&quot;: [
+        &quot;/workspace/reproof/payload/oracle/bin/pdal&quot;,
+        &quot;--version&quot;
+      ],
+      &quot;output_truncated&quot;: false,
+      &quot;returncode&quot;: 0,
+      &quot;stderr&quot;: &quot;&quot;,
+      &quot;stderr_bytes&quot;: 0,
+      &quot;stdout&quot;: &quot;--------------------------------------------------------------------------------\npdal 2.10.0 (git-version: f1e35f)\n--------------------------------------------------------------------------------\n\n&quot;,
+      &quot;stdout_bytes&quot;: 197
+    },
+    &quot;placement_status&quot;: {
+      &quot;command&quot;: [
+        &quot;/workspace/reproof/payload/candidate/bin/pdg&quot;,
+        &quot;calibrate&quot;,
+        &quot;--status&quot;
+      ],
+      &quot;output_truncated&quot;: false,
+      &quot;returncode&quot;: 0,
+      &quot;stderr&quot;: &quot;&quot;,
+      &quot;stderr_bytes&quot;: 0,
+      &quot;stdout&quot;: &quot;pdg 0.1.0-dev\ndevice_name: NVIDIA GeForce RTX 4090\ncompute_capability: 8.9\ndriver: 595.71.05\ncuda: 13.3\ncpu_model: Intel(R) Core(TM) i5-14500\nlogical_cpus: 20\nembedded_profile: applies (shipped-rtx4090-sm89-cuda13.3)\nlocal_profile_path: /root/.config/pdg/placement-profile.json\nlocal_profile: not-found (no profile file)\nshipped_profile: shipped-rtx4090-sm89-cuda13.3\ngeneric_profile: generic-cuda-sm80plus-cuda13.3\nactive_profile: shipped-rtx4090-sm89-cuda13.3\nactive_profile_tier: shipped\nactive_profile_source: rtx4090.json\nactive_profile_sha256: 1bf342e4eb40673ee9ba192a4e1a877861a1d566e1880ca1a2119c4789c7a466\n&quot;,
+      &quot;stdout_bytes&quot;: 615
+    }
+  }
+}</pre></body></html>

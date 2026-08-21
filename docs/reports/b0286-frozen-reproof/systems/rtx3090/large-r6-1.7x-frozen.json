@@ -1,0 +1,372 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "large-r6-1.7x-frozen",
+  "pipeline": {
+    "path": "/workspace/reproof/results-v3/shadow-repo/bench/pipelines/reference/r6-features.json",
+    "sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/results-v3/large-work/large-r6-1.7x-frozen-oracle.json",
+        "sha256": "3f908b84ef7ffcc50dcc98a255ebeaafc15903858bb94789a1873a34d278129d"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/results-v3/large-work/large-r6-1.7x-frozen-candidate.json",
+        "sha256": "9a81179dd6f28ebf4c29deac1b2af01a621d524410dbf7e7c17d52f7412103db"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/25GN1_01.LAZ",
+      "bytes": 480156479,
+      "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      }
+    ],
+    "used_input_bytes": 480156479,
+    "extent": {
+      "minx": 119980,
+      "maxx": 121019.999,
+      "miny": 486230,
+      "maxy": 487519.999,
+      "points": 47478228
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/evidence/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 3090",
+      "compute_capability": "8.6",
+      "driver": "580.126.09",
+      "cuda": "13.3",
+      "cpu_model": "AMD EPYC 7R32 48-Core Processor",
+      "logical_cpus": "96",
+      "embedded_profile": "applies (shipped-rtx3090-sm86-cuda13.3)",
+      "local_profile_path": "/workspace/reproof/results-v3/clean-config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx3090-sm86-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-rtx3090-sm86-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        890.6982348000165,
+        899.5576335230144,
+        892.964336975012
+      ],
+      "median_seconds": 892.964336975012,
+      "minimum_seconds": 890.6982348000165,
+      "maximum_seconds": 899.5576335230144,
+      "peak_rss_bytes": [
+        7661817856,
+        7652159488,
+        7667400704
+      ],
+      "median_peak_rss_bytes": 7661817856,
+      "output_bytes": [
+        3346558932,
+        3346558932,
+        3346558932
+      ],
+      "median_output_bytes": 3346558932,
+      "points_per_second": 53169.231999607386,
+      "input_mib_per_second": 0.5128008845566817,
+      "output_mib_per_second": 3.5740814830297523,
+      "compression_ratio_input_to_output": 0.14347767027459596
+    },
+    "candidate": {
+      "seconds": [
+        99.23887658200692,
+        99.83852596697398,
+        101.64979723701254
+      ],
+      "median_seconds": 99.83852596697398,
+      "minimum_seconds": 99.23887658200692,
+      "maximum_seconds": 101.64979723701254,
+      "peak_rss_bytes": [
+        14708428800,
+        14706999296,
+        14707429376
+      ],
+      "median_peak_rss_bytes": 14707429376,
+      "output_bytes": [
+        3346558932,
+        3346558932,
+        3346558932
+      ],
+      "median_output_bytes": 3346558932,
+      "points_per_second": 475550.1700386235,
+      "input_mib_per_second": 4.5865350819565585,
+      "output_mib_per_second": 31.966891246411926,
+      "compression_ratio_input_to_output": 0.14347767027459596
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 8.944085745721042,
+    "resolution": {
+      "paired_speedups": [
+        8.97529542330097,
+        9.010125348010275,
+        8.784713410622205
+      ],
+      "paired_mean": 8.923378060644483,
+      "paired_spread": 0.22541193738807053,
+      "candidate_faster_in": 3,
+      "pairs": 3,
+      "paired_standard_error": 0.07005758295422594,
+      "interval_half_width": 0.14011516590845188,
+      "resolvable": true
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238"
+    ],
+    "candidate_artifact_sha256": [
+      "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 1084.4362019009423,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 7664365568,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 115.67712081607897,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 14708498432,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 890.6982348000165,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 7661817856,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 99.23887658200692,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 14708428800,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 99.83852596697398,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 14706999296,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 899.5576335230144,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 7652159488,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 892.964336975012,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 7667400704,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 101.64979723701254,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 14707429376,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

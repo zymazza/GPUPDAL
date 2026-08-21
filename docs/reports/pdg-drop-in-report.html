@@ -1,0 +1,324 @@
+<title>PDG Drop-in Report</title>
+<style>
+:root{--bg:#F2F4F6;--panel:#FFFFFF;--ink:#1A2027;--muted:#5B6773;--rule:#D5DBE1;--accent:#0F7C86;--accent-ink:#0B5B62;--ochre:#A8701C;--win-bg:#DDF1E6;--win-ink:#14563A;--flat-bg:#EEF0F2;--flat-ink:#4A5560;--loss-bg:#F8E1DC;--loss-ink:#7A2E1F;--host-bg:#F5EBD9;--host-ink:#6E4B12;--code-bg:#E9EDF0;--shadow:0 1px 2px rgba(20,30,40,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12171C;--panel:#1A2128;--ink:#E6EAEE;--muted:#9AA6B2;--rule:#2C353E;--accent:#3FB2BC;--accent-ink:#7FD3DA;--ochre:#D9A24C;--win-bg:#173A2C;--win-ink:#9FE0BF;--flat-bg:#232B33;--flat-ink:#B7C0C9;--loss-bg:#4A241D;--loss-ink:#F1B3A6;--host-bg:#3A2E18;--host-ink:#EAC98A;--code-bg:#232B33;--shadow:none}}
+:root[data-theme="dark"]{--bg:#12171C;--panel:#1A2128;--ink:#E6EAEE;--muted:#9AA6B2;--rule:#2C353E;--accent:#3FB2BC;--accent-ink:#7FD3DA;--ochre:#D9A24C;--win-bg:#173A2C;--win-ink:#9FE0BF;--flat-bg:#232B33;--flat-ink:#B7C0C9;--loss-bg:#4A241D;--loss-ink:#F1B3A6;--host-bg:#3A2E18;--host-ink:#EAC98A;--code-bg:#232B33;--shadow:none}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Source Sans 3","IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:1120px;margin:0 auto;padding:40px 24px 96px}
+.col{max-width:68ch}
+h1,h2,h3{font-family:"Charter","Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:600;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:2.5rem;line-height:1.1}
+h2{font-size:1.6rem;margin-top:64px;padding-top:20px;border-top:1px solid var(--rule)}
+h3{font-size:1.15rem;margin-top:32px}
+p,ul,ol{margin:14px 0}
+li{margin:6px 0}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+code,pre{font-family:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace;font-size:.9em}
+code{background:var(--code-bg);padding:1px 5px;border-radius:3px}
+pre{background:var(--code-bg);padding:14px 16px;border-radius:6px;overflow-x:auto;line-height:1.45}
+pre code{background:none;padding:0}
+.eyebrow{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-ink);font-weight:600}
+.lede{font-size:1.15rem;color:var(--muted);max-width:60ch}
+.meta{font-size:.85rem;color:var(--muted);margin-top:18px}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.9rem;margin:28px 0 8px;padding:12px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+nav.toc a{color:var(--ink);text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent-ink);text-decoration:underline}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:32px 0 8px}
+.tile{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;box-shadow:var(--shadow)}
+.tile .k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tile .v{font-family:"Charter","Source Serif 4",Georgia,serif;font-size:1.7rem;line-height:1.15;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.tile .v.win{color:var(--accent-ink)}
+.tile .v.host{color:var(--ochre)}
+.tile p{margin:4px 0 0;font-size:.92rem;color:var(--muted)}
+.scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--rule);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:right;vertical-align:top;white-space:nowrap}
+th{font-weight:600;color:var(--muted);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;text-align:right;background:var(--panel);position:sticky;top:0}
+td.name,th:first-child{text-align:left;white-space:normal;min-width:180px}
+td small,th small{color:var(--muted);font-weight:400;font-size:.8em;text-transform:none;letter-spacing:0}
+tr:last-child td{border-bottom:none}
+td.win{background:var(--win-bg);color:var(--win-ink)}
+td.flat{background:var(--flat-bg);color:var(--flat-ink)}
+td.loss{background:var(--loss-bg);color:var(--loss-ink)}
+td.host{background:var(--host-bg);color:var(--host-ink)}
+.callout{border-left:3px solid var(--accent);background:var(--panel);padding:12px 16px;margin:18px 0;border-radius:0 6px 6px 0}
+.callout.warn{border-left-color:var(--ochre)}
+.callout b:first-child{display:block;margin-bottom:2px}
+dl.faq dt{font-weight:600;margin-top:16px}
+dl.faq dd{margin:4px 0 0 0;color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.85rem;color:var(--muted);margin:6px 0 0}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.legend .w::before{background:var(--win-bg);border:1px solid var(--win-ink)}
+.legend .f::before{background:var(--flat-bg);border:1px solid var(--flat-ink)}
+.legend .l::before{background:var(--loss-bg);border:1px solid var(--loss-ink)}
+.legend .h::before{background:var(--host-bg);border:1px solid var(--host-ink)}
+.check li{margin:8px 0}
+@media (prefers-reduced-motion: no-preference){a{transition:color .12s}}
+@media (max-width:640px){h1{font-size:2rem}main{padding:24px 14px 64px}}
+</style>
+<main>
+<header class="col">
+<div class="eyebrow">Report · 19 August 2026 · current evidence B0286</div>
+<h1>PDG Drop-in Report</h1>
+<p class="lede">What PDG does for a PDAL user, in plain language: where it is faster, where it is not, and exactly what to expect when you run it on your own machine — including the parts we have not measured yet.</p>
+<p class="meta">PDG is a fork of the <code>pdal</code> command line. You run the same commands and the same pipeline JSON (<code>pdg pipeline job.json</code>, <code>pdg translate …</code>). PDG preserves pinned PDAL 2.10.0 semantics: deterministic outputs, metadata, point order, stdout, stderr and exit status are compared byte-for-byte; inherently nondeterministic containers such as COPC use a separately versioned canonical semantic comparison. Current performance claims below come from the exact frozen 1.7× release artifact, not a rebuild.</p>
+</header>
+
+<div class="callout warn"><b>Release-evidence status (read before the tables)</b>The exact frozen <b>1.7× shipped-profile artifact</b> was re-run without rebuilding: fourteen 1M workflows on all ten named GPU/host machines and the 47.5M r6 graph on seven named machines, with one warm-up and three measured pairs per cell. Every retained deterministic comparison is exact. These are author-run repository results, not unrelated third-party validation, and they do not establish the preregistered 40-project 3DEP population claim. The older 3× tables remain below only as historical evidence.</div>
+
+<nav class="toc" aria-label="Sections">
+<a href="#short">The short version</a><a href="#promise">The promise</a><a href="#current">Current release proof</a><a href="#wins">Historical evidence</a><a href="#not">What did not work</a><a href="#expect">What to expect on your machine</a><a href="#testing">Testing it yourself</a><a href="#release">Before you release it</a><a href="#numbers">Profiles and historical tables</a>
+</nav>
+
+<div class="strip">
+<div class="tile"><div class="k">Current 1M r6 feature graph</div><div class="v win">7 of 10: 7.4× – 10.2×</div><p>Results vary materially by GPU and host. RTX 3060 and RTX 4090 measured 6.36× and 6.53×; the RTX 3090 exception measured 0.99×.</p></div>
+<div class="tile"><div class="k">Current fourteen-workflow suite</div><div class="v">0.99× – 1.43×<br><span style="font-size:.7em">total-wall speedup across ten hosts</span></div><p>The equal-workload geometric mean ranged from 0.98× to 1.18×. The current frozen artifact does not support a universal CPU-side speedup claim.</p></div>
+<div class="tile"><div class="k">PDAL semantics preserved</div><div class="v host">byte-exact or canonical</div><p>Deterministic outputs are byte-identical to pinned PDAL. A real byte-nondeterministic 1M-point COPC pair matched canonically on full point records, metadata, hierarchy invariants and an exact bounded query.</p></div>
+</div>
+
+<section class="col" id="short">
+<h2>The short version</h2>
+<ul>
+<li><b>For the current frozen 1.7× release artifact</b>, seven of ten 1M r6 feature cells measured <b>7.4–10.2×</b>. RTX 3060 and RTX 4090 measured <b>6.36×</b> and <b>6.53×</b>. The RTX 3090 is the explicit exception at <b>0.99×</b>, not 2.5× and not 7–12×.</li>
+<li><b>For the complete fourteen-workflow suite</b>, current total-wall speedup ranges from <b>0.99× to 1.43×</b> and equal-workload geometric mean from <b>0.98× to 1.18×</b>. Older measurements of larger CPU-side gains remain historical and are not predictions for this artifact.</li>
+<li><b>Nothing you get is approximate.</b> Default mode preserves PDAL semantics: deterministic outputs are byte-identical, while inherently nondeterministic containers require canonical comparison. An opt-in <code>pdg --fast</code> mode relaxes only kNN tie order for a bit more speed.</li>
+<li><b>The rule for switching a stage onto the GPU</b> is a measured one: on each GPU class we ship, a stage is admitted at the point counts where the GPU beat PDG's own (already parallel) CPU path by <b>at least 1.7×</b> in our calibration, and stays on the CPU elsewhere. The first version of this report used a 3× rule; the maintainer lowered it to 1.7× the same day (see "What did not work" for why, and what it changed for the RTX 5090 and RTX 3090).</li>
+<li><b>Not established</b>: performance on GPUs outside the ten named classes, Windows, non-NVIDIA devices, the preregistered “≥10× on at least 90% of 3DEP projects” population claim, or unrelated third-party reproduction.</li>
+</ul>
+</section>
+
+<section class="col" id="promise">
+<h2>The promise, precisely</h2>
+<p>Three things are true of every run and are what the test suite enforces:</p>
+<ol>
+<li><b>Same pipelines.</b> No new stage names, no options to learn. A PDAL pipeline JSON runs unchanged.</li>
+<li><b>Same semantics, with the comparator named.</b> Deterministic output files, metadata, point order, stdout, stderr and exit code are compared byte-for-byte against a pinned build of upstream PDAL 2.10.0. Inherently nondeterministic containers such as COPC are canonicalized and compared by point records, metadata and semantics. Where a GPU path cannot reproduce PDAL exactly — for example a k-nearest-neighbour tie that PDAL's CPU tree resolves in one order and the GPU in another — PDG repairs the result on the CPU or does not use the GPU for that stage. Failures still fail with a non-zero exit and no output.</li>
+<li><b>Nothing tunes itself at run time.</b> The decision "GPU or CPU for this stage on this machine" comes from a measured profile: the maintainer's reference machine, a profile you wrote with <code>pdg calibrate</code>, a profile we shipped for your GPU class, or a conservative generic one. PDG never times, fits or guesses while your job runs, so a given machine and input always makes the same choice.</li>
+</ol>
+<div class="callout"><b><code>pdg --fast</code> (opt-in)</b>Keeps point count, order, coordinates and every attribute except on exact-distance kNN tie rows, where the GPU's tie choice stands instead of being repaired to PDAL's. Rasters and text outputs stay byte-identical. When it was measured on the reference machine (before later exact-mode work) it ran the feature workflow at 11.6× against about 8.7× exact and the fourteen-workflow suite at 2.71× vs 2.61× geometric mean — a modest gain, because the exact tie repair is cheap. Exact mode has since improved to 2.90×; fast mode was not re-measured. It exists for users who prefer the simpler contract, not as the main speed story.</div>
+</section>
+
+<section id="current">
+<div class="col">
+<h2>Current frozen-release proof</h2>
+<p>These are the measurements for the software users actually receive: frozen candidate SHA-256 <code>3e734d39662a…</code>, pinned oracle SHA-256 <code>6e1b06cf2227…</code>, release-manifest SHA-256 <code>01443c1245f8…</code>, and the embedded 1.7× shipped profile selected on every machine. No benchmark worker rebuilt or changed the payload. Each cell used one untimed warm-up and three alternating measured pairs; times cover the complete process, including read and write.</p>
+<h3>Fourteen 1M-point workflows on all ten GPU/host machines</h3>
+<p>“Geometric mean” weights each workflow equally. “Total wall” is the ratio of the sums of the fourteen median times. The r6 column is the normal-plus-covariance feature pipeline at issue in the headline. Every machine completed all 14 workflows with zero missing, invalid or inexact cells.</p>
+</div>
+<div class="scroll"><table>
+<tr><th>GPU class</th><th>Equal-workload geometric mean</th><th>Total wall</th><th>r6 feature graph</th></tr>
+<tr><td class=name>A10</td><td>1.146×</td><td>1.377×</td><td class=win><b>7.410×</b></td></tr>
+<tr><td class=name>A100 40 GB</td><td>1.156×</td><td>1.371×</td><td class=win><b>7.942×</b></td></tr>
+<tr><td class=name>L40S</td><td>1.149×</td><td>1.385×</td><td class=win><b>7.913×</b></td></tr>
+<tr><td class=name>RTX 3060 12 GB</td><td>1.146×</td><td>1.365×</td><td class=win><b>6.363×</b></td></tr>
+<tr><td class=name>RTX 3090</td><td class=loss>0.983×</td><td class=loss>0.987×</td><td class=loss><b>0.986×</b></td></tr>
+<tr><td class=name>RTX 4060 Ti</td><td>1.154×</td><td>1.371×</td><td class=win><b>8.629×</b></td></tr>
+<tr><td class=name>RTX 4080</td><td>1.176×</td><td>1.397×</td><td class=win><b>10.110×</b></td></tr>
+<tr><td class=name>RTX 4090</td><td>1.119×</td><td>1.347×</td><td class=win><b>6.531×</b></td></tr>
+<tr><td class=name>RTX 5090</td><td>1.163×</td><td>1.393×</td><td class=win><b>9.695×</b></td></tr>
+<tr><td class=name>RTX A6000</td><td>1.164×</td><td>1.430×</td><td class=win><b>10.230×</b></td></tr>
+</table></div>
+<div class="col">
+<p>This table is why the old universal headline was removed. Seven cells form a 7.4–10.2× band, but two more are around 6.4× and the RTX 3090 host is at parity. The result is materially host- and GPU-dependent. Ten GPU classes establish cross-hardware evidence only; they do not substitute for independent 3DEP-project sampling.</p>
+<h3>47,478,228-point AHN4 r6 graph on seven machines</h3>
+<p>This is the same frozen artifact and exact format-8/44 LAZ → format-7/120 LAZ graph, with one warm-up and three pairs. The three smaller-card classes were not run at this size and are not implied by the table.</p>
+</div>
+<div class="scroll"><table>
+<tr><th>GPU class</th><th>Pinned PDAL median</th><th>PDG median</th><th>Speedup</th></tr>
+<tr><td class=name>A10</td><td>714.414 s</td><td>83.840 s</td><td class=win><b>8.521×</b></td></tr>
+<tr><td class=name>A100 40 GB</td><td>725.837 s</td><td>73.840 s</td><td class=win><b>9.830×</b></td></tr>
+<tr><td class=name>L40S</td><td>818.073 s</td><td>104.690 s</td><td class=win><b>7.814×</b></td></tr>
+<tr><td class=name>RTX 3090</td><td>892.964 s</td><td>99.839 s</td><td class=win><b>8.944×</b></td></tr>
+<tr><td class=name>RTX 4090</td><td>432.764 s</td><td>63.522 s</td><td class=win><b>6.813×</b></td></tr>
+<tr><td class=name>RTX 5090</td><td>459.573 s</td><td>39.617 s</td><td class=win><b>11.601×</b></td></tr>
+<tr><td class=name>RTX A6000</td><td>1122.234 s</td><td>113.876 s</td><td class=win><b>9.855×</b></td></tr>
+</table></div>
+<div class="col">
+<p>The measured seven-card range is 6.81–11.60×. It is not a “47M on all ten cards” result. The RTX 3090’s 8.94× large-cloud result coexists with its 0.986× 1M result; point count materially changes the outcome.</p>
+<div class="callout"><b>Correctness and reproducibility gates</b>The hardened frozen-binary conformance run passed 2,048/2,048 cases and all 4,096 product executions returned zero. A packaged author-run <code>pdg verify</code> report was exact and valid, while honestly recording a 0.785× loss on its small 250K fixture and <code>external_validation.status = not-performed</code>.</div>
+</div>
+</section>
+
+<section id="wins">
+<div class="col">
+<h2>Historical 3× evidence</h2>
+<p>We measured fourteen everyday PDAL workflows on a 1M-point LAZ fixture on ten rented machines, one per GPU class, each in two states: <b>before</b> (a fresh install, before this change — the GPU is off because no profile applied, so this is PDG's CPU-side speed) and <b>historical 3× default</b> (the then-current profile embedded, nothing calibrated on the box, no environment variables). Speedups are median-of-three wall-clock ratios against stock PDAL built on the same box. They are evidence for that frozen 3× configuration, not a fresh measurement of the 1.7× release files.</p>
+<h3>By workflow (median across the ten GPUs; historical 3× proof)</h3>
+</div>
+<div class="scroll"><table>
+<tr><th>Workflow</th><th>Before<br><small>CPU-side only</small></th><th>Drop-in default<br><small>range across GPUs</small></th><th>Where the time went</th></tr>
+<tr><td class=name>Translate, crop, reproject<br><small>r1-translate</small></td><td>1.8×<br><small>1.2–2.8</small></td><td class='win'><b>1.6×</b><br><small>1.2–2.7</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Ground classification + height above ground (SMRF, HAG)<br><small>r2-ground-normalize</small></td><td>1.2×<br><small>1.1–1.4</small></td><td class='flat'><b>1.2×</b><br><small>1.1–1.3</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Ground-only DTM raster<br><small>r3-dtm</small></td><td>1.7×<br><small>1.3–2.2</small></td><td class='win'><b>1.8×</b><br><small>1.3–2.2</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Statistical denoise + radius thinning<br><small>r4-denoise-thin</small></td><td>6.9×<br><small>5.4–7.7</small></td><td class='win'><b>7.0×</b><br><small>5.1–8.4</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Bounded COPC query<br><small>r5-copc-query</small></td><td>1.4×<br><small>1.0–1.9</small></td><td class='win'><b>1.5×</b><br><small>1.0–1.9</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Normals + covariance features (LAZ, all extra dims)<br><small>r6-features</small></td><td>2.6×<br><small>2.3–2.8</small></td><td class='win'><b>8.8×</b><br><small>2.4–12.0</small></td><td><small>GPU (drop-in profile)</small></td></tr>
+<tr><td class=name>First-return max-Z DSM raster<br><small>r7-dsm</small></td><td>1.2×<br><small>1.0–1.6</small></td><td class='flat'><b>1.2×</b><br><small>1.0–1.5</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Orthophoto RGB colorization across CRSs<br><small>r8-colorize</small></td><td>2.2×<br><small>1.5–3.8</small></td><td class='win'><b>2.1×</b><br><small>1.4–3.9</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Polygon clip with geometry reprojection<br><small>r9-polygon-clip</small></td><td>1.6×<br><small>1.3–2.6</small></td><td class='win'><b>1.6×</b><br><small>1.3–2.5</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Voxel-centroid decimation<br><small>r10-decimate</small></td><td>1.4×<br><small>1.2–1.7</small></td><td class='flat'><b>1.3×</b><br><small>1.2–1.6</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Classification refinement (SMRF, outlier, neighbor classifier)<br><small>r11-classify-refine</small></td><td>11.2×<br><small>7.7–13.1</small></td><td class='win'><b>11.0×</b><br><small>7.5–12.6</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Spatial tiling<br><small>r12-tile</small></td><td>1.7×<br><small>1.3–2.2</small></td><td class='win'><b>1.7×</b><br><small>1.3–2.2</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>Multi-file merge<br><small>r13-merge</small></td><td>2.3×<br><small>1.9–3.4</small></td><td class='win'><b>2.3×</b><br><small>1.9–3.6</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+<tr><td class=name>LAS → LAZ conversion<br><small>r14-convert-compress</small></td><td>2.3×<br><small>1.8–3.3</small></td><td class='win'><b>2.3×</b><br><small>1.8–3.5</small></td><td><small>CPU-side work; GPU not involved</small></td></tr>
+</table></div>
+<div class="legend"><span class="w">≥ 1.5× faster than PDAL</span><span class="f">about the same as before</span><span class="l">slower than PDAL</span></div>
+<div class="col">
+<p>Read this table only as the historical 3× configuration. It recorded an ~8.8× median r6 cell, two large CPU-side wins, and 1.2–2.5× on many other rows. Those observations explain the project history but are not predictions for the current artifact. In particular, the frozen 1.7× rerun above supersedes the old expectation that the RTX 3090 would remain around 2.5× at 1M: it measured 0.986×.</p>
+<h3>Historical bigger-cloud table: a 47.5M-point AHN4 tile</h3>
+<p>On the cards with 24 GB or more we also ran a real 47,478,228-point Dutch AHN4 tile (LAZ, with vendor extra-bytes dimensions) in default mode with the historical 3× proof profile — again nothing calibrated on the box. Times are for the complete <code>pdal</code>/<code>pdg</code> process including read and write. Each large-tile cell was timed once.</p>
+</div>
+<div class="scroll"><table>
+<tr><th>GPU</th><th>Job</th><th>Stock PDAL</th><th>PDG</th><th>Speedup</th></tr>
+<tr><td class=name>A10</td><td>features (plain writer)</td><td>10.6 min</td><td>1.1 min</td><td class='win'><b>9.8×</b></td></tr>
+<tr><td class=name>A10</td><td>r6 graph (LAZ, extra dims)</td><td>11.9 min</td><td>1.4 min</td><td class='win'><b>8.6×</b></td></tr>
+<tr><td class=name>A10</td><td>LOF (local profile run)</td><td>13.4 min</td><td>0.6 min</td><td class='win'><b>21.3×</b></td></tr>
+<tr><td class=name>A100 40 GB</td><td>features (plain writer)</td><td>17.3 min</td><td>1.1 min</td><td class='win'><b>16.1×</b></td></tr>
+<tr><td class=name>A100 40 GB</td><td>r6 graph (LAZ, extra dims)</td><td>19.3 min</td><td>1.6 min</td><td class='win'><b>12.3×</b></td></tr>
+<tr><td class=name>A100 40 GB</td><td>LOF (local profile run)</td><td>20.7 min</td><td>0.7 min</td><td class='win'><b>29.2×</b></td></tr>
+<tr><td class=name>L40S</td><td>features (plain writer)</td><td>9.1 min</td><td>0.5 min</td><td class='win'><b>17.1×</b></td></tr>
+<tr><td class=name>L40S</td><td>r6 graph (LAZ, extra dims)</td><td>10.2 min</td><td>0.8 min</td><td class='win'><b>12.5×</b></td></tr>
+<tr><td class=name>L40S</td><td>LOF (local profile run)</td><td>10.6 min</td><td>0.4 min</td><td class='win'><b>29.3×</b></td></tr>
+<tr><td class=name>RTX 3090</td><td>features (plain writer)</td><td>19.3 min</td><td>8.1 min</td><td class='win'><b>2.4×</b></td></tr>
+<tr><td class=name>RTX 3090</td><td>r6 graph (LAZ, extra dims)</td><td>22.4 min</td><td>8.9 min</td><td class='win'><b>2.5×</b></td></tr>
+<tr><td class=name>RTX 3090</td><td>LOF (local profile run)</td><td>28.3 min</td><td>1.5 min</td><td class='win'><b>18.8×</b></td></tr>
+<tr><td class=name>RTX 4090</td><td>features (plain writer)</td><td>13.1 min</td><td>0.9 min</td><td class='win'><b>15.2×</b></td></tr>
+<tr><td class=name>RTX 4090</td><td>r6 graph (LAZ, extra dims)</td><td>14.6 min</td><td>1.2 min</td><td class='win'><b>12.2×</b></td></tr>
+<tr><td class=name>RTX 4090</td><td>LOF (local profile run)</td><td>13.1 min</td><td>0.5 min</td><td class='win'><b>24.9×</b></td></tr>
+<tr><td class=name>RTX A6000</td><td>features (plain writer)</td><td>15.4 min</td><td>1.3 min</td><td class='win'><b>11.9×</b></td></tr>
+<tr><td class=name>RTX A6000</td><td>r6 graph (LAZ, extra dims)</td><td>17.3 min</td><td>1.7 min</td><td class='win'><b>10.4×</b></td></tr>
+<tr><td class=name>RTX A6000</td><td>LOF (local profile run)</td><td>20.0 min</td><td>0.7 min</td><td class='win'><b>28.5×</b></td></tr>
+</table></div>
+<div class="col">
+<p>This table remains useful as historical placement and calibration evidence, but it used one timed observation per large cell and the earlier 3× default. The current seven-card, three-pair frozen-artifact table above is the release claim. In particular, the old RTX 3090 calibration result is not presented as what users should expect from the shipped file.</p>
+<h3>Does the ratio keep growing with bigger clouds or bigger GPUs?</h3>
+<p>No. We ran the same tile at 47M, 95M and 190M points on a rented H200 (141 GB): the kNN feature graphs sit on a flat ~10× plateau, ground classification climbs slowly (1.4 → 1.65×), and I/O-bound graphs stay at 1.4–3.6×. The H200 was not faster than an RTX 4090 in absolute time at these sizes. The GPU is not the bottleneck; single-file LAZ I/O, the exact CPU repair and CPU-only stages are. A larger card buys headroom (no tiling at 190M), not ratio.</p>
+</div>
+</section>
+
+<section class="col" id="not">
+<h2>What did not work, or does not help</h2>
+<dl class="faq">
+<dt>Small clouds</dt><dd>Below about 250K points nothing runs on the GPU; CUDA start-up alone is 170–250 ms. Most stages need 1M points before the GPU wins by our margin, and several (normal, eigenvalues, covariancefeatures on their own) need 4M. Small-file batch jobs get the CPU-side speedups only.</dd>
+<dt><code>filters.neighborclassifier</code></dt><dd>Loses on the GPU on every machine (0.3–1.3× against the CPU path). It stays on the CPU. Its CPU path is fast, which is why classification refinement is ~11× anyway.</dd>
+<dt>Point programs — <code>filters.assign</code>, <code>filters.ferry</code>, <code>filters.expression</code> chains</dt><dd>Lose below 4M points, win modestly above. Shipped profiles admit them at 4M only; a lone <code>filters.ferry</code> almost never.</dd>
+<dt>Ground classification (SMRF), height above ground, DTM/DSM rasters, tiling, merging, COPC queries, colorization, clipping, reprojection</dt><dd>1.0–2.5× from CPU work; the GPU is not used. Exact SMRF morphology on the GPU and GPU reprojection are on the follow-up list, unbuilt.</dd>
+<dt>Forcing the GPU on</dt><dd>You can (<code>PDG_EXPERIMENTAL_CUDA_HYBRID=1</code>). On the boxes we measured, forcing the GPU everywhere was <em>slower</em> overall than the profile's choices (4090 box: 2.28× vs 2.51× geometric mean) because light workflows lose on the device. Leave it to the profile unless you are testing.</dd>
+<dt>The 3× rule and the failed RTX 3090 expectation</dt><dd>The first shipped-profile proof used a 3× admission threshold; the profiles were then widened to 1.7× from calibration evidence. That historical analysis predicted the RTX 5090 1M feature graph and RTX 3090 large graph would improve when admitted, while continuing to describe the RTX 3090 1M r6 result as roughly 2.5×. The frozen-artifact rerun is now authoritative: RTX 5090 r6 measured 9.695×, but RTX 3090 r6 measured only 0.986× and its complete fourteen-workflow suite 0.987× by total wall. The report therefore records the 3090 as a current exception instead of preserving the calibration-based prediction.</dd>
+<dt>Anything not NVIDIA, or below compute capability 8.0</dt><dd>No GPU use. AMD, Intel and Apple GPUs are not supported at all; NVIDIA cards older than Ampere (RTX 20-series, GTX, Turing/Volta data-centre parts) fall outside every shipped and generic profile. These machines get the CPU-side speedups and nothing else.</dd>
+</dl>
+</section>
+<section class="col" id="expect">
+<h2>What to expect on your machine</h2>
+<p>PDG decides GPU-or-CPU per stage from the first profile that matches, in this order. Run <code>pdg calibrate --status</code> (or <code>pdg doctor</code>) and read the <code>active_profile_tier</code> line — it tells you which of these you are in.</p>
+<div class="scroll"><table>
+<tr><th>Tier</th><th>Who gets it</th><th>What it means for you</th></tr>
+<tr><td class="name"><b>embedded</b></td><td class="name">The maintainer's reference machine only (exact GPU, driver, CUDA and CPU match)</td><td class="name">The full measured profile behind the headline numbers (2.90× GM / 5.40× total wall on the fourteen workflows).</td></tr>
+<tr><td class="name"><b>local</b></td><td class="name">Anyone who has run <code>pdg calibrate</code> on this exact machine (GPU, driver, CUDA build, CPU model, core count and PDG version all match)</td><td class="name">Placement tightened to your CPU and, with <code>--input</code>, your data. Takes precedence over the tiers below. Invalidated silently by a driver, CUDA or PDG upgrade (falls through to the next tier; <code>--status</code> says <code>machine-mismatch</code> and why).</td></tr>
+<tr><td class="name"><b>shipped</b></td><td class="name">A10, A100, L40S, RTX 3060, RTX 3090, RTX 4060 Ti, RTX 4080, RTX 4090, RTX 5090, RTX A6000 — matched on GPU name, compute capability and the CUDA toolkit PDG was compiled with (13.3). Driver and CPU are <em>not</em> matched.</td><td class="name">Each current stage is admitted only where calibration showed at least 1.7× over the PDG CPU path throughout the admitted envelope. The current ten-machine 1M table above measures those exact shipped profiles; the 47.5M current proof covers only seven named machines. Results vary materially with the unmatched host as well as the GPU.</td></tr>
+<tr><td class="name"><b>generic</b></td><td class="name">Any other NVIDIA GPU with compute capability ≥ 8.0 and ≥ 12.24 GB memory, on a CUDA 13.3 build — e.g. RTX 4070, RTX 5080, RTX 3080 12 GB, A30, A40, L4, H100, H200 (an 8 GB or 10 GB card is below the memory bound and gets the CPU path)</td><td class="name">Deliberately conservative placement derived from the earlier calibration sweep: only stage models that cleared its cross-machine admission rule, using conservative device/host coefficients. This tier was not part of the ten named-machine B0286 re-proof and has no current big-cloud measurement; it is not a performance promise for unmeasured hardware.</td></tr>
+<tr><td class="name"><b>none</b> (CPU path)</td><td class="name">Everything else: no NVIDIA GPU, compute capability &lt; 8.0, &lt; 12 GB, a build against another CUDA toolkit, or <code>PDG_DISABLE_SHIPPED_PROFILES=1</code></td><td class="name">Exact host fallback with the same deterministic-byte/canonical-container contract and no GPU use. Earlier author-run evidence found substantial CPU-side wins on some workflows, but B0286 does not establish a universal CPU-speedup claim; measure the complete workload against same-machine PDAL.</td></tr>
+</table></div>
+
+<h3>Things you will notice</h3>
+<ul>
+<li><b>Nothing to configure.</b> If your GPU is in the shipped list, the first run already uses it where the profile says so. There is no flag to "turn on the GPU"; the profile does that per stage.</li>
+<li><b>Which stages ran where.</b> There is no friendly "explain" output yet — that is on the release list below. Today the diagnostic switches <code>PDG_DEBUG_ADMISSION_PHASES=1</code> and <code>PDG_DEBUG_HYBRID=1</code> print to stderr where an automatic GPU route was declined and why, and the benchmark harness records the active profile per run. If a stage you expected on the GPU ran on the CPU, the usual reasons are: point count outside the envelope, a layout the device path does not handle (it falls back, still exact), or a stage that lost the measurement (neighborclassifier, point programs below 4M).</li>
+<li><b>Memory.</b> Historical calibration/sweep runs exercised 48M-point LOF and feature graphs on selected 24 GB cards and stopped the 12–16 GB profiles at 16M. The current frozen B0286 proof is narrower: one 47.5M AHN4 r6 graph on seven named machines at roughly 10–15 GB peak host RSS. Above every admitted envelope PDG does not "try anyway".</li>
+<li><b>Files with vendor extra dimensions</b> (e.g. AHN4's <code>Deviation</code>, <code>Amplitude</code>, <code>Reflectance</code>) now run on the GPU path as long as no GPU stage computes those dimensions; a file that carries a device-computed dimension in an unexpected type (e.g. <code>Rank=uint16</code> under <code>filters.estimaterank</code>) is refused by the device path and completes on the CPU under the same deterministic-byte/canonical-container contract.</li>
+<li><b>Container CPU quotas matter more than the GPU.</b> Every rented box had a cgroup quota of 9.6–30.7 cores. Both PDAL and PDG scale with cores, so ratios are fairly stable, but absolute times on your workstation will differ from the boxes'.</li>
+<li><b>Determinism.</b> Same machine, same input, same profile → same placement; deterministic outputs reproduce the same bytes, while containers known to be nondeterministic are evaluated canonically. Run-to-run wall time varies by ±10–20% on I/O-bound workflows on the rented boxes; that is noise, not placement change.</li>
+</ul>
+
+<h3>When to run <code>pdg calibrate</code></h3>
+<p>You do not have to. Run it when (a) your GPU is not in the shipped list and you want more than the generic tier, (b) your CPU is much faster or slower per core than an EPYC/Xeon server part — a fast desktop CPU narrows every GPU margin — or (c) you want placement tuned to your own data (<code>--input your-tile.laz</code>; the synthetic calibration cloud under-represents <code>filters.radiusassign</code> on real data). It takes 17–41 minutes for the standard sizes on the boxes we used, plus 6–72 minutes for the optional 16M/48M append; it writes <code>~/.config/pdg/placement-profile.json</code> (or <code>$PDG_PROFILE_PATH</code>), only ever admits stages whose device output was byte-identical to the CPU's, and its profile is keyed to your exact machine, so it cannot be copied to another. <code>--status</code> and <code>--dry-run</code> write nothing.</p>
+
+<h3>Environment switches you may meet</h3>
+<div class="scroll"><table>
+<tr><th>Variable</th><th>Effect</th></tr>
+<tr><td class="name"><code>PDG_DISABLE_SHIPPED_PROFILES=1</code></td><td class="name">Ignore the shipped and generic tiers: GPU only from a profile measured on this machine.</td></tr>
+<tr><td class="name"><code>PDG_DISABLE_LOCAL_PROFILE=1</code></td><td class="name">Ignore any local profile.</td></tr>
+<tr><td class="name"><code>PDG_PROFILE_PATH</code></td><td class="name">Where <code>pdg calibrate</code> reads/writes the local profile.</td></tr>
+<tr><td class="name"><code>PDG_EXPERIMENTAL_CUDA_HYBRID=1</code></td><td class="name">Force CUDA routes regardless of profile. For testing; measured slower overall on real suites.</td></tr>
+<tr><td class="name"><code>pdg --fast …</code></td><td class="name">The relaxed kNN-tie contract (a flag, not a variable; cannot be enabled from the environment).</td></tr>
+</table></div>
+</section>
+
+<section class="col" id="testing">
+<h2>Testing it yourself</h2>
+<ol>
+<li><b>Check the tier</b>: <code>pdg calibrate --status</code>. If you expected <code>shipped</code> and see <code>generic</code> or nothing, check the GPU name (must match exactly, e.g. <code>NVIDIA GeForce RTX 4090</code>), compute capability, and that PDG was built against CUDA 13.3.</li>
+<li><b>Prove exactness on your own data</b>: run the same pipeline with <code>pdal</code> and <code>pdg</code> and compare deterministic LAS/LAZ and rasters bit-for-bit; use the versioned canonical comparator for a COPC container whose oracle bytes are themselves nondeterministic. This is what the conformance suite does with a pinned PDAL 2.10.0 build; an unexplained default-mode semantic difference is a bug — please report it with the pipeline and a small input.</li>
+<li><b>Measure fairly</b>: warm the cache (run once, discard), take the median of three, and compare a PDAL and a PDG built the same way on the same machine. Our harness is <code>scripts/pdg/benchmark_reference.py</code> (paired runs, byte comparison, per-run profile record) and the fourteen workflows are in <code>bench/pipelines/reference/</code>. Wall time is the whole process, read and write included.</li>
+<li><b>Do not assume a universal gain.</b> If a kNN pipeline at 4M points shows no gain on a shipped GPU, inspect the active tier and placement diagnostics: the point count may be outside the admitted envelope, the layout may be unsupported, or the stage combination may be unprofiled. Report an unexpected result with those diagnostics and a same-machine PDAL baseline.</li>
+<li><b>Big inputs</b>: the current 47.5M frozen-artifact r6 proof covers exactly seven named classes—A10, A100 40 GB, L40S, RTX 3090, RTX 4090, RTX 5090 and RTX A6000—and measured 6.81–11.60× with three pairs per cell. It is not evidence for the three smaller cards or for all ten classes. Watch host RAM (~10–15 GB peak for the tile).</li>
+</ol>
+</section>
+
+<section class="col" id="release">
+<h2>Before you release it: what an open-source audience needs to know</h2>
+<p>These are the facts a README, release note and issue template should carry, and the loose ends we would close or state first.</p>
+<ul class="check">
+<li><b>The shipped profiles are keyed to CUDA toolkit 13.3.</b> A build against 13.4 (or a distro/conda package built with another toolkit) gets <em>no</em> shipped and <em>no</em> generic tier — CPU path only until someone runs <code>pdg calibrate</code>. Either re-sweep on the release toolkit, relax the key deliberately with new measurements, or say it plainly in the install docs. This is the single most likely "it's not using my GPU" report.</li>
+<li><b>Binaries must carry the right GPU architectures.</b> The sweep boxes were each built for their own SM (80/86/89/120; 90 for Hopper). A distributed build needs a fat binary covering all of them, or the shipped tier is moot on the ones left out.</li>
+<li><b>Local profiles are keyed to the PDG version.</b> A version bump silently invalidates every user's calibration (they fall back to the shipped tier). Say so in release notes and consider a "profile out of date, re-run <code>pdg calibrate</code>" hint in <code>--status</code>.</li>
+<li><b>State the hardware support honestly</b>: NVIDIA only; shipped profiles for the ten listed classes; conservative generic placement on other Ampere-or-newer cards ≥ 12 GB; no GPU below that. Do not promise a universal CPU-side gain: the current complete-suite totals range from a 0.987× loss to a 1.430× win across the measured hosts.</li>
+<li><b>The exact 1.7× artifact has now been re-run.</b> The current table binds the candidate, oracle, profile files, harness, pipelines and inputs by SHA-256, checks the payload before and after timing, and never rebuilds on a benchmark worker. The older 3× tables remain labelled historical.</li>
+<li><b>Measurements are one warm-up plus three paired observations on rented containers with CPU quotas</b>: all ten classes at 1M and only the seven named classes at 47.5M. Publish the raw JSON and host facts with every number; do not generalize the 47.5M result to the three untested cards.</li>
+<li><b>Unmeasured</b>: the generic tier on any big cloud; H100/H200 under the generic tier (an H200 was measured only with CUDA forced on: ~10× plateau); Windows and macOS (nothing built or run); non-x86 hosts; the "direct whole-view" GPU executors off the reference machine (they stay CPU elsewhere).</li>
+<li><b>Known follow-ups</b>: run the preregistered 40-project 3DEP population study; obtain unrelated-user reproductions; build exact SMRF morphology on the GPU, GPU reprojection, LAZ encode scale-out for wide records, a profile refresh protocol, and calibrated direct executors.</li>
+<li><b>A plain "why did this run on the CPU?" output.</b> Users will ask; today the answer needs two debug variables and knowledge of the envelope table. An <code>--explain</code>-style summary of per-stage placement and the reason would prevent most support traffic.</li>
+<li><b>Housekeeping</b>: the repository README is still upstream PDAL's; write PDG's own (what it is, the promise, the tier table above, how to check and calibrate, how to report a wrong placement). Decide the licence stance for the fork and the shipped profile data files (they are measurements, in JSON, under <code>data/placement-profiles/</code>). Keep the "regenerate, never hand-edit" rule for those files.</li>
+</ul>
+<div class="callout warn"><b>What we would put in the first paragraph of the README</b>"PDG runs the same pipeline JSON as <code>pdal</code> and preserves pinned PDAL semantics: deterministic outputs are byte-identical, while inherently nondeterministic containers are compared canonically. On the exact frozen 1.7× artifact, seven of ten measured 1M r6 feature cells were 7.4–10.2×; RTX 3060 and RTX 4090 were about 6.4×, and the RTX 3090 exception was 0.99×. The complete fourteen-workflow total-wall result ranged from 0.99× to 1.43× across those hosts. Results vary materially by GPU, host, workflow and input; the seven-card 47.5M table is not a ten-card or 3DEP-population claim. Nothing is approximate unless you pass <code>--fast</code>."</div>
+</section>
+
+<section id="numbers">
+<div class="col">
+<h2>The numbers</h2>
+<h3>Per GPU: the fourteen workflows at 1M points (geometric mean / total wall-time speedup vs stock PDAL)</h3>
+<p>"Before" is a fresh install before the historical profile change; "drop-in" here is the historical 3× profile. This table is retained for provenance only. The current 1.7× frozen-artifact table is in “Current frozen-release proof” above. Deterministic compared outputs in both evidence sets were byte-identical.</p>
+</div>
+<div class="scroll"><table>
+<tr><th>GPU (host)</th><th>Before</th><th>Drop-in default</th><th>Feature workflow (r6)</th></tr>
+<tr><td class=name>A10<br><small>Xeon Gold 6342</small></td><td>1.89× / 2.65×</td><td><b>2.13× / 3.61×</b></td><td class='win'>2.3× → 7.3×</td></tr>
+<tr><td class=name>A100 40 GB<br><small>EPYC 7532</small></td><td>2.29× / 3.15×</td><td><b>2.52× / 4.32×</b></td><td class='win'>2.6× → 8.2×</td></tr>
+<tr><td class=name>L40S<br><small>EPYC 9124</small></td><td>2.03× / 2.84×</td><td><b>2.24× / 4.01×</b></td><td class='win'>2.4× → 9.7×</td></tr>
+<tr><td class=name>RTX 3060 12 GB<br><small>Xeon E5-2683 v4</small></td><td>2.02× / 2.84×</td><td><b>2.44× / 4.66×</b></td><td class='win'>2.6× → 12.0×</td></tr>
+<tr><td class=name>RTX 3090<br><small>Xeon E5-2673 v4</small></td><td>2.11× / 2.72×</td><td><b>2.07× / 3.02×</b></td><td class='flat'>2.3× → 3.2×</td></tr>
+<tr><td class=name>RTX 4060 Ti<br><small>EPYC 7K62</small></td><td>1.99× / 2.82×</td><td><b>2.18× / 3.77×</b></td><td class='win'>2.6× → 9.0×</td></tr>
+<tr><td class=name>RTX 4080<br><small>EPYC 7R13</small></td><td>2.45× / 3.23×</td><td><b>2.62× / 4.37×</b></td><td class='win'>2.6× → 8.6×</td></tr>
+<tr><td class=name>RTX 4090<br><small>EPYC 7702</small></td><td>2.64× / 3.48×</td><td><b>2.93× / 5.03×</b></td><td class='win'>2.8× → 11.1×</td></tr>
+<tr><td class=name>RTX 5090<br><small>EPYC 7B12</small></td><td>1.97× / 2.76×</td><td><b>1.84× / 2.62×</b></td><td class='flat'>2.5× → 2.4×</td></tr>
+<tr><td class=name>RTX A6000<br><small>Xeon E5-2699 v4</small></td><td>2.78× / 3.53×</td><td><b>3.05× / 5.15×</b></td><td class='win'>2.7× → 9.8×</td></tr>
+</table></div>
+<div class="col">
+<h3>Which stages the shipped profiles put on the GPU, and at what point counts</h3>
+<p>A range means "GPU between these input sizes"; <b>CPU</b> means the measurement did not clear the 1.7× rule on that GPU (or the stage lost everywhere, like <code>neighborclassifier</code>). Outside a range the stage runs on the CPU. The right-most column is the generic fallback, which keeps a 3× rule because it also has to cover GPUs slower than any we measured.</p>
+</div>
+<div class="scroll"><table>
+<tr><th>Stage / combination</th><th>A10</th><th>A100 40 GB</th><th>L40S</th><th>RTX 3060 12 GB</th><th>RTX 3090</th><th>RTX 4060 Ti</th><th>RTX 4080</th><th>RTX 4090</th><th>RTX 5090</th><th>RTX A6000</th><th>generic</th></tr>
+<tr><td class=name>filters.approximatecoplanar<br><small>approximatecoplanar</small></td><td class=win>250K–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.covariancefeatures<br><small>covariancefeatures</small></td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=host>CPU</td></tr>
+<tr><td class=name>chains of the kNN feature filters (normal, eigenvalues, covariance, coplanar, optimal neighborhood, rank)<br><small>eigen-family-compose</small></td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>1M–4M</td></tr>
+<tr><td class=name>filters.eigenvalues<br><small>eigenvalues</small></td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.estimaterank<br><small>estimaterank</small></td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>4M–4M</td></tr>
+<tr><td class=name>assign / ferry / expression chains (&quot;point programs&quot;)<br><small>fused-point-program</small></td><td class=win>1M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>1M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td></tr>
+<tr><td class=name>filters.lof<br><small>lof</small></td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–16M</td><td class=win>250K–48M</td><td class=win>250K–16M</td><td class=win>250K–16M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–16M</td></tr>
+<tr><td class=name>filters.neighborclassifier<br><small>neighborclassifier</small></td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.nndistance<br><small>nndistance</small></td><td class=win>250K–48M</td><td class=win>1M–48M</td><td class=win>1M–48M</td><td class=win>1M–16M</td><td class=win>1M–48M</td><td class=win>1M–16M</td><td class=win>250K–16M</td><td class=win>1M–48M</td><td class=win>1M–48M</td><td class=win>1M–48M</td><td class=win>4M–16M</td></tr>
+<tr><td class=name>filters.normal<br><small>normal</small></td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=win>1M–4M</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.normal + filters.covariancefeatures<br><small>normal-covariancefeatures-compose</small></td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–16M</td><td class=win>250K–48M</td><td class=win>250K–16M</td><td class=win>250K–16M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>4M–4M</td></tr>
+<tr><td class=name>… with writers.las extra_dims=all (the r6 graph)<br><small>normal-covariancefeatures-compose-extradims</small></td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–48M</td><td class=win>250K–16M</td><td class=win>1M–48M</td><td class=win>250K–16M</td><td class=win>250K–16M</td><td class=win>250K–48M</td><td class=win>1M–48M</td><td class=win>250K–48M</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.optimalneighborhood<br><small>optimalneighborhood</small></td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>1M–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=host>CPU</td></tr>
+<tr><td class=name>filters.radiusassign<br><small>radiusassign</small></td><td class=win>250K–4M</td><td class=win>1M–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>1M–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>4M–4M</td></tr>
+<tr><td class=name>filters.estimaterank + filters.optimalneighborhood<br><small>rank-optimal-compose</small></td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>250K–4M</td><td class=win>1M–4M</td></tr>
+<tr><td class=name>a single filters.ferry<br><small>simple-ferry</small></td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=win>4M–4M</td><td class=host>CPU</td><td class=host>CPU</td></tr>
+</table></div>
+<div class="legend"><span class="w">on the GPU within the range</span><span class="h">on the CPU</span></div>
+<div class="col">
+<p class="meta">Current release evidence: BENCHMARKS.md B0286 and decision D0287. The frozen artifact manifest, ten-machine 1M reports, seven-machine 47.5M reports, hardened conformance result, COPC semantic comparison, <code>pdg verify</code> output, and checksums are published under <code>docs/reports/b0286-frozen-reproof/</code>. Vast.ai rentals attributable to this re-proof cost about $8.28. Historical context: B0274–B0279 and decisions D0261/D0271/D0277–D0280; the superseded 3× sweep remains under <code>build/benchmarks/b0278-sweep/</code> with companion <code>docs/reports/b0278-drop-in-defaults.html</code>.</p>
+</div>
+</section>
+</main>

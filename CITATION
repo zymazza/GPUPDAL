@@ -1,0 +1,11 @@
+Until a release DOI is minted, cite the exact GPUPDAL release or commit and
+repository URL:
+
+  Mazza, Zy (2026). GPUPDAL: GPU Point Data Abstraction Library.
+  https://github.com/zymazza/GPUPDAL, commit <full commit SHA>.
+
+GPUPDAL is derived from and retains the upstream PDAL implementation. When your
+work relies on PDAL itself, also use PDAL's official citation:
+
+  PDAL contributors (2026). PDAL: The Point Data Abstraction Library.
+  https://pdal.org/. https://doi.org/10.5281/zenodo.10884408

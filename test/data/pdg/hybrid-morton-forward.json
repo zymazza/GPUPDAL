@@ -1,0 +1,15 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.mortonorder"
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las"
+    }
+  ]
+}

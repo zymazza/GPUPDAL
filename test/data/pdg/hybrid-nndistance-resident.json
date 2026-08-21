@@ -1,0 +1,32 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "always_up": false,
+      "knn": 12,
+      "type": "filters.normal"
+    },
+    {
+      "k": 12,
+      "mode": "kth",
+      "type": "filters.nndistance"
+    },
+    {
+      "dimensions": "NNDistance=>GpsTime",
+      "type": "filters.ferry"
+    },
+    {
+      "k": 12,
+      "mode": "avg",
+      "type": "filters.nndistance"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

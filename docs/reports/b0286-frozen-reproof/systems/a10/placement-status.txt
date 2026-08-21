@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA A10
+compute_capability: 8.6
+driver: 12.3.0
+cuda: 13.3
+cpu_model: Intel(R) Xeon(R) Gold 6342 CPU @ 2.80GHz
+logical_cpus: 96
+embedded_profile: applies (shipped-a10-sm86-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-a10-sm86-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-a10-sm86-cuda13.3
+active_profile_tier: shipped
+active_profile_source: a10.json
+active_profile_sha256: 39113c8787b7d8e79574f3bee9efa1b06593c672c1883a4017cb74f3d408632c

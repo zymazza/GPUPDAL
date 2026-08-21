@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.divider",
+      "mode": "round_robin",
+      "count": 7
+    },
+    {
+      "type": "writers.las",
+      "filename": "result#.las"
+    }
+  ]
+}

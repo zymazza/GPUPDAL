@@ -1,0 +1,9 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "filters.outlier", "method": "statistical", "mean_k": 8, "multiplier": 2.0 },
+    { "type": "filters.range", "limits": "Classification![7:7]" },
+    { "type": "filters.sample", "radius": 1.0 },
+    { "type": "writers.las", "filename": "output.laz", "compression": "true" }
+  ]
+}

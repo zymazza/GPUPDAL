@@ -1,0 +1,66 @@
+{
+  "schema": "pdg-bounded-differential-recipes-v1",
+  "suite_id": "pdg-bounded-generated-v1",
+  "description": "Finite, reviewable boundary combinations; no open-ended random generation.",
+  "target_cases": 2048,
+  "determinism_repeats": 2,
+  "limits": {
+    "max_cases": 2048,
+    "max_inline_input_bytes_per_case": 1048576,
+    "max_artifact_files_per_case": 32,
+    "max_artifact_bytes_per_case": 1073741824,
+    "max_stream_bytes_per_process": 16777216,
+    "timeout_seconds_per_process": 120,
+    "max_determinism_repeats": 3
+  },
+  "axes": {
+    "input": [
+      "empty",
+      "one-point",
+      "duplicate-xyz",
+      "exact-distance-ties",
+      "signed-zero-and-nan",
+      "global-offsets",
+      "return-boundaries",
+      "tiny-arithmetic-sequence"
+    ],
+    "stage": [
+      "identity",
+      "assign-extra-dimension",
+      "ordered-ferry",
+      "inclusive-range",
+      "stable-sort",
+      "decimation",
+      "head",
+      "tail",
+      "normal-knn",
+      "covariance-features",
+      "nndistance-tie",
+      "label-duplicates",
+      "identity-transformation",
+      "fixed-seed-randomize",
+      "same-crs-reprojection",
+      "empty-crop"
+    ],
+    "writer": [
+      "format-0",
+      "format-1",
+      "format-2",
+      "format-3",
+      "format-6",
+      "format-7",
+      "format-8",
+      "weird-scale-offset"
+    ],
+    "graph": [
+      "array-root-implicit-defaults",
+      "object-root-explicit-defaults"
+    ]
+  },
+  "named_large_case": {
+    "id": "giant-cloud-1000000",
+    "points": 1000000,
+    "replacement_index": 2047,
+    "reason": "One bounded large-cloud control; it never multiplies across the Cartesian axes."
+  }
+}

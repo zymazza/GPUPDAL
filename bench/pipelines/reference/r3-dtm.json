@@ -1,0 +1,8 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "filters.smrf" },
+    { "type": "filters.range", "limits": "Classification[2:2]" },
+    { "type": "writers.gdal", "filename": "output.tif", "resolution": 1.0, "output_type": "idw" }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "knn": 12,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

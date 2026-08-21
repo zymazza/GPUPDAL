@@ -1,0 +1,39 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.faux",
+      "bounds": "([0,64],[0,64],[0,245])",
+      "mode": "grid"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Classification = Z",
+        "GpsTime = X",
+        "PointSourceId = Y"
+      ]
+    },
+    {
+      "type": "filters.assign",
+      "value": "X = GpsTime + 0.4 + sin(GpsTime * 12.9898 + PointSourceId * 78.233 + Classification * 37.719) * 0.2"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Y = PointSourceId + 0.4 + sin(GpsTime * 39.346 + PointSourceId * 11.135 + Classification * 83.155) * 0.2"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Z = GpsTime / 1000 + PointSourceId / 1000 + Classification * 100"
+    },
+    {
+      "type": "writers.las",
+      "filename": "build/bench-data/pmf-hag-nn-normal-1m.las",
+      "dataformat_id": 7,
+      "extra_dims": "all",
+      "minor_version": 4,
+      "scale_x": 0.000001,
+      "scale_y": 0.000001,
+      "scale_z": 0.0001
+    }
+  ]
+}

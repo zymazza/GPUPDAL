@@ -1,0 +1,24 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.laz",
+      "override_srs": "EPSG:28992"
+    },
+    {
+      "type": "filters.returns",
+      "groups": "first,only"
+    },
+    {
+      "type": "writers.gdal",
+      "filename": "output.tif",
+      "resolution": 1.0,
+      "output_type": "max",
+      "dimension": "Z",
+      "binmode": true,
+      "data_type": "float64",
+      "nodata": -9999.0,
+      "bounds": "([REPLACE_FULL_MINX,REPLACE_FULL_MAXX],[REPLACE_FULL_MINY,REPLACE_FULL_MAXY])"
+    }
+  ]
+}

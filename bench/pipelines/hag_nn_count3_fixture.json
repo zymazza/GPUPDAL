@@ -1,0 +1,31 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.faux",
+      "bounds": "([0,333334],[0,3],[0,1])",
+      "mode": "grid"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Classification = 1",
+        "Classification = 2 WHERE Y == 0"
+      ]
+    },
+    {
+      "type": "filters.assign",
+      "value": "X = X + Y / 5"
+    },
+    {
+      "type": "filters.assign",
+      "value": "Z = X / 1000 + Y"
+    },
+    {
+      "type": "writers.las",
+      "filename": "build/bench-data/hag-nn-count3-unique-grid-1m.las",
+      "minor_version": 4,
+      "dataformat_id": 7,
+      "extra_dims": "all"
+    }
+  ]
+}

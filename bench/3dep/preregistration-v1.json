@@ -1,0 +1,73 @@
+{
+  "schema": "pdg-3dep-preregistration-v1",
+  "study_id": "pdg-r6-3dep-rtx4090-v1",
+  "status": "protocol-frozen-selection-and-measurement-not-yet-executed",
+  "claim": "On an RTX 4090, frozen-release PDG default mode achieves at least 10x pinned-PDAL wall-clock performance on r6 for at least 90% of independently sampled eligible 3DEP projects, with a one-sided exact 95% confidence bound.",
+  "unit_of_analysis": "3DEP project",
+  "sample_size": 40,
+  "selection": {
+    "seed": "pdg-r6-3dep-rtx4090-v1-public-seed-2026-08-18",
+    "catalog_rule": "Freeze the complete public 3DEP project catalog snapshot before selection. Eligible projects are ranked by SHA-256(seed + NUL + project_id); take the first 40. Within each project, eligible tiles are ranked by SHA-256(seed + NUL + project_id + NUL + tile_id); take the first tile.",
+    "eligibility": [
+      "The catalog record identifies one distinct 3DEP project.",
+      "At least one public HTTPS LAZ or COPC tile is listed as directly downloadable without credentials."
+    ],
+    "exclusions": [
+      "Catalog entries that are aliases of an already selected project, resolved from the frozen catalog before ranking.",
+      "Catalog entries with no listed public HTTPS LAZ or COPC tile."
+    ],
+    "replacement_rule": "No replacement after the 40-project selection is sealed. An unavailable URL, failed download, oracle decode failure, memory refusal, missing input, exactness failure, or benchmark failure remains one failed project-level outcome.",
+    "independence_rule": "Only one tile from each unique 3DEP project contributes one Bernoulli outcome. Repeats and additional tiles do not increase n."
+  },
+  "pipeline": {
+    "path": "bench/pipelines/reference/r6-features.json",
+    "sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+    "description": "readers.las -> filters.normal(knn=8) -> filters.covariancefeatures(knn=8, Dimensionality) -> compressed writers.las"
+  },
+  "artifacts": {
+    "candidate": "Exact user-downloadable PDG release payload, closed by pdg-frozen-release-artifact-v1 before timing.",
+    "oracle": "Independently built pinned PDAL oracle included in the same closed payload.",
+    "mutation_policy": "No configure, build, install, profile conversion, or payload write after closure. Verify the complete payload before and after the study."
+  },
+  "machine": {
+    "required_gpu_name_substring": "RTX 4090",
+    "gpu_count": 1,
+    "placement_mode": "default automatic",
+    "fast_mode": false,
+    "cpu_affinity": "fixed and reported",
+    "power_and_clock_policy": "unchanged during the study and reported",
+    "cache_state": "warm"
+  },
+  "timing": {
+    "scope": "whole process including read, compute, and write",
+    "warmups": 1,
+    "measured_pairs": 3,
+    "order": "alternating oracle/candidate order as implemented by benchmark_reference.py",
+    "summary": "median wall-clock seconds for each executable; oracle median divided by candidate median"
+  },
+  "correctness": {
+    "contract": "exact",
+    "requirement": "Every timed candidate output, stdout, stderr, and exit status must satisfy the pinned-oracle exact contract. An inexact attempt is a failure and produces no accepted performance result."
+  },
+  "endpoint": {
+    "success": "return code zero AND exact_outputs true AND median_speedup >= 10.0",
+    "missing_or_failed_attempts": "failure",
+    "confidence": "one-sided 95% Clopper-Pearson lower bound",
+    "acceptance": "lower bound strictly greater than 0.90",
+    "minimum_all-success_result": "29/29; the planned 40/40 result has lower bound approximately 0.9278"
+  },
+  "reporting": {
+    "publish": [
+      "preregistration and its SHA-256",
+      "frozen catalog snapshot and SHA-256",
+      "ranked selection audit including pre-timing exclusions",
+      "selected input URLs, byte sizes, point counts, and SHA-256 values",
+      "frozen artifact manifest and pre/post validation",
+      "machine, driver, CUDA, CPU, RAM, affinity, power and clock state",
+      "all warm-up and measured raw timings",
+      "all exactness results and failures",
+      "analysis JSON with the exact confidence bound"
+    ],
+    "third_party_status": "Author-run evidence is not independent third-party validation. No external validation is claimed by this protocol."
+  }
+}

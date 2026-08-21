@@ -1,0 +1,8 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "filters.smrf" },
+    { "type": "filters.hag_nn" },
+    { "type": "writers.las", "filename": "output.laz", "compression": "true", "extra_dims": "HeightAboveGround=float32" }
+  ]
+}

@@ -1,0 +1,16 @@
+pdg 0.1.0-dev
+device_name: NVIDIA GeForce RTX 4080
+compute_capability: 8.9
+driver: 590.48.01
+cuda: 13.3
+cpu_model: AMD EPYC 7742 64-Core Processor
+logical_cpus: 128
+embedded_profile: applies (shipped-rtx4080-sm89-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtx4080-sm89-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtx4080-sm89-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtx4080.json
+active_profile_sha256: d5fecb01269ebcf2064bca322d6924c75b3275d32426f0e91ed4f2b76c5818ed

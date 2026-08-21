@@ -1,0 +1,8 @@
+{
+  "pipeline": [
+    {"type":"readers.las","filename":"input.las"},
+    {"type":"filters.mad","dimension":"Z","k":2.0,
+     "mad_multiplier":1.4862},
+    {"type":"writers.las","filename":"output.las"}
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Scratch = Intensity * 2 - 1",
+        "Classification = 7 WHERE Scratch >= 1000 && ReturnNumber >= 1"
+      ]
+    },
+    {
+      "type": "filters.ferry",
+      "dimensions": "Classification=>UserData"
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "PointSourceId = Scratch / 2 WHERE Scratch <= 131070",
+        "ReturnNumber = UserData WHERE UserData >= 1 && UserData <= 15"
+      ]
+    },
+    {
+      "type": "filters.range",
+      "limits": "X[:]"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

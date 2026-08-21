@@ -1,0 +1,10 @@
+{
+  "pipeline":[
+    "@CMAKE_SOURCE_DIR@/test/data/las/1.2-with-color.las",
+    {
+      "type":"filters.chipper"
+      "capacity": 100,
+    },
+    "@CMAKE_SOURCE_DIR@/test/temp/hexbin.las"
+  ]
+}

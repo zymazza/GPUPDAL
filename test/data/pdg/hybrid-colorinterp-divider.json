@@ -1,0 +1,22 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.divider",
+      "mode": "round_robin",
+      "count": 3
+    },
+    {
+      "type": "filters.colorinterp",
+      "dimension": "Z",
+      "ramp": "blue_red"
+    },
+    {
+      "type": "writers.las",
+      "filename": "result#.las"
+    }
+  ]
+}

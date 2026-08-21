@@ -1,0 +1,68 @@
+Wed Aug 19 03:11:35 UTC 2026
+377050f1a8ee
+NVIDIA GeForce RTX 3060, 580.159.03, 12288 MiB
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           39 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  12
+On-line CPU(s) list:                     0-11
+Vendor ID:                               GenuineIntel
+Model name:                              12th Gen Intel(R) Core(TM) i5-12400F
+CPU family:                              6
+Model:                                   151
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+Stepping:                                5
+CPU(s) scaling MHz:                      36%
+CPU max MHz:                             4400.0000
+CPU min MHz:                             800.0000
+BogoMIPS:                                4992.00
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize arch_lbr flush_l1d arch_capabilities ibpb_exit_to_user
+Virtualization:                          VT-x
+L1d cache:                               288 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                7.5 MiB (6 instances)
+L3 cache:                                18 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-11
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       1.7Gi        10Gi       560Ki        19Gi        29Gi
+Swap:          8.0Gi        96Mi       7.9Gi
+3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd  /workspace/reproof/payload/candidate/bin/pdg
+6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39  /workspace/reproof/payload/oracle/bin/pdal
+01443c1245f81843766b7b6250fefe3d22fd0d48b513378ba4b25219608312f6  /workspace/reproof/release-manifest.json
+pdg 0.1.0-dev
+device_name: NVIDIA GeForce RTX 3060
+compute_capability: 8.6
+driver: 580.159.03
+cuda: 13.3
+cpu_model: 12th Gen Intel(R) Core(TM) i5-12400F
+logical_cpus: 12
+embedded_profile: applies (shipped-rtx3060-sm86-cuda13.3)
+local_profile_path: /workspace/reproof/results-v3/clean-config/pdg/placement-profile.json
+local_profile: not-found (no profile file)
+shipped_profile: shipped-rtx3060-sm86-cuda13.3
+generic_profile: generic-cuda-sm80plus-cuda13.3
+active_profile: shipped-rtx3060-sm86-cuda13.3
+active_profile_tier: shipped
+active_profile_source: rtx3060.json
+active_profile_sha256: 84f557f7029b9ac4779b46a9de89baf5ab43d1b3870ca9c83916e36823725c57

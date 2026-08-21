@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.radialdensity",
+      "radius": 1.01
+    },
+    {
+      "type": "writers.las",
+      "filename": "out.las",
+      "extra_dims": "all"
+    }
+  ]
+}

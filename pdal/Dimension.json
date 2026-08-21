@@ -1,0 +1,689 @@
+{ "dimensions": [
+    {
+    "name": "X",
+    "type": "double",
+    "description": "X coordinate"
+    },
+    {
+    "name": "Y",
+    "type": "double",
+    "description": "Y coordinate"
+    },
+    {
+    "name": "Z",
+    "type": "double",
+    "description": "Z coordinate"
+    },
+    {
+    "name": "W",
+    "type": "double",
+    "description": "W coordinate"
+    },
+    {
+    "name": "Intensity",
+    "type": "uint16",
+    "description": "Representation of the pulse return magnitude"
+    },
+    {
+    "name": "Amplitude",
+    "type": "float",
+    "description": "This is the ratio of the received power to the power received at the detection limit expressed in dB"
+    },
+    {
+    "name": "Reflectance",
+    "type": "float",
+    "description": "Ratio of the received power to the power that would be received from a white diffuse target at the same distance expressed in dB. The reflectance represents a range independent property of the target.  The surface normal of this target is assumed to be in parallel to the laser beam direction."
+    },
+    {
+    "name": "ReturnNumber",
+    "type": "uint8",
+    "description": "Pulse return number for a given output pulse. A given output laser pulse can have many returns, and they must be marked in order, starting with 1"
+    },
+    {
+    "name": "NumberOfReturns",
+    "type": "uint8",
+    "description": "Total number of returns for a given pulse."
+    },
+    {
+    "name": "ScanDirectionFlag",
+    "type": "uint8",
+    "description": "Direction at which the scanner mirror was traveling at the time of the output pulse. A value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction, where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite"
+    },
+    {
+    "name": "EdgeOfFlightLine",
+    "type": "uint8",
+    "description": "Indicates the end of scanline before a direction change with a value of 1 - 0 otherwise"
+    },
+    {
+    "name": "Classification",
+    "alt_names": ["class", "cls"],
+    "type": "uint8",
+    "description": "ASPRS classification.  0 for no classification.  See LAS specification for details."
+    },
+    {
+    "name": "ScanAngleRank",
+    "alt_names": "ScanAngle",
+    "type": "float",
+    "description": "Angle degree at which the laser point was output from the system, including the roll of the aircraft.  The scan angle is based on being nadir, and -90 the left side of the aircraft in the direction of flight"
+    },
+    {
+    "name": "UserData",
+    "alt_names": "user_data",
+    "type": "uint8",
+    "description": "Unspecified user data"
+    },
+    {
+    "name": "PointSourceId",
+    "type": "uint16",
+    "description": "File source ID from which the point originated.  Zero indicates that the point originated in the current file"
+    },
+    {
+    "name": "Red",
+    "type": "uint16",
+    "alt_names": "diffuse_red",
+    "description": "Red image channel value"
+    },
+    {
+    "name": "Green",
+    "type": "uint16",
+    "alt_names": "diffuse_green",
+    "description": "Green image channel value"
+    },
+    {
+    "name": "Blue",
+    "type": "uint16",
+    "alt_names": "diffuse_blue",
+    "description": "Blue image channel value"
+    },
+    {
+    "name": "GpsTime",
+    "type": "double",
+    "description": "GPS time that the point was acquired"
+    },
+    {
+    "name": "InternalTime",
+    "type": "double",
+    "description": "Scanner's internal time when the point was acquired, in seconds"
+    },
+    {
+    "name": "OffsetTime",
+    "alt_names": "Time",
+    "type": "uint32",
+    "description": "Milliseconds from first acquired point"
+    },
+    {
+    "name": "IsPpsLocked",
+    "type": "uint8",
+    "description": "The external PPS signal was found to be synchronized at the time of the current laser shot."
+    },
+    {
+    "name": "StartPulse",
+    "type": "int32",
+    "description": "Relative pulse signal strength"
+    },
+    {
+    "name": "ReflectedPulse",
+    "type": "int32",
+    "description": "Relative reflected pulse signal strength"
+    },
+    {
+    "name": "Pdop",
+    "type": "float",
+    "description": "GPS PDOP (dilution of precision)"
+    },
+    {
+    "name": "Pitch",
+    "type": "float",
+    "description": "Pitch in degrees"
+    },
+    {
+    "name": "Roll",
+    "type": "float",
+    "description": "Roll in degrees"
+    },
+    {
+    "name": "PulseWidth",
+    "type": "float",
+    "description": "Laser received pulse width (digitizer samples)"
+    },
+    {
+    "name": "Deviation",
+    "type": "float",
+    "description": "Difference between the shape of the reference pulse and the return pulse. A larger value for deviation indicates larger distortion."
+    },
+    {
+    "name": "PassiveSignal",
+    "type": "int32",
+    "description": "Relative passive signal"
+    },
+    {
+    "name": "BackgroundRadiation",
+    "type": "float",
+    "description": "A measure of background radiation."
+    },
+    {
+    "name": "PassiveX",
+    "type": "double",
+    "description": "Passive X footprint"
+    },
+    {
+    "name": "PassiveY",
+    "type": "double",
+    "description": "Passive Y footprint"
+    },
+    {
+    "name": "PassiveZ",
+    "type": "double",
+    "description": "Passive Z footprint"
+    },
+    {
+    "name": "XVelocity",
+    "type": "double",
+    "description": "X Velocity"
+    },
+    {
+    "name": "YVelocity",
+    "type": "double",
+    "description": "Y Velocity"
+    },
+    {
+    "name": "ZVelocity",
+    "type": "double",
+    "description": "Z Velocity"
+    },
+    {
+    "name": "Azimuth",
+    "alt_names": "PlatformHeading",
+    "type": "double",
+    "description": "Scanner azimuth"
+    },
+    {
+    "name": "WanderAngle",
+    "type": "double",
+    "description": "Wander Angle"
+    },
+    {
+    "name": "XBodyAccel",
+    "type": "double",
+    "description": "X Body Acceleration"
+    },
+    {
+    "name": "YBodyAccel",
+    "type": "double",
+    "description": "Y Body Acceleration"
+    },
+    {
+    "name": "ZBodyAccel",
+    "type": "double",
+    "description": "Z Body Acceleration"
+    },
+    {
+    "name": "XBodyAngRate",
+    "type": "double",
+    "description": "X Body Angle Rate"
+    },
+    {
+    "name": "YBodyAngRate",
+    "type": "double",
+    "description": "Y Body Angle Rate"
+    },
+    {
+    "name": "ZBodyAngRate",
+    "type": "double",
+    "description": "Z Body Angle Rate"
+    },
+    {
+    "name": "Flag",
+    "type": "uint8",
+    "description": "Flag"
+    },
+    {
+    "name": "Mark",
+    "type": "uint8",
+    "description": "Mark"
+    },
+    {
+    "name": "Alpha",
+    "type": "uint16",
+    "description": "Alpha"
+    },
+    {
+    "name": "EchoRange",
+    "type": "double",
+    "description": "Echo Range"
+    },
+    {
+    "name": "ScanChannel",
+    "type": "uint8",
+    "description": "Scan Channel"
+    },
+    {
+    "name": "Infrared",
+    "alt_names": "NearInfrared",
+    "type": "uint16",
+    "description": "Infrared"
+    },
+    {
+    "name": "HeightAboveGround",
+    "alt_names": ["height above ground", "HAG"],
+    "type": "double",
+    "description": "Height Above Ground"
+    },
+    {
+    "deprecated": true,
+    "name": "ClassFlags",
+    "type": "uint8",
+    "description": "Class Flags - deprecated in favor of Synthetic/KeyPoint/Withheld/Overlap"
+    },
+    {
+    "name": "Synthetic",
+    "type": "uint8",
+    "description": "ASPRS Synthetic flag.  See LAS specification for details."
+    },
+    {
+    "name": "KeyPoint",
+    "type": "uint8",
+    "description": "ASPRS Key-Point flag.  See LAS specification for details."
+    },
+    {
+    "name": "Withheld",
+    "type": "uint8",
+    "description": "ASPRS Withheld flag.  See LAS specification for details."
+    },
+    {
+    "name": "Overlap",
+    "type": "uint8",
+    "description": "ASPRS Overlap flag.  See LAS specification for details."
+    },
+    {
+    "name": "LvisLfid",
+    "alt_names": "Lvis_Lfid",
+    "type": "uint64",
+    "description": "LVIS_LFID"
+    },
+    {
+    "name": "ShotNumber",
+    "type": "uint64",
+    "description": "Shot Number"
+    },
+    {
+    "name": "LongitudeCentroid",
+    "alt_names": "Longitude_Centroid",
+    "type": "double",
+    "description": "Longitude Centroid"
+    },
+    {
+    "name": "LatitudeCentroid",
+    "alt_names": "Latitude_Centroid",
+    "type": "double",
+    "description": "Latitude Centroid"
+    },
+    {
+    "name": "ElevationCentroid",
+    "alt_names": "Elevation_Centroid",
+    "type": "double",
+    "description": "Elevation Centroid"
+    },
+    {
+    "name": "LongitudeLow",
+    "alt_names": "Longitude_Low",
+    "type": "double",
+    "description": "Longitude Low"
+    },
+    {
+    "name": "LatitudeLow",
+    "alt_names": "Latitude_Low",
+    "type": "double",
+    "description": "Latitude Low"
+    },
+    {
+    "name": "ElevationLow",
+    "alt_names": "Elevation_Low",
+    "type": "double",
+    "description": "Elevation Low"
+    },
+    {
+    "name": "LongitudeHigh",
+    "alt_names": "Longitude_High",
+    "type": "double",
+    "description": "Longitude High"
+    },
+    {
+    "name": "LatitudeHigh",
+    "alt_names": "Latitude_High",
+    "type": "double",
+    "description": "Latitude High"
+    },
+    {
+    "name": "ElevationHigh",
+    "alt_names": "Elevation_High",
+    "type": "double",
+    "description": "Elevation High"
+    },
+    {
+    "name": "PointId",
+    "type": "uint32",
+    "description": "An explicit representation of point ordering within a file, which allows this usually-implicit information to be preserved when reordering points."
+    },
+    {
+    "name": "OriginId",
+    "type": "uint32",
+    "description": "A file source ID from which the point originated.  This ID is global to a derivative dataset which may be aggregated from multiple files."
+    },
+    {
+    "name": "NormalX",
+    "alt_names": ["nx", "normal_x", "normalx", "normal x" ],
+    "type": "double",
+    "description": "X component of a vector normal to surface at this point"
+    },
+    {
+    "name": "NormalY",
+    "alt_names": ["ny", "normal_y", "normaly", "normal y"],
+    "type": "double",
+    "description": "Y component of a vector normal to surface at this point"
+    },
+    {
+    "name": "NormalZ",
+    "alt_names": ["nz", "normal_z", "normalz", "normal z"],
+    "type": "double",
+    "description": "Z component of a vector normal to surface at this point"
+    },
+    {
+    "name": "Curvature",
+    "type": "double",
+    "description": "Curvature of surface at this point"
+    },
+    {
+    "name": "Density",
+    "type": "double",
+    "description": "Estimate of point density"
+    },
+    {
+    "name": "Omit",
+    "type": "uint8_t",
+    "description": "Used to shallowly mark a point as being omitted without removing it"
+    },
+    {
+    "name": "ClusterID",
+    "type": "int64_t",
+    "description": "ID assigned to a point by a point-clustering algorithm."
+    },
+    {
+    "name": "NNDistance",
+    "type": "double",
+    "description": "Distance metric related to a point's nearest neighbors."
+    },
+    {
+    "name": "TextureU",
+    "alt_names": ["tu", "texture_u", "textureu" ],
+    "type": "double",
+    "description": "U component of a texture location at this point"
+    },
+    {
+    "name": "TextureV",
+    "alt_names": ["tv", "texture_v", "texturev" ],
+    "type": "double",
+    "description": "V component of a texture location at this point"
+    },
+    {
+    "name": "TextureW",
+    "alt_names": ["tw", "texture_w", "texturew" ],
+    "type": "double",
+    "description": "W component of a texture location at this point"
+    },
+    {
+    "name": "Linearity",
+    "type": "double",
+    "description": "Linearity of a point; larger values indicate more linear regions."
+    },
+    {
+    "name": "Planarity",
+    "type": "double",
+    "description": "Planarity of a point; larger values indicate more planar regions."
+    },
+    {
+    "name": "Scattering",
+    "type": "double",
+    "description": "Scattering of a point; larger values incidate complex (scattered) 3D regions."
+    },
+    {
+    "name": "Verticality",
+    "type": "double",
+    "description": "Verticality of a point; larger values indicate vertical structure."
+    },
+    {
+    "name": "Omnivariance",
+    "type": "double",
+    "description": "Omnivariance of a point; cube root of the product of all eigenvalues."
+    },
+    {
+    "name": "Anisotropy",
+    "type": "double",
+    "description": "Anisotropy of a point; larger values indicate strong variance in multiple dimensions."
+    },
+    {
+    "name": "Eigenentropy",
+    "type": "double",
+    "description": "Eigenentropy of a point; small values indicate more ordered regions, while large values indicate disorder."
+    },
+    {
+    "name": "EigenvalueSum",
+    "type": "double",
+    "description": "Sum of computed eigenvalues."
+    },
+    {
+    "name": "SurfaceVariation",
+    "type": "double",
+    "description": "Surface variation of a point; larger values indicate higher surface variation."
+    },
+    {
+    "name": "DemantkeVerticality",
+    "type": "double",
+    "description": "Verticality of a point; larger values indicate vertical structure (Demantke's variation)."
+    },
+    {
+    "name": "OptimalKNN",
+    "type": "uint64",
+    "description": "Optimal number of k nearest neighbors, such that eigenentropy is minimized."
+    },
+    {
+    "name": "OptimalRadius",
+    "type": "double",
+    "description": "Radius corresponding to optimal k nearest neighbors, such that eigenentropy is minimized."
+    },
+    {
+    "name": "Coplanar",
+    "type": "uint8",
+    "description": "Indicator of whether or not a point is part of a coplanar neighborhood."
+    },
+    {
+    "name": "LocalReachabilityDistance",
+    "type": "double",
+    "description": "Reachability metric based on the NNDistance of a point's nearest neighbors."
+    },
+    {
+    "name": "LocalOutlierFactor",
+    "type": "double",
+    "description": "Outlier factor based on the LocalReachabilityDistance of a point's nearest neighbors."
+    },
+    {
+    "name": "Miniball",
+    "type": "double",
+    "description": "Metric capturing distance from a point to the center of the smallest enclosing ball encapsulating k-nearest neighbors, scaled by radius of the ball."
+    },
+    {
+    "name": "Reciprocity",
+    "type": "double",
+    "description": "Metric capturing percentage of k-nearest neighbors that also contain the current point in their k-neighborhood."
+    },
+    {
+    "name": "Rank",
+    "type": "uint8",
+    "description": "Estimated rank of neighborhood of points."
+    },
+    {
+    "name": "Eigenvalue0",
+    "type": "double",
+    "description": "Smallest eigenvalue obtained form covariance of XYZ coordinates in k-neighborhood."
+    },
+    {
+    "name": "Eigenvalue1",
+    "type": "double",
+    "description": "Middle eigenvalue obtained form covariance of XYZ coordinates in k-neighborhood."
+    },
+    {
+    "name": "Eigenvalue2",
+    "type": "double",
+    "description": "Largest eigenvalue obtained form covariance of XYZ coordinates in k-neighborhood."
+    },
+    {
+    "name": "PlaneFit",
+    "type": "double",
+    "description": "Metric capturing current point's point to plane distance compared to those in the same k-neighborhood used to estimate the plane."
+    },
+    {
+    "name": "RadialDensity",
+    "type": "double",
+    "description": "Estimate of radial point density"
+    },
+    {
+    "name": "BeamOriginX",
+    "type": "double",
+    "description": "Beam origin X coordinate of current laser shot"
+    },
+    {
+    "name": "BeamOriginY",
+    "type": "double",
+    "description": "Beam origin Y coordinate of current laser shot"
+    },
+    {
+    "name": "BeamOriginZ",
+    "type": "double",
+    "description": "Beam origin Z coordinate of current laser shot"
+    },
+    {
+    "name": "BeamDirectionX",
+    "type": "double",
+    "description": "Beam direction unit vector X coordinate"
+    },
+    {
+    "name": "BeamDirectionY",
+    "type": "double",
+    "description": "Beam direction unit vector Y coordinate"
+    },
+    {
+    "name": "BeamDirectionZ",
+    "type": "double",
+    "description": "Beam direction unit vector Z coordinate"
+    },
+    {
+    "name": "NorthPositionRMS",
+    "type": "double",
+    "description": "North position RMS error"
+    },
+    {
+    "name": "EastPositionRMS",
+    "type": "double",
+    "description": "East position RMS error"
+    },
+    {
+    "name": "DownPositionRMS",
+    "type": "double",
+    "description": "Down position RMS error"
+    },
+    {
+    "name": "NorthVelocityRMS",
+    "type": "double",
+    "description": "North velocity RMS error"
+    },
+    {
+    "name": "EastVelocityRMS",
+    "type": "double",
+    "description": "East velocity RMS error"
+    },
+    {
+    "name": "DownVelocityRMS",
+    "type": "double",
+    "description": "Down velocity RMS error"
+    },
+    {
+    "name": "RollRMS",
+    "type": "double",
+    "description": "Roll RMS error"
+    },
+    {
+    "name": "PitchRMS",
+    "type": "double",
+    "description": "Pitch RMS error"
+    },
+    {
+    "name": "HeadingRMS",
+    "type": "double",
+    "description": "Heading RMS error"
+    },
+    {
+    "name": "Reliability",
+    "type": "double",
+    "description": "Reliability (or confidence) of points"
+    },
+    {
+    "name": "EchoPos",
+    "type": "double",
+    "description": "Difference in position of a peak of a return signal compared to a typical return from a hard surface"
+    },
+    {
+    "name": "EchoNorm",
+    "type": "double",
+    "description": "Difference in shape of a return signal compared to a typical return from a hard surface."
+    },
+    {
+    "name": "ImgNbr",
+    "type": "uint8",
+    "description": "Stores the number of the image from which it gets the color."
+    },
+    {
+    "name": "Image",
+    "type": "uint16",
+    "description": "Index of the image use for texturation."
+    },
+    {
+    "name": "Dimension",
+    "type": "uint8",
+    "description": "Dimension of the points. three types of dimensions are available (Linear : points form a linear feature. Planar : points form a planar surface. Complex : random group of points)."
+    },
+    {
+    "name": "SphericalRange",
+    "type": "double",
+    "description": "Range in context of spherical coordinates."
+    },
+    {
+    "name": "SphericalAzimuth",
+    "type": "double",
+    "description": "Azimuth in context of spherical coordinates."
+    },
+    {
+    "name": "SphericalElevation",
+    "type": "double",
+    "description": "Elevation in context of spherical coordinates."
+    },
+    {
+    "name": "H3",
+    "type": "uint64",
+    "description": "H3 index id"
+    },
+    {
+    "name": "Duplicate",
+    "type": "uint8",
+    "description": "Indicator of whether or not a point is a labeled duplicate"
+    },
+    {
+    "name": "ShotTimestamp",
+    "type": "double",
+    "description": "Precise timestamp of laser shot in seconds (GpsTime or InternalTime depending on sync_to_pps)."
+    },
+    {
+    "name": "UnambiguousRange",
+    "type": "double",
+    "description": "MTA zone width (unambiguous range) in meters. Required for zone correction calculation."
+    }
+] }

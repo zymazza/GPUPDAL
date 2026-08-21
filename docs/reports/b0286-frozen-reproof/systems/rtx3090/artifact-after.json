@@ -1,0 +1,13 @@
+{
+  "actual": {
+    "bytes": 307012410,
+    "file_count": 813,
+    "tree_sha256": "ceffa6cd41a6fe7626f86dc4bf080fd0f5b931c03e04ce3e0d4a940bee71b4d7"
+  },
+  "differences": [],
+  "manifest": "/workspace/reproof/release-manifest.json",
+  "manifest_sha256": "01443c1245f81843766b7b6250fefe3d22fd0d48b513378ba4b25219608312f6",
+  "payload_root": "/workspace/reproof/payload",
+  "schema": "pdg-frozen-release-artifact-check-v1",
+  "valid": true
+}

@@ -1,0 +1,16 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.returns",
+      "groups": "first,intermediate,last,only"
+    },
+    {
+      "type": "writers.las",
+      "filename": "return#.las"
+    }
+  ]
+}

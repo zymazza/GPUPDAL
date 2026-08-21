@@ -1,0 +1,22 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.laz"
+    },
+    {
+      "type": "filters.crop",
+      "bounds": "([REPLACE_MINX,REPLACE_MAXX],[REPLACE_MINY,REPLACE_MAXY])"
+    },
+    {
+      "type": "filters.voxeldownsize",
+      "cell": 1.0,
+      "mode": "center"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

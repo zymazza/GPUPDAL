@@ -1,0 +1,189 @@
+{
+  "schema": "pdg-measurement-scoping-evidence-v1",
+  "slice": "B0142",
+  "date": "2026-08-12",
+  "repository": {
+    "commit": "c4c8dc2afab7ae0ee42a3e21c1e0e15c9c8b6ee1",
+    "branch": "p3-skewness-resident",
+    "worktree": "clean"
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 9 7900",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "sm": 89,
+    "driver": "610.43.03",
+    "cuda": "13.3.73",
+    "build": "Release -O3 -DNDEBUG",
+    "kernel": "7.1.3-arch1-2",
+    "storage": "warm NVMe/ext4",
+    "locale": "C",
+    "timezone": "UTC",
+    "frozen_epoch": 1704067200
+  },
+  "binaries": {
+    "dispatcher": {
+      "path": "build/pdg-cuda-release/bin/pdg",
+      "bytes": 1838896,
+      "sha256": "0014a770b988dcbc501b3c9e2e057066c784135ee5254aa01fd37b890ceca641"
+    },
+    "engine": {
+      "path": "build/pdg-cuda-release/bin/pdg-engine",
+      "bytes": 11431296,
+      "sha256": "4b8e13b3eaa1db7a1076b5a1d896a2ec79a466a20e1f25d3414cde98e64a37f5"
+    },
+    "oracle": {
+      "path": "build/pdal-upstream-tests/bin/pdal",
+      "bytes": 286832,
+      "sha256": "ea66f6a9ebb833fef1ba6d3def99ba0b36385632deeefebe8e6a9c7e034af7a2",
+      "upstream_commit": "f1e35f5c3e416b8c6a2c39966c8205cfae54afe2"
+    }
+  },
+  "input": {
+    "path": "build/bench-data/hag-nn-count4-unique-grid-1m.las",
+    "bytes": 40000701,
+    "points": 1000002,
+    "sha256": "14532b092c348bfa266cccf0d91e73e7cf40ccdebf51a33b79e207439d564d19",
+    "candidate_boundary_property": {
+      "verified_range": "k = 1..64",
+      "all_boundaries_distinct": true,
+      "minimum_separation": 0.2,
+      "method": "enumerated both query lanes (Y == 1 at +0.2, Y == 2 at +0.4) at interior and both X extreme rows",
+      "conclusion": "one retained fixture serves the entire admissible count range; no new fixture is required"
+    }
+  },
+  "output_control": {
+    "report": {
+      "path": "build/benchmarks/b0142-hag-nn-output-control-current-clean-1m.json",
+      "bytes": 17100,
+      "sha256": "e80e13b5909cc5e54f8ca10a33ad0986d20f20111798d8f3469fa65566e3714b"
+    },
+    "pinned_pdal_median_seconds": 0.290153739,
+    "exact_output_sha256": "6876e51cba9a3145a0d16a88aac819971badc771bdc668b6ea30626e8d57af92",
+    "exact_output_bytes": 40000701
+  },
+  "sweep": {
+    "protocol": "one warmup per executable followed by five alternating exact pairs per count",
+    "counts": [
+      {
+        "count": 7,
+        "report": "build/benchmarks/b0139-hag-nn-count7-current-clean-1m.json",
+        "pinned_pdal_median_seconds": 1.050776026,
+        "default_delegate_median_seconds": 1.075603836,
+        "stage_surface_seconds": 0.760622287,
+        "stage_fraction_of_stock_wall_percent": 72.3867,
+        "stock_seconds_per_neighbor": 0.1086603,
+        "output_sha256": "98fb53141a3da0e8d0d3bf94384f7dba21d8468b9448189a881f079b34df3536"
+      },
+      {
+        "count": 8,
+        "report": "build/benchmarks/b0142-hag-nn-count8-current-clean-1m.json",
+        "report_bytes": 17080,
+        "report_sha256": "6934bb2bb6135d0295625e2b2375406aaeb4775494b507a21bd0f0fc85f32755",
+        "pinned_pdal_median_seconds": 1.075645517,
+        "default_delegate_median_seconds": 1.093987839,
+        "stage_surface_seconds": 0.785491778,
+        "stage_fraction_of_stock_wall_percent": 73.0252,
+        "stock_seconds_per_neighbor": 0.0981865,
+        "output_sha256": "3c82a878cc17d93c19f94f529fd80aafb2f54e485893f0d4474112a2d66b7e85"
+      },
+      {
+        "count": 12,
+        "report": "build/benchmarks/b0142-hag-nn-count12-current-clean-1m.json",
+        "report_bytes": 17076,
+        "report_sha256": "1c306e6f742e78ff23c3c9f4659883945e0169f4b596e82a3a171cf9238995bc",
+        "pinned_pdal_median_seconds": 1.147854476,
+        "default_delegate_median_seconds": 1.162369574,
+        "stage_surface_seconds": 0.857700737,
+        "stage_fraction_of_stock_wall_percent": 74.7221,
+        "stock_seconds_per_neighbor": 0.0714751,
+        "output_sha256": "94abdcf59392d5b28b914f1363be24dc6bfa5c5eed786f1a90970716a1cecda7"
+      },
+      {
+        "count": 16,
+        "report": "build/benchmarks/b0142-hag-nn-count16-current-clean-1m.json",
+        "report_bytes": 17088,
+        "report_sha256": "b598828009830305c88052691a6097b5b616a7f124cdaf22d2d26db7804fd4ed",
+        "pinned_pdal_median_seconds": 1.219574480,
+        "default_delegate_median_seconds": 1.238337434,
+        "stage_surface_seconds": 0.929420741,
+        "stage_fraction_of_stock_wall_percent": 76.2086,
+        "stock_seconds_per_neighbor": 0.0580888,
+        "output_sha256": "09d466acd02a63c9720b5ee6af9342e0857d91b4816183e10260d5c6c754574e"
+      },
+      {
+        "count": 24,
+        "report": "build/benchmarks/b0142-hag-nn-count24-current-clean-1m.json",
+        "report_bytes": 17081,
+        "report_sha256": "1140e987d5c8a033dc388615e6681a121d01256a9c4c857de599940af5836b70",
+        "pinned_pdal_median_seconds": 1.371048773,
+        "default_delegate_median_seconds": 1.413859975,
+        "stage_surface_seconds": 1.080895034,
+        "stage_fraction_of_stock_wall_percent": 78.8371,
+        "stock_seconds_per_neighbor": 0.0450373,
+        "output_sha256": "030698f71ed5145f96c6eaf205f4897d50906c219b1616125e040c5ab011a2f8"
+      },
+      {
+        "count": 32,
+        "report": "build/benchmarks/b0142-hag-nn-count32-current-clean-1m.json",
+        "report_bytes": 17093,
+        "report_sha256": "01fa5c80fb5d3d88edec3cfbcc01b44a443d097fee8cefad09e72efe508187a4",
+        "pinned_pdal_median_seconds": 1.508035821,
+        "default_delegate_median_seconds": 1.525828499,
+        "stage_surface_seconds": 1.217882082,
+        "stage_fraction_of_stock_wall_percent": 80.7595,
+        "stock_seconds_per_neighbor": 0.0380588,
+        "output_sha256": "ecbf7b18e25bb4632ad8ab54ec274b30704001baa42550d9320ccd7dee976c31"
+      },
+      {
+        "count": 48,
+        "report": "build/benchmarks/b0142-hag-nn-count48-current-clean-1m.json",
+        "report_bytes": 17093,
+        "report_sha256": "00b7698e0e9bddfb17dc8a556a04527f8f9c41e84cac3f07daaba3eedb21624d",
+        "pinned_pdal_median_seconds": 1.778506026,
+        "default_delegate_median_seconds": 1.803820015,
+        "stage_surface_seconds": 1.488352287,
+        "stage_fraction_of_stock_wall_percent": 83.6855,
+        "stock_seconds_per_neighbor": 0.0310073,
+        "output_sha256": "30a7f1253cefddfc2e5fd172c2eb3f9f9f7f38bba864812041ac0fe7579a97df"
+      },
+      {
+        "count": 64,
+        "report": "build/benchmarks/b0142-hag-nn-count64-current-clean-1m.json",
+        "report_bytes": 17080,
+        "report_sha256": "845b2f47448ab191489b837e8bfb775a59517522162a3b82217585ffcd1629da",
+        "pinned_pdal_median_seconds": 2.057952491,
+        "default_delegate_median_seconds": 2.081910588,
+        "stage_surface_seconds": 1.767798752,
+        "stage_fraction_of_stock_wall_percent": 85.9009,
+        "stock_seconds_per_neighbor": 0.0276219,
+        "output_sha256": "e210627724a51919f338c0b318bdbb54e9230673d807c03c4ab094d7f5309f4c"
+      }
+    ],
+    "all_outputs_distinct": true,
+    "all_outputs_exact_against_default_delegate": true
+  },
+  "derived": {
+    "neighbor_ratio_seven_to_sixty_four": 9.142857,
+    "stage_surface_ratio_seven_to_sixty_four": 2.3241,
+    "per_neighbor_cost_falls_factor": 3.93,
+    "stage_fraction_trend": "rises monotonically from 72.3867 percent at count seven to 85.9009 percent at count 64",
+    "interpretation": "the dominant stock cost is the per-query index traversal, which is largely count-independent; the count-dependent accumulation is comparatively cheap, matching B0139's finding that 88.392121 percent of filter time is the post-index query/projection"
+  },
+  "engine_readiness": {
+    "device_projection_generic": "hagNnKernel accumulates over min(groundCount, neighbors) with no fixed-width state",
+    "preflight_scratch_bytes_per_point_formula": "3 + count * (sizeof(uint32) + sizeof(double))",
+    "preflight_scratch_at_count_64_bytes_per_point": 771,
+    "preflight_scratch_at_count_64_for_this_fixture_megabytes": 771,
+    "shared_index_existing_cap": "the neighborhood region already rejects maximumNeighbors > 64",
+    "conclusion": "raising the admissible bound to 64 introduces no new constant and no unbudgeted allocation; 64 is the spatial index's own pre-existing limit"
+  },
+  "decision": {
+    "functional_support": "yes through unchanged pinned-PDAL fallback at every measured count",
+    "gpu_native": "no above count seven",
+    "performance_qualified": false,
+    "automatically_selected": false,
+    "scope_decision": "close counts eight through 64 as one parameterized envelope rather than one count per slice",
+    "reason": "the count ladder is a proof ladder, not an implementation or cost ladder; per-count slices would spend roughly 57 further three-commit triads re-proving a structurally identical envelope while the measured stage surface grows sub-linearly and its share of stock wall grows monotonically",
+    "next_task": "B0143 raises the bound to the shared index cap with a proof matrix generated over count, then qualifies representative counts rather than every count."
+  }
+}

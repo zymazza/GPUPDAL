@@ -1,0 +1,17 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.csv",
+      "type": "readers.text"
+    },
+    {
+      "knn": 64,
+      "type": "filters.approximatecoplanar"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

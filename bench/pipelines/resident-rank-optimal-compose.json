@@ -1,0 +1,30 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.estimaterank",
+      "knn": 14,
+      "thresh": 0.01
+    },
+    {
+      "type": "filters.optimalneighborhood",
+      "min_k": 10,
+      "max_k": 14
+    },
+    {
+      "type": "filters.assign",
+      "value": [
+        "Classification = Rank",
+        "Intensity = OptimalKNN",
+        "PointSourceId = OptimalRadius"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

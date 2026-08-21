@@ -1,0 +1,23 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.stats",
+      "dimensions": [
+        "X",
+        "Y",
+        "Z",
+        "Intensity",
+        "Classification",
+        "GpsTime"
+      ]
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}

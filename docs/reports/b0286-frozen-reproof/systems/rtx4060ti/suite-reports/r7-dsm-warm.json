@@ -1,0 +1,2348 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "r7-dsm",
+  "pipeline": {
+    "path": "/workspace/reproof/results-v3/shadow-repo/bench/pipelines/reference/r7-dsm.json",
+    "sha256": "a21c7b5a5d0d2d3cc80c93afba9e60c777d423c4c5ee80afe020a00bc98eb668",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/results-v3/suite-work/r7-dsm/warm/r7-dsm-oracle.json",
+        "sha256": "bb86cee8be54710986221bd39ab4e1473b75c06baf586433b0b1cf8a9f3638dc"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/results-v3/suite-work/r7-dsm/warm/r7-dsm-candidate.json",
+        "sha256": "49d71a6a8e420a1ca5e6c96b963f59487cd265b0ff50744ea2614901d5753a78"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+      "bytes": 6747641,
+      "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    ],
+    "used_input_bytes": 6747641,
+    "extent": {
+      "minx": 184500,
+      "maxx": 185999.99,
+      "miny": 494923.21,
+      "maxy": 494999.99,
+      "points": 1000000
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-5.15.0-185-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/evidence/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 4060 Ti",
+      "compute_capability": "8.9",
+      "driver": "595.71.05",
+      "cuda": "13.3",
+      "cpu_model": "AMD EPYC 7K62 48-Core Processor",
+      "logical_cpus": "192",
+      "embedded_profile": "applies (shipped-rtx4060ti-sm89-cuda13.3)",
+      "local_profile_path": "/workspace/reproof/results-v3/clean-config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx4060ti-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-rtx4060ti-sm89-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        0.5809471621178091,
+        0.5568457068875432,
+        0.5936115197837353
+      ],
+      "median_seconds": 0.5809471621178091,
+      "minimum_seconds": 0.5568457068875432,
+      "maximum_seconds": 0.5936115197837353,
+      "peak_rss_bytes": [
+        167976960,
+        164429824,
+        163213312
+      ],
+      "median_peak_rss_bytes": 164429824,
+      "output_bytes": [
+        924954,
+        924954,
+        924954
+      ],
+      "median_output_bytes": 924954,
+      "points_per_second": 1721326.9385025622,
+      "input_mib_per_second": 11.076828217167252,
+      "output_mib_per_second": 1.5183908816105833,
+      "compression_ratio_input_to_output": 7.29510981086627
+    },
+    "candidate": {
+      "seconds": [
+        0.4759297971613705,
+        0.5349655849859118,
+        0.535099436994642
+      ],
+      "median_seconds": 0.5349655849859118,
+      "minimum_seconds": 0.4759297971613705,
+      "maximum_seconds": 0.535099436994642,
+      "peak_rss_bytes": [
+        145666048,
+        145473536,
+        146731008
+      ],
+      "median_peak_rss_bytes": 145666048,
+      "output_bytes": [
+        924954,
+        924954,
+        924954
+      ],
+      "median_output_bytes": 924954,
+      "points_per_second": 1869279.1238642663,
+      "input_mib_per_second": 12.028908211355784,
+      "output_mib_per_second": 1.6489002253863798,
+      "compression_ratio_input_to_output": 7.29510981086627
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 1.08595240221501,
+    "resolution": {
+      "paired_speedups": [
+        1.2206572599211118,
+        1.0409000550983247,
+        1.1093480552282455
+      ],
+      "paired_mean": 1.1236351234158939,
+      "paired_spread": 0.17975720482278712,
+      "candidate_faster_in": 3,
+      "pairs": 3,
+      "paired_standard_error": 0.05238082794774646,
+      "interval_half_width": 0.10476165589549293,
+      "resolvable": true
+    },
+    "artifact_names": [
+      "output.tif"
+    ],
+    "oracle_artifact_sha256": [
+      "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc"
+    ],
+    "candidate_artifact_sha256": [
+      "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 0.557255988009274,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 168128512,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 0.5272341119125485,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 144044032,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 0.5809471621178091,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 167976960,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 0.4759297971613705,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 145666048,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 0.5349655849859118,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 145473536,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 0.5568457068875432,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 164429824,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 0.5936115197837353,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 163213312,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 0.535099436994642,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 146731008,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924954,
+          "sha256": "55069aa3edbb42bb4731e34491fcbee1f14d867eb0110ae36f53d961f01700dc",
+          "raster_metadata_sha256": "fff45a6fed761042c1f56f524d6689c1de316ed4bd82e2cdedd67be0511d4a26",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "coordinateSystem": {
+              "wkt": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "dataAxisToSRSAxisMapping": [
+                1,
+                2
+              ]
+            },
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "": {
+                "AREA_OR_POINT": "Area"
+              },
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "wgs84Extent": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    5.8210687,
+                    52.4419854
+                  ],
+                  [
+                    5.8210619,
+                    52.4412934
+                  ],
+                  [
+                    5.8431218,
+                    52.4412105
+                  ],
+                  [
+                    5.8431289,
+                    52.4419025
+                  ],
+                  [
+                    5.8210687,
+                    52.4419854
+                  ]
+                ]
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "max",
+                "checksum": 32407,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:wkt2": "PROJCRS[\"Amersfoort / RD New\",\n    BASEGEOGCRS[\"Amersfoort\",\n        DATUM[\"Amersfoort\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4289]],\n    CONVERSION[\"RD New\",\n        METHOD[\"Oblique Stereographic\",\n            ID[\"EPSG\",9809]],\n        PARAMETER[\"Latitude of natural origin\",52.1561605555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",5.38763888888889,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9999079,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",155000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",463000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting (X)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"northing (Y)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Engineering survey, topographic mapping.\"],\n        AREA[\"Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.\"],\n        BBOX[50.75,3.2,53.7,7.22]],\n    ID[\"EPSG\",28992]]",
+              "proj:epsg": 28992,
+              "proj:projjson": {
+                "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "Amersfoort / RD New",
+                "base_crs": {
+                  "name": "Amersfoort",
+                  "datum": {
+                    "type": "GeodeticReferenceFrame",
+                    "name": "Amersfoort",
+                    "ellipsoid": {
+                      "name": "Bessel 1841",
+                      "semi_major_axis": 6377397.155,
+                      "inverse_flattening": 299.1528128
+                    }
+                  },
+                  "coordinate_system": {
+                    "subtype": "ellipsoidal",
+                    "axis": [
+                      {
+                        "name": "Geodetic latitude",
+                        "abbreviation": "Lat",
+                        "direction": "north",
+                        "unit": "degree"
+                      },
+                      {
+                        "name": "Geodetic longitude",
+                        "abbreviation": "Lon",
+                        "direction": "east",
+                        "unit": "degree"
+                      }
+                    ]
+                  },
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 4289
+                  }
+                },
+                "conversion": {
+                  "name": "RD New",
+                  "method": {
+                    "name": "Oblique Stereographic",
+                    "id": {
+                      "authority": "EPSG",
+                      "code": 9809
+                    }
+                  },
+                  "parameters": [
+                    {
+                      "name": "Latitude of natural origin",
+                      "value": 52.1561605555556,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8801
+                      }
+                    },
+                    {
+                      "name": "Longitude of natural origin",
+                      "value": 5.38763888888889,
+                      "unit": "degree",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8802
+                      }
+                    },
+                    {
+                      "name": "Scale factor at natural origin",
+                      "value": 0.9999079,
+                      "unit": "unity",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8805
+                      }
+                    },
+                    {
+                      "name": "False easting",
+                      "value": 155000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8806
+                      }
+                    },
+                    {
+                      "name": "False northing",
+                      "value": 463000,
+                      "unit": "metre",
+                      "id": {
+                        "authority": "EPSG",
+                        "code": 8807
+                      }
+                    }
+                  ]
+                },
+                "coordinate_system": {
+                  "subtype": "Cartesian",
+                  "axis": [
+                    {
+                      "name": "Easting",
+                      "abbreviation": "X",
+                      "direction": "east",
+                      "unit": "metre"
+                    },
+                    {
+                      "name": "Northing",
+                      "abbreviation": "Y",
+                      "direction": "north",
+                      "unit": "metre"
+                    }
+                  ]
+                },
+                "scope": "Engineering survey, topographic mapping.",
+                "area": "Netherlands - onshore, including Waddenzee, Dutch Wadden Islands and 12-mile offshore coastal zone.",
+                "bbox": {
+                  "south_latitude": 50.75,
+                  "west_longitude": 3.2,
+                  "north_latitude": 53.7,
+                  "east_longitude": 7.22
+                },
+                "id": {
+                  "authority": "EPSG",
+                  "code": 28992
+                }
+              },
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "max"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

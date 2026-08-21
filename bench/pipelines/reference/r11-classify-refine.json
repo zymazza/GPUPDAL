@@ -1,0 +1,22 @@
+{
+  "pipeline": [
+    { "type": "readers.las", "filename": "input.laz" },
+    { "type": "filters.smrf" },
+    {
+      "type": "filters.outlier",
+      "method": "statistical",
+      "mean_k": 8,
+      "multiplier": 2.0
+    },
+    {
+      "type": "filters.neighborclassifier",
+      "k": 7,
+      "domain": "Classification[1:1]"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.laz",
+      "compression": "true"
+    }
+  ]
+}

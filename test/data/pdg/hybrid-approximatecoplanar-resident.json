@@ -1,0 +1,33 @@
+{
+  "pipeline": [
+    {
+      "filename": "input.las",
+      "type": "readers.las"
+    },
+    {
+      "always_up": false,
+      "knn": 7,
+      "type": "filters.normal"
+    },
+    {
+      "knn": 8,
+      "thresh1": 25.0,
+      "thresh2": 6.0,
+      "type": "filters.approximatecoplanar"
+    },
+    {
+      "dimensions": "Coplanar=>UserData",
+      "type": "filters.ferry"
+    },
+    {
+      "knn": 7,
+      "normalize": true,
+      "type": "filters.eigenvalues"
+    },
+    {
+      "extra_dims": "all",
+      "filename": "out.las",
+      "type": "writers.las"
+    }
+  ]
+}

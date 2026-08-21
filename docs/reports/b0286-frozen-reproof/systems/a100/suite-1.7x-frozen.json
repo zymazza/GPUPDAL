@@ -1,0 +1,151 @@
+{
+  "binaries": {
+    "candidate": {
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd"
+    },
+    "oracle": {
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39"
+    }
+  },
+  "cache_state": "warm",
+  "complete": true,
+  "contract": "exact",
+  "equal_workload_geometric_mean_speedup": 1.1555282561044904,
+  "ids": [
+    "r1-translate",
+    "r2-ground-normalize",
+    "r3-dtm",
+    "r4-denoise-thin",
+    "r5-copc-query",
+    "r6-features",
+    "r7-dsm",
+    "r8-colorize",
+    "r9-polygon-clip",
+    "r10-decimate",
+    "r11-classify-refine",
+    "r12-tile",
+    "r13-merge",
+    "r14-convert-compress"
+  ],
+  "inexact": [],
+  "invalid": {},
+  "missing": [],
+  "paired_suite_round_speedups": [
+    1.3427730359453613,
+    1.3925843851967457,
+    1.3512060603023561
+  ],
+  "paired_suite_rounds": [
+    {
+      "candidate_seconds": 39.606484114192426,
+      "iteration": 0,
+      "oracle_seconds": 53.182518917135894,
+      "speedup": 1.3427730359453613
+    },
+    {
+      "candidate_seconds": 39.07696967944503,
+      "iteration": 1,
+      "oracle_seconds": 54.41797779640183,
+      "speedup": 1.3925843851967457
+    },
+    {
+      "candidate_seconds": 40.567062470596284,
+      "iteration": 2,
+      "oracle_seconds": 54.81446065893397,
+      "speedup": 1.3512060603023561
+    }
+  ],
+  "schema": "pdg-reference-suite-aggregate-v1",
+  "total_wall_time": {
+    "candidate_median_seconds": 39.47109431028366,
+    "oracle_median_seconds": 54.125385883264244,
+    "speedup": 1.3712664122707792
+  },
+  "workload_count": 14,
+  "workloads": [
+    {
+      "candidate_median_seconds": 1.0737146721221507,
+      "id": "r1-translate",
+      "median_speedup": 1.0415547028126457,
+      "oracle_median_seconds": 1.118332566227764
+    },
+    {
+      "candidate_median_seconds": 3.265095434617251,
+      "id": "r2-ground-normalize",
+      "median_speedup": 0.9316951359365726,
+      "oracle_median_seconds": 3.0420735348016024
+    },
+    {
+      "candidate_median_seconds": 1.3203068180009723,
+      "id": "r3-dtm",
+      "median_speedup": 1.0113213792861109,
+      "oracle_median_seconds": 1.3352545122615993
+    },
+    {
+      "candidate_median_seconds": 8.66535489121452,
+      "id": "r4-denoise-thin",
+      "median_speedup": 1.048722473224063,
+      "oracle_median_seconds": 9.087552412878722
+    },
+    {
+      "candidate_median_seconds": 0.5391337308101356,
+      "id": "r5-copc-query",
+      "median_speedup": 0.9517087866966495,
+      "oracle_median_seconds": 0.5130983088165522
+    },
+    {
+      "candidate_median_seconds": 2.1393619291484356,
+      "id": "r6-features",
+      "median_speedup": 7.941589653355778,
+      "oracle_median_seconds": 16.989934561308473
+    },
+    {
+      "candidate_median_seconds": 0.6259405752643943,
+      "id": "r7-dsm",
+      "median_speedup": 1.1096893867093827,
+      "oracle_median_seconds": 0.6945996130816638
+    },
+    {
+      "candidate_median_seconds": 3.248903767671436,
+      "id": "r8-colorize",
+      "median_speedup": 1.0129880880493654,
+      "oracle_median_seconds": 3.291100815869868
+    },
+    {
+      "candidate_median_seconds": 0.8693673009984195,
+      "id": "r9-polygon-clip",
+      "median_speedup": 0.9062565887638434,
+      "oracle_median_seconds": 0.7878698445856571
+    },
+    {
+      "candidate_median_seconds": 0.8226854708045721,
+      "id": "r10-decimate",
+      "median_speedup": 1.017697871941163,
+      "oracle_median_seconds": 0.8372452529147267
+    },
+    {
+      "candidate_median_seconds": 13.771591816097498,
+      "id": "r11-classify-refine",
+      "median_speedup": 0.9679802287728165,
+      "oracle_median_seconds": 13.330628596711904
+    },
+    {
+      "candidate_median_seconds": 1.0650899331085384,
+      "id": "r12-tile",
+      "median_speedup": 1.0078340187882573,
+      "oracle_median_seconds": 1.0734338676556945
+    },
+    {
+      "candidate_median_seconds": 1.1632469561882317,
+      "id": "r13-merge",
+      "median_speedup": 0.9789534133963776,
+      "oracle_median_seconds": 1.138764578383416
+    },
+    {
+      "candidate_median_seconds": 0.9013010142371058,
+      "id": "r14-convert-compress",
+      "median_speedup": 0.9824657953104804,
+      "oracle_median_seconds": 0.8854974177666008
+    }
+  ]
+}

@@ -1,0 +1,1092 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "r3-dtm",
+  "pipeline": {
+    "path": "/workspace/reproof/results-v3/shadow-repo/bench/pipelines/reference/r3-dtm.json",
+    "sha256": "748e6a26faaf3507d89a891103796869b001ec21d7a5ae720f9ff9d2cc6f4c85",
+    "materialized": {
+      "oracle": {
+        "path": "/workspace/reproof/results-v3/suite-work/r3-dtm/warm/r3-dtm-oracle.json",
+        "sha256": "c7a6a4f2a0f2d03e10897a8bc497e54e08de33a13bd097515a6c1af40966ebe1"
+      },
+      "candidate": {
+        "path": "/workspace/reproof/results-v3/suite-work/r3-dtm/warm/r3-dtm-candidate.json",
+        "sha256": "06b1a491878004e50d25b6c4d5939486928f2447c831da13d0c22bf87d18a4b1"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+      "bytes": 6747641,
+      "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      },
+      "input.laz": {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/workspace/reproof/results-v3/shadow-repo/build/bench-data/reference/ref-1m.laz",
+        "bytes": 6747641,
+        "sha256": "bb21eb8e5efe33a90639022a7ee9d250d1b38233162f2de6e3d24e08247f948f"
+      }
+    ],
+    "used_input_bytes": 6747641,
+    "extent": {
+      "minx": 184500,
+      "maxx": 185999.99,
+      "miny": 494923.21,
+      "maxy": 494999.99,
+      "points": 1000000
+    }
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/workspace/reproof/payload/oracle/bin/pdal",
+      "sha256": "6e1b06cf2227f98d5934a886c57e4a2b559b6d0c893918d7345e882324119a39",
+      "runtime_components": [
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/oracle/lib/libpdalcpp.so.20",
+          "sha256": "1dc2703990cb32c789080d7cf684c809373afdbf09f0b1426cd65c4d9d2bd217"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/workspace/reproof/payload/candidate/bin/pdg",
+      "sha256": "3e734d39662a985e8cb7b06d6cc72d464a162ad87504a93b67f95345549043bd",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/workspace/reproof/payload/candidate/bin/pdg-engine",
+          "sha256": "8e17dfdd8151b8e3f633bfb208373bbb9d13c9353fa7875245ee1ec1f1f6b0b6"
+        },
+        {
+          "role": "loaded_pdal_shared_library",
+          "path": "/workspace/reproof/payload/candidate/lib/libpdalcpp.so.20",
+          "sha256": "9ad42a42c5d46436675eb6baa64e021d632c26b35d0a1a2effa6955826ded4dc"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.39",
+    "cache_state": "warm",
+    "cache_eviction": "1 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_",
+      "LD_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_ORACLE_PDAL": "/workspace/reproof/payload/oracle/bin/pdal"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/workspace/reproof/payload/evidence/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA A10",
+      "compute_capability": "8.6",
+      "driver": "12.3.0",
+      "cuda": "13.3",
+      "cpu_model": "Intel(R) Xeon(R) Gold 6342 CPU @ 2.80GHz",
+      "logical_cpus": "96",
+      "embedded_profile": "applies (shipped-a10-sm86-cuda13.3)",
+      "local_profile_path": "/workspace/reproof/results-v3/clean-config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-a10-sm86-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "shipped-a10-sm86-cuda13.3",
+      "active_profile_tier": "shipped"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        1.0202246769331396,
+        1.0154077119659632,
+        1.0159125220961869
+      ],
+      "median_seconds": 1.0159125220961869,
+      "minimum_seconds": 1.0154077119659632,
+      "maximum_seconds": 1.0202246769331396,
+      "peak_rss_bytes": [
+        188272640,
+        192401408,
+        184901632
+      ],
+      "median_peak_rss_bytes": 188272640,
+      "output_bytes": [
+        924834,
+        924834,
+        924834
+      ],
+      "median_output_bytes": 924834,
+      "points_per_second": 984336.7201898902,
+      "input_mib_per_second": 6.3342578992451015,
+      "output_mib_per_second": 0.8681755698014231,
+      "compression_ratio_input_to_output": 7.296056373359976
+    },
+    "candidate": {
+      "seconds": [
+        1.0168527788482606,
+        1.0214122149627656,
+        1.026424512034282
+      ],
+      "median_seconds": 1.0214122149627656,
+      "minimum_seconds": 1.0168527788482606,
+      "maximum_seconds": 1.026424512034282,
+      "peak_rss_bytes": [
+        186175488,
+        186880000,
+        197337088
+      ],
+      "median_peak_rss_bytes": 186880000,
+      "output_bytes": [
+        924834,
+        924834,
+        924834
+      ],
+      "median_output_bytes": 924834,
+      "points_per_second": 979036.6566513539,
+      "input_mib_per_second": 6.300151715205764,
+      "output_mib_per_second": 0.8635009644675238,
+      "compression_ratio_input_to_output": 7.296056373359976
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 0.9946155990832954,
+    "resolution": {
+      "paired_speedups": [
+        1.003316014033711,
+        0.9941213714611576,
+        0.9897586331826181
+      ],
+      "paired_mean": 0.9957320062258289,
+      "paired_spread": 0.013557380851092815,
+      "candidate_faster_in": 1,
+      "pairs": 3,
+      "paired_standard_error": 0.003995674834295633,
+      "interval_half_width": 0.007991349668591266,
+      "resolvable": false
+    },
+    "artifact_names": [
+      "output.tif"
+    ],
+    "oracle_artifact_sha256": [
+      "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91"
+    ],
+    "candidate_artifact_sha256": [
+      "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 1.0134397961664945,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 188362752,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.00028693000786,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 192884736,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "warmup"
+    },
+    {
+      "seconds": 1.0202246769331396,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 188272640,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 1.0168527788482606,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 186175488,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 1.0214122149627656,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 186880000,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 1.0154077119659632,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 192401408,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 1
+    },
+    {
+      "seconds": 1.0159125220961869,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 184901632,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 2
+    },
+    {
+      "seconds": 1.026424512034282,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 197337088,
+      "artifacts": [
+        {
+          "name": "output.tif",
+          "bytes": 924834,
+          "sha256": "5dd276d00e012b7693b748c217bdc65851d5bc26bce056ad5192a4202c4f5f91",
+          "raster_metadata_sha256": "483ca3b0b7c34a3fcc679dec65418dcc2fcca63afb72bb555d1bdf6855c06623",
+          "raster_metadata": {
+            "driverShortName": "GTiff",
+            "driverLongName": "GeoTIFF",
+            "size": [
+              1500,
+              77
+            ],
+            "geoTransform": [
+              184500.0,
+              1.0,
+              0.0,
+              495000.21,
+              0.0,
+              -1.0
+            ],
+            "metadata": {
+              "IMAGE_STRUCTURE": {
+                "INTERLEAVE": "BAND"
+              }
+            },
+            "cornerCoordinates": {
+              "upperLeft": [
+                184500.0,
+                495000.21
+              ],
+              "lowerLeft": [
+                184500.0,
+                494923.21
+              ],
+              "lowerRight": [
+                186000.0,
+                494923.21
+              ],
+              "upperRight": [
+                186000.0,
+                495000.21
+              ],
+              "center": [
+                185250.0,
+                494961.71
+              ]
+            },
+            "extent": {
+              "type": "Polygon",
+              "coordinates": [
+                []
+              ]
+            },
+            "bands": [
+              {
+                "band": 1,
+                "block": [
+                  1500,
+                  1
+                ],
+                "type": "Float64",
+                "colorInterpretation": "Gray",
+                "description": "idw",
+                "checksum": 37792,
+                "noDataValue": -9999.0,
+                "metadata": {}
+              }
+            ],
+            "stac": {
+              "proj:shape": [
+                1500,
+                77
+              ],
+              "proj:transform": [
+                184500.0,
+                1.0,
+                0.0,
+                495000.21,
+                0.0,
+                -1.0
+              ],
+              "raster:bands": [
+                {
+                  "data_type": "float64",
+                  "nodata": null
+                }
+              ],
+              "eo:bands": [
+                {
+                  "name": "b1",
+                  "description": "idw"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 2
+    }
+  ]
+}

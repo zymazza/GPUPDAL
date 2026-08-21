@@ -1,0 +1,6 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.mad","dimension":"Z",
+   "where":"Classification == 2"},
+  {"type":"writers.las","filename":"out.las"}
+]

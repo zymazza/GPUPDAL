@@ -1,0 +1,246 @@
+{
+  "schema": "pdg-reference-pipeline-baseline-v1",
+  "label": "independent-ahn4-r6-fixed",
+  "pipeline": {
+    "path": "/home/zy/dev/pdal-gpu/bench/pipelines/reference/r6-features.json",
+    "sha256": "843223e15f866ece2eb807982ea75bb23f22e8fd56435d4ba67acc1ace223c70",
+    "materialized": {
+      "oracle": {
+        "path": "/tmp/pdg-audit/independent-ahn4-r6-fixed/work/independent-ahn4-r6-fixed-oracle.json",
+        "sha256": "68d2a6b24a2dfeff7b26866a61137f72d1509a3c407e5bdfe0ed3419336aacb8"
+      },
+      "candidate": {
+        "path": "/tmp/pdg-audit/independent-ahn4-r6-fixed/work/independent-ahn4-r6-fixed-candidate.json",
+        "sha256": "1feae345937b63d98d0c9d8b4dac1660d833fcd523d9e719551f6fcf39dfbbe4"
+      }
+    }
+  },
+  "fixture": {
+    "laz": {
+      "path": "/home/zy/dev/pdal-gpu/build/bench-data/big/25GN1_01.LAZ",
+      "bytes": 480156479,
+      "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+    },
+    "copc": null,
+    "registered": {
+      "input.las": {
+        "path": "/home/zy/dev/pdal-gpu/build/bench-data/big/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      },
+      "input.laz": {
+        "path": "/home/zy/dev/pdal-gpu/build/bench-data/big/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      }
+    },
+    "used_input_paths": [
+      {
+        "path": "/home/zy/dev/pdal-gpu/build/bench-data/big/25GN1_01.LAZ",
+        "bytes": 480156479,
+        "sha256": "b4a4334cdcd850f41d103917f596860bc6bf26612a7f129d79121f472ac5b9ec"
+      }
+    ],
+    "used_input_bytes": 480156479,
+    "extent": {
+      "minx": 119980,
+      "maxx": 121019.999,
+      "miny": 486230,
+      "maxy": 487519.999,
+      "points": 47478228
+    }
+  },
+  "qualification": {
+    "model": "normal-covariancefeatures-compose-extradims",
+    "input_point_format": 8,
+    "input_record_bytes": 44,
+    "input_compressed": true,
+    "output_point_format": 7,
+    "output_record_bytes": 120,
+    "output_compressed": true,
+    "required_automatic_resident_route": true
+  },
+  "binaries": {
+    "oracle": {
+      "path": "/tmp/pdg-audit-upstream-git-build2/bin/pdal",
+      "sha256": "804a7b160fe57bf6294afb2204e1891cb4f6ad567e56d965bc76479f872cc013",
+      "runtime_components": [
+        {
+          "role": "pdal_shared_library",
+          "path": "/tmp/pdg-audit-upstream-git-build2/lib/libpdalcpp.so.20.0.0",
+          "sha256": "0117e264c16bf45f84e9bc1b0eea163edbab643d2e5d8baa98bc55287d617e4e"
+        }
+      ]
+    },
+    "candidate": {
+      "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/bin/pdg",
+      "sha256": "154b1960d51be92a7c8c4be78a9387ca0d01b395f4652020f21086215443faf3",
+      "runtime_components": [
+        {
+          "role": "engine",
+          "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/bin/pdg-engine",
+          "sha256": "c3a1511b4db5f4ad66c251d1b84571978226785b90478e6795f48260c3dc0541"
+        },
+        {
+          "role": "pdal_shared_library",
+          "path": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdalcpp.so.20.0.0",
+          "sha256": "ea113c56be1498e81088c8900f6c15bf86a2deec34c8a3dfccebd440597084d7"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "platform": "Linux-7.1.3-arch1-2-x86_64-with-glibc2.43",
+    "cache_state": "warm",
+    "cache_eviction": "0 untimed warmup(s) per executable; no explicit page-cache eviction",
+    "scrubbed_prefixes": [
+      "PDG_",
+      "PDAL_TEST_"
+    ],
+    "scrubbed_variables": [
+      "PDAL_TEST_FROZEN_EPOCH"
+    ],
+    "common_overrides": {},
+    "candidate_overrides": {
+      "PDG_REQUIRE_AUTOMATIC_NORMAL_COVARIANCE_RESIDENT": "1"
+    },
+    "candidate_leading_args": [],
+    "frozen_time_library": "/home/zy/dev/pdal-gpu/build/pdg-cuda-release/lib/libpdg_frozen_time.so",
+    "freeze_environment": "PDAL_TEST_FROZEN_EPOCH",
+    "freeze_epoch": 1704067200,
+    "peak_ram_measurement": "2 ms /proc sampling; sum of resident bytes across the public process and its descendants",
+    "candidate_placement_profile": {
+      "device_name": "NVIDIA GeForce RTX 4090",
+      "compute_capability": "8.9",
+      "driver": "610.43.03",
+      "cuda": "13.3",
+      "cpu_model": "AMD Ryzen 9 7900 12-Core Processor",
+      "logical_cpus": "24",
+      "embedded_profile": "applies (sm89-2026-08-17-r6-large-layouts)",
+      "local_profile_path": "/home/zy/.config/pdg/placement-profile.json",
+      "local_profile": "not-found (no profile file)",
+      "shipped_profile": "shipped-rtx4090-sm89-cuda13.3",
+      "generic_profile": "generic-cuda-sm80plus-cuda13.3",
+      "active_profile": "sm89-2026-08-17-r6-large-layouts",
+      "active_profile_tier": "embedded"
+    }
+  },
+  "protocol": "alternating oracle/candidate, outputs removed before each run",
+  "summary": {
+    "oracle": {
+      "seconds": [
+        410.9608580699987
+      ],
+      "median_seconds": 410.9608580699987,
+      "minimum_seconds": 410.9608580699987,
+      "maximum_seconds": 410.9608580699987,
+      "peak_rss_bytes": [
+        7642202112
+      ],
+      "median_peak_rss_bytes": 7642202112,
+      "output_bytes": [
+        3346558932
+      ],
+      "median_output_bytes": 3346558932,
+      "points_per_second": 115529.80549771254,
+      "input_mib_per_second": 1.114249430052438,
+      "output_mib_per_second": 7.7660128431129545,
+      "compression_ratio_input_to_output": 0.14347767027459596
+    },
+    "candidate": {
+      "seconds": [
+        32.18809226099984
+      ],
+      "median_seconds": 32.18809226099984,
+      "minimum_seconds": 32.18809226099984,
+      "maximum_seconds": 32.18809226099984,
+      "peak_rss_bytes": [
+        14776430592
+      ],
+      "median_peak_rss_bytes": 14776430592,
+      "output_bytes": [
+        3346558932
+      ],
+      "median_output_bytes": 3346558932,
+      "points_per_second": 1475024.6027325515,
+      "input_mib_per_second": 14.226158486353645,
+      "output_mib_per_second": 99.15242183070572,
+      "compression_ratio_input_to_output": 0.14347767027459596
+    }
+  },
+  "comparison": {
+    "contract": "exact",
+    "exact_outputs": true,
+    "exact_artifacts": true,
+    "exact_records": null,
+    "identical_records": null,
+    "fast_differing_records": null,
+    "fast_compared_records": null,
+    "fast_max_differing_records_fraction": null,
+    "exact_raster_metadata": true,
+    "exact_stdout": true,
+    "exact_stderr": true,
+    "median_speedup": 12.767481052859182,
+    "resolution": {
+      "paired_speedups": [
+        12.767481052859182
+      ],
+      "paired_mean": 12.767481052859182,
+      "paired_spread": null,
+      "candidate_faster_in": 1,
+      "pairs": 1
+    },
+    "artifact_names": [
+      "output.laz"
+    ],
+    "oracle_artifact_sha256": [
+      "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238"
+    ],
+    "candidate_artifact_sha256": [
+      "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238"
+    ]
+  },
+  "failures": [],
+  "runs": [
+    {
+      "seconds": 410.9608580699987,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 7642202112,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "oracle",
+      "phase": "measured",
+      "iteration": 0
+    },
+    {
+      "seconds": 32.18809226099984,
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_head": "",
+      "peak_rss_bytes": 14776430592,
+      "artifacts": [
+        {
+          "name": "output.laz",
+          "bytes": 3346558932,
+          "sha256": "8d8b81018219f2183e6de1d59269f5f0bcb26d629d1d59986849c83e3ca45238",
+          "las_point_count": 47478228
+        }
+      ],
+      "missing_artifact_patterns": [],
+      "label": "candidate",
+      "phase": "measured",
+      "iteration": 0
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  {"type":"readers.las","filename":"input.las"},
+  {"type":"filters.decimation","step":4.2},
+  {"type":"filters.head","count":200},
+  {"type":"filters.tail","count":50,"invert":true},
+  {"type":"writers.las","filename":"out.las"}
+]

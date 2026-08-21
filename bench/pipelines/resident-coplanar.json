@@ -1,0 +1,20 @@
+{
+  "pipeline": [
+    {
+      "type": "readers.las",
+      "filename": "input.las"
+    },
+    {
+      "type": "filters.approximatecoplanar",
+      "knn": 8
+    },
+    {
+      "type": "filters.ferry",
+      "dimensions": "Coplanar=>UserData"
+    },
+    {
+      "type": "writers.las",
+      "filename": "output.las"
+    }
+  ]
+}
