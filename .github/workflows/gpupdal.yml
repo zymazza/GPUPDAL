@@ -33,7 +33,7 @@ jobs:
   host-core:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install build dependencies
         run: |
           sudo apt-get update
@@ -65,7 +65,7 @@ jobs:
   upstream-pdal-tests:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install build dependencies
         run: |
           sudo apt-get update
@@ -83,7 +83,7 @@ jobs:
   host-sanitizers:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install build dependencies
         run: |
           sudo apt-get update
@@ -355,7 +355,7 @@ jobs:
     runs-on: ubuntu-24.04
     container: nvidia/cuda:12.6.3-devel-ubuntu24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install build dependencies
         run: |
           apt-get update
@@ -374,7 +374,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.gpu_runtime }}
     runs-on: [self-hosted, linux, x64, rtx4090]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Verify reference GPU
         run: nvidia-smi
       - name: Configure and build release targets
