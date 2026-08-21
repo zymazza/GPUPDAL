@@ -21,7 +21,8 @@ The checked-in manifest is intentionally empty and the development version is
 rejected by `prepack`. The manual release process must set one version in both
 `package.json` and `native-manifest.json`, add the immutable Linux x86-64 asset
 URL and digest, run the tests, perform a clean-machine install, and only then
-run an interactive `npm publish --access public` from the owner's npm account.
+run an authenticated `npm publish --access public` from the owner's npm
+account.
 The package intentionally disables npm provenance for now because npm does not
 support provenance from a local manual publish or a private source repository.
 
@@ -31,6 +32,6 @@ the Linux bundle.
 
 Publishing the unscoped package makes its current npm maintainers responsible
 for future releases, access changes, deprecation, and maintainer membership.
-The first publish therefore belongs in Zy Mazza's `zymazza` npm account with
-account 2FA and recovery methods enabled; GPUPDAL does not need a paid npm
-organization for a public package.
+The first publish therefore belongs in Zy Mazza's `zymazza` npm account. Keep
+authentication material outside the repository and retained logs. GPUPDAL does
+not need a paid npm organization for a public package.

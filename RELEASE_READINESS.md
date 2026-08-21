@@ -28,7 +28,8 @@ the few owner choices and technical gates that remain.
   acknowledge reports within five business days on a best-effort basis. This
   is not an SLA, warranty, support promise, or guarantee of a fix.
 - npm owner: **zymazza**. Authentication was verified without publishing or
-  reserving a package. Account 2FA and recovery methods remain a launch gate.
+  reserving a package. The owner's npm authentication configuration is private
+  operational information rather than project release metadata.
 - First binary scope: CLI-only Linux x86-64 with optional external plugins off.
   Drop-in behavior covers the complete configured stage catalog and is gated
   by exact `gpupdal --drivers` parity with the bundled sibling `pdal`; plugin
@@ -100,8 +101,9 @@ whole depends on closed-source PDAL components.
       GPUPDAL citation author while retaining upstream PDAL attribution.
 - [ ] Populate `packages/npm/native-manifest.json` only after an immutable
       public asset exists, set the final version, run a clean npm installation,
-      enable 2FA/recovery on `zymazza`, and publish interactively from that
-      account.
+      authenticate with an npm-supported publication method, and publish from
+      the `zymazza` account. Remove temporary credential material after
+      verifying the registry package.
 - [ ] Preserve the private GPUPDAL naming-permission email and confirm that its
       exact scope covers the project name and command. Do not publish the email
       unless Zy and its sender intentionally choose to.

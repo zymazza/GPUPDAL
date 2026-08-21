@@ -79,11 +79,16 @@ native archive. Immediately before the first public publish:
 3. Put the immutable asset URL and SHA-256 in the `linux-x64` manifest entry.
 4. Run `node packages/npm/scripts/validate-package.js`, `npm pack --dry-run`,
    and a clean-directory installation test.
-5. From the `zymazza` npm account with 2FA enabled, run `npm publish --access
-   public` inside `packages/npm` and complete the interactive challenge.
+5. Authenticate as `zymazza` with an npm-supported publication method. Run
+   `npm publish --access public` inside `packages/npm`, keeping any temporary
+   credential configuration outside the repository with mode 0600.
+6. Verify the published version and a clean install, delete the temporary npm
+   authentication material, and retire any release-only credentials.
 
-No npm token belongs in the repository. npm provenance is intentionally off
-while publishing is local and the source repository is private.
+No npm credential belongs in the repository, shell history, or retained
+release logs. The owner's authentication configuration is not release
+metadata. npm provenance is intentionally off while publishing is local and
+the source repository is private.
 
 ## What the SBOM is
 
