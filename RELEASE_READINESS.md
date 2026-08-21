@@ -82,6 +82,11 @@ Copy this section into an issue or answer it in a review. Items marked
 - [ ] Require host conformance and sanitizers in release CI. Require physical
       GPU exactness and Compute Sanitizer evidence for each advertised GPU
       artifact; manual-only GPU jobs are not a release gate.
+- [ ] Restore GitHub-hosted runner availability. The first private-repository
+      run failed every `ubuntu-24.04` job before checkout, with no runner or
+      logs assigned, even though Actions is enabled. Review the account's
+      Actions billing/quota state or attach an approved hosted runner, then
+      rerun the green local gates in CI.
 - [ ] Complete or explicitly narrow the optional-plugin configuration matrix.
 - [ ] Produce SPDX or CycloneDX SBOMs and a reviewed third-party notice bundle.
 - [ ] Reconcile public coverage counts. The dated implementation status says
@@ -97,6 +102,11 @@ Copy this section into an issue or answer it in a review. Items marked
       and all newly added files passed a high-confidence credential, private-key,
       and sensitive-filename scan on 2026-08-21; the legacy development history
       is intentionally not part of the new repository.
+- [ ] Decide how to ship the inherited
+      `test/data/autzen/autzen-surface.tif.min.tif` fixture. GitHub accepted its
+      54.41 MB blob but warns above 50 MB; keep it as an attributed upstream
+      test input, migrate it to Git LFS with clean-install coverage, or exclude
+      it from distribution without weakening upstream tests.
 - [ ] Run clean Linux x86-64 source and binary installs, the frozen conformance
       suite, host sanitizers, physical GPU sanitizer lanes, the fourteen
       reference workflows, and `gpupal verify`; retain immutable reports.
@@ -114,3 +124,5 @@ Copy this section into an issue or answer it in a review. Items marked
       updated without rewriting historical benchmark/decision evidence.
 - [x] Host build, 459-test default host suite, and 96-test extended exact
       differential matrix pass; five optional local-corpus tests are skipped.
+- [x] Private `zymazza/GPUPAL` repository created with `main` at the clean
+      GPUPAL root snapshot; no public release or npm publication was made.
