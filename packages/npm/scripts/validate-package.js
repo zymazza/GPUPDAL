@@ -15,4 +15,4 @@ if (metadata.version.includes("development") || manifest.version !== metadata.ve
   throw new Error("npm package and native manifest need the same release version");
 }
 validateEntry(manifest.platforms["linux-x64"]);
-console.log(`gpupal npm package ${metadata.version} is ready to pack`);
+console.log(`gpupdal npm package ${metadata.version} is ready to pack`);

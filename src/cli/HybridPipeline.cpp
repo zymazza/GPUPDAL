@@ -325,7 +325,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
     const bool requireAutomaticR2 =
         std::getenv("PDG_REQUIRE_AUTOMATIC_R2_GROUND_NORMALIZE") != nullptr;
     if (automaticR2GroundNormalize && std::getenv("PDG_DEBUG_HYBRID"))
-        std::cerr << "gpupal: evaluating automatic r2 hybrid\n";
+        std::cerr << "gpupdal: evaluating automatic r2 hybrid\n";
     if (requireAutomaticR2 && !automaticR2GroundNormalize)
     {
         pdal::Utils::printError(
@@ -360,7 +360,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
     catch (const std::exception& exception)
     {
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: hybrid rewrite failed: " << exception.what()
+            std::cerr << "gpupdal: hybrid rewrite failed: " << exception.what()
                       << '\n';
         return std::nullopt;
     }
@@ -430,7 +430,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
         catch (const std::exception& exception)
         {
             if (std::getenv("PDG_DEBUG_HYBRID"))
-                std::cerr << "gpupal: automatic CUDA count probe failed: "
+                std::cerr << "gpupdal: automatic CUDA count probe failed: "
                           << exception.what() << '\n';
             return std::nullopt;
         }
@@ -492,7 +492,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
     catch (const std::exception& exception)
     {
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: original hybrid validation failed: "
+            std::cerr << "gpupdal: original hybrid validation failed: "
                       << exception.what() << '\n';
         return std::nullopt;
     }
@@ -526,7 +526,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
             layoutSignature(prepared.pointTable().layout()) != originalLayout)
         {
             if (std::getenv("PDG_DEBUG_HYBRID"))
-                std::cerr << "gpupal: rewritten hybrid layout differs from the "
+                std::cerr << "gpupdal: rewritten hybrid layout differs from the "
                              "original pipeline\n";
             return std::nullopt;
         }
@@ -534,7 +534,7 @@ static std::optional<int> tryHybridPipelineImpl(int argc, char** argv)
     catch (const std::exception& exception)
     {
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: rewritten hybrid validation failed: "
+            std::cerr << "gpupdal: rewritten hybrid validation failed: "
                       << exception.what() << '\n';
         return std::nullopt;
     }

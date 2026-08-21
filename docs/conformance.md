@@ -1,8 +1,8 @@
-# GPUPAL Conformance Suite
+# GPUPDAL Conformance Suite
 
-The **GPUPAL Conformance Suite** is the named, versioned release gate for the
-claim that `gpupal` is a drop-in replacement for the pinned PDAL oracle within
-GPUPAL's declared semantic envelope. It compares complete processes, not kernels:
+The **GPUPDAL Conformance Suite** is the named, versioned release gate for the
+claim that `gpupdal` is a drop-in replacement for the pinned PDAL oracle within
+GPUPDAL's declared semantic envelope. It compares complete processes, not kernels:
 exit status, stdout, stderr, created artifact set, file bytes, and deterministic
 repeats.
 
@@ -39,7 +39,7 @@ Run a release candidate against the pinned oracle:
 python3 scripts/pdg/conformance.py run \
   --manifest build/conformance/generated-v1.json \
   --oracle build/pdal-upstream-tests/bin/pdal \
-  --candidate build/pdg-cuda-release/bin/gpupal \
+  --candidate build/pdg-cuda-release/bin/gpupdal \
   --differential scripts/pdg/differential.py \
   --frozen-time-library build/pdg-cuda-release/lib/libpdg_frozen_time.so \
   --work-dir build/conformance/work \

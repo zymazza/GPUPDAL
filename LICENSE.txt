@@ -1,9 +1,9 @@
-GPUPAL License
+GPUPDAL License
 ==============
 
-Unless otherwise indicated, files in the GPUPAL distribution are released
+Unless otherwise indicated, files in the GPUPDAL distribution are released
 under the BSD 3-Clause terms below. Copyright remains with the respective
-copyright holders; GPUPAL-specific contributions are released under the same
+copyright holders; GPUPDAL-specific contributions are released under the same
 terms by their contributors.
 
 Bundled and vendored components that state different terms remain under those

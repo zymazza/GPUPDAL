@@ -92,3 +92,8 @@ validation. Current harness runs preserve nonzero unlicensed-LAStools results,
 hash every directory member, freeze staged-input provenance, and use at least
 three measured repeats for large jobs. Historical one/two-repeat rows remain
 labelled as such rather than being retroactively upgraded.
+
+The PDF was regenerated on 2026-08-21 to use the GPUPDAL presentation label
+and a zero-based linear y-axis for the aggregate 18-job chart. The retained
+JSON inputs and benchmark values were not changed; their historical `pdg_*`
+tool identifiers remain intact.

@@ -1,9 +1,9 @@
-name: GPUPAL
+name: GPUPDAL
 
 on:
   pull_request:
     paths:
-      - ".github/workflows/gpupal.yml"
+      - ".github/workflows/gpupdal.yml"
       - "CMakeLists.txt"
       - "CMakePresets.json"
       - "cmake/**"
@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: gpupal-${{ github.workflow }}-${{ github.ref }}
+  group: gpupdal-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -111,7 +111,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/ordinal_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -126,7 +126,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/locate_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -141,7 +141,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/transformation_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -156,7 +156,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/robust_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -171,7 +171,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/ordering_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -186,7 +186,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/morton_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -201,7 +201,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/groupby_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -216,7 +216,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/returns_merge_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -231,7 +231,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/divider_splitter_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -246,7 +246,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/colorinterp_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -261,7 +261,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/stats_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -276,7 +276,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/info_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -291,7 +291,7 @@ jobs:
           asan_library="$(g++ -print-file-name=libasan.so)"
           python3 tests/differential/expressionstats_matrix.py \
             --oracle build/pdg-host-sanitize/bin/pdal \
-            --candidate build/pdg-host-sanitize/bin/gpupal \
+            --candidate build/pdg-host-sanitize/bin/gpupdal \
             --differential scripts/pdg/differential.py \
             --fixture-root test/data \
             --work-dir build/pdg-host-sanitize/tests/differential \
@@ -307,7 +307,7 @@ jobs:
           for matrix in outlier normal eigenvalues covariancefeatures nndistance; do
             python3 "tests/differential/${matrix}_matrix.py" \
               --oracle build/pdg-host-sanitize/bin/pdal \
-              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --candidate build/pdg-host-sanitize/bin/gpupdal \
               --differential scripts/pdg/differential.py \
               --fixture-root test/data \
               --work-dir build/pdg-host-sanitize/tests/differential \
@@ -321,7 +321,7 @@ jobs:
             PDG_DISABLE_CUDA_HYBRID=1 \
             python3 scripts/pdg/differential.py \
               --oracle build/pdg-host-sanitize/bin/pdal \
-              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --candidate build/pdg-host-sanitize/bin/gpupdal \
               --case pdg_hybrid_neighborhood_resident_host_asan_exact \
               --work-dir \
                 build/pdg-host-sanitize/tests/differential/asan-resident \
@@ -338,7 +338,7 @@ jobs:
             PDG_DISABLE_CUDA_HYBRID=1 \
             python3 scripts/pdg/differential.py \
               --oracle build/pdg-host-sanitize/bin/pdal \
-              --candidate build/pdg-host-sanitize/bin/gpupal \
+              --candidate build/pdg-host-sanitize/bin/gpupdal \
               --case pdg_hybrid_nndistance_resident_host_asan_exact \
               --work-dir \
                 build/pdg-host-sanitize/tests/differential/asan-nndistance \
@@ -386,7 +386,7 @@ jobs:
             --target pdg_differential_prerequisites
       - name: Runtime tests
         run: |
-          build/pdg-cuda-release/bin/gpupal doctor
+          build/pdg-cuda-release/bin/gpupdal doctor
           ctest --test-dir build/pdg-cuda-release --output-on-failure \
             -E '^pdg_automatic_approximatecoplanar_cuda_exact$'
       - name: Automatic approximatecoplanar default-selector differential
@@ -402,7 +402,7 @@ jobs:
                 --tool "$tool" --error-exitcode=99 python3 \
                 tests/differential/automatic_approximatecoplanar.py \
                 --oracle build/pdg-cuda-release/bin/pdal \
-                --candidate build/pdg-cuda-release/bin/gpupal \
+                --candidate build/pdg-cuda-release/bin/gpupdal \
                 --differential scripts/pdg/differential.py \
                 --fixture-root test/data \
                 --work-dir "$run_dir" \
@@ -439,7 +439,7 @@ jobs:
               compute-sanitizer --tool "$tool" --error-exitcode=99 \
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -455,7 +455,7 @@ jobs:
               compute-sanitizer --tool "$tool" --error-exitcode=99 \
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -471,7 +471,7 @@ jobs:
               compute-sanitizer --tool "$tool" --error-exitcode=99 \
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -487,7 +487,7 @@ jobs:
               compute-sanitizer --tool "$tool" --error-exitcode=99 \
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -504,7 +504,7 @@ jobs:
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_STREAMING_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -521,7 +521,7 @@ jobs:
                 env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                 PDG_REQUIRE_STREAMING_HYBRID=1 \
                 PDG_REQUIRE_CUDA_HYBRID=1 \
-                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                 pipeline pipeline.json
             )
           done
@@ -537,7 +537,7 @@ jobs:
                 compute-sanitizer --tool "$tool" --error-exitcode=99 \
                   env PDG_DISABLE_NATIVE=1 PDG_REQUIRE_HYBRID=1 \
                   PDG_REQUIRE_CUDA_HYBRID=1 \
-                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                   pipeline pipeline.json --metadata metadata.json
               )
             done
@@ -594,7 +594,7 @@ jobs:
                   PDG_REQUIRE_SPATIAL_TILING=1 \
                   "$spatial_backend" \
                   "${extra_guards[@]}" \
-                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupal" \
+                  "$GITHUB_WORKSPACE/build/pdg-cuda-release/bin/gpupdal" \
                   pipeline pipeline.json
               )
             done
@@ -605,7 +605,7 @@ jobs:
         run: >-
           python3 scripts/pdg/differential.py
           --oracle build/pdg-cuda-release/bin/pdal
-          --candidate build/pdg-cuda-release/bin/gpupal
+          --candidate build/pdg-cuda-release/bin/gpupdal
           --case gpu-native-simple
           --work-dir build/pdg-cuda-release/tests/differential
           --frozen-time-library
@@ -617,7 +617,7 @@ jobs:
         run: >-
           python3 scripts/pdg/differential.py
           --oracle build/pdg-cuda-release/bin/pdal
-          --candidate build/pdg-cuda-release/bin/gpupal
+          --candidate build/pdg-cuda-release/bin/gpupdal
           --case gpu-native-assign-ferry-fused
           --work-dir build/pdg-cuda-release/tests/differential
           --frozen-time-library

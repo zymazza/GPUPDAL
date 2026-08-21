@@ -186,7 +186,7 @@ target_compile_definitions(pdg_core
     PUBLIC
         PDG_HAS_CUDA=$<BOOL:${PDG_ENABLE_CUDA}>
         PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR=$<BOOL:${PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR}>
-        GPUPAL_VERSION="${GPUPAL_VERSION}"
+        GPUPDAL_VERSION="${GPUPDAL_VERSION}"
         PDG_ORACLE_COMMIT="${PDG_ORACLE_COMMIT}"
         PDG_ORACLE_VERSION="${PDG_ORACLE_VERSION}")
 
@@ -302,8 +302,8 @@ target_include_directories(pdg_engine PRIVATE
 
 add_executable(pdg_cli cli/DispatchMain.cpp)
 # Keep the internal target name stable for the existing build and differential
-# infrastructure.  GPUPAL is the public, PDAL-compatible command name.
-set_target_properties(pdg_cli PROPERTIES OUTPUT_NAME gpupal)
+# infrastructure.  GPUPDAL is the public, PDAL-compatible command name.
+set_target_properties(pdg_cli PROPERTIES OUTPUT_NAME gpupdal)
 target_compile_features(pdg_cli PRIVATE cxx_std_20)
 target_link_libraries(pdg_cli PRIVATE pdg_dispatch)
 add_dependencies(pdg_cli pdg_engine)
@@ -327,7 +327,7 @@ add_custom_command(
     DEPENDS
         ${PROJECT_SOURCE_DIR}/scripts/pdg/verify.py
         ${PROJECT_SOURCE_DIR}/scripts/pdg/benchmark_reference.py
-    COMMENT "Packaging GPUPAL verify helpers beside the build-tree launcher")
+    COMMENT "Packaging GPUPDAL verify helpers beside the build-tree launcher")
 add_custom_target(pdg_verify_helpers
     DEPENDS "${PDG_VERIFY_HELPER}" "${PDG_BENCHMARK_HELPER}")
 add_dependencies(pdg_cli pdg_verify_helpers)

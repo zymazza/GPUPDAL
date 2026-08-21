@@ -1,7 +1,7 @@
 #pragma once
 
 // Shared placement-calibration case machinery (D0277).  The bench audit tool
-// (`pdg_placement_audit`) and the engine's `gpupal calibrate` command build the
+// (`pdg_placement_audit`) and the engine's `gpupdal calibrate` command build the
 // same PlacementRequest for a calibration case and fit the same residual
 // model, so a locally calibrated profile is produced by exactly the procedure
 // that produced the embedded SM-89 profile.  Nothing here measures anything.

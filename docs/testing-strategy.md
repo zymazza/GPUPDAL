@@ -4,7 +4,7 @@
 
 The primary oracle is upstream PDAL at the commit recorded in
 `cmake/pdg-oracle.cmake`. Given identical inputs, pipeline/options,
-environment, and dependency versions, default `gpupal` behavior must match:
+environment, and dependency versions, default `gpupdal` behavior must match:
 
 - output file bytes;
 - output ordering and dimension representation;
@@ -62,7 +62,7 @@ the original host pipeline.
 ## Differential harness
 
 For each case the harness creates isolated oracle and candidate directories,
-runs the pinned `pdal` and `gpupal` commands, and compares all observable
+runs the pinned `pdal` and `gpupdal` commands, and compares all observable
 artifacts. On failure it reports:
 
 1. the first differing output, byte offset, and a bounded hex context;
@@ -183,7 +183,7 @@ new replacement preserved upstream behavior.
 
 ### 0.1 Full-tool and execution-boundary conformance
 
-The public release lane is named the **GPUPAL Conformance Suite** and is specified
+The public release lane is named the **GPUPDAL Conformance Suite** and is specified
 in `docs/conformance.md`. `scripts/pdg/conformance.py` consumes versioned,
 offline manifests and emits a schema-versioned complete-process report. The
 checked-in `bounded-recipes-v1.json` expands to exactly 2,048 deterministic
@@ -210,7 +210,7 @@ must validate all three execution outcomes independently:
    more accelerated regions;
 3. an exact untouched-PDAL command fallback.
 
-Snapshot `gpupal --drivers` and compare its configured filter/reader/writer names
+Snapshot `gpupdal --drivers` and compare its configured filter/reader/writer names
 to the sibling `pdal --drivers` output. For each application verb, retain a
 success case, an option/usage failure, and an I/O failure. Hybrid tests place a
 point program before, between, and after non-native stages, and require the
@@ -1414,7 +1414,7 @@ other than one resident region/index/lane, and any query product other than
 the exact eleven-neighbor 133-byte/point layout. The placement audit and raw-
 report verifier are required after changing either calibration surface.
 
-Automatic qualification runs `gpupal pipeline`, not diagnostic `gpupal resident`.
+Automatic qualification runs `gpupdal pipeline`, not diagnostic `gpupdal resident`.
 The runner scrubs its require flag and injected-failure hook from ambient state
 and sets the require flag only for candidate processes. A below-floor input,
 option drift, disabled source, rejected preflight, and injected post-execution
@@ -1429,7 +1429,7 @@ public admission around that same execution endpoint; no new kernel claim is
 introduced.
 
 B0093 applies the same admission-only discipline to `radiusassign-direct`.
-The automatic require flag is candidate-only in `gpupal pipeline`; both it and
+The automatic require flag is candidate-only in `gpupdal pipeline`; both it and
 the injected post-execution proof hook are scrubbed from ambient benchmark
 state. The physical process lane must use an exactly 1,000,000-point pinned
 source so its derived 50K below-floor control, 250K device-floor control, and
@@ -1511,7 +1511,7 @@ both thresholds, layout, cardinality, device, compressed source/output,
 preflight, and post-execution proof failure without publication. Each
 pre-execution negative also runs option-free and byte/diagnostic-compares the
 unchanged fallback with pinned PDAL. Its positive gate uses the ordinary
-`gpupal pipeline` command, reproduces B0096's exact output and diagnostics,
+`gpupdal pipeline` command, reproduces B0096's exact output and diagnostics,
 observes one index and positive pinned-KD3 repair through a fail-closed runtime
 proof, and retains a same-machine pinned-PDAL baseline plus output-bound
 profile. Any expansion beyond the measured default shape requires a new ladder
@@ -1556,7 +1556,7 @@ one lane, the 16M cap, and isolation from the ordinary `neighborclassifier`
 model. Changed stage count/order, `k`, LAS format, record width, compression,
 or index facts must remain host-selected.
 
-The automatic process matrix must exercise the public `gpupal pipeline` command,
+The automatic process matrix must exercise the public `gpupdal pipeline` command,
 not only an explicit resident subcommand. Positive 250K and 1M cases require
 the selected placement, executable rewrite, mapped LAS source, direct
 Classification output, record-summary index configuration, no host XYZ mirror,
@@ -1827,7 +1827,7 @@ matches. The output-bound profile reproduces that hash; its 20 kernels total
 milliseconds for duplicate labeling. The hybrid label wrapper copies its byte
 column back into the host PointView; these runs do not prove resident reuse.
 This qualifies only the named explicit forced-hybrid chain. A
-`gpupal resident --stats` preflight separately proves that actual resident
+`gpupdal resident --stats` preflight separately proves that actual resident
 placement declines with `missing_calibration_model`.
 
 B0117 first uses a disposable strict one-shape placement prototype to run the
@@ -1840,7 +1840,7 @@ No kernel or wider stage envelope changes in B0117.
 
 B0117's disposable prototype is exact but negative. It temporarily anchors
 the label stage to the existing NNDistance model, then requires an actual
-`gpupal resident --stats` execution with one selected region, stages 1--3, one
+`gpupdal resident --stats` execution with one selected region, stages 1--3, one
 observed index, accepted preflight, and no fallback boundary. After one
 correctness warmup, the 0.70-second confirmation is 8.43% slower than B0116's
 0.645599567-second hybrid median. Stats also reject the borrowed accounting:
@@ -3069,7 +3069,7 @@ an order-preserving descriptor is invalid for that publication contract.
 The complete-process gate compares candidate and pinned oracle artifact bytes,
 stdout, stderr, status, and LAS point-record stride. The physical selection
 matrix includes `normal(knn=8) -> covariancefeatures(knn=8,
-Dimensionality) -> extra_dims=all` through the public `gpupal pipeline` command.
+Dimensionality) -> extra_dims=all` through the public `gpupdal pipeline` command.
 The measured compressed format-7, 1M-point, 36 -> 100-byte case sets
 `PDG_REQUIRE_AUTOMATIC_NORMAL_COVARIANCE_RESIDENT=1`, requires an all-native
 plan, verifies that placement's output width equals the emitted stride, and
@@ -3285,7 +3285,7 @@ qualify only the named explicit-resident envelope; option-free selection remains
 B0042 and must add public CLI flag/metadata/fallback coverage.
 
 B0042 adds `PDG_REQUIRE_AUTOMATIC_RESIDENT_LAS_OUTPUT=1` as a positive public
-`gpupal pipeline` proof. A below-placement host case must fail without output; the
+`gpupdal pipeline` proof. A below-placement host case must fail without output; the
 physical v3 lane must produce a fourth artifact through the public command and
 match the same upstream output as ordinary and explicit-direct resident
 execution. The benchmark runner strips ambient endpoint flags, injects this
@@ -3812,7 +3812,7 @@ model, `--stats` predictions and materialized crossings, and complete-process
 artifacts.
 
 D0056 adds the explicit, production-default-off
-`gpupal resident PIPELINE --stats FILE` process observer. On an exact profile it
+`gpupdal resident PIPELINE --stats FILE` process observer. On an exact profile it
 builds runtime facts, evaluates the core placement model, and either preserves
 the host pipeline or forces selected point-program wrappers to execute CUDA.
 Unknown profiles, configured reader/writer layouts, unsafe ferry mappings,

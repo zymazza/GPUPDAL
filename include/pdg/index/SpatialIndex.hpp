@@ -119,7 +119,7 @@ void knnLofValuesDevice(const SpatialIndex& index, std::uint32_t neighbors,
 } // namespace detail
 
 inline constexpr std::uint8_t KnnExact = 0U;
-// D0271: never reported under the relaxed tie-order contract (`gpupal --fast`,
+// D0271: never reported under the relaxed tie-order contract (`gpupdal --fast`,
 // pdg::knnStatusMask()); the index's own tie choice then stands for every
 // consumer and no exact tie repair runs.
 inline constexpr std::uint8_t KnnDistanceTie = 1U;

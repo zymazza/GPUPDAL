@@ -1113,7 +1113,7 @@ buildRuntimePlacement(const Plan& plan, const RuntimePlacementFacts& facts,
                        : std::get_if<FileStagePlan>(&stages.back().payload);
     // D0279: a profile that measured the extra_dims=all publication of the
     // normal/covariance composition (`normal-covariancefeatures-compose-
-    // extradims`, calibrated by `gpupal calibrate` on plain and compressed
+    // extradims`, calibrated by `gpupdal calibrate` on plain and compressed
     // sinks) lifts B0224's one-layout bound. B0280 did that for shipped GPU
     // classes; B0280/B0281 then qualified and refreshed the embedded
     // reference profile after its higher precedence shadowed that evidence.

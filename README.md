@@ -1,8 +1,8 @@
-# GPUPAL
+# GPUPDAL
 
-GPUPAL (GPU Pointcloud Abstraction Library) is an independent,
+GPUPDAL (GPU Point Data Abstraction Library) is an independent,
 performance-focused point-cloud processing engine derived from PDAL. Its
-public `gpupal` command is a drop-in command-line replacement for `pdal`: it
+public `gpupdal` command is a drop-in command-line replacement for `pdal`: it
 accepts the same commands and pipelines, then chooses between exact CPU and
 CUDA implementations using measured end-to-end performance.
 
@@ -17,9 +17,9 @@ default. See the [conformance suite](docs/conformance.md),
 ## Quick start
 
 ```sh
-gpupal pipeline pipeline.json
-gpupal translate input.laz output.laz
-gpupal doctor
+gpupdal pipeline pipeline.json
+gpupdal translate input.laz output.laz
+gpupdal doctor
 ```
 
 ## Profile this machine
@@ -28,47 +28,47 @@ Run calibration to measure exact CPU and GPU paths and write a machine-local
 placement profile:
 
 ```sh
-gpupal calibrate
+gpupdal calibrate
 ```
 
 For placement tuned to representative data, supply a LAS or LAZ file:
 
 ```sh
-gpupal calibrate --input /path/to/tile.laz --points 250000,1000000,4000000
+gpupdal calibrate --input /path/to/tile.laz --points 250000,1000000,4000000
 ```
 
-GPUPAL then uses the profile automatically, selecting the GPU only where it
+GPUPDAL then uses the profile automatically, selecting the GPU only where it
 measured a complete-process win. Inspect the active profile with
-`gpupal calibrate --status`, or preview the calibration plan with
-`gpupal calibrate --dry-run`. The default profile location is
-`~/.config/gpupal/placement-profile.json`. See the
+`gpupdal calibrate --status`, or preview the calibration plan with
+`gpupdal calibrate --dry-run`. The default profile location is
+`~/.config/gpupdal/placement-profile.json`. See the
 [calibration guide](docs/calibration.md) for quick runs, selected models,
 custom output paths, and invalidation rules.
 
-## Verify and benchmark GPUPAL
+## Verify and benchmark GPUPDAL
 
-Run the portable verification benchmark to compare the installed `gpupal`
+Run the portable verification benchmark to compare the installed `gpupdal`
 binary with the configured frozen reference on the same machine. It performs
 one warm-up followed by three alternating complete-process timing pairs,
 checks exactness, and writes portable JSON and HTML evidence:
 
 ```sh
-gpupal verify --output-dir gpupal-proof
+gpupdal verify --output-dir gpupdal-proof
 ```
 
 To use representative data and a pipeline of your own, use `input.laz` and
 `output.laz` as the pipeline's input and output placeholders:
 
 ```sh
-gpupal verify --input /path/to/tile.laz --pipeline /path/to/pipeline.json \
-  --runs 3 --warmups 1 --output-dir gpupal-proof
+gpupdal verify --input /path/to/tile.laz --pipeline /path/to/pipeline.json \
+  --runs 3 --warmups 1 --output-dir gpupdal-proof
 ```
 
-Publishing the resulting `gpupal-proof` directory lets another person audit the
+Publishing the resulting `gpupdal-proof` directory lets another person audit the
 machine, binary and input hashes, placement decision, exactness result, and raw
 timings. An author-run report is prepared evidence; it becomes third-party
 validation only when an unrelated user runs and publishes it. See the full
-[`gpupal verify` guide](docs/verification.md).
+[`gpupdal verify` guide](docs/verification.md).
 
 ## npm installation status
 
@@ -76,14 +76,14 @@ The repository contains the release-safe scaffold for the intended install
 experience:
 
 ```sh
-npm install gpupal
-npx gpupal --version
+npm install gpupdal
+npx gpupdal --version
 ```
 
-Use `npm install --global gpupal` when you want `gpupal` directly on your
+Use `npm install --global gpupdal` when you want `gpupdal` directly on your
 shell path.
 
-The package is not published yet. GPUPAL is a native C++/CUDA distribution,
+The package is not published yet. GPUPDAL is a native C++/CUDA distribution,
 so npm publication is gated on checksummed Linux x86-64 release binaries, a
 declared support matrix, and clean-machine installation tests. See
 [packages/npm/README.md](packages/npm/README.md) and
@@ -91,7 +91,7 @@ declared support matrix, and clean-machine installation tests. See
 
 ## Development status
 
-GPUPAL is under active development. Runtime and differential-test coverage are
+GPUPDAL is under active development. Runtime and differential-test coverage are
 mature, while packaging, APIs, optional integrations, naming, and release
 conformance continue to be tracked explicitly:
 
@@ -117,11 +117,11 @@ ctest --preset pdg-host-debug
 
 CUDA builds require CUDA 12.4 or newer. Runtime acceleration is conservative:
 when a device, pipeline, layout, or performance profile is not qualified,
-GPUPAL uses the exact host implementation.
+GPUPDAL uses the exact host implementation.
 
 ## License and contributing
 
-GPUPAL is distributed under the BSD 3-Clause license except where a bundled
+GPUPDAL is distributed under the BSD 3-Clause license except where a bundled
 component states different terms. See [LICENSE.txt](LICENSE.txt),
 [NOTICE](NOTICE), and [ORIGIN.md](ORIGIN.md) for retained copyright,
 provenance, and third-party notices.

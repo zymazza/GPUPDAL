@@ -1102,7 +1102,7 @@ if(PDG_ENABLE_CUDA AND PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR)
 endif()
 
 if(PDG_ENABLE_CUDA)
-    # D0277: `gpupal calibrate` and the local placement profile.
+    # D0277: `gpupdal calibrate` and the local placement profile.
     set(PDG_CALIBRATE_PINNED_ORACLE_ARGS)
     if (PDG_PINNED_ORACLE_EXECUTABLE)
         set(PDG_CALIBRATE_PINNED_ORACLE_ARGS

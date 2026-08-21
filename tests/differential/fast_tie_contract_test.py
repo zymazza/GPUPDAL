@@ -3,9 +3,9 @@
 
 On the deterministic-ties hybrid neighborhood pipeline (forced CUDA hybrid
 route): (1) the default contract still performs the exact host tie repair
-(the repair proof gate succeeds); (2) under `gpupal --fast` the same gate must
+(the repair proof gate succeeds); (2) under `gpupdal --fast` the same gate must
 fail closed because no tie repair runs, and nothing is published; (3) under
-`gpupal --fast` without the gate the run succeeds and its LAS records have the
+`gpupdal --fast` without the gate the run succeeds and its LAS records have the
 same count, layout, and coordinates as the exact run, differing at most in
 the tie rows' attributes; (4) the default contract without `--fast` is
 unchanged (byte-identical to the exact run).

@@ -11,7 +11,7 @@ function platformKey() {
 }
 
 function packagedBinary() {
-  return path.join(__dirname, "..", "native", platformKey(), "gpupal");
+  return path.join(__dirname, "..", "native", platformKey(), "gpupdal");
 }
 
 function run(args, options = {}) {
@@ -21,13 +21,13 @@ function run(args, options = {}) {
   const report = options.report || console.error;
   const forwardSignal = options.forwardSignal ||
     ((signal) => process.kill(process.pid, signal));
-  const binary = environment.GPUPAL_BINARY || packagedBinary();
+  const binary = environment.GPUPDAL_BINARY || packagedBinary();
 
   if (!exists(binary)) {
     report(
-      `gpupal: native binary is unavailable for ${platformKey()}. ` +
-        "Reinstall from a supported release or set GPUPAL_BINARY to a tested " +
-        "GPUPAL executable."
+      `gpupdal: native binary is unavailable for ${platformKey()}. ` +
+        "Reinstall from a supported release or set GPUPDAL_BINARY to a tested " +
+        "GPUPDAL executable."
     );
     return 127;
   }
@@ -37,7 +37,7 @@ function run(args, options = {}) {
     stdio: "inherit"
   });
   if (result.error) {
-    report(`gpupal: unable to execute ${binary}: ${result.error.message}`);
+    report(`gpupdal: unable to execute ${binary}: ${result.error.message}`);
     return 126;
   }
   if (result.signal) {

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Process proof of `gpupal calibrate` and the local placement profile (D0277).
+"""Process proof of `gpupdal calibrate` and the local placement profile (D0277).
 
-1. `gpupal calibrate --status` and `--dry-run` work and write nothing.
-2. On the reference machine, `gpupal calibrate` without --force declines
+1. `gpupdal calibrate --status` and `--dry-run` work and write nothing.
+2. On the reference machine, `gpupdal calibrate` without --force declines
    ("embedded reference profile applies") and writes nothing.
 3. With the embedded profile hidden by the test hook, a quick calibration
    (two models, 100K/250K points, one pair each) writes a profile keyed to
@@ -76,7 +76,7 @@ def main() -> int:
     # loudly rather than silently if the device is unavailable.
     doctor = run([args.candidate, "doctor"], check=False)
     if doctor.returncode != 0:
-        raise SystemExit(f"gpupal doctor failed:\n{doctor.stdout}{doctor.stderr}")
+        raise SystemExit(f"gpupdal doctor failed:\n{doctor.stdout}{doctor.stderr}")
 
     # 1. status / dry-run write nothing.
     status = run([args.candidate, "calibrate", "--status"],

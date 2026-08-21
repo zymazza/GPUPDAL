@@ -67,7 +67,7 @@ with tempfile.TemporaryDirectory(prefix="pdg-hybrid-layout-fallback-") as temp:
     assert result.returncode == 73, result.stderr
     assert result.stdout == "", result.stdout
     assert (
-        "gpupal: rewritten hybrid layout differs from the original pipeline\n"
+        "gpupdal: rewritten hybrid layout differs from the original pipeline\n"
         in result.stderr
     ), result.stderr
     assert (root / "oracle.args").read_text(encoding="utf-8").splitlines() == [

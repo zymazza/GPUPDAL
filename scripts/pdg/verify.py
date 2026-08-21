@@ -351,7 +351,7 @@ def main() -> int:
         return 0 if valid else 1
     except (OSError, ValueError, subprocess.SubprocessError,
             json.JSONDecodeError) as error:
-        print(f"gpupal verify: {error}", file=sys.stderr)
+        print(f"gpupdal verify: {error}", file=sys.stderr)
         return 2
 
 

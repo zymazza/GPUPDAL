@@ -78,7 +78,7 @@ int execProgram(const std::filesystem::path& program, int argc, char** argv,
         ::execvp(executable.c_str(), arguments.data());
 
     const int error = errno;
-    std::cerr << "gpupal: unable to execute " << description << ' '
+    std::cerr << "gpupdal: unable to execute " << description << ' '
               << executable << ": " << std::strerror(error) << '\n';
     return error == ENOENT ? 127 : 126;
 }
@@ -111,13 +111,13 @@ int runVerify(int argc, char** argv)
     if (!std::filesystem::is_regular_file(helper, error) || error)
     {
         // Installed layouts keep implementation helpers out of the public
-        // binary directory.  Build trees copy the same bytes beside `gpupal`.
+        // binary directory.  Build trees copy the same bytes beside `gpupdal`.
         helper =
             binaryDirectory.parent_path() / "libexec" / "pdg" / "pdg-verify.py";
     }
     if (!std::filesystem::is_regular_file(helper, error) || error)
     {
-        std::cerr << "gpupal: verification helper is not installed: " << helper
+        std::cerr << "gpupdal: verification helper is not installed: " << helper
                   << '\n';
         return 127;
     }
@@ -138,7 +138,7 @@ int runVerify(int argc, char** argv)
     }
     if (configuredOracle && !acceptsConfiguredOracle)
     {
-        std::cerr << "gpupal: PDG_ORACLE_PDAL is set; verification will not "
+        std::cerr << "gpupdal: PDG_ORACLE_PDAL is set; verification will not "
                      "silently attest a redirected oracle. Re-run with "
                      "--accept-configured-oracle to record and use it.\n";
         return 2;
@@ -148,7 +148,7 @@ int runVerify(int argc, char** argv)
     for (int index = 2; index < argc; ++index)
         owned.emplace_back(argv[index]);
     // Inject resolved roles last so user arguments cannot substitute a
-    // different candidate or oracle while retaining the `gpupal verify` label.
+    // different candidate or oracle while retaining the `gpupdal verify` label.
     owned.emplace_back("--candidate");
     owned.push_back(candidate);
     owned.emplace_back("--oracle");
@@ -163,7 +163,7 @@ int runVerify(int argc, char** argv)
     arguments.push_back(nullptr);
     ::execvp(arguments[0], arguments.data());
     const int executionError = errno;
-    std::cerr << "gpupal: unable to execute verification helper " << helper
+    std::cerr << "gpupdal: unable to execute verification helper " << helper
               << ": " << std::strerror(executionError) << '\n';
     return executionError == ENOENT ? 127 : 126;
 }
@@ -311,7 +311,7 @@ void armAutomaticR2MarkerIfMatched(int argc, char** argv)
     {
         ::setenv("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1", 1);
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: armed automatic r2 hybrid dispatch\n";
+            std::cerr << "gpupdal: armed automatic r2 hybrid dispatch\n";
     }
 }
 
@@ -345,7 +345,7 @@ bool commandRequiresEngine(int argc, char** argv,
     {
         ::setenv("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1", 1);
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: armed automatic r2 hybrid dispatch\n";
+            std::cerr << "gpupdal: armed automatic r2 hybrid dispatch\n";
     }
     useAutomaticR7ReaderThreads =
         pdg::cli::dispatchUsesAutomaticR7ReaderThreads(*pipeline, inputFacts);
@@ -363,7 +363,7 @@ int main(int argc, char** argv, char** environmentPointers)
 {
     const std::vector<std::string_view> environment =
         presentDispatchEnvironment(environmentPointers);
-    // `gpupal --fast <command> ...` (D0261/D0271): the leading flag is consumed
+    // `gpupdal --fast <command> ...` (D0261/D0271): the leading flag is consumed
     // here, recorded as an internal marker for the engine and sibling, and
     // the command is dispatched exactly as without it on every route,
     // including the environment-selected engine route below. Fast mode keeps
@@ -383,7 +383,7 @@ int main(int argc, char** argv, char** environmentPointers)
         if (fastFlag)
         {
             std::cerr
-                << "gpupal: verify proves default exact mode; --fast is not "
+                << "gpupdal: verify proves default exact mode; --fast is not "
                    "accepted\n";
             return 2;
         }

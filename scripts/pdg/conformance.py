@@ -554,7 +554,7 @@ def main() -> int:
                 raise ValueError(f"required file does not exist: {executable}")
         return run_suite(args)
     except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(f"gpupal conformance: {error}", file=sys.stderr)
+        print(f"gpupdal conformance: {error}", file=sys.stderr)
         return 2
 
 

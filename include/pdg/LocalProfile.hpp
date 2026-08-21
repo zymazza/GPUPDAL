@@ -4,7 +4,7 @@
 //
 // The embedded SM-89 placement profile is a performance promise measured on
 // one physical machine.  Every other machine fails closed to the host path
-// unless the maintainer runs the explicit `gpupal calibrate` command, which
+// unless the maintainer runs the explicit `gpupdal calibrate` command, which
 // re-measures the placement calibration cases on that machine and writes a
 // profile file.  This module owns that file: its schema, its machine key, and
 // the once-per-process lookup consulted by `placementCalibrationFor` when the
@@ -43,7 +43,7 @@ struct LocalProfileMachineKey
 };
 
 // One row of the human-readable per-model summary carried by the profile so
-// `gpupal calibrate --status` can explain the file without re-deriving
+// `gpupdal calibrate --status` can explain the file without re-deriving
 // anything.
 struct LocalProfileModelSummary
 {
@@ -113,13 +113,13 @@ inline constexpr std::string_view ShippedProfileDirOnlyTestEnvironment =
     "PDG_TEST_SHIPPED_PROFILE_DIR_ONLY";
 // Calibration-only override honoured by the explicit `resident` command: the
 // planner sees a profile that prices every calibrated stage as a device win
-// so `gpupal calibrate` can time the device executor before any local profile
+// so `gpupdal calibrate` can time the device executor before any local profile
 // exists.  The automatic `pipeline` route declines whenever it is set.
 inline constexpr std::string_view CalibrationForceDeviceEnvironment =
     "PDG_CALIBRATION_FORCE_DEVICE_PLACEMENT";
 
 // ${PDG_PROFILE_PATH} or
-// ${XDG_CONFIG_HOME:-$HOME/.config}/gpupal/placement-profile.json
+// ${XDG_CONFIG_HOME:-$HOME/.config}/gpupdal/placement-profile.json
 [[nodiscard]] std::filesystem::path defaultLocalProfilePath();
 
 // Reads the CPU model name from /proc/cpuinfo (empty when unavailable).
@@ -166,7 +166,7 @@ struct LocalProfileLookup
 [[nodiscard]] const LocalProfileLookup& loadedLocalProfile() noexcept;
 
 // Same as loadedLocalProfile() but performs the lookup now, without caching;
-// used by `gpupal calibrate --status` and tests.
+// used by `gpupdal calibrate --status` and tests.
 [[nodiscard]] LocalProfileLookup lookupLocalProfile() noexcept;
 
 [[nodiscard]] std::string_view
@@ -205,7 +205,7 @@ genericPlacementProfileFor(const PlacementDeviceKey& device) noexcept;
 // "generic", or "" for none / the calibration override.
 [[nodiscard]] std::string_view
 placementProfileTier(const PlacementCalibrationProfile* profile) noexcept;
-// Every parsed shipped/generic profile (for `gpupal calibrate --status`).
+// Every parsed shipped/generic profile (for `gpupdal calibrate --status`).
 [[nodiscard]] const std::vector<LocalPlacementProfile>& shippedProfiles();
 
 } // namespace pdg

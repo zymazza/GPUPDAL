@@ -54,7 +54,7 @@ public:
 
 // D0271: mask applied to every kNN status the gather kernels publish. All
 // bits under the default contract; KnnDistanceTie cleared under the relaxed
-// tie-order contract (`gpupal --fast`). Written per index build from
+// tie-order contract (`gpupdal --fast`). Written per index build from
 // pdg::knnStatusMask() so the device and host paths agree.
 __constant__ std::uint8_t c_knnStatusMask = 0xFFU;
 

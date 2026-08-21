@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-GPUPAL has not published its first release. Security fixes currently target
+GPUPDAL has not published its first release. Security fixes currently target
 the latest commit on `main`; a version-support table will be added before the
 first public release.
 
@@ -10,7 +10,7 @@ first public release.
 
 Do not open a public issue for a suspected vulnerability. Use GitHub's private
 security-advisory reporting for this repository. Include the affected command
-or parser, a minimal non-sensitive reproducer, impact, and the GPUPAL and
+or parser, a minimal non-sensitive reproducer, impact, and the GPUPDAL and
 pinned-PDAL versions.
 
 The project must designate a monitored security contact and response target

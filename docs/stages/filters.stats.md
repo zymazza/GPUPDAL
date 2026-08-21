@@ -41,7 +41,7 @@ forms remain on the exact host implementation. CUDA execution is available
 only through the internal experimental/require gates. Automatic replacement is
 disabled: the RTX 4090 device-runtime, all four Compute Sanitizer tools, and an
 end-to-end break-even matrix have not yet run for this primitive. Option-free
-`gpupal` therefore retains the pinned upstream stats stage while still allowing
+`gpupdal` therefore retains the pinned upstream stats stage while still allowing
 qualified adjacent regions to execute natively.
 
 ## Verification

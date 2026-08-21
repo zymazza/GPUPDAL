@@ -62,7 +62,7 @@ using pdg::cli::MappedInput;
 
 void version()
 {
-    std::cout << "gpupal " << pdg::Version << '\n'
+    std::cout << "gpupdal " << pdg::Version << '\n'
               << "oracle-pdal " << pdg::OracleCommit << '\n'
               << "cuda "
               << (pdg::cudaBackendCompiled() ? "enabled" : "disabled") << '\n';
@@ -114,7 +114,7 @@ int doctor()
                                         std::string(pdg::placementProfileTier(
                                             profile)) +
                                         ")"
-                                  : std::string("none (host path; run `gpupal "
+                                  : std::string("none (host path; run `gpupdal "
                                                 "calibrate`)"))
                       << '\n'
                       << "local_profile "
@@ -1605,7 +1605,7 @@ int runOracle(int argc, char** argv)
         ::execvp(program.c_str(), arguments.data());
 
     const int error = errno;
-    std::cerr << "gpupal: unable to execute pinned PDAL fallback " << program
+    std::cerr << "gpupdal: unable to execute pinned PDAL fallback " << program
               << ": " << std::strerror(error) << '\n';
     return error == ENOENT ? 127 : 126;
 }
@@ -1690,162 +1690,162 @@ int main(int argc, char** argv)
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_RESIDENT_LAS_OUTPUT"))
     {
-        std::cerr << "gpupal: required automatic resident LAS output path "
+        std::cerr << "gpupdal: required automatic resident LAS output path "
                      "was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_EIGEN_FAMILY_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic eigen-family resident path "
+        std::cerr << "gpupdal: required automatic eigen-family resident path "
                      "was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_NORMAL_COVARIANCE_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic normal/covariance resident "
+        std::cerr << "gpupdal: required automatic normal/covariance resident "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_RANK_OPTIMAL_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic rank/optimal resident path "
+        std::cerr << "gpupdal: required automatic rank/optimal resident path "
                      "was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_OUTLIER_NNDISTANCE_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic outlier/NNDistance resident "
+        std::cerr << "gpupdal: required automatic outlier/NNDistance resident "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv(
             "PDG_REQUIRE_AUTOMATIC_RADIUS_OUTLIER_RADIALDENSITY_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic radius-outlier/radial-density "
+        std::cerr << "gpupdal: required automatic radius-outlier/radial-density "
                      "resident path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_RADIUSASSIGN_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic radiusassign resident path "
+        std::cerr << "gpupdal: required automatic radiusassign resident path "
                      "was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_NEIGHBORCLASSIFIER_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic neighborclassifier resident "
+        std::cerr << "gpupdal: required automatic neighborclassifier resident "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_HAG_NN_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic HAG-NN count-one resident "
+        std::cerr << "gpupdal: required automatic HAG-NN count-one resident "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_HAG_DELAUNAY_RESIDENT"))
     {
         std::cerr
-            << "gpupal: required automatic HAG-Delaunay count-three resident "
+            << "gpupdal: required automatic HAG-Delaunay count-three resident "
                "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_SKEWNESS_RESIDENT"))
     {
         std::cerr
-            << "gpupal: required automatic skewness resident path was not "
+            << "gpupdal: required automatic skewness resident path was not "
                "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_SORT_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic sort resident path was not "
+        std::cerr << "gpupdal: required automatic sort resident path was not "
                      "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_AUTOMATIC_APPROXIMATECOPLANAR_RESIDENT"))
     {
-        std::cerr << "gpupal: required automatic approximate-coplanar resident "
+        std::cerr << "gpupdal: required automatic approximate-coplanar resident "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_DIRECT_SKEWNESS_COMPOSITION"))
     {
         std::cerr
-            << "gpupal: required direct skewness composition path was not "
+            << "gpupdal: required direct skewness composition path was not "
                "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_DIRECT_SORT_COMPOSITION"))
     {
-        std::cerr << "gpupal: required direct sort composition path was not "
+        std::cerr << "gpupdal: required direct sort composition path was not "
                      "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_DIRECT_LAS_RESIDENT_SOURCE"))
     {
-        std::cerr << "gpupal: required direct LAS resident source path "
+        std::cerr << "gpupdal: required direct LAS resident source path "
                      "was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_DIRECT_LAS_RECORD_SUMMARY") ||
         std::getenv("PDG_REQUIRE_DIRECT_LAS_RECORD_SUMMARY_BACKEND"))
     {
-        std::cerr << "gpupal: required direct LAS record summary path was not "
+        std::cerr << "gpupdal: required direct LAS record summary path was not "
                      "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NO_DIRECT_LAS_HOST_XYZ"))
     {
         std::cerr
-            << "gpupal: required direct LAS no-host-XYZ path was not used\n";
+            << "gpupdal: required direct LAS no-host-XYZ path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NND_DEVICE_ONLY_HANDOFF"))
     {
-        std::cerr << "gpupal: required NNDistance device-only assignment "
+        std::cerr << "gpupdal: required NNDistance device-only assignment "
                      "handoff was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NND_HOST_RESTORE"))
     {
         std::cerr
-            << "gpupal: required NNDistance host restoration path was not "
+            << "gpupdal: required NNDistance host restoration path was not "
                "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NND_PARALLEL_REPAIR"))
     {
-        std::cerr << "gpupal: required parallel selective NNDistance device "
+        std::cerr << "gpupdal: required parallel selective NNDistance device "
                      "repair path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NND_DEVICE_REPAIR"))
     {
-        std::cerr << "gpupal: required selective NNDistance device repair "
+        std::cerr << "gpupdal: required selective NNDistance device repair "
                      "path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_OUTLIER_DEVICE_REPAIR"))
     {
-        std::cerr << "gpupal: required selective statistical-outlier device "
+        std::cerr << "gpupdal: required selective statistical-outlier device "
                      "repair path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_OUTLIER_PARALLEL_REPAIR"))
     {
-        std::cerr << "gpupal: required parallel statistical-outlier device "
+        std::cerr << "gpupdal: required parallel statistical-outlier device "
                      "repair path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_LOF_PARALLEL_REPAIR"))
     {
-        std::cerr << "gpupal: required parallel LOF repair path was not used\n";
+        std::cerr << "gpupdal: required parallel LOF repair path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_LOF_KD3_COORDINATE_CACHE"))
     {
-        std::cerr << "gpupal: required LOF KD3 coordinate cache path was not "
+        std::cerr << "gpupdal: required LOF KD3 coordinate cache path was not "
                      "used\n";
         return 124;
     }
@@ -1860,19 +1860,19 @@ int main(int argc, char** argv)
     if (std::getenv("PDG_REQUIRE_CUDA_TRANSLATE"))
     {
         std::cerr
-            << "gpupal: required exact CUDA translation path was not used\n";
+            << "gpupdal: required exact CUDA translation path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_CUDA_POINT_PROGRAM"))
     {
-        std::cerr << "gpupal: required exact CUDA point-program path was not "
+        std::cerr << "gpupdal: required exact CUDA point-program path was not "
                      "used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_FUSED_CUDA_POINT_PROGRAM"))
     {
         std::cerr
-            << "gpupal: required descriptor-planned fused CUDA point-program "
+            << "gpupdal: required descriptor-planned fused CUDA point-program "
                "path was not used\n";
         return 124;
     }
@@ -1880,12 +1880,12 @@ int main(int argc, char** argv)
         std::getenv("PDG_REQUIRE_STREAMING_HYBRID") ||
         std::getenv("PDG_REQUIRE_CUDA_HYBRID"))
     {
-        std::cerr << "gpupal: required hybrid pipeline path was not used\n";
+        std::cerr << "gpupdal: required hybrid pipeline path was not used\n";
         return 124;
     }
     if (std::getenv("PDG_REQUIRE_NATIVE"))
     {
-        std::cerr << "gpupal: requested command is outside the proven native "
+        std::cerr << "gpupdal: requested command is outside the proven native "
                      "compatibility envelope\n";
         return 125;
     }

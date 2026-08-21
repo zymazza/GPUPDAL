@@ -1674,7 +1674,7 @@ def main():
             # uses a distinct output so the exact successful differential above
             # remains independent of the no-overwrite assertion.
             protected = direct / "protected.las"
-            protected.write_bytes(b"gpupal resident no-overwrite sentinel\n")
+            protected.write_bytes(b"gpupdal resident no-overwrite sentinel\n")
             protected_digest = sha256(protected)
             protected_pipeline = write_pipeline(
                 direct / "protected.json", large_input, protected, False)

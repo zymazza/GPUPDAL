@@ -673,7 +673,7 @@ with tempfile.TemporaryDirectory(prefix="pdg-resident-process-") as temp:
             resident_proof.stderr), resident_proof.stderr
         assert not resident_proof_output.exists()
 
-    # Explicit `gpupal resident` returns before main's automatic-fallback proof
+    # Explicit `gpupdal resident` returns before main's automatic-fallback proof
     # guards. The resident core itself must reject a repair proof when no
     # selected matching stage can evaluate it, before the ordinary host writer
     # creates an artifact.

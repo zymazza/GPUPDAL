@@ -1918,7 +1918,7 @@ private:
                 m_fileTypedDimensions.push_back(name);
                 if (std::getenv("PDG_DEBUG_HYBRID"))
                     std::cerr
-                        << "gpupal: resident layout follows the file's type "
+                        << "gpupdal: resident layout follows the file's type "
                            "for dimension "
                         << name << '\n';
             }

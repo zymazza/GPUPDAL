@@ -74,7 +74,7 @@ def parse_args() -> argparse.Namespace:
         help=(
             "candidate execution gate; native preserves the historical "
             "direct-LAS benchmark behavior; resident runs the diagnostic "
-            "`gpupal resident` command with stats-based executor proof"
+            "`gpupdal resident` command with stats-based executor proof"
         ),
     )
     parser.add_argument(

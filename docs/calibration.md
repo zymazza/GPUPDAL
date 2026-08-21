@@ -1,11 +1,11 @@
-# Local placement calibration (`gpupal calibrate`)
+# Local placement calibration (`gpupdal calibrate`)
 
 Status: shipped in D0277/B0277. Governing text: `spec.md` D4 and
 `DECISIONS.md` D0277; this page is operational.
 
 ## Why it exists
 
-Automatic device selection in `gpupal pipeline` is a *performance* promise on
+Automatic device selection in `gpupdal pipeline` is a *performance* promise on
 top of the exactness promise: a stage runs on the GPU only where a same-machine
 measurement showed the complete process finishes sooner. The shipped build
 carries exactly one such measurement — the embedded SM-89 profile
@@ -15,7 +15,7 @@ machine therefore fails closed to the host path, even when it has a capable
 GPU (B0275: forcing the hybrid on a rented RTX 4090 with another driver took
 r6 from 2.7x to 11.2x, but nothing selected it by default).
 
-`gpupal calibrate` closes that gap without weakening the promise: it re-measures
+`gpupdal calibrate` closes that gap without weakening the promise: it re-measures
 the same calibration cases on the machine it runs on, with the same fitting
 procedure that produced the embedded profile, and writes a profile keyed to
 that exact machine. Nothing runs it implicitly; the runtime never times, fits,
@@ -25,7 +25,7 @@ or tunes anything.
 
 1. Identity. Reads the machine key: CUDA device 0 name, compute capability,
    NVIDIA kernel driver version, the CUDA toolkit the build was compiled with,
-   the CPU model name, the logical CPU count, and the GPUPAL version.
+   the CPU model name, the logical CPU count, and the GPUPDAL version.
 2. Reference check. If the embedded profile applies to this machine it says
    so and exits (use `--force` to write a local profile anyway).
 3. Fixtures. Writes a deterministic synthetic lidar-like cloud (LAS 1.4,
@@ -75,8 +75,8 @@ default. `placementCalibrationFor` consults, in order:
 1. the **embedded reference profile** (the maintainer's RTX 4090, exact
    device/driver/toolkit key);
 2. the calibration override (explicit `resident` command only);
-3. a **local profile** written by `gpupal calibrate` on this exact machine;
-4. a **shipped GPU-class profile** — measured by `gpupal calibrate` on a rented
+3. a **local profile** written by `gpupdal calibrate` on this exact machine;
+4. a **shipped GPU-class profile** — measured by `gpupdal calibrate` on a rented
    machine with the same GPU model, compute capability and compiled CUDA
    toolkit (`bench/remote/vast_sweep.sh`), converted by
    `bench/report/make_shipped_profile.py`, which keeps only the stage models
@@ -92,12 +92,12 @@ default. `placementCalibrationFor` consults, in order:
    slower GPU), with the slowest device and fastest host
    coefficients seen.
 
-`gpupal calibrate --status` prints `active_profile_tier` (embedded / local /
+`gpupdal calibrate --status` prints `active_profile_tier` (embedded / local /
 shipped / generic / none) and, for a compiled shipped/generic profile, its
 embedded source filename and SHA-256. Release re-proof compares that hash to
-the closed profile payload. `gpupal doctor` shows the tier next to the profile
+the closed profile payload. `gpupdal doctor` shows the tier next to the profile
 id. A local profile always takes precedence over the shipped and generic
-tiers, so `gpupal calibrate` remains the way to tighten placement to a
+tiers, so `gpupdal calibrate` remains the way to tighten placement to a
 particular CPU or dataset; it is no longer a prerequisite.
 
 The promise of tiers 4 and 5 is weaker than tier 3's by construction and is
@@ -106,12 +106,12 @@ class rented host, admitted only where the device won by the stated margin".
 
 ## Where the profile lives and how it is used
 
-`$PDG_PROFILE_PATH`, else `${XDG_CONFIG_HOME:-~/.config}/gpupal/placement-profile.json`.
+`$PDG_PROFILE_PATH`, else `${XDG_CONFIG_HOME:-~/.config}/gpupdal/placement-profile.json`.
 The previous file is kept as `.previous`.
 
 A local profile applies if and only if its machine key equals the current
 machine key in every field. A different GPU, driver, CUDA build, CPU, core
-count, or GPUPAL version makes the file inert (`gpupal calibrate --status`
+count, or GPUPDAL version makes the file inert (`gpupdal calibrate --status`
 reports `machine-mismatch` and why) and the shipped/generic tiers take over.
 
 Automatic admission keeps every structural gate it had: profiles supply
@@ -149,13 +149,13 @@ profile says: the profile only chooses between two exact executors.
 ## Commands and environment
 
 ```
-gpupal calibrate --status              # machine key, embedded/local profile status
-gpupal calibrate                       # 250K/1M/4M points, 3 pairs each, 15 models
-gpupal calibrate --quick               # 250K/1M, one pair each
-gpupal calibrate --input tile.laz --points 250000,1000000,4000000
-gpupal calibrate --models lof,normal-covariancefeatures-compose --repeats 5
-gpupal calibrate --dry-run --force     # print the plan
-gpupal doctor                          # shows placement_profile / local_profile
+gpupdal calibrate --status              # machine key, embedded/local profile status
+gpupdal calibrate                       # 250K/1M/4M points, 3 pairs each, 15 models
+gpupdal calibrate --quick               # 250K/1M, one pair each
+gpupdal calibrate --input tile.laz --points 250000,1000000,4000000
+gpupdal calibrate --models lof,normal-covariancefeatures-compose --repeats 5
+gpupdal calibrate --dry-run --force     # print the plan
+gpupdal doctor                          # shows placement_profile / local_profile
 ```
 
 | Variable | Effect |

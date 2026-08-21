@@ -45,7 +45,7 @@ namespace
 using Json = nlohmann::json;
 using Clock = std::chrono::steady_clock;
 
-// The calibration plan: the placement models `gpupal calibrate` measures and
+// The calibration plan: the placement models `gpupdal calibrate` measures and
 // the pipelines it runs for them.  Pipelines are verbatim copies of the
 // corresponding cases in test/data/pdg/placement-calibration-sm89.json (the
 // embedded profile's evidence record); "input.las"/"output.las" are replaced
@@ -120,7 +120,7 @@ struct Options
 
 void printUsage(std::ostream& out)
 {
-    out << "Usage: gpupal calibrate [options]\n"
+    out << "Usage: gpupdal calibrate [options]\n"
            "\n"
            "Measures the placement calibration cases on this machine and "
            "writes a local\n"
@@ -478,12 +478,12 @@ struct ModelMeasurement
 void progress(const Options& options, const std::string& line)
 {
     if (!options.quiet)
-        std::cerr << "gpupal calibrate: " << line << '\n';
+        std::cerr << "gpupdal calibrate: " << line << '\n';
 }
 
 int printStatus(std::ostream& out)
 {
-    out << "gpupal " << Version << "\n";
+    out << "gpupdal " << Version << "\n";
     LocalProfileMachineKey machine;
     try
     {
@@ -720,7 +720,7 @@ int runCalibrate(int argc, char** argv)
     }
     catch (const std::invalid_argument& error)
     {
-        std::cerr << "gpupal calibrate: " << error.what() << "\n\n";
+        std::cerr << "gpupdal calibrate: " << error.what() << "\n\n";
         printUsage(std::cerr);
         return 2;
     }
@@ -733,7 +733,7 @@ int runCalibrate(int argc, char** argv)
 
         if (!cudaBackendCompiled())
         {
-            std::cerr << "gpupal calibrate: this build has no CUDA backend; "
+            std::cerr << "gpupdal calibrate: this build has no CUDA backend; "
                          "nothing to calibrate\n";
             return 2;
         }
@@ -744,7 +744,7 @@ int runCalibrate(int argc, char** argv)
         }
         catch (const std::exception& error)
         {
-            std::cerr << "gpupal calibrate: no usable CUDA device ("
+            std::cerr << "gpupdal calibrate: no usable CUDA device ("
                       << error.what() << ")\n";
             return 2;
         }
@@ -768,7 +768,7 @@ int runCalibrate(int argc, char** argv)
             if (embeddedApplies && !options.force && !ignoreBuiltin)
             {
                 std::cout
-                    << "gpupal calibrate: the embedded reference profile '"
+                    << "gpupdal calibrate: the embedded reference profile '"
                     << active->id
                     << "' applies to this machine; nothing to "
                        "calibrate (use --force to measure and write a "
@@ -790,7 +790,7 @@ int runCalibrate(int argc, char** argv)
         }
         if (selected.empty())
         {
-            std::cerr << "gpupal calibrate: no models selected\n";
+            std::cerr << "gpupdal calibrate: no models selected\n";
             return 2;
         }
         for (const std::string& requested : options.models)
@@ -798,7 +798,7 @@ int runCalibrate(int argc, char** argv)
                              [&](const auto& item)
                              { return item.first == requested; }))
             {
-                std::cerr << "gpupal calibrate: unknown model '" << requested
+                std::cerr << "gpupdal calibrate: unknown model '" << requested
                           << "'\n";
                 return 2;
             }
@@ -807,12 +807,12 @@ int runCalibrate(int argc, char** argv)
         const std::filesystem::path pdal = siblingPdal(argv[0]);
         if (!std::filesystem::is_regular_file(pdal))
         {
-            std::cerr << "gpupal calibrate: sibling pdal not found at " << pdal
+            std::cerr << "gpupdal calibrate: sibling pdal not found at " << pdal
                       << '\n';
             return 2;
         }
 
-        std::cout << "gpupal calibrate\n"
+        std::cout << "gpupdal calibrate\n"
                   << "  device:   " << machine.deviceName << " (sm "
                   << machine.computeCapability << ", driver "
                   << machine.driverVersion << ", CUDA "
@@ -879,7 +879,7 @@ int runCalibrate(int argc, char** argv)
                     usable.push_back(points);
             if (usable.empty())
             {
-                std::cerr << "gpupal calibrate: " << options.input
+                std::cerr << "gpupdal calibrate: " << options.input
                           << " has only " << source.pointCount
                           << " points; no requested size fits\n";
                 return 2;
@@ -903,7 +903,7 @@ int runCalibrate(int argc, char** argv)
                     {}, work / "subset.stdout", work / "subset.stderr");
                 if (result.exitStatus != 0)
                 {
-                    std::cerr << "gpupal calibrate: subset materialization "
+                    std::cerr << "gpupdal calibrate: subset materialization "
                                  "failed: "
                               << result.stderrTail << '\n';
                     return 1;
@@ -1359,7 +1359,7 @@ int runCalibrate(int argc, char** argv)
     }
     catch (const std::exception& error)
     {
-        std::cerr << "gpupal calibrate: " << error.what() << '\n';
+        std::cerr << "gpupdal calibrate: " << error.what() << '\n';
         return 1;
     }
 }

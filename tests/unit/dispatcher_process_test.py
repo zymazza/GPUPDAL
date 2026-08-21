@@ -44,7 +44,7 @@ with tempfile.TemporaryDirectory(prefix="pdg-dispatch-") as temp:
     wrapper(root / "pdal", log, "oracle")
     wrapper(root / "pdg-engine", log, "engine")
 
-    # `gpupal verify` is a first-class public command.  It invokes the packaged
+    # `gpupdal verify` is a first-class public command.  It invokes the packaged
     # helper directly, before ambient PDG_* routing, and pins the candidate and
     # oracle arguments after all user-supplied options.
     verify_log = root / "verify.log"

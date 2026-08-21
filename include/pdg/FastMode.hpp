@@ -5,7 +5,7 @@
 namespace pdg
 {
 
-// D0261: `gpupal --fast` arms the internal marker PDG_INTERNAL_FAST_MODE=1 for
+// D0261: `gpupdal --fast` arms the internal marker PDG_INTERNAL_FAST_MODE=1 for
 // the engine and the sibling PDAL; nothing else may set it (the launcher
 // strips an external value). This is the one place engine code reads it.
 [[nodiscard]] bool fastModeEnabled() noexcept;

@@ -1,21 +1,21 @@
-# GPUPAL npm installer
+# GPUPDAL npm installer
 
-This directory is the publication source for the future unscoped `gpupal`
+This directory is the publication source for the future unscoped `gpupdal`
 package:
 
 ```sh
-npm install gpupal
-npx gpupal --version
+npm install gpupdal
+npx gpupdal --version
 ```
 
-For a shell-wide command, use `npm install --global gpupal` followed by
-`gpupal --version`.
+For a shell-wide command, use `npm install --global gpupdal` followed by
+`gpupdal --version`.
 
-GPUPAL is native software. The npm package is a small launcher and installer,
+GPUPDAL is native software. The npm package is a small launcher and installer,
 not a JavaScript reimplementation. On install it selects the declared
 platform artifact, downloads it from the matching GitHub release, verifies the
 archive's SHA-256 digest, and installs the complete sibling bundle needed by
-the launcher (`gpupal`, `pdg-engine`, and the pinned `pdal` oracle).
+the launcher (`gpupdal`, `pdg-engine`, and the pinned `pdal` oracle).
 
 The checked-in manifest is intentionally empty and the development version is
 rejected by `prepack`. Release automation must set one version in both

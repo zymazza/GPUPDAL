@@ -39,12 +39,12 @@ These need no build and are often decisive.
 | `PDG_DISABLE_KD3_COORDINATE_CACHE` | control | Restores the uncached nanoflann adapter for published `build3dIndex()` products (B0263 default is the exact cached-coordinate backing with a mutation epoch that refreshes reused snapshots). Same-final-binary control: r11 falls from 7.37x to 5.32x with it set. Test builds honor `PDAL_TEST_VERIFY_KD3_SNAPSHOT=1`, which fails closed at any reuse whose snapshot silently diverged from the live view. |
 | `PDG_DISABLE_HOST_NEIGHBORHOOD_WORKERS` / `PDG_NATIVE_WORKERS=N` | control | Force the exact serial statistical-outlier / neighbor-classifier kNN passes, SMRF grid passes, reprojection batches, and `writers.las` record packing (B0268; test builds also honor `PDAL_TEST_TRACE_LAS_PACK=1`, one stderr line per parallel pack run with its outcome), `readers.las` record unpacking (B0269; `PDAL_TEST_TRACE_LAS_UNPACK=1` prints rows/segments/slots per worker run), and `readers.copc`'s ordered decode pool under `requests=1` (B0270; `PDAL_TEST_TRACE_COPC_DECODE=1` prints tiles/ordered/workers), `writers.gdal`'s banded raster accumulation (B0273; `PDAL_TEST_TRACE_GDAL_BANDS=1` prints rows/bands/listed/height per banded run), and every KD2/KD3 nanoflann build (B0274, concurrent subtree construction), or cap their worker count (B0258). |
 | `PDG_EXPERIMENTAL_AUTOMATIC_R4_OUTLIER_CUDA=1` | control | Re-enables the retired B0227 literal 1M r4 CUDA outlier selector (D0272): the exact host path (worker kNN outlier + hashed sample) is faster at 1M and 4M, so the default r4 route is host; the opt-in keeps the route's differential lane and the `PDG_REQUIRE_AUTOMATIC_R4_OUTLIER_CUDA` proof gate exercisable. |
-| `gpupal --fast` (internal `PDG_INTERNAL_FAST_MODE=1`, launcher-armed only) | contract | D0271: the spatial index publishes no `KnnDistanceTie`, so `pdg-engine resident --stats` reports zero ambiguous/repaired rows for the eigen family, HAG-NN, LOF, and classifier under `--fast`; compare with the exact run's tie-row counts to bound the differing records the fast comparator reports. The serial control is the same-final-binary attribution: r11 returns to about 1.035x when set. Test-only builds also honor `PDAL_TEST_FORCE_HOST_NEIGHBORHOOD_WORKERS=N` and `PDAL_TEST_REQUIRE_HOST_NEIGHBORHOOD_WORKERS=N`. |
+| `gpupdal --fast` (internal `PDG_INTERNAL_FAST_MODE=1`, launcher-armed only) | contract | D0271: the spatial index publishes no `KnnDistanceTie`, so `pdg-engine resident --stats` reports zero ambiguous/repaired rows for the eigen family, HAG-NN, LOF, and classifier under `--fast`; compare with the exact run's tie-row counts to bound the differing records the fast comparator reports. The serial control is the same-final-binary attribution: r11 returns to about 1.035x when set. Test-only builds also honor `PDAL_TEST_FORCE_HOST_NEIGHBORHOOD_WORKERS=N` and `PDAL_TEST_REQUIRE_HOST_NEIGHBORHOOD_WORKERS=N`. |
 | `pdg_r11_neighborhood_attribution --input FILE [--output REPORT.json]` (bench target, needs the local 1M reference LAZ) | JSON report | In-process wall and allocation attribution of the r11 prefix, fresh KD3 build, statistical-outlier and neighbor-classifier kNN passes, the isolated vote tally, and fixed-chunk multi-worker exact executions with bit-identity checks. B0257 used it to reject the vote-tally hypothesis (about 0.1% of wall) and to attribute about 5.55 s of the 6.8-second process to the two serial kNN passes. |
 
 ## Reported state
 
-`gpupal resident --stats <file>` carries two sections added for the same reason:
+`gpupdal resident --stats <file>` carries two sections added for the same reason:
 
 - `plan` — the planner-derived attributes the compose matchers test (`native`,
   `preferred_residency`, `resident_region`, `device_knn_gather_neighbors`,
@@ -58,9 +58,9 @@ These need no build and are often decisive.
 
 ## Three standing warnings
 
-1. **Never read `--stats` from `gpupal resident` to explain a `gpupal pipeline`
+1. **Never read `--stats` from `gpupdal resident` to explain a `gpupdal pipeline`
    timing.** They are the same function with `automaticAdmission` flipped, so
-   the numbers look comparable and are not. `gpupal resident` reported 146 ms on a
+   the numbers look comparable and are not. `gpupdal resident` reported 146 ms on a
    translate whose public-path admission costs 0.17 ms (B0185, B0196).
 2. **Use paired alternating runs, not medians of three.** Reference-pipeline
    single-run spreads reach 463 ms; a median-of-3 sweep produced a clean-looking

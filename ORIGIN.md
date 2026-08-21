@@ -1,6 +1,6 @@
 # Project origin and attribution
 
-GPUPAL (GPU Pointcloud Abstraction Library) is an independent project derived
+GPUPDAL (GPU Point Data Abstraction Library) is an independent project derived
 from the PDAL source tree. Its private-release bootstrap snapshot was based on
 the local development branch at:
 
@@ -9,7 +9,7 @@ the local development branch at:
   `cmake/pdg-oracle.cmake`
 - upstream project: <https://github.com/PDAL/PDAL>
 
-The GPUPAL repository intentionally begins with a new root commit rather
+The GPUPDAL repository intentionally begins with a new root commit rather
 than copying upstream Git history. This changes repository lineage, not source
 provenance or licensing obligations.
 

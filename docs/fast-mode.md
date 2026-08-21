@@ -1,6 +1,6 @@
-# `gpupal --fast` (D0261, D0271)
+# `gpupdal --fast` (D0261, D0271)
 
-`gpupal --fast <command> ...` runs any `gpupal` command under the **fast contract**.
+`gpupdal --fast <command> ...` runs any `gpupdal` command under the **fast contract**.
 The flag must be the first argument; the launcher consumes it, arms the
 internal `PDG_INTERNAL_FAST_MODE=1` marker for the engine and sibling PDAL,
 and dispatches the remaining command exactly as it would without the flag. An

@@ -221,7 +221,7 @@ def main() -> int:
             print(rendered, end="")
         return 0 if valid else 1
     except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(f"gpupal artifact manifest: {error}", file=sys.stderr)
+        print(f"gpupdal artifact manifest: {error}", file=sys.stderr)
         return 2
 
 

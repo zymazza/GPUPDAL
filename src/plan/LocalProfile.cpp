@@ -217,7 +217,7 @@ std::filesystem::path defaultLocalProfilePath()
         base = std::filesystem::path(home) / ".config";
     else
         base = std::filesystem::path(".");
-    return base / "gpupal" / "placement-profile.json";
+    return base / "gpupdal" / "placement-profile.json";
 }
 
 std::string hostCpuModelName()
@@ -537,7 +537,7 @@ ShippedProfileTable& shippedTable()
             if (!profile)
             {
                 if (std::getenv("PDG_DEBUG_HYBRID"))
-                    std::cerr << "gpupal: shipped placement profile "
+                    std::cerr << "gpupdal: shipped placement profile "
                               << source.name << " ignored: " << error << '\n';
                 continue;
             }

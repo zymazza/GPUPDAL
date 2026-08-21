@@ -12741,3 +12741,33 @@ API names remain an explicit release-scope decision. Name/trademark clearance,
 third-party licensing, native packaging, release CI, and npm ownership remain
 gates recorded in `RELEASE_READINESS.md`; selecting the name does not claim
 those gates have passed.
+
+## D0289 — GPUPDAL supersedes GPUPAL as the public release identity
+
+After selecting GPUPAL in D0288, the owner selected **GPUPDAL — GPU Point Data
+Abstraction Library** as the clearer public name and reported that Howard
+Butler gave permission to use `GPUPDAL`. The project has not yet made a public
+release, so changing the public identifiers now avoids a post-release command,
+package, and repository migration.
+
+**Decision.** The public product, repository, executable, configuration
+directory, and intended unscoped npm package are GPUPDAL, `GPUPDAL`,
+`gpupdal`, `~/.config/gpupdal`, and `gpupdal`, respectively. D0289 supersedes
+D0288 only for those public identifiers. Internal C++ namespaces and targets,
+`PDG_*` controls, build presets, helper paths, raw benchmark tool ids, and
+immutable historical evidence retain `pdg`. Append-only decisions and retained
+reports keep the names under which they were produced; regenerated presentation
+material may label the current product GPUPDAL while disclosing a historical
+`pdg` benchmark id.
+
+The reported permission resolves the owner's naming choice. Before public
+visibility, retain the permission in a durable project record and confirm its
+scope and the non-endorsement wording in `RELEASE_READINESS.md`. The npm
+registry returned not-found for the unscoped `gpupdal` name on 2026-08-21; that
+availability check does not reserve the name.
+
+**Consequences.** Public source, diagnostics, packaging metadata, CI workflow
+names, documentation, and new release assets use GPUPDAL/`gpupdal`. Existing
+GPUPAL public identifiers are removed before the first release. This is a
+branding and distribution change only; it does not alter compatibility,
+exactness, stage coverage, or benchmark measurements.

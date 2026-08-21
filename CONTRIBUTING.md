@@ -1,6 +1,6 @@
-# Contributing to GPUPAL
+# Contributing to GPUPDAL
 
-GPUPAL welcomes focused bug fixes, compatibility improvements, performance
+GPUPDAL welcomes focused bug fixes, compatibility improvements, performance
 work, tests, documentation, and reproducibility tooling.
 
 ## Before you start
@@ -54,7 +54,7 @@ starting a heavy build, sanitizer, corpus, or benchmark lane.
 
 A performance claim must include:
 
-- the exact GPUPAL commit and build configuration;
+- the exact GPUPDAL commit and build configuration;
 - machine, CPU, RAM, GPU, driver, and CUDA details;
 - input identity, size, and hash;
 - a same-machine frozen-reference baseline;

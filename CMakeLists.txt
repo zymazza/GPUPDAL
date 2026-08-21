@@ -8,12 +8,12 @@ cmake_minimum_required(VERSION 3.13)
 project(PDAL VERSION 2.10.0 LANGUAGES CXX C)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 
-# GPUPAL versions independently from the pinned/upstream-compatible PDAL ABI.
+# GPUPDAL versions independently from the pinned/upstream-compatible PDAL ABI.
 # Keep this value aligned with packages/npm/package.json at release time.
-set(GPUPAL_VERSION_MAJOR 0)
-set(GPUPAL_VERSION_MINOR 1)
-set(GPUPAL_VERSION_PATCH 0)
-set(GPUPAL_VERSION "${GPUPAL_VERSION_MAJOR}.${GPUPAL_VERSION_MINOR}.${GPUPAL_VERSION_PATCH}-dev")
+set(GPUPDAL_VERSION_MAJOR 0)
+set(GPUPDAL_VERSION_MINOR 1)
+set(GPUPDAL_VERSION_PATCH 0)
+set(GPUPDAL_VERSION "${GPUPDAL_VERSION_MAJOR}.${GPUPDAL_VERSION_MINOR}.${GPUPDAL_VERSION_PATCH}-dev")
 
 option(BUILD_SHARED_LIBS "Build pdal as a shared library" ON)
 

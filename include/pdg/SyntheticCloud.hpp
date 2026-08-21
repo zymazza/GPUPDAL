@@ -1,6 +1,6 @@
 #pragma once
 
-// D0277: the deterministic synthetic lidar-like cloud used by `gpupal
+// D0277: the deterministic synthetic lidar-like cloud used by `gpupdal
 // calibrate` when the maintainer supplies no input.  It is a stand-in for real
 // data: scan-ordered strips over a rolling terrain with a vegetation fraction,
 // at a nominal density, so kNN structures and traversal see spatially coherent

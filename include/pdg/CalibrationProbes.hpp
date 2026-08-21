@@ -1,7 +1,7 @@
 #pragma once
 
 // D0277: direct measurements of the planner-owned placement coefficients on
-// this machine, used only by `gpupal calibrate`.  Each probe is a small,
+// this machine, used only by `gpupdal calibrate`.  Each probe is a small,
 // self-contained CUDA measurement; none of them touch the planner.
 
 #include <cstddef>

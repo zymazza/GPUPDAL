@@ -94,7 +94,7 @@ def binary_manifest(path: pathlib.Path, *, candidate: bool,
         components.append({"role": "engine", "path": str(engine),
                            "sha256": sha256(engine)})
 
-    # `gpupal` and `pdal` dynamically load the fork/oracle PDAL library. Resolve
+    # `gpupdal` and `pdal` dynamically load the fork/oracle PDAL library. Resolve
     # the dependency with the exact loader environment used for the measured
     # process rather than assuming the adjacent build-tree library won.
     if is_elf(dependency_carrier):
@@ -231,7 +231,7 @@ def environment_overrides(values: list[str], *, candidate_only: bool) -> dict[st
 
 def candidate_placement_profile(candidate: Path,
                                 environment: dict[str, str]) -> dict | None:
-    """`gpupal calibrate --status` of the candidate, if it supports it."""
+    """`gpupdal calibrate --status` of the candidate, if it supports it."""
     try:
         completed = subprocess.run(
             [str(candidate), "calibrate", "--status"], env=environment,
@@ -1061,7 +1061,7 @@ def main() -> int:
                 "2 ms /proc sampling; sum of resident bytes across the public "
                 "process and its descendants"),
             # D0277: which placement profile the candidate would use on this
-            # machine (embedded reference, a local `gpupal calibrate` profile,
+            # machine (embedded reference, a local `gpupdal calibrate` profile,
             # or none). Recorded from the candidate itself so a default-mode
             # run states its own selection evidence.
             "candidate_placement_profile": candidate_placement_profile(

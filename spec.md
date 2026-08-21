@@ -1,8 +1,8 @@
-# GPUPAL — Build Specification for the Coding Agent (v0.2)
+# GPUPDAL — Build Specification for the Coding Agent (v0.2)
 
-> Product and repository: GPUPAL (GPU Pointcloud Abstraction Library). Public
-> CLI binary: `gpupal`. The internal C++ namespace remains `pdg`; the Python
-> package name is still provisional. See D0288 and §15.
+> Product and repository: GPUPDAL (GPU Point Data Abstraction Library). Public
+> CLI binary: `gpupdal`. The internal C++ namespace remains `pdg`; the Python
+> intended npm package: `gpupdal`. See D0289 and §15.
 
 ---
 
@@ -75,7 +75,7 @@ Principles, in priority order:
 |---|---|---|
 | Language | C++20 host; device code within nvcc's supported subset | |
 | CUDA | ≥ 12.4, CCCL (CUB / Thrust / libcu++) | Prefer CCCL primitives over hand-rolled kernels |
-| Build | CMake ≥ 3.28 + presets, Ninja | Single top-level target set; `gpupal`, `libpdg`, tests, bench |
+| Build | CMake ≥ 3.28 + presets, Ninja | Single top-level target set; `gpupdal`, `libpdg`, tests, bench |
 | JSON | simdjson (parse), nlohmann (emit) | Pipeline files are small; simdjson is for point-adjacent metadata too |
 | CRS | PROJ ≥ 9 (host) | Plus native fp64 device kernels for common projections, §7 transforms |
 | Raster/vector I/O | GDAL ≥ 3.8 (host) | Colorization, DEM inputs, GeoTIFF out, OGR polygons |
@@ -364,7 +364,7 @@ All are clients of §5.4 + §5.5; each is "one query + registers of math." Ph 2,
 | `filters.streamcallback` | C++ host callback at tile granularity | 6 |
 | `filters.matlab` / `filters.julia` | preserve configured upstream behavior; optimize bridge/residency and decide GPU applicability with evidence | 6 |
 
-### 7.14 Applications (`gpupal <verb>`)
+### 7.14 Applications (`gpupdal <verb>`)
 
 `translate`, `pipeline`, `info`, `merge`, `sort`, `split`, `tile`, `tindex`, `random` — thin wrappers over stages, delivered with their stages. `ground` wraps the §7.1 defaults (Ph 3). `density` wraps hexbin (Ph 3). `hausdorff`, `chamfer`, `delta` — cross-cloud NN distance metrics on the shared index (Ph 5, N). `eval` — classification confusion metrics via segmented counts (Ph 5, E). `bench` — §10 harness (Ph 1).
 
@@ -452,8 +452,8 @@ Standing rules:
 
 ## 12. Phased delivery plan (exit criteria are the phase)
 
-- **P0 — Scaffold.** Repo, CMake presets, CI (build + host tests in CUDA container; GPU jobs on a self-hosted 4090 runner), allocator, `PointBatch`, dimension registry, LAS read/write with device round-trip. *Exit:* `gpupal translate in.las out.las` preserves payload byte-for-byte; CI green.
-- **P1 — Per-point core.** Expression parser + bytecode VM; fused `pp` engine; assign/ferry/colorinterp/transformation; compaction culls (expression, decimation, head/tail, locate, iqr/mad, crop-bbox); sort/mortonorder/randomize; partition family (splitter, divider, groupby, returns, merge); stats/info/expressionstats; `gpupal bench` harness + PDAL baselines. *Exit:* fused `pp` chains ≥ 70% DRAM roofline; bench suite + goldens green.
+- **P0 — Scaffold.** Repo, CMake presets, CI (build + host tests in CUDA container; GPU jobs on a self-hosted 4090 runner), allocator, `PointBatch`, dimension registry, LAS read/write with device round-trip. *Exit:* `gpupdal translate in.las out.las` preserves payload byte-for-byte; CI green.
+- **P1 — Per-point core.** Expression parser + bytecode VM; fused `pp` engine; assign/ferry/colorinterp/transformation; compaction culls (expression, decimation, head/tail, locate, iqr/mad, crop-bbox); sort/mortonorder/randomize; partition family (splitter, divider, groupby, returns, merge); stats/info/expressionstats; `gpupdal bench` harness + PDAL baselines. *Exit:* fused `pp` chains ≥ 70% DRAM roofline; bench suite + goldens green.
 - **P1.5 — Resident execution.** The following milestone directive is normative and recorded verbatim:
 
 ```text
@@ -493,7 +493,7 @@ D4  Plan-level host/device placement model accounting for transfer bytes, packin
     demonstrated wrong placement calls that matter. No general optimizer.
     Coefficients for a machine other than the reference come from measured
     profiles only, never from the runtime: a local profile written by the
-    explicit `gpupal calibrate` command (D0277), which re-measures the same
+    explicit `gpupdal calibrate` command (D0277), which re-measures the same
     calibration cases there and is keyed to that exact machine; failing that,
     a shipped GPU-class profile measured by the same command on a rented
     machine of that GPU model / compute capability / toolkit and admitted
@@ -598,9 +598,9 @@ Known risks: register pressure in fused kNN kernels (mitigate with a `__launch_b
 
 - **License: BSD-3-Clause** (matches PDAL; maximally permissive for an open-source launch).
 - Porting provenance rules: PDAL source (BSD) may be referenced/ported with attribution in `NOTICE`; verify lazperf's license before vendoring; **never** port LASzip (LGPL) — the LAZ format spec is public, clean-room from the spec if lazperf can't be used; every algorithm page cites its paper (Appendix A).
-- **Naming:** "PDAL" is the upstream project's identity. GPUPAL is the chosen
+- **Naming:** "PDAL" is the upstream project's identity. GPUPDAL is the chosen
   distinct product name and must not imply upstream endorsement. Availability
-  and trademark review of GPUPAL remain public-launch gates; see D0288.
+  and permission record for GPUPDAL remain public-launch gates; see D0289.
 
 ## Appendix A — Algorithm references
 

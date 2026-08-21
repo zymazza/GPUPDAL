@@ -1,18 +1,18 @@
 cff-version: 1.2.0
 message: >-
-  Cite the exact GPUPAL release or commit. The contributor list and DOI will
+  Cite the exact GPUPDAL release or commit. The contributor list and DOI will
   be finalized before v0.1.0; also cite upstream PDAL when appropriate.
 type: software
-title: GPUPAL
+title: GPUPDAL
 version: 0.1.0-dev
 abstract: >-
-  GPUPAL (GPU Pointcloud Abstraction Library) provides a PDAL-compatible
+  GPUPDAL (GPU Point Data Abstraction Library) provides a PDAL-compatible
   command that conservatively selects exact CPU and CUDA point-cloud
   processing implementations using measured end-to-end performance.
-repository-code: https://github.com/zymazza/GPUPAL
+repository-code: https://github.com/zymazza/GPUPDAL
 license: BSD-3-Clause
 authors:
-  - name: GPUPAL contributors
+  - name: GPUPDAL contributors
 keywords:
   - point clouds
   - PDAL

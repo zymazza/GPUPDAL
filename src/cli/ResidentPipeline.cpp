@@ -2822,7 +2822,7 @@ Json statsJson(
 
 // B0196/D0215: report where an admission attempt gave up.
 //
-// `gpupal pipeline` is `runResidentPipelineImpl(..., automaticAdmission=true)`;
+// `gpupdal pipeline` is `runResidentPipelineImpl(..., automaticAdmission=true)`;
 // when it declines it returns `std::nullopt` and the caller re-reads, prepares
 // and executes the pipeline by another route. B0194 measured that discarded
 // attempt at a fixed ~19 ms and could not attribute ~13 ms of it, because
@@ -2958,7 +2958,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
     {
         if (automaticAdmission)
             return std::nullopt;
-        std::cerr << "Usage: gpupal resident PIPELINE [--stats FILE]\n";
+        std::cerr << "Usage: gpupdal resident PIPELINE [--stats FILE]\n";
         return 1;
     }
     std::string statsDestination;
@@ -2968,7 +2968,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
         {
             if (automaticAdmission)
                 return std::nullopt;
-            std::cerr << "Usage: gpupal resident PIPELINE [--stats FILE]\n";
+            std::cerr << "Usage: gpupdal resident PIPELINE [--stats FILE]\n";
             return 1;
         }
         statsDestination = argv[4];
@@ -2976,7 +2976,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
         {
             if (automaticAdmission)
                 return std::nullopt;
-            std::cerr << "gpupal: --stats requires a file path\n";
+            std::cerr << "gpupdal: --stats requires a file path\n";
             return 1;
         }
     }
@@ -2994,7 +2994,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
     {
         if (automaticAdmission)
             return std::nullopt;
-        std::cerr << "gpupal: unable to read resident pipeline " << argv[2]
+        std::cerr << "gpupdal: unable to read resident pipeline " << argv[2]
                   << '\n';
         return 1;
     }
@@ -4151,7 +4151,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
                 {
                     pdal::PipelineManager preflight(ResidentTilePoints);
                     preflight.setLog(pdal::Log::makeLog(
-                        "gpupal resident preflight", "devnull"));
+                        "gpupdal resident preflight", "devnull"));
                     std::istringstream candidatePipeline(rewrite.json);
                     preflight.readPipeline(candidatePipeline);
                     if (!preflight.hasReader())
@@ -4801,7 +4801,7 @@ std::optional<int> tryAutomaticResidentLasPipeline(int argc, char** argv)
     if (std::getenv("PDG_INTERNAL_AUTOMATIC_R2_HYBRID"))
     {
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: automatic resident probe declined for r2 "
+            std::cerr << "gpupdal: automatic resident probe declined for r2 "
                          "hybrid\n";
         return std::nullopt;
     }
@@ -4812,7 +4812,7 @@ std::optional<int> tryAutomaticResidentLasPipeline(int argc, char** argv)
     if (std::getenv(CalibrationForceDeviceEnvironment.data()))
     {
         if (std::getenv("PDG_DEBUG_HYBRID"))
-            std::cerr << "gpupal: automatic resident probe declined under the "
+            std::cerr << "gpupdal: automatic resident probe declined under the "
                          "calibration placement override\n";
         return std::nullopt;
     }

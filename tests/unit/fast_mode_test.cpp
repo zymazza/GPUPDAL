@@ -1,4 +1,4 @@
-// D0271: under `gpupal --fast` (internal marker PDG_INTERNAL_FAST_MODE=1) the
+// D0271: under `gpupdal --fast` (internal marker PDG_INTERNAL_FAST_MODE=1) the
 // spatial index does not report kNN distance ties, so the device/host-index
 // tie choice stands and no exact tie repair runs. Everything but the tie bit
 // — neighbor ids, distances, incomplete flags — is unchanged.

@@ -1,7 +1,7 @@
-# GPUPAL agent guide
+# GPUPDAL agent guide
 
 This repository is an upstream-backed fork of PDAL for a CUDA-native engine
-whose public drop-in CLI is `gpupal` and whose internal C++ namespace remains
+whose public drop-in CLI is `gpupdal` and whose internal C++ namespace remains
 `pdg`. Read this file first, then read
 `spec.md`, `IMPLEMENTATION_PLAN.md`, `DECISIONS.md`, and
 `docs/testing-strategy.md`. Read `docs/stage-coverage.md` before changing stage

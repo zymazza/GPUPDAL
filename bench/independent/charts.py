@@ -28,9 +28,9 @@ MUTED = "#52514e"
 
 # Tool identity: fixed order, one hue family per product, shades for its modes.
 TOOLS = [
-    ("pdg_gpu", "pdg — GPU on (automatic)", "#2a78d6", ""),
-    ("pdg_cpu", "pdg — CPU only (no GPU)", "#86b6ef", ""),
-    ("pdg_gpu_all", "pdg — GPU forced on", "#104281", "////"),
+    ("pdg_gpu", "GPUPDAL — GPU on (automatic)", "#2a78d6", ""),
+    ("pdg_cpu", "GPUPDAL — CPU only (no GPU)", "#86b6ef", ""),
+    ("pdg_gpu_all", "GPUPDAL — GPU forced on", "#104281", "////"),
     ("pdal_pinned", "PDAL 2.10.0 (built from source)", "#eb6834", ""),
     ("pdal_sys", "PDAL 2.10.1 (Linux package)", "#f7b08e", ""),
     ("lastools", "LAStools (unlicensed)", "#1baf7a", ""),
@@ -41,7 +41,7 @@ TOOL_NAME = {t[0]: t[1] for t in TOOLS}
 TOOL_COLOR = {t[0]: t[2] for t in TOOLS}
 TOOL_HATCH = {t[0]: t[3] for t in TOOLS}
 TOOL_ORDER = [t[0] for t in TOOLS]
-SHORT = {"pdg_gpu": "pdg (GPU)", "pdg_cpu": "pdg (CPU only)", "pdg_gpu_all": "pdg (GPU forced)",
+SHORT = {"pdg_gpu": "GPUPDAL (GPU)", "pdg_cpu": "GPUPDAL (CPU only)", "pdg_gpu_all": "GPUPDAL (GPU forced)",
          "pdal_pinned": "PDAL 2.10.0", "pdal_sys": "PDAL 2.10.1 pkg", "lastools": "LAStools",
          "wrench": "QGIS engine", "qgis": "QGIS"}
 SIZE_LABEL = {"1m": "1 million", "4m": "4 million", "16m": "16 million", "47m": "47 million"}
@@ -86,10 +86,11 @@ def _save(fig, path: pathlib.Path):
     plt.close(fig)
 
 
-def legend_handles(tools):
+def legend_handles(tools, names=None):
     from matplotlib.patches import Patch
+    names = names or TOOL_NAME
     return [Patch(facecolor=TOOL_COLOR[t], hatch=TOOL_HATCH[t], edgecolor="white" if not TOOL_HATCH[t] else "#fcfcfb",
-                  label=TOOL_NAME[t]) for t in tools]
+                  label=names[t]) for t in tools]
 
 
 def chart_family_bars(idx: dict, size: str, family: str, out: pathlib.Path, tools=TOOL_ORDER, title=None):
@@ -167,7 +168,7 @@ def chart_speedup(idx: dict, size: str, out: pathlib.Path, base="pdg_gpu",
     ax.set_xlabel(f"how many times longer the other tool took than {TOOL_NAME[base]}\n(log scale; 1× = same time; left of 1× = the other tool was faster)")
     ax.grid(axis="x", which="major")
     ax.set_axisbelow(True)
-    ax.set_title(title or f"Speed of pdg compared with the other tools — {SIZE_LABEL[size]} points")
+    ax.set_title(title or f"Speed of GPUPDAL compared with the other tools — {SIZE_LABEL[size]} points")
     fig.legend(handles=legend_handles(list(others)), loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=2, fontsize=8)
     _save(fig, out)
     return out
@@ -216,7 +217,7 @@ def chart_scaling(idx: dict, out: pathlib.Path, tools=TOOL_ORDER, sizes=("1m", "
 
 
 def chart_gpu_vs_cpu(idx: dict, out: pathlib.Path, sizes=("1m", "4m", "16m", "47m"), title=None):
-    """Bars: pdg CPU-only time / pdg GPU-auto time and GPU-forced / GPU-auto per task, one panel per size."""
+    """Bars: GPUPDAL CPU-only time / GPUPDAL GPU-auto time and GPU-forced / GPU-auto per task, one panel per size."""
     sizes = [s for s in sizes if any(k[0] == s and k[2] == "pdg_gpu" for k in idx)]
     tasks = [t for t in TASKS if any(median(idx.get((s, t["id"], "pdg_gpu"))) for s in sizes)]
     fig, axes = plt.subplots(1, len(sizes), figsize=(2.6 * len(sizes) + 1.5, 0.35 * len(tasks) + 1.2), sharey=True)
@@ -246,13 +247,14 @@ def chart_gpu_vs_cpu(idx: dict, out: pathlib.Path, sizes=("1m", "4m", "16m", "47
         ax.set_axisbelow(True)
     axes[0].invert_yaxis()
     fig.legend(handles=legend_handles(["pdg_cpu", "pdg_gpu_all"]), loc="lower center", ncol=2, fontsize=8.5, bbox_to_anchor=(0.5, -0.02))
-    fig.suptitle(title or "Same program, same computer: time relative to pdg with the GPU on (automatic) = 1×\n(right of 1× = slower than automatic; left = faster)", fontsize=10.5, fontweight="bold")
+    fig.suptitle(title or "Same program, same computer: time relative to GPUPDAL with the GPU on (automatic) = 1×\n(right of 1× = slower than automatic; left = faster)", fontsize=10.5, fontweight="bold")
     fig.tight_layout(rect=(0, 0.03, 1, 0.94))
     _save(fig, out)
     return out
 
 
-def chart_totals(idx: dict, out: pathlib.Path, tools=TOOL_ORDER, sizes=("1m", "4m", "16m", "47m"), only_tasks=None, title=None):
+def chart_totals(idx: dict, out: pathlib.Path, tools=TOOL_ORDER, sizes=("1m", "4m", "16m", "47m"), only_tasks=None,
+                 title=None, tool_names=None):
     """Sum of medians over the jobs every listed tool completed at every listed size."""
     sizes = [s for s in sizes if any(k[0] == s for k in idx)]
     common = []
@@ -267,23 +269,27 @@ def chart_totals(idx: dict, out: pathlib.Path, tools=TOOL_ORDER, sizes=("1m", "4
     fig, ax = plt.subplots(figsize=(9, 3.4))
     x = np.arange(len(sizes))
     w = 0.8 / len(tools)
+    totals = {
+        tool: [sum(median(idx[(s, t["id"], tool)]) for t in common) for s in sizes]
+        for tool in tools
+    }
+    vmax = max(v for vals in totals.values() for v in vals)
     for j, tool in enumerate(tools):
-        vals = [sum(median(idx[(s, t["id"], tool)]) for t in common) for s in sizes]
+        vals = totals[tool]
         xs = x - 0.4 + w * (j + 0.5)
         ax.bar(xs, vals, width=w * 0.9, color=TOOL_COLOR[tool], hatch=TOOL_HATCH[tool], edgecolor="white", linewidth=0.5)
         for xi, v in zip(xs, vals):
-            ax.text(xi, v * 1.08, fmt_seconds(v), ha="center", va="bottom", fontsize=6.5, rotation=90, color=TEXT)
-    ax.set_yscale("log")
+            ax.annotate(fmt_seconds(v), xy=(xi, v), xytext=(0, 3), textcoords="offset points",
+                        ha="center", va="bottom", fontsize=6.5, rotation=90, color=TEXT)
     ax.set_xticks(x)
     ax.set_xticklabels([f"{SIZE_LABEL[s]} points" for s in sizes])
     ax.yaxis.set_major_formatter(FuncFormatter(_sec_formatter))
-    ax.yaxis.set_minor_formatter(NullFormatter())
-    ax.set_ylabel("total seconds (log scale)")
+    ax.set_ylabel("total seconds (linear scale)")
     ax.grid(axis="y")
     ax.set_axisbelow(True)
-    ax.set_ylim(top=ax.get_ylim()[1] * 3)
-    ax.set_title(title or f"Total time to run the {len(common)} jobs that every tool can do")
-    fig.legend(handles=legend_handles(tools), loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3, fontsize=8)
+    ax.set_ylim(0, vmax * 1.18)
+    ax.set_title(title or f"Total time to run the {len(common)} jobs that every tool can do (linear scale)")
+    fig.legend(handles=legend_handles(tools, tool_names), loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3, fontsize=8)
     _save(fig, out)
     return out, common
 
@@ -367,7 +373,7 @@ def chart_memory(idx: dict, size: str, out: pathlib.Path, tools=TOOL_ORDER, titl
 
 
 def chart_headline(idxs: dict, out: pathlib.Path):
-    """One picture: geometric-mean speed of pdg (GPU auto) vs each other tool at every size, workstation."""
+    """One picture: geometric-mean speed of GPUPDAL (GPU auto) vs each other tool at every size, workstation."""
     idx = idxs["Workstation (Ryzen 9 7900 + RTX 4090)"] if "Workstation (Ryzen 9 7900 + RTX 4090)" in idxs else list(idxs.values())[0]
     others = ["pdal_pinned", "pdal_sys", "lastools", "wrench", "qgis"]
     sizes = [s for s in ("1m", "4m", "16m", "47m") if any(k[0] == s for k in idx)]
@@ -393,11 +399,11 @@ def chart_headline(idxs: dict, out: pathlib.Path):
     ax.axhline(1, color="#8a8984", lw=1)
     ax.set_xticks(x)
     ax.set_xticklabels([f"{SIZE_LABEL[s]} points" for s in sizes])
-    ax.set_ylabel("times slower than pdg (GPU on)\n(geometric mean over the jobs both can do)")
+    ax.set_ylabel("times slower than GPUPDAL (GPU on)\n(geometric mean over the jobs both can do)")
     ax.set_ylim(0, ax.get_ylim()[1] * 1.25)
     ax.grid(axis="y")
     ax.set_axisbelow(True)
-    ax.set_title("Headline: on the workstation, how much longer each tool took than pdg, on average")
+    ax.set_title("Headline: on the workstation, how much longer each tool took than GPUPDAL, on average")
     fig.legend(handles=legend_handles(others), loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3, fontsize=8)
     _save(fig, out)
     return out

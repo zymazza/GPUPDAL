@@ -155,8 +155,10 @@ std::size_t writeSyntheticLas(const std::filesystem::path& path,
     // GUID zeroed (8-23); version 1.4
     header[24] = 1;
     header[25] = 4;
-    std::memcpy(header.data() + 26, "gpupal calibrate", 16);
-    std::memcpy(header.data() + 58, "gpupal calibrate synthetic", 26);
+    constexpr char systemId[] = "gpupdal calibrate";
+    constexpr char softwareId[] = "gpupdal calibrate synthetic";
+    std::memcpy(header.data() + 26, systemId, sizeof(systemId) - 1);
+    std::memcpy(header.data() + 58, softwareId, sizeof(softwareId) - 1);
     put16(header, 90, 1);    // creation day
     put16(header, 92, 2026); // creation year
     put16(header, 94, HeaderSize);

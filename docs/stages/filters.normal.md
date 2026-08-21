@@ -29,7 +29,7 @@ are handled the same way.
 
 `radius`, `viewpoint`, `refine=true`, `where`/`where_merge`, `knn` outside the
 current device range, unknown options, and invalid combinations remain on the
-unchanged upstream `filters.normal`. They are fully functional through `gpupal`
+unchanged upstream `filters.normal`. They are fully functional through `gpupdal`
 but are not reported as GPU-native. For a maximal consecutive run of
 compatible normal, nearest-neighbor distance, eigenvalue, and covariance-
 feature stages, the first wrapper uploads whole-view XYZ and builds the index

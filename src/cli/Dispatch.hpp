@@ -33,7 +33,7 @@ struct DispatchInputFacts
     std::optional<DispatchInputFacts> inputFacts = std::nullopt) noexcept;
 
 // Returns true only for literal measured direct-delegation routes calibrated
-// for `gpupal pipeline FILE` without stream, metadata, or other CLI modifiers.
+// for `gpupdal pipeline FILE` without stream, metadata, or other CLI modifiers.
 [[nodiscard]] bool
 dispatchRequiresPlainPipelineInvocation(std::string_view pipelineJson) noexcept;
 

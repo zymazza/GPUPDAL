@@ -27,7 +27,7 @@ function download(url, destination, redirects = 0) {
       reject(new Error("too many release-asset redirects"));
       return;
     }
-    const request = https.get(url, { headers: { "User-Agent": "gpupal-npm" } },
+    const request = https.get(url, { headers: { "User-Agent": "gpupdal-npm" } },
       (response) => {
         if (response.statusCode >= 300 && response.statusCode < 400 &&
             response.headers.location) {
@@ -51,15 +51,15 @@ function download(url, destination, redirects = 0) {
 
 function validateEntry(entry) {
   if (!entry || typeof entry.url !== "string" ||
-      !entry.url.startsWith("https://github.com/zymazza/GPUPAL/releases/download/") ||
+      !entry.url.startsWith("https://github.com/zymazza/GPUPDAL/releases/download/") ||
       !/^[0-9a-f]{64}$/.test(entry.sha256 || "")) {
     throw new Error("release manifest entry is incomplete or untrusted");
   }
 }
 
 async function install() {
-  if (process.env.GPUPAL_SKIP_DOWNLOAD === "1") {
-    console.warn("gpupal: native download skipped by GPUPAL_SKIP_DOWNLOAD=1");
+  if (process.env.GPUPDAL_SKIP_DOWNLOAD === "1") {
+    console.warn("gpupdal: native download skipped by GPUPDAL_SKIP_DOWNLOAD=1");
     return;
   }
 
@@ -69,8 +69,8 @@ async function install() {
   const entry = manifest.platforms[key];
   validateEntry(entry);
 
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "gpupal-install-"));
-  const archive = path.join(temporary, "gpupal.tar.gz");
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-install-"));
+  const archive = path.join(temporary, "gpupdal.tar.gz");
   const destination = path.join(packageRoot, "native", key);
   try {
     await download(entry.url, archive);
@@ -88,7 +88,7 @@ async function install() {
     if (extracted.error || extracted.status !== 0) {
       throw extracted.error || new Error(`tar exited with status ${extracted.status}`);
     }
-    for (const executable of ["gpupal", "pdg-engine", "pdal"]) {
+    for (const executable of ["gpupdal", "pdg-engine", "pdal"]) {
       const filename = path.join(destination, executable);
       if (!fs.statSync(filename, { throwIfNoEntry: false })?.isFile()) {
         throw new Error(`release archive is missing ${executable}`);
@@ -102,7 +102,7 @@ async function install() {
 
 if (require.main === module) {
   install().catch((error) => {
-    console.error(`gpupal: native installation failed: ${error.message}`);
+    console.error(`gpupdal: native installation failed: ${error.message}`);
     process.exit(1);
   });
 }

@@ -15,7 +15,7 @@ for the class in question, so the burden is paid whether or not the gate is
 ever flipped.
 
 Every case runs the same pipeline twice -- once through pinned upstream PDAL,
-once through `gpupal resident`, which is the executor generalized selection would
+once through `gpupdal resident`, which is the executor generalized selection would
 choose -- and requires byte-identical output. A case that cannot reach the
 resident executor is reported rather than skipped silently, because a shape
 that stops being admitted is exactly the regression this matrix should catch.

@@ -133,7 +133,7 @@ hardware counters.
 
 ### 7. Default-selection benchmark gate
 
-The primary benchmark must be an ordinary option-free `gpupal pipeline`
+The primary benchmark must be an ordinary option-free `gpupdal pipeline`
 invocation: no force, require, experimental, backend, or selector environment
 variable may choose CUDA. Use the pinned PDAL process as the same-machine
 baseline, frozen observable time, two warmups, and at least ten alternating

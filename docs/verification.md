@@ -1,13 +1,13 @@
-# `gpupal verify`
+# `gpupdal verify`
 
-`gpupal verify` creates a portable, self-contained record that another machine or
+`gpupdal verify` creates a portable, self-contained record that another machine or
 user can publish without giving PDG permission to contact anyone or upload
 anything. The command performs one local complete-process differential: the
-pinned PDAL oracle and `gpupal` run the same normal/covariance pipeline with an
+pinned PDAL oracle and `gpupdal` run the same normal/covariance pipeline with an
 untimed warm-up and at least three alternating measured pairs.
 
 ```sh
-gpupal verify --output-dir gpupal-proof
+gpupdal verify --output-dir gpupdal-proof
 ```
 
 By default the pinned oracle creates a deterministic 250,000-point fixture.
@@ -15,8 +15,8 @@ Existing data and a pipeline using `input.laz` and `output.laz` placeholders
 can be supplied instead:
 
 ```sh
-gpupal verify --input tile.laz --pipeline pipeline.json \
-  --runs 3 --warmups 1 --output-dir gpupal-proof
+gpupdal verify --input tile.laz --pipeline pipeline.json \
+  --runs 3 --warmups 1 --output-dir gpupdal-proof
 ```
 
 The command writes:
@@ -33,10 +33,10 @@ command. The tracked executable/helper hashes are checked again after timing.
 
 The command returns nonzero if evidence is missing, malformed, inexact, the
 benchmark process fails, or a tracked binary changes. A speedup below one is
-reported honestly but is not a correctness failure. `gpupal --fast verify` is
+reported honestly but is not a correctness failure. `gpupdal --fast verify` is
 rejected because this command proves the default exact contract.
 
-If `PDG_ORACLE_PDAL` redirects the normal compatibility oracle, `gpupal verify`
+If `PDG_ORACLE_PDAL` redirects the normal compatibility oracle, `gpupdal verify`
 refuses to use it silently. Pass `--accept-configured-oracle` to make that
 choice explicit; the source, complete binary hash, expected 2.10.0 version
 check, and provenance limitation are then recorded in the report. Frozen

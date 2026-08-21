@@ -101,7 +101,7 @@ option(BUILD_TOOLS_LASDUMP "Choose if lasdump tool should be built" TRUE)
 option(BUILD_TOOLS_NITFWRAP "Choose if nitfwrap tool should be built" FALSE)
 
 option(WITH_PDG
-    "Build the GPUPAL command and its accelerated execution engine" FALSE)
+    "Build the GPUPDAL command and its accelerated execution engine" FALSE)
 option(PDG_ENABLE_CUDA
     "Compile CUDA backends for PDG" TRUE)
 option(PDG_BUILD_TESTS

@@ -1,10 +1,10 @@
-# GPUPAL release readiness
+# GPUPDAL release readiness
 
 Status date: 2026-08-21
 Target: first public pre-release (`v0.1.0`)
 Current repository posture: private development
 
-GPUPAL is not ready for a public binary or npm release yet. The engine has a
+GPUPDAL is not ready for a public binary or npm release yet. The engine has a
 large exactness and performance evidence base, but the distribution,
 licensing, support, and clean-install gates below remain open. This checklist
 is intentionally separate from historical benchmark claims.
@@ -15,10 +15,10 @@ Copy this section into an issue or answer it in a review. Items marked
 **required** block a public release.
 
 1. **Copyright owner — required.** What exact person or legal entity and year
-   should identify GPUPAL-specific contributions? Do you have authority to
+   should identify GPUPDAL-specific contributions? Do you have authority to
    license every non-upstream contribution already imported into this root
    history?
-2. **Project license — required.** Confirm BSD-3-Clause for GPUPAL-owned code.
+2. **Project license — required.** Confirm BSD-3-Clause for GPUPDAL-owned code.
    Should contributions use a Developer Certificate of Origin, a CLA, or the
    current inbound=outbound statement in `CONTRIBUTING.md`?
 3. **Third-party distribution — required.** Must every vendored subtree carry
@@ -35,42 +35,43 @@ Copy this section into an issue or answer it in a review. Items marked
    and hash for each public fixture. Decide whether machine-local paths in
    immutable evidence reports remain as provenance or are replaced by a new,
    privacy-reviewed release evidence bundle.
-6. **Name and trademark — required.** Confirm the spelling “GPUPAL — GPU
-   Pointcloud Abstraction Library” after a trademark/name-availability review.
-   Confirm the non-endorsement language for PDAL, Hobu, Flaxen, and upstream
-   contributors.
-7. **Public identifiers.** The command is `gpupal`; internal C++ namespace,
+6. **Name permission record — required.** The owner selected “GPUPDAL — GPU
+   Point Data Abstraction Library” and reports that Howard Butler gave
+   permission to use `GPUPDAL`. Retain that permission in a durable project
+   record, confirm its scope, and approve the non-endorsement language for
+   PDAL, Hobu, Flaxen, and upstream contributors before public visibility.
+7. **Public identifiers.** The command is `gpupdal`; internal C++ namespace,
    environment variables, test data, and CMake targets remain `pdg` for now.
-   Should the eventual Python import and C++ API be `gpupal`, or are those APIs
+   Should the eventual Python import and C++ API be `gpupdal`, or are those APIs
    intentionally deferred beyond the CLI-only first release?
 8. **Version and compatibility.** Confirm `v0.1.0`, Linux x86-64, and the
    supported CUDA/toolkit/driver/GPU range. Decide whether CUDA 12.x and 13+
    are separate artifacts and which physical GPU classes may be advertised.
-9. **npm scope — required for npm publication.** Confirm that `gpupal` is the
+9. **npm scope — required for npm publication.** Confirm that `gpupdal` is the
    desired unscoped npm name and who owns the npm organization/account. Decide
    whether npm initially supports only Linux x86-64 and whether installation
    may download a checksummed GitHub release asset during `postinstall`.
 10. **Security and conduct — required.** Name a monitored security contact,
     response target, code-of-conduct enforcement contact, and appeal path.
 11. **Release evidence.** Should the preregistered 40-project 3DEP study and
-    at least one unrelated-user `gpupal verify` report block `v0.1.0`, or may
+    at least one unrelated-user `gpupdal verify` report block `v0.1.0`, or may
     they remain clearly labeled post-release validation? Do not market a
     universal speedup: the frozen evidence includes a 0.986x RTX 3090 result
     at 1M points and a fourteen-workflow total-wall range of 0.987–1.430x.
 12. **Distribution channels.** Choose the first supported channels: source
     archive, native tarball, npm, container, Python wheel, and/or conda. Each
     selected channel needs its own clean-install and uninstall test.
-13. **Citation — required.** Provide GPUPAL author/maintainer names,
+13. **Citation — required.** Provide GPUPDAL author/maintainer names,
     affiliations/ORCIDs if desired, preferred citation text, release date, and
     whether a DOI will be minted. The inherited PDAL citation must remain as
-    upstream attribution, not be presented as the GPUPAL citation.
+    upstream attribution, not be presented as the GPUPDAL citation.
 
 ## Technical release blockers
 
-- [ ] Create a GPUPAL-native package target. The inherited CPack/release flow
+- [ ] Create a GPUPDAL-native package target. The inherited CPack/release flow
       currently names PDAL artifacts and validates the PDAL version; it does
-      not prove an installed `gpupal` command.
-- [ ] Make the release build enable GPUPAL, include `gpupal`, `pdg-engine`, the
+      not prove an installed `gpupdal` command.
+- [ ] Make the release build enable GPUPDAL, include `gpupdal`, `pdg-engine`, the
       pinned sibling `pdal`, helpers, runtime libraries, notices, and an SBOM,
       then verify all hashes from a clean environment.
 - [ ] Add an installed CMake export/config if a public C++ API is in v0.1.0;
@@ -92,7 +93,7 @@ Copy this section into an issue or answer it in a review. Items marked
 - [ ] Reconcile public coverage counts. The dated implementation status says
       16 automatically selected filters while the current coverage audit says
       23; the generated audit must become the single source of truth.
-- [ ] Replace inherited PDAL-only citation metadata with an approved GPUPAL
+- [ ] Replace inherited PDAL-only citation metadata with an approved GPUPDAL
       citation while retaining upstream attribution.
 - [ ] Populate `packages/npm/native-manifest.json` with an immutable release
       URL and SHA-256, set the package version, test the installer without
@@ -109,12 +110,13 @@ Copy this section into an issue or answer it in a review. Items marked
       it from distribution without weakening upstream tests.
 - [ ] Run clean Linux x86-64 source and binary installs, the frozen conformance
       suite, host sanitizers, physical GPU sanitizer lanes, the fourteen
-      reference workflows, and `gpupal verify`; retain immutable reports.
+      reference workflows, and `gpupdal verify`; retain immutable reports.
 
 ## Completed preparation
 
-- [x] Distinct public name selected: GPUPAL.
-- [x] Public executable renamed to `gpupal`; it retains the PDAL-compatible
+- [x] Distinct public name selected: GPUPDAL; the owner reports permission
+      from Howard Butler. Durable permission evidence remains a launch gate.
+- [x] Public executable renamed to `gpupdal`; it retains the PDAL-compatible
       command/fallback surface while internal `pdg` identifiers remain stable.
 - [x] npm package name checked as unclaimed on 2026-08-21 and a fail-closed,
       checksum-verifying Linux x86-64 installer scaffold added.
@@ -124,5 +126,5 @@ Copy this section into an issue or answer it in a review. Items marked
       updated without rewriting historical benchmark/decision evidence.
 - [x] Host build, 459-test default host suite, and 96-test extended exact
       differential matrix pass; five optional local-corpus tests are skipped.
-- [x] Private `zymazza/GPUPAL` repository created with `main` at the clean
-      GPUPAL root snapshot; no public release or npm publication was made.
+- [x] Private `zymazza/GPUPDAL` repository created with `main` at the clean
+      GPUPDAL root snapshot; no public release or npm publication was made.

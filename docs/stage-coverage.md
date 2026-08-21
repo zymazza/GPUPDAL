@@ -1,7 +1,7 @@
 # Functional and GPU-native stage coverage
 
-GPUPAL is the PDAL fork itself, not a separate reduced-functionality point
-processor. The `gpupal` executable follows a three-level execution policy:
+GPUPDAL is the PDAL fork itself, not a separate reduced-functionality point
+processor. The `gpupdal` executable follows a three-level execution policy:
 
 1. use a specialized exact CUDA or mapped-host path when its full pipeline is
    proven compatible;
@@ -19,7 +19,7 @@ This policy separates four questions that must not be conflated:
   measurement establish the end-to-end value of that exact envelope? A
   negative result still qualifies the decision to stay on the host.
 - **Automatically selected:** does the option-free public planner select that
-  envelope without a force, require, experimental, or `gpupal resident` request?
+  envelope without a force, require, experimental, or `gpupdal resident` request?
 
 These categories are independent. The answer to the first is yes for every
 driver and application in the configured fork. A stage may be GPU-native but
@@ -37,7 +37,7 @@ optimization work.
 
 ## Configured catalog snapshot
 
-On the 2026-08-09 reference build, `gpupal --drivers` reports the same 122 drivers
+On the 2026-08-09 reference build, `gpupdal --drivers` reports the same 122 drivers
 as the sibling PDAL executable:
 
 | Driver family | Configured | Functionally supported | GPU-native | Performance-qualified | Automatically selected |
@@ -83,7 +83,7 @@ and the production-default-off P1.5 placement model do not add to that count.
 A fifth property sits behind the four columns and is not implied by any of
 them: whether an envelope can be *reached* by reconstructing it from its
 recorded description. B0176 and B0177 measured seven automatic envelopes on the
-1,000,000-point fixture through the public `gpupal pipeline`:
+1,000,000-point fixture through the public `gpupdal pipeline`:
 
 | Route | Measured | Recorded | Reachable |
 | --- | ---: | --- | :-: |
@@ -119,9 +119,9 @@ family was ever unreachable. B0184's two remaining "refusals" were both errors
 of measurement:
 
 - `runResidentPipelineImpl` takes an `automaticAdmission` parameter that is
-  **false** for an explicit `gpupal resident` invocation and **true** when routed
-  from `gpupal pipeline`, and two envelopes are gated behind facts set only in the
-  latter. Reading `--stats` from `gpupal resident` to explain a `gpupal pipeline`
+  **false** for an explicit `gpupdal resident` invocation and **true** when routed
+  from `gpupdal pipeline`, and two envelopes are gated behind facts set only in the
+  latter. Reading `--stats` from `gpupdal resident` to explain a `gpupdal pipeline`
   timing disables the route being measured. **Never mix the two.**
 - Radius-outlier + radialdensity failed only because its `assign.value` was
   written as a one-element array; the envelope tests `is_string()`.
@@ -299,7 +299,7 @@ published upstream PDAL procedure passes
 network-enabled rerun. These totals measure regression coverage, not catalog
 completion or automatic performance qualification.
 
-The public `gpupal` executable is a thin dispatcher. Commands and parsed pipeline
+The public `gpupdal` executable is a thin dispatcher. Commands and parsed pipeline
 graphs with no current candidate stage execute sibling `pdal` directly,
 without loading the PDAL/GDAL/CUDA-linked `pdg-engine`; candidate, ambiguous,
 or internally forced requests enter the engine and retain the same conservative
@@ -977,7 +977,7 @@ linear resident regions across an unsupported host boundary while charging one
 shared startup/synchronization toll and aggregating only selected-region
 physical terms. Unknown profiles, models, memory envelopes, or branch
 topologies fail closed. This does not add to the automatic or native stage
-counts. The explicit `gpupal resident` observer now constructs bounded runtime
+counts. The explicit `gpupdal resident` observer now constructs bounded runtime
 facts and reports planned boundaries plus transfer-inferred crossings. Its
 physical small V7 process selects host and is exact. Its two-region mixed probe
 is also exact, but executes one-stream PDAL point-program wrappers rather than
@@ -988,7 +988,7 @@ region to the calibrated B0005 executor, feeds it the planner's D1 VRAM budget,
 reports its D3 two-lane schedule and exact transfers, and passes the hash-pinned
 complete-process differential. This adds no stage or automatic/native coverage
 count, does not qualify the mixed wrapper, and does not complete D4 or V4/E2.
-Normal `gpupal pipeline` behavior remains unchanged. The next
+Normal `gpupdal pipeline` behavior remains unchanged. The next
 production-relevant slice is a resumable planner-owned device batch with a real
 materialized unsupported-stage spill/upload boundary.
 
@@ -1148,7 +1148,7 @@ waits for that port: unchanged PDAL remains the compatibility implementation.
 ## Reproducing the coverage gates
 
 ```sh
-build/pdg-cuda-release/bin/gpupal --drivers
+build/pdg-cuda-release/bin/gpupdal --drivers
 
 ctest --test-dir build/pdg-host-debug --output-on-failure
 ctest --test-dir build/pdg-cuda-debug --output-on-failure

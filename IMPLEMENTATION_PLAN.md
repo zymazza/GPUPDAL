@@ -1,8 +1,8 @@
-# GPUPAL implementation plan
+# GPUPDAL implementation plan
 
-The public product and repository name are GPUPAL (GPU Pointcloud Abstraction
-Library), and the PDAL-compatible command is `gpupal`. Historical evidence and
-internal `pdg` identifiers retain their recorded spelling; see D0288.
+The public product and repository name are GPUPDAL (GPU Pointcloud Abstraction
+Library), and the PDAL-compatible command is `gpupdal`. Historical evidence and
+internal `pdg` identifiers retain their recorded spelling; see D0289.
 
 This plan refines the phase queue in `spec.md` into reviewable vertical slices.
 The default acceptance contract is exact compatibility with the pinned
@@ -2257,8 +2257,8 @@ already closed it.
   view, host/CUDA XYZ transpose/repack paths, and pinned CUDA staging allocator
   are implemented. Devices without stream-ordered memory pools select a
   lifetime-safe `cudaMalloc`/`cudaFree` allocator; a forced-classic regression
-  passes on the RTX 4090 and `gpupal doctor` reports pool capability.
-- Full-PDAL execution shell: `gpupal` exposes every command and all 122 drivers in
+  passes on the RTX 4090 and `gpupdal doctor` reports pool capability.
+- Full-PDAL execution shell: `gpupdal` exposes every command and all 122 drivers in
   the configured fork (84 filters, 24 readers, and 14 writers). Specialized
   whole-pipeline paths run first; otherwise compatible point-local regions are
   replaced inside the original PDAL `PipelineManager`; every other command or
@@ -2271,7 +2271,7 @@ already closed it.
   duplicate a count that can drift as measured envelopes are accepted. Every
   other implemented envelope is reported individually rather than collapsed
   into a misleading qualification count. Neither is catalog completion. The
-  public `gpupal` launcher is a dependency-light dispatcher:
+  public `gpupdal` launcher is a dependency-light dispatcher:
   commands and pipelines with no current PDG candidate go directly to sibling
   `pdal`, while candidates and ambiguous inputs enter `pdg-engine`. This
   removes PDAL/GDAL/CUDA startup from the common untouched-fallback path
@@ -3188,9 +3188,9 @@ recorded as catalog coverage, not as a release blocker.
   unrelated-user reproductions remain open execution gates and are not
   represented as completed measurements.
 - Build reproducible packages, SBOM, notices, deterministic regression corpus,
-  benchmark bundle, npm installer, and release CI. GPUPAL resolves the working
+  benchmark bundle, npm installer, and release CI. GPUPDAL resolves the working
   product-name choice; availability/trademark review remains required before
-  publication (D0288).
+  publication (D0289).
 
 Exit: `v0.1.0` packages install in clean supported environments, the exact
 conformance suite and sanitizers pass, and every headline speedup links to a

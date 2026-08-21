@@ -1,6 +1,6 @@
 # Code of conduct
 
-GPUPAL contributors and maintainers must keep project spaces professional,
+GPUPDAL contributors and maintainers must keep project spaces professional,
 welcoming, and focused on the work. Harassment, discrimination, threats,
 deliberate intimidation, doxxing, and publication of another person's private
 data are not acceptable.
