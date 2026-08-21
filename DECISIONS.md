@@ -12873,3 +12873,20 @@ verbatim as its own grant. This remains BSD-3-Clause: it does not restrict
 commercial use, truthful attribution, or factual compatibility statements.
 Trademark registration and enforcement, if pursued later, are separate from
 this copyright license condition.
+
+## D0295 — Confirm the first binary scope and best-effort contact target
+
+Zy confirmed a CLI-only Linux x86-64 first binary with optional external
+plugins disabled, provided it remains a `pdal` drop-in. The configured release
+already enforces identical `gpupdal --drivers` and sibling `pdal --drivers`
+output, and default mode delegates any unaccelerated configured stage to that
+exact sibling implementation. Optional plugin source remains in the repository;
+plugins can enter later artifacts only with their dependency, license, platform,
+and clean-install gates.
+
+The npm account is `zymazza`; authentication was verified without publishing a
+package. Account 2FA and recovery configuration remain required before the
+first publication. The public security/conduct contact remains
+`zy@automagics.com`, with a five-business-day best-effort acknowledgement goal.
+That goal is explicitly not an SLA, support contract, warranty, promise of a
+fix, or modification of the BSD **AS IS** disclaimer.

@@ -24,9 +24,15 @@ the few owner choices and technical gates that remain.
 - Rights: Zy confirms authority to license the existing GPUPDAL-specific code,
   tests, documentation, generated assets, and modifications. Upstream and
   third-party work retains its existing license and attribution.
-- Public security/conduct contact: **zy@automagics.com**. An acknowledgement
-  target still needs confirmation before public launch; five business days is
-  the recommended initial target.
+- Public security/conduct contact: **zy@automagics.com**. GPUPDAL aims to
+  acknowledge reports within five business days on a best-effort basis. This
+  is not an SLA, warranty, support promise, or guarantee of a fix.
+- npm owner: **zymazza**. Authentication was verified without publishing or
+  reserving a package. Account 2FA and recovery methods remain a launch gate.
+- First binary scope: CLI-only Linux x86-64 with optional external plugins off.
+  Drop-in behavior covers the complete configured stage catalog and is gated
+  by exact `gpupdal --drivers` parity with the bundled sibling `pdal`; plugin
+  source remains available for later artifacts and source builds.
 - Long-term platforms: Linux, Windows, and macOS. The first supported native
   artifact will be Linux x86-64. Windows and macOS require real-machine
   validation; modern macOS is CPU-only.
@@ -45,24 +51,11 @@ the few owner choices and technical gates that remain.
   private `main` history was replaced with a clean root snapshot before public
   visibility.
 
-## Questions that still need Zy’s decision
+## Owner questionnaire status
 
-1. **npm account — required for npm publication.** Zy does not have an npm
-   account yet. Create one at npmjs.com, verify its email, enable 2FA with
-   recovery methods, and provide the username. No paid npm organization is
-   required for the public unscoped `gpupdal` package; maintainers can be added
-   later deliberately.
-
-2. **First binary scope.** Confirm that `v0.1.0` is CLI-only Linux x86-64. The
-   recommendation is to ship every optional plugin off initially. This does not
-   remove PDAL's built-in command/stage catalog or delete plugin source: it
-   prevents untested external SDKs and their transitive libraries, licenses,
-   platform constraints, and much larger bundle closure from entering the
-   first binary. Individual plugins can be added in later reviewed artifacts,
-   or name any plugin that must be part of v0.1.0 now.
-
-3. **Response target.** Confirm the recommended goal of acknowledging security
-   and conduct reports within five business days.
+The initial license, rights, contact, response target, npm owner, platform, and
+plugin-scope decisions are complete. Remaining items below are operational
+release qualification, not unanswered owner policy questions.
 
 ## Dependency and rights audit
 
@@ -107,7 +100,8 @@ whole depends on closed-source PDAL components.
       GPUPDAL citation author while retaining upstream PDAL attribution.
 - [ ] Populate `packages/npm/native-manifest.json` only after an immutable
       public asset exists, set the final version, run a clean npm installation,
-      and publish interactively from Zy’s 2FA-protected npm account.
+      enable 2FA/recovery on `zymazza`, and publish interactively from that
+      account.
 - [ ] Preserve the private GPUPDAL naming-permission email and confirm that its
       exact scope covers the project name and command. Do not publish the email
       unless Zy and its sender intentionally choose to.

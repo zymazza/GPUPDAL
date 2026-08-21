@@ -15,7 +15,8 @@ a minimal non-sensitive reproducer, impact, and the GPUPDAL and pinned-PDAL
 versions. Do not email secrets or private datasets unless a secure transfer
 method has been agreed first.
 
-The monitored contact is now designated. The owner must confirm the proposed
-five-business-day acknowledgement target before the repository becomes public;
-that remaining decision is tracked in
-[RELEASE_READINESS.md](RELEASE_READINESS.md).
+GPUPDAL aims to acknowledge security reports within five business days. This
+is a best-effort open-source project target, not a service-level agreement,
+support contract, warranty, or promise that a fix will be available. The
+software remains provided **AS IS**, without warranties, under
+[LICENSE.txt](LICENSE.txt).

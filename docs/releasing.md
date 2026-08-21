@@ -10,6 +10,13 @@ the public `gpupdal` launcher, `pdg-engine`, the pinned sibling `pdal`, runtime
 libraries, GDAL/PROJ data, notices, checksums, and an SPDX 2.3 software bill of
 materials (SBOM).
 
+Optional external plugins are off in this first artifact to keep its dependency
+and license closure controlled. This does not weaken compatibility within the
+configured catalog: the release gate requires the complete `gpupdal --drivers`
+listing to equal the bundled sibling `pdal --drivers` listing. Both commands
+therefore expose the same built-in stages and defaults, and GPUPDAL delegates
+unsupported accelerated paths to that sibling implementation.
+
 Windows and macOS remain intended platforms, but they are not supported merely
 because the source might compile. Each needs a real-machine build, clean
 install, exact differential suite, and uninstall test. Modern macOS will be a
@@ -72,7 +79,7 @@ native archive. Immediately before the first public publish:
 3. Put the immutable asset URL and SHA-256 in the `linux-x64` manifest entry.
 4. Run `node packages/npm/scripts/validate-package.js`, `npm pack --dry-run`,
    and a clean-directory installation test.
-5. From Zy Mazza's npm account with 2FA enabled, run `npm publish --access
+5. From the `zymazza` npm account with 2FA enabled, run `npm publish --access
    public` inside `packages/npm` and complete the interactive challenge.
 
 No npm token belongs in the repository. npm provenance is intentionally off

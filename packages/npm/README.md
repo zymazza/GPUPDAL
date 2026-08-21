@@ -31,5 +31,6 @@ the Linux bundle.
 
 Publishing the unscoped package makes its current npm maintainers responsible
 for future releases, access changes, deprecation, and maintainer membership.
-The first publish therefore belongs in Zy Mazza's npm account with account 2FA
-enabled; GPUPDAL does not need a paid npm organization for a public package.
+The first publish therefore belongs in Zy Mazza's `zymazza` npm account with
+account 2FA and recovery methods enabled; GPUPDAL does not need a paid npm
+organization for a public package.

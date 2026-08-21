@@ -14,5 +14,5 @@ needed to enforce this policy. Send conduct reports privately to
 **zy@automagics.com** with `GPUPDAL CONDUCT` in the subject. An affected person
 may request reconsideration at the same address with `GPUPDAL APPEAL` in the
 subject; as a single-maintainer project, GPUPDAL cannot yet promise an
-independent appeal reviewer. The acknowledgement target remains tracked in
-[RELEASE_READINESS.md](RELEASE_READINESS.md).
+independent appeal reviewer. GPUPDAL aims to acknowledge a report within five
+business days on a best-effort basis; this is not a contractual service level.

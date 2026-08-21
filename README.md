@@ -6,6 +6,13 @@ public `gpupdal` command is a drop-in command-line replacement for `pdal`: it
 accepts the same commands and pipelines, then chooses between exact CPU and
 CUDA implementations using measured end-to-end performance.
 
+The first binary's optional external plugins are disabled for a controlled,
+portable dependency set. Drop-in behavior is preserved for the complete stage
+catalog configured into that release: the bundle requires `gpupdal --drivers`
+to match its sibling `pdal --drivers`, and unsupported acceleration falls back
+to that exact PDAL implementation. Plugin source remains available for later
+qualified artifacts and source builds.
+
 Default mode prioritizes reproducibility. Deterministic outputs must match the
 frozen reference bytes; inherently nondeterministic containers are
 canonicalized and compared semantically. An accelerated path that cannot meet
@@ -145,6 +152,10 @@ The GPUPDAL-specific BSD non-endorsement clause explicitly protects the names
 GPUPDAL, Zy Mazza, and Automagics: derived products may not use those names to
 imply endorsement or promotion without prior written permission. It does not
 prohibit truthful attribution, compatibility statements, or commercial use.
+
+GPUPDAL is provided **AS IS**, without warranties or a support commitment. The
+five-business-day security/contact acknowledgement target is a best-effort
+project goal, not an SLA, warranty, or promise to provide a fix.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), which
 describes the exactness, testing, and benchmark requirements for changes.
