@@ -70,6 +70,18 @@ timings. An author-run report is prepared evidence; it becomes third-party
 validation only when an unrelated user runs and publishes it. See the full
 [`gpupdal verify` guide](docs/verification.md).
 
+## Benchmark snapshot
+
+![Aggregate wall-clock time for all 18 common jobs, using a zero-based linear y-axis](docs/reports/gpupdal-18-job-linear.png)
+
+Lower is better. Each bar is the summed median wall-clock time for the 18 jobs
+that every compared tool completed at every input size on the reference
+workstation. The y-axis starts at zero and is linear. This is an author-produced
+comparative run, not third-party validation; LAStools ran unlicensed and some
+tools use different algorithms for similarly named jobs. See the
+[full benchmark report](docs/reports/pdg-independent-benchmark.pdf) for methods,
+per-job results, hardware, repeat counts, and limitations.
+
 ## npm installation status
 
 The repository contains the release-safe scaffold for the intended install
@@ -128,6 +140,11 @@ component states different terms. See [LICENSE.txt](LICENSE.txt),
 [NOTICE](NOTICE), [ORIGIN.md](ORIGIN.md), and the
 [third-party inventory](THIRD_PARTY_LICENSES.md) for retained copyright,
 provenance, and third-party notices.
+
+The GPUPDAL-specific BSD non-endorsement clause explicitly protects the names
+GPUPDAL, Zy Mazza, and Automagics: derived products may not use those names to
+imply endorsement or promotion without prior written permission. It does not
+prohibit truthful attribution, compatibility statements, or commercial use.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), which
 describes the exactness, testing, and benchmark requirements for changes.

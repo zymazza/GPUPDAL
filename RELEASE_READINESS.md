@@ -18,7 +18,9 @@ the few owner choices and technical gates that remain.
   may be added later.
 - License: **BSD-3-Clause** for GPUPDAL-owned work. Commercial use by others is
   permitted; Zy may commercialize support, certified builds, hosted services,
-  integrations, warranties, and the GPUPDAL brand.
+  integrations, warranties, and the GPUPDAL brand. The GPUPDAL-specific third
+  clause explicitly bars use of the names GPUPDAL, Zy Mazza, or Automagics to
+  endorse or promote a derived product without prior written permission.
 - Rights: Zy confirms authority to license the existing GPUPDAL-specific code,
   tests, documentation, generated assets, and modifications. Upstream and
   third-party work retains its existing license and attribution.

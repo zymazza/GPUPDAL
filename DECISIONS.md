@@ -12859,3 +12859,17 @@ the compressed fixture but not the 57,053,532-byte blob.
 **Consequences.** The hosted public-history candidate is compact and contains
 all current attribution, decisions, tests, and release preparation. Local
 development remotes unrelated to `zymazza/GPUPDAL` are not rewritten.
+
+## D0294 — Make GPUPDAL name non-endorsement explicit
+
+BSD-3-Clause already contains a non-endorsement condition. Zy requested that
+the GPUPDAL-specific grant name GPUPDAL, Zy Mazza, and Automagics explicitly so
+derived products cannot use those names to imply endorsement or promotion
+without specific prior written permission.
+
+**Decision.** Add a separate GPUPDAL-specific BSD 3-Clause grant with the three
+names in its third condition, and retain the upstream PDAL/Hobu license text
+verbatim as its own grant. This remains BSD-3-Clause: it does not restrict
+commercial use, truthful attribution, or factual compatibility statements.
+Trademark registration and enforcement, if pursued later, are separate from
+this copyright license condition.
