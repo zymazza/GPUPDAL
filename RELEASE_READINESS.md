@@ -60,9 +60,8 @@ plugin-scope decisions are complete. Before publication, Zy still needs to
 review these release-specific choices:
 
 1. **Version/channel:** use `0.1.0-alpha.1` for the first public compatibility
-   preview (recommended while upstream-suite and CUDA artifact gates remain
-   open), or wait and publish stable `0.1.0` only after those
-   gates close.
+   preview (recommended for a clearly labeled CPU-only first artifact), or wait
+   and publish stable `0.1.0` only after the selected release gates close.
 2. **First public binary:** approve a clearly labeled CPU-only compatibility
    preview, or wait for physically qualified CUDA artifacts. The controlled
    Debian archive currently has `PDG_ENABLE_CUDA=OFF`; it preserves configured
