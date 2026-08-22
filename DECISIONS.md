@@ -12979,3 +12979,21 @@ materially enlarge and complicate every install for an auxiliary command.
 The checked-in development manifest remains intentionally empty and unpublishable;
 final version selection, a clean-commit native build, staged pack/install tests,
 and explicit owner authorization still precede any registry publication.
+
+## D0299 — Rehearse the private-source npm delivery path without publishing
+
+Clean commit `984e2d21aae51677da1f0cc8bd22f7f7da4ae301` produced the controlled
+Debian 12 archive `gpupdal-0.0.0-test.1-linux-x64.tar.gz` with SHA-256
+`d1661a0cf0ce2703af62c126afeb720ccd033c9cc61d4f95fc1918709b6aa812`.
+The archive passed a read-only, non-root bare-Debian smoke after the smoke
+tmpfs was explicitly mounted executable. Its staged npm package verified all
+291 native checksum entries; `npm pack --dry-run` reported 300 total entries,
+51,482,737 compressed bytes, and 130,510,405 unpacked bytes. Installing the
+actual tarball into an empty temporary prefix with lifecycle scripts disabled
+then passed `gpupdal --version` and `gpupdal --drivers`.
+
+**Consequences.** The Linux npm delivery mechanism is qualified independently
+of GitHub visibility, post-install downloads, and registry publication. This
+test version is intentionally nonpublic and is not a release selection. The
+owner's final version/binary choice, the full final conformance report, a
+repeat build from that final clean commit, and explicit publish approval remain.

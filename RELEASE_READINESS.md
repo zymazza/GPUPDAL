@@ -126,7 +126,12 @@ PDAL components.
 - [ ] After the owner selects a version and binary lane, rebuild from the clean
       commit, place the immutable archive inside the npm package, populate
       `packages/npm/native-manifest.json`, and run pack plus clean-install
-      tests. The bundled-archive design works while GitHub remains private.
+      tests. A nonpublic `0.0.0-test.1` rehearsal from clean commit
+      `984e2d21a` passed archive validation, read-only/non-root bare-Debian
+      smoke, a 300-entry npm dry run, and a clean local install with both
+      `gpupdal --version` and `gpupdal --drivers`. The bundled-archive design
+      works while GitHub remains private; repeat the same gate for the selected
+      final version and binary lane.
       Authenticate with an npm-supported publication method and publish from
       `zymazza` only with explicit final approval; remove temporary credential
       material after verifying the registry package.

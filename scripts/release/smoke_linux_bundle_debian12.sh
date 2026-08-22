@@ -13,7 +13,7 @@ docker run --rm \
     --security-opt no-new-privileges \
     --read-only \
     --user 65534:65534 \
-    --tmpfs /work:rw,nosuid,nodev,size=1g \
+    --tmpfs /work:rw,exec,nosuid,nodev,size=1g \
     --env LC_ALL=C \
     --volume "${archive}:/archive.tar.gz:ro" \
     "${base_image}" \
