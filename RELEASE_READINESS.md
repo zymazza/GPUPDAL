@@ -43,10 +43,12 @@ the few owner choices and technical gates that remain.
   pinned-Debian Linux bundle, SPDX SBOM generator, and non-root bare-container
   smoke now exist; final clean-commit and selected-binary qualification remain
   engineering gates below.
-- Howard Butler's GPUPDAL naming permission is in the owner's email. It need
-  not be published or committed. Preserve the original message and a backup
-  privately before launch, including its date, sender, recipients, and exact
-  scope; public documentation may say “permission on file.”
+- Howard Butler's GPUPDAL naming permission is in the owner's email. Zy
+  confirmed that it expressly covers the project name; the lowercase
+  `gpupdal` executable is the ordinary command form of that same name and does
+  not need a separate follow-up absent limiting language in the message. The
+  email need not be published or committed. Preserve the original and one
+  private backup; public documentation may say “permission on file.”
 - History cleanup: Zy approved rewriting the short private GPUPDAL history once
   a smaller equivalent test fixture existed. The same Autzen raster now exists
   as a losslessly compressed 305 KB fixture, satisfying that condition; the
@@ -66,10 +68,6 @@ review these release-specific choices:
    preview, or wait for physically qualified CUDA artifacts. The controlled
    Debian archive currently has `PDG_ENABLE_CUDA=OFF`; it preserves configured
    PDAL behavior but is not a GPU acceleration binary.
-3. **Naming record:** confirm the original Howard Butler email and one private
-   backup preserve the date, participants, and permission scope for both the
-   GPUPDAL project name and `gpupdal` command. The email need not be public.
-
 Actual npm publication and any change from private to public visibility are
 separate, explicit owner actions after the selected gates pass.
 
@@ -134,9 +132,10 @@ PDAL components.
       Authenticate with an npm-supported publication method and publish from
       `zymazza` only with explicit final approval; remove temporary credential
       material after verifying the registry package.
-- [ ] Preserve the private GPUPDAL naming-permission email and confirm that its
-      exact scope covers the project name and command. Do not publish the email
-      unless Zy and its sender intentionally choose to.
+- [x] Preserve the private GPUPDAL naming-permission email. Zy confirmed the
+      permission expressly covers the GPUPDAL project name; no separate
+      command-name confirmation is required absent limiting language. Do not
+      publish the email unless Zy and its sender intentionally choose to.
 - [ ] Review committed evidence for private paths or corpus details before
       changing repository visibility. The clean bootstrap snapshot passed a
       high-confidence secret scan on 2026-08-21.

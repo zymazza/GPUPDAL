@@ -12997,3 +12997,19 @@ of GitHub visibility, post-install downloads, and registry publication. This
 test version is intentionally nonpublic and is not a release selection. The
 owner's final version/binary choice, the full final conformance report, a
 repeat build from that final clean commit, and explicit publish approval remain.
+
+## D0300 — Treat the permitted project name as the ordinary command name
+
+Zy confirmed that Howard Butler's private email expressly permits the
+**GPUPDAL** project name. The message did not separately enumerate the
+lowercase `gpupdal` executable, and Zy prefers not to request redundant
+confirmation. The release record treats that executable as the ordinary
+command form of the permitted software name, not as a distinct product name.
+No follow-up is required unless the original message contains language that
+limits the permitted use to a repository, document title, or other narrower
+context.
+
+**Consequences.** The naming-permission owner gate is complete. Preserve the
+original email and one private backup; do not commit or publish it. This is a
+project risk-record decision, not a claim of trademark registration or a
+general trademark clearance opinion.
