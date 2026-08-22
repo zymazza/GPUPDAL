@@ -1,0 +1,7 @@
+Component: NVIDIA CUDA C++ Core Libraries (CCCL) 3.4.0
+Source: https://github.com/NVIDIA/cccl/blob/v3.4.0/LICENSE
+Raw source: https://raw.githubusercontent.com/NVIDIA/cccl/v3.4.0/LICENSE
+SHA-256: f96f51edda77fb9897de29d924d615e6bd153f4969db85fc6b7a22d7a624631e
+
+CCCL is a compile-time dependency. The adjacent CCCL-3.4.0.txt file is the
+unmodified combined license from that pinned upstream tag.

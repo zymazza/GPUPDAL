@@ -5,11 +5,11 @@ for the project repository and is not part of the release gate.
 
 ## Supported artifacts
 
-The first stable native package is Linux x86-64 with CUDA 13. It is a CLI
-distribution containing the public `gpupdal` launcher, CUDA-capable
-`pdg-engine`, the pinned sibling `pdal`, runtime libraries, GDAL/PROJ data,
-notices, checksums, and an SPDX 2.3 software bill of materials (SBOM). The
-driver is a host prerequisite and is never bundled.
+The `0.1.0` npm release target carries CUDA 13 native payloads for Linux x86-64
+and Windows x64. Each is a CLI distribution containing the public `gpupdal`
+launcher, CUDA-capable `pdg-engine`, the pinned sibling `pdal`, runtime
+libraries, GDAL/PROJ data, notices, checksums, and an SPDX 2.3 software bill of
+materials (SBOM). The driver is a host prerequisite and is never bundled.
 
 Optional external plugins are off in this first artifact to keep its dependency
 and license closure controlled. This does not weaken compatibility within the
@@ -18,12 +18,11 @@ listing to equal the bundled sibling `pdal --drivers` listing. Both commands
 therefore expose the same built-in stages and defaults, and GPUPDAL delegates
 unsupported accelerated paths to that sibling implementation.
 
-Windows and macOS remain intended platforms, but they are not supported merely
-because the source might compile. Each needs a real-machine build, clean
-install, exact differential suite, and uninstall test. Modern macOS will be a
-CPU-only compatibility build because current CUDA toolkits do not support
-macOS. Windows can gain CUDA support after the same physical-GPU gates as
-Linux.
+Windows is accepted only after its real-machine build, clean GPU and
+driverless installs, exact differential, npm local/global install, and
+uninstall gates pass. Modern macOS remains an intended CPU-only compatibility
+build because current CUDA toolkits do not support macOS; it still needs its
+own real-machine qualification before being added to the support matrix.
 
 ## Build a Linux bundle
 
@@ -118,6 +117,47 @@ engine and delegates directly to the bundled pinned PDAL command on a
 driverless machine. The separate no-driver smoke proves that delegation is
 byte-exact in a container with neither NVIDIA devices nor a CUDA toolkit.
 
+## Build and qualify the Windows CUDA artifact
+
+Configure an optimized x64 Ninja `Release` or `RelWithDebInfo` build with
+Visual Studio 2022, CUDA 13.3,
+`GPUPDAL_ENABLE_CUDA=ON`, `PDG_CUDA_ARCHITECTURES=all`,
+`PDG_REQUIRE_PORTABLE_CUDA_ARCHITECTURES=ON`, a full clean Git revision in
+`GPUPDAL_SOURCE_REVISION`, and optional plugins off. Build serially. Then run
+the maintained bundle target:
+
+```powershell
+cmake --build C:\gpupdal\build-cuda --parallel 1 `
+  --target pdg_cli pdg_engine pdal pdg_verify_helpers
+cmake --build C:\gpupdal\build-cuda --parallel 1 `
+  --target gpupdal_windows_bundle
+```
+
+The bundle target rejects the wrong version/revision, a dirty Git source tree,
+non-portable architecture settings, enabled optional plugins, unresolved DLLs,
+unowned Conda data, missing license files, an incomplete CUDA image set,
+embedded personal or noncanonical build paths, unchecksummed archive entries,
+and extracted startup or driver-catalog failures. It copies the app-local
+Visual C++ runtime, CUDA runtime/NVRTC libraries, GDAL/PROJ/PDAL data, CA
+roots, third-party notices, the runtime dependency map, and an SPDX SBOM. It
+never copies the NVIDIA host driver.
+
+Run the complete unit/CTest and Compute Sanitizer gates from a separate
+same-revision SM 89 qualification build configured for the physical device.
+Do not compile every test-only CUDA translation unit for all portable cubins;
+the product artifact carries the all-architecture image, while the tests prove
+the physically available architecture.
+
+Run `scripts/release/test_windows_bundle.ps1` on two separate clean Windows
+hosts: one x64 SM 89 machine with only the NVIDIA driver added and one x64
+machine with no NVIDIA driver. The GPU lane requires a forced CUDA fused
+pipeline and byte-exact output against the bundled PDAL oracle. The driverless
+lane requires byte-exact direct fallback, including a reprojection that proves
+the launcher discovers bundle-relative GDAL/PROJ data before dispatch. Both
+lanes reject compiler, CMake, Conda, and CUDA-toolkit commands on `PATH` and
+exercise local and global npm install, command discovery, exact output, and
+uninstall from the final npm tarball.
+
 ## Required release checks
 
 Run these serially, retaining the logs and exact commit SHA. The controlled
@@ -154,7 +194,8 @@ Immediately before the first public publish:
    ```sh
    node packages/npm/scripts/prepare-release.js \
      --version 0.1.0 \
-     --archive dist/gpupdal-0.1.0-linux-x64-cuda13.tar.gz \
+     --linux-archive dist/gpupdal-0.1.0-linux-x64-cuda13.tar.gz \
+     --windows-archive dist/gpupdal-0.1.0-win32-x64-cuda13.zip \
      --output dist/npm/gpupdal
    ```
 

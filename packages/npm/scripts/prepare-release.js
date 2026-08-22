@@ -84,6 +84,11 @@ for (const executable of ["gpupdal", "pdg-engine", "pdal"]) {
 
 const windowsDirectory = path.join(output, "native", "win32-x64");
 fs.mkdirSync(windowsDirectory, { recursive: true, mode: 0o755 });
+const unzipProbe = spawnSync("unzip", ["-v"], { stdio: "ignore" });
+if (unzipProbe.error || unzipProbe.status !== 0) {
+  throw unzipProbe.error ||
+    new Error("unzip is required to stage the Windows release archive");
+}
 const windowsExtracted = spawnSync("unzip", [
   "-q", windowsArchive, "-d", windowsDirectory
 ], { stdio: "inherit" });

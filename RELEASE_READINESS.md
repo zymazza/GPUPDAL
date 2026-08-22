@@ -2,16 +2,17 @@
 
 Status date: 2026-08-22
 
-Target: first stable CUDA release (proposed version `0.1.0`; owner approval
-still required before publication)
+Target: first stable CUDA release, version `0.1.0` on npm's `latest` channel
+(owner approved)
 
 Current repository posture: private development
 
-The clean `0.1.0` CUDA release candidate is physically qualified on the
+The clean Linux `0.1.0` CUDA release candidate is physically qualified on the
 declared RTX 4090 / SM 89 support profile, including the final conformance and
-npm clean-install rehearsals. GPUPDAL has not been published. The remaining
-release gates are the owner's explicit npm-publication and
-repository-visibility approvals.
+npm clean-install rehearsals. GPUPDAL has not been published. The owner has
+approved publishing `0.1.0` as npm `latest`; publication waits on the Windows
+artifact gates below and npm authentication. The source repository remains
+private unless the owner separately approves changing its visibility.
 
 ## Owner answers recorded
 
@@ -30,22 +31,24 @@ repository-visibility approvals.
 - Public security/conduct contact: **zy@automagics.com**. GPUPDAL aims to
   acknowledge reports within five business days on a best-effort basis. This
   is not an SLA, warranty, support promise, or guarantee of a fix.
-- npm owner: **zymazza**. Authentication was verified without publishing or
-  reserving a package. The owner's npm authentication configuration is private
-  operational information rather than project release metadata.
-- First binary scope: CLI-only Linux x86-64 with optional external plugins off.
-  Drop-in behavior covers the complete configured stage catalog and is gated
-  by exact `gpupdal --drivers` parity with the bundled sibling `pdal`; plugin
-  source remains available for later artifacts and source builds.
+- npm owner: **zymazza**. Final publication requires a fresh authenticated npm
+  session after the engineering gates pass. The owner's npm authentication
+  configuration is private operational information rather than project release
+  metadata.
+- First binary scope: CLI-only Linux x86-64 and Windows x64 bundles with
+  optional external plugins off. Drop-in behavior covers the complete
+  configured stage catalog on each platform and is gated by exact
+  `gpupdal --drivers` parity with its bundled sibling `pdal`; plugin source
+  remains available for later artifacts and source builds.
 - Stable-product meaning: the first stable package is the CUDA 13 artifact,
   and supported measured envelopes must select real GPU execution. A CPU-only
   archive may be shipped as a compatibility companion, but is not the stable
   GPUPDAL acceleration product.
-- Long-term platforms: Linux, Windows, and macOS. The first supported native
-  artifact is Linux x86-64. Windows Server 2022 source-build and physical L4
-  CUDA qualification is complete, but a redistributable Windows bundle and
-  its clean-machine package gates remain future work. Modern macOS is CPU-only
-  and still requires real-machine validation.
+- Long-term platforms: Linux, Windows, and macOS. Linux x86-64 is qualified.
+  Windows Server 2022 source-build and physical L4 CUDA qualification is
+  complete; the redistributable Windows bundle and clean-machine package gates
+  below are active work for `0.1.0`, not deferred work. Modern macOS is
+  CPU-only and still requires real-machine validation.
 - Release operation: local/manual. GitHub Actions was disabled for the private
   repository on 2026-08-21; no paid hosted CI is a release requirement.
 - Native packaging is project work, not an owner prerequisite. A maintained
@@ -67,15 +70,10 @@ repository-visibility approvals.
 ## Owner review still needed
 
 The initial license, rights, contact, response target, npm owner, platform,
-plugin scope, and stable CUDA binary decisions are complete. Before
-publication, Zy still needs to approve:
-
-1. **Version/channel:** publish the physically qualified CUDA artifact as
-   stable `0.1.0` on npm's `latest` channel (recommended), or choose a different
-   version/channel and repeat the version-bound archive/npm staging.
-2. **External state changes:** separately authorize the actual npm publication
-   and changing `zymazza/GPUPDAL` from private to public. Neither action is
-   implied by approving the engineering candidate.
+plugin scope, stable CUDA binary, version/channel, and npm-publication
+decisions are complete. Zy has not approved changing `zymazza/GPUPDAL` from
+private to public; that remains a separate future decision and is not required
+for the public npm binary package.
 
 ## Dependency and rights audit
 
@@ -177,9 +175,15 @@ closed-source PDAL components.
       changing repository visibility. A 2026-08-22 credential-pattern scan is
       clean, and the new `0.1.0` report contains only container-local
       `/qualification` paths. Historical agent guidance and benchmark JSON
-      intentionally retain `/home/zy` provenance strings and local corpus
-      names. Before making the repository public, Zy must approve retaining
-      those non-secret strings or authorize a mechanical redaction pass.
+      intentionally retain non-secret provenance strings: absolute
+      `/home/zy/...` paths, local corpus/project labels such as `adklr`, `veil`,
+      and `snow-road-twin`, and measured-machine labels such as Ryzen 9 7900,
+      RTX 4090, and driver versions. They are evidence about where a result
+      came from, not credentials, tokens, private keys, AWS identifiers, or
+      personal file contents. Before making the repository public, Zy must
+      approve retaining those strings or authorize a mechanical redaction of
+      the absolute home paths and local project names. Hardware and dataset
+      hashes should remain because benchmark claims depend on them.
 - [x] Losslessly compress
       `test/data/autzen/autzen-surface.tif.min.tif` from 54.41 MB to about
       305 KB while preserving raster values and geospatial metadata.
@@ -195,9 +199,12 @@ closed-source PDAL components.
       so no universal speedup is claimed. This is not a blocker for the narrow
       SM 89 automatic-acceleration support statement.
 
-## Future Windows artifact gates
+## Windows `0.1.0` artifact gates
 
-These items do not block the qualified Linux x86-64 `0.1.0` candidate.
+These items now gate the multi-platform npm `0.1.0` publication. They were
+mistakenly described as future work after source-level Windows qualification;
+the redistributable artifact and clean-machine checks are part of the current
+release task.
 
 - [x] Compile the native `gpupdal`, `pdg-engine`, and `pdg_unit_tests`
       targets on Windows Server 2022 with Visual Studio 2022/MSVC 19.44 and

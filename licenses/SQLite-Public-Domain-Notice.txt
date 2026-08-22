@@ -1,0 +1,13 @@
+SQLite public-domain notice
+
+Component: SQLite (the Windows release currently carries libsqlite 3.53.4)
+Conda package license declaration: blessing
+Official rights notice: https://www.sqlite.org/copyright.html
+
+SQLite's authors dedicate the deliverable SQLite code and documentation to
+the public domain. The official notice permits anyone to copy, modify,
+publish, use, compile, sell, or distribute that deliverable code, in source
+or binary form, for any commercial or non-commercial purpose.
+
+This file records the authoritative upstream status for the redistributed
+SQLite runtime. It is not a new license imposed by GPUPDAL.

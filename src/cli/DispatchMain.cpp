@@ -77,6 +77,32 @@ std::filesystem::path executablePath(const char* executable)
 #endif
 }
 
+#ifdef _WIN32
+void configureBundledRuntimeEnvironment(const char* executable)
+{
+    const std::filesystem::path self = executablePath(executable);
+    if (self.empty())
+        return;
+    const std::filesystem::path root = self.parent_path();
+    const auto setBundledPath = [&](const wchar_t* name,
+                                    const std::filesystem::path& path)
+    {
+        if (::GetEnvironmentVariableW(name, nullptr, 0) != 0)
+            return;
+        std::error_code error;
+        if (!std::filesystem::exists(path, error) || error)
+            return;
+        ::SetEnvironmentVariableW(name, path.c_str());
+    };
+    setBundledPath(L"GDAL_DATA", root / "share" / "gdal");
+    setBundledPath(L"PROJ_DATA", root / "share" / "proj");
+    setBundledPath(L"CURL_CA_BUNDLE", root / "share" / "certs" /
+                                             "cacert.pem");
+    setBundledPath(L"SSL_CERT_FILE", root / "share" / "certs" /
+                                           "cacert.pem");
+}
+#endif
+
 int setEnvironment(std::string_view name, const char* value)
 {
     const std::string ownedName(name);
@@ -472,6 +498,11 @@ bool commandRequiresEngine(int argc, char** argv,
 
 int main(int argc, char** argv, char** environmentPointers)
 {
+#ifdef _WIN32
+    // Configure the bundle before choosing the engine or the sibling PDAL
+    // fallback. A driverless launch may never enter pdg-engine.exe.
+    configureBundledRuntimeEnvironment(argv[0]);
+#endif
     const std::vector<std::string_view> environment =
         presentDispatchEnvironment(environmentPointers);
     // `gpupdal --fast <command> ...` (D0261/D0271): the leading flag is consumed

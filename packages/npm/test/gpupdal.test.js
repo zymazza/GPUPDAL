@@ -178,7 +178,7 @@ test("Windows native verification requires .exe files without Unix mode bits", (
       path.join(native, "SHA256SUMS"),
       `${names.map((filename) =>
         `${sha256(path.join(native, filename))}  ./${filename}`
-      ).join("\n")}\n`
+      ).join("\r\n")}\r\n`
     );
     assert.equal(verifyNativeTree(directory, entry), 3);
   } finally {

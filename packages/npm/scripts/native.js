@@ -66,7 +66,7 @@ function verifyNativeTree(packageRoot, entry) {
   if (!fs.lstatSync(sumsPath, { throwIfNoEntry: false })?.isFile()) {
     throw new Error("native SHA256SUMS is missing");
   }
-  const lines = fs.readFileSync(sumsPath, "utf8").trimEnd().split("\n");
+  const lines = fs.readFileSync(sumsPath, "utf8").trimEnd().split(/\r?\n/);
   if (lines.length === 0) {
     throw new Error("native SHA256SUMS is empty");
   }
