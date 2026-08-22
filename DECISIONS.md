@@ -12885,8 +12885,97 @@ plugins can enter later artifacts only with their dependency, license, platform,
 and clean-install gates.
 
 The npm account is `zymazza`; authentication was verified without publishing a
-package. Account 2FA and recovery configuration remain required before the
-first publication. The public security/conduct contact remains
+package. npm's August 2026 policy permits direct publication without account
+2FA when a narrowly scoped granular write token has **Bypass 2FA** enabled, so
+account 2FA is recommended but is not a GPUPDAL release requirement. No
+publication credential is retained in the repository. The public
+security/conduct contact remains
 `zy@automagics.com`, with a five-business-day best-effort acknowledgement goal.
 That goal is explicitly not an SLA, support contract, warranty, promise of a
 fix, or modification of the BSD **AS IS** disclaimer.
+
+## D0296 — Pin the first Linux release environment and exact oracle build
+
+The workstation-linked developer archive did not establish an oldest-supported
+glibc baseline or a reviewable geospatial dependency closure. The release lane
+now builds in the pinned official Debian 12 image
+`sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241`,
+uses checksummed CMake 3.28.6 and GDAL 3.8.5 sources, and builds GDAL with the
+bounded driver set, command-line applications, and GEOS support needed by the
+exact differential corpus.
+
+The lane creates a true detached checkout of the commit in
+`cmake/pdg-oracle.cmake` and builds that checkout as the oracle. A source archive
+or nested checkout of the current tree is insufficient because PDAL embeds its
+source revision in observable LAS metadata. GPUPDAL compilation and packaging
+run with networking disabled, at no more than two compile jobs. The current
+CPU-only archive contains 51 runtime dependency rows, 45 copied system notice
+sets, 47 SPDX packages, 290 files, 337 relationships, and no missing-license
+marker. Its internal and outer hashes, relative runtime paths, configured driver
+parity, private-path scan, and non-root bare-Debian startup pass. The controlled
+unit result is 447 passed with two optional local-corpus skips; the exact
+differential result is 98/98. The host ASan/UBSan lane passes all 454 applicable
+tests with five intentional fixture-dependent skips and no sanitizer finding;
+the preset disables LeakSanitizer because the managed workstation tracer cannot
+host it, while retaining address and undefined-behavior checks.
+
+**Consequences.** Debian 12/glibc 2.36 is the oldest-supported baseline for this
+candidate, and the prior broad workstation GDAL closure is not a release input.
+This closes the reproducible CPU bundle and dependency-notice work; it does not
+qualify CUDA artifacts, the full sequential upstream suite, or a public version.
+
+## D0297 — Bind neighborhood covariance to the pinned PDAL arithmetic
+
+A clean GCC 12 release build exposed two independent weaknesses: the resident
+covariance path's hand-written arithmetic was not bit-identical to the pinned
+PDAL `pdal::math::computeCovariance` implementation for every kNN row, and the
+test's second hand-written oracle could agree or disagree based on its compiler
+context. Compatibility mode now uses a separately attributed covariance helper
+with the pinned upstream operation order and Eigen expression shape. The unit
+test links the pinned `pdal/private/MathUtils.cpp` implementation itself and
+constructs a PDAL `PointView`, so the oracle is no longer another transcription
+of the product code.
+
+The same clean build diagnosed GCC 12 `-Wmaybe-uninitialized` false positives
+around six direct-placement `std::optional` values. Those values now use the
+existing `NoResidentRegion` sentinel after explicit successful validation;
+placement selection and calibrated model names are unchanged.
+
+The published upstream-suite build under GCC 16 also rejected `GDALWriter`'s
+inline constructor because exception cleanup instantiated a `unique_ptr` whose
+private `BandWorkers` pointee was still incomplete. Its constructor and virtual
+destructor now live after the private type definition in `GDALWriter.cpp`;
+object state and writer behavior are unchanged.
+
+After that portability fix, all 142 tests in the sequential published upstream
+PDAL suite pass. The two network-dependent STAC/COPC tests were rerun against
+their official public fixtures after the initial network-isolated run passed
+the other 140.
+
+**Consequences.** Default neighborhood covariance is byte-gated against the
+actual pinned upstream helper. The retained upstream BSD header and existing
+NOTICE attribution cover the derived product helper. The GDAL writer ownership
+change is source-level compiler portability only. No performance claim or
+automatic-selection envelope changes.
+
+## D0298 — Make npm independent of source visibility and keep verification optional
+
+A public npm installer cannot anonymously fetch a release asset from a private
+GitHub repository. A second download also adds mutable hosting, lifecycle-script,
+and system-`tar` failure modes. The release staging command now extracts the
+checksummed Linux bundle into `native/linux-x64` before `npm pack`; npm's
+immutable package tarball carries that complete tree. Prepack validates the
+release manifest, required executables, and every entry in the bundle's
+`SHA256SUMS`. The installed `gpupdal` command therefore needs neither GitHub
+access nor a postinstall script.
+
+The core PDAL-compatible CLI has no Python runtime dependency. The optional
+`gpupdal verify` evidence command remains a standard-library Python helper and
+now reports clearly when `python3` is absent from `PATH`; its process-boundary
+test covers that status-127 contract. Bundling a private Python runtime would
+materially enlarge and complicate every install for an auxiliary command.
+
+**Consequences.** Private source visibility no longer blocks `npm i gpupdal`.
+The checked-in development manifest remains intentionally empty and unpublishable;
+final version selection, a clean-commit native build, staged pack/install tests,
+and explicit owner authorization still precede any registry publication.

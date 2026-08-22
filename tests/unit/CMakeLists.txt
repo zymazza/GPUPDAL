@@ -1,3 +1,19 @@
+# The math helpers are private libpdal symbols, so link the pinned upstream
+# implementation directly into the test executable as the compatibility
+# oracle.  Keep its language and code-generation settings aligned with PDAL.
+add_library(pdg_pinned_pdal_math_oracle OBJECT
+    ${PROJECT_SOURCE_DIR}/pdal/private/MathUtils.cpp)
+pdal_lib_compile_settings(pdg_pinned_pdal_math_oracle)
+set_target_properties(pdg_pinned_pdal_math_oracle PROPERTIES
+    POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(pdg_pinned_pdal_math_oracle PRIVATE PDAL::PDAL)
+target_include_directories(pdg_pinned_pdal_math_oracle PRIVATE
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}/include
+    ${PDAL_VENDOR_EIGEN_DIR}
+    ${PROJECT_SOURCE_DIR}/vendor/nlohmann
+    ${PROJECT_SOURCE_DIR}/vendor)
+
 add_executable(pdg_unit_tests
     color_map_test.cpp
     compaction_test.cpp
@@ -38,6 +54,8 @@ add_executable(pdg_unit_tests
     spatial_tile_test.cpp
     spatial_index_test.cpp
     summary_test.cpp)
+target_sources(pdg_unit_tests PRIVATE
+    $<TARGET_OBJECTS:pdg_pinned_pdal_math_oracle>)
 target_sources(pdg_unit_tests PRIVATE transformation_test.cpp)
 target_sources(pdg_unit_tests PRIVATE robust_test.cpp)
 target_sources(pdg_unit_tests PRIVATE scheduler_test.cpp)
@@ -56,7 +74,9 @@ target_link_libraries(pdg_unit_tests PRIVATE
     GTest::gtest_main)
 target_include_directories(pdg_unit_tests PRIVATE
     ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}/include
     ${PDAL_VENDOR_EIGEN_DIR}
+    ${PROJECT_SOURCE_DIR}/vendor/nlohmann
     ${PROJECT_SOURCE_DIR}/vendor)
 target_compile_definitions(pdg_unit_tests PRIVATE
     PDG_TEST_DATA_DIR="${PROJECT_SOURCE_DIR}/test/data")

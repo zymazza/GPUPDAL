@@ -17,12 +17,13 @@
   "files": [
     "bin/",
     "scripts/",
+    "native/",
     "LICENSE.txt",
     "README.md",
     "native-manifest.json"
   ],
   "scripts": {
-    "postinstall": "node scripts/install.js",
+    "prepare-release": "node scripts/prepare-release.js",
     "prepack": "node scripts/validate-package.js",
     "test": "node --test test/*.test.js"
   },

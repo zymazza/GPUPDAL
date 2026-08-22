@@ -59,6 +59,9 @@ binary with the configured frozen reference on the same machine. It performs
 one warm-up followed by three alternating complete-process timing pairs,
 checks exactness, and writes portable JSON and HTML evidence:
 
+The optional verifier requires Python 3 on `PATH`. Ordinary PDAL-compatible
+commands do not require Python.
+
 ```sh
 gpupdal verify --output-dir gpupdal-proof
 ```

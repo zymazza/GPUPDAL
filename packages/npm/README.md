@@ -11,18 +11,21 @@ npx gpupdal --version
 For a shell-wide command, use `npm install --global gpupdal` followed by
 `gpupdal --version`.
 
-GPUPDAL is native software. The npm package is a small launcher and installer,
-not a JavaScript reimplementation. On install it selects the declared
-platform artifact, downloads it from the matching GitHub release, verifies the
-archive's SHA-256 digest, and installs the complete sibling bundle needed by
+GPUPDAL is native software. The npm package is a small launcher distribution,
+not a JavaScript reimplementation. The immutable npm package carries the
+declared platform files themselves, so installation does not depend on access
+to the source repository, a second download host, or an npm lifecycle script.
+Before packing, every file is verified against the release archive's internal
+`SHA256SUMS`. The native tree contains the complete sibling bundle needed by
 the launcher (`gpupdal`, `pdg-engine`, and the pinned `pdal` oracle).
 
 The checked-in manifest is intentionally empty and the development version is
-rejected by `prepack`. The manual release process must set one version in both
-`package.json` and `native-manifest.json`, add the immutable Linux x86-64 asset
-URL and digest, run the tests, perform a clean-machine install, and only then
-run an authenticated `npm publish --access public` from the owner's npm
-account.
+rejected by `prepack`. The manual release process stages one version and the
+matching Linux x86-64 archive under `dist/npm/gpupdal`, records its relative
+path and digest, runs the tests, performs a clean-machine install, and only
+then runs an authenticated `npm publish --access public` from the owner's npm
+account. See `docs/releasing.md` in the source repository for the exact
+commands.
 The package intentionally disables npm provenance for now because npm does not
 support provenance from a local manual publish or a private source repository.
 

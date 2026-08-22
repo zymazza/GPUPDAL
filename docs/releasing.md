@@ -26,39 +26,56 @@ Linux.
 
 ## Build a Linux bundle
 
-Check resources, configure the maintained release preset, and use no more than
-two host compile jobs on the reference workstation:
+Check resources and run the maintained Debian 12 container build. It pins the
+official base-image digest, installs only the required compiler and geospatial
+development packages, builds pinned GDAL 3.8.5 with its required command-line
+tools and GEOS support, creates a detached checkout and build of the exact
+oracle commit from `cmake/pdg-oracle.cmake`, disables networking during
+GPUPDAL compilation and packaging, and uses no more than two compile jobs:
 
 ```sh
 free -h
-cmake --preset pdg-host-release
-cmake --build build/pdg-host-release --target gpupdal_linux_bundle --parallel 2
+scripts/release/build_linux_bundle_debian12.sh
 ```
 
+The resulting binaries require glibc 2.36 or newer. Debian 12 is the declared
+oldest-supported build environment for the first Linux artifact; clean-install
+qualification on other advertised distributions remains mandatory.
+
 The artifact and its outer SHA-256 file are written under `dist/`. The bundle
-target builds the required executables, discovers their transitive shared
+records the pinned base image, compiler, CMake, glibc, and source revision in
+`BUILD-ENVIRONMENT.txt`. The target builds the required executables, discovers
+their transitive shared
 libraries, excludes the host glibc and GPU driver, copies package-manager
 license material, records `RUNTIME_DEPENDENCIES.tsv`, creates
 `SBOM.spdx.json`, assigns bundle-relative ELF runtime paths, rejects embedded
 local source paths, verifies the archive's internal checksums and npm layout,
 compares `gpupdal --drivers` with its sibling `pdal`, and runs an extracted
-`gpupdal verify` smoke test in a minimal environment.
+`gpupdal verify` smoke test in a clean environment. The optional verification
+command requires Python 3 on `PATH`; normal PDAL-compatible commands do not.
 
-This workstation artifact is a developer release candidate until the same
-recipe runs in the selected oldest-supported Linux build environment and the
-archive passes a clean install on every advertised distribution. Before
-publication, inspect `licenses/SYSTEM-LICENSES-MISSING.txt` if present and
-review every runtime dependency and notice.
+The archive remains a release candidate until it passes a clean install on
+every advertised distribution. Before publication, inspect
+`licenses/SYSTEM-LICENSES-MISSING.txt` if present and review every runtime
+dependency and notice.
+
+Run the dependency-free core smoke in a read-only, non-root Debian 12
+container. It verifies internal hashes, startup, driver parity, and the clear
+diagnostic for the optional Python-based verifier:
+
+```sh
+scripts/release/smoke_linux_bundle_debian12.sh \
+  dist/gpupdal-0.1.0-dev-linux-x64.tar.gz
+```
 
 ## Required release checks
 
-Run these serially, retaining the logs and exact commit SHA:
+Run these serially, retaining the logs and exact commit SHA. The controlled
+Debian build directory records `/src`, so execute its tests through the same
+container rather than invoking that build directory directly from the host:
 
 ```sh
-ctest --preset pdg-host-release
-cmake --build build/pdg-host-debug --target pdg_differential_prerequisites
-ctest --test-dir build/pdg-host-debug -L differential --output-on-failure
-npm test --prefix packages/npm
+scripts/release/test_linux_bundle_debian12.sh
 git diff --check
 ```
 
@@ -68,21 +85,36 @@ on physical supported GPUs, and Compute Sanitizer memcheck/racecheck. A local
 
 ## npm publication
 
-The npm package is a small launcher that downloads the complete, checksummed
-native archive. Immediately before the first public publish:
+The npm package is a small launcher carrying the complete, checksummed native
+tree inside the immutable npm tarball. It needs no post-install download or
+lifecycle script and remains independent of the private source repository.
+Immediately before the first public publish:
 
-1. Publish the immutable native archive at a URL accessible without GitHub
-   credentials. A release asset in a private repository cannot serve public
-   `npm install` users.
-2. Set the same non-development version in `CMakeLists.txt`,
-   `packages/npm/package.json`, and `packages/npm/native-manifest.json`.
-3. Put the immutable asset URL and SHA-256 in the `linux-x64` manifest entry.
-4. Run `node packages/npm/scripts/validate-package.js`, `npm pack --dry-run`,
-   and a clean-directory installation test.
-5. Authenticate as `zymazza` with an npm-supported publication method. Run
-   `npm publish --access public` inside `packages/npm`, keeping any temporary
-   credential configuration outside the repository with mode 0600.
-6. Verify the published version and a clean install, delete the temporary npm
+1. Choose one non-development version for the controlled build and npm
+   staging. A non-development bundle refuses a dirty source tree:
+
+   ```sh
+   GPUPDAL_RELEASE_VERSION=0.1.0-alpha.1 \
+     scripts/release/build_linux_bundle_debian12.sh
+   ```
+2. Stage the package without committing the binary archive:
+
+   ```sh
+   node packages/npm/scripts/prepare-release.js \
+     --version 0.1.0-alpha.1 \
+     --archive dist/gpupdal-0.1.0-alpha.1-linux-x64.tar.gz \
+     --output dist/npm/gpupdal
+   ```
+
+3. From `dist/npm/gpupdal`, run `node scripts/validate-package.js`,
+   `npm pack --dry-run`, and a clean-directory installation test.
+4. Authenticate as `zymazza` with an npm-supported publication method. Run
+   `npm publish --access public` inside the reviewed `dist/npm/gpupdal` staging
+   directory, keeping any temporary credential configuration outside the
+   repository with mode 0600. npm currently accepts either interactive account
+   2FA or a narrowly scoped granular write token created with **Bypass 2FA**;
+   see [npm's publishing-authentication policy](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/).
+5. Verify the published version and a clean install, delete the temporary npm
    authentication material, and retire any release-only credentials.
 
 No npm credential belongs in the repository, shell history, or retained

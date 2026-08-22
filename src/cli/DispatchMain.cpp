@@ -163,8 +163,16 @@ int runVerify(int argc, char** argv)
     arguments.push_back(nullptr);
     ::execvp(arguments[0], arguments.data());
     const int executionError = errno;
-    std::cerr << "gpupdal: unable to execute verification helper " << helper
-              << ": " << std::strerror(executionError) << '\n';
+    if (executionError == ENOENT)
+    {
+        std::cerr << "gpupdal: verification requires Python 3; install "
+                     "python3 and ensure it is on PATH\n";
+    }
+    else
+    {
+        std::cerr << "gpupdal: unable to execute Python 3 for verification: "
+                  << std::strerror(executionError) << '\n';
+    }
     return executionError == ENOENT ? 127 : 126;
 }
 

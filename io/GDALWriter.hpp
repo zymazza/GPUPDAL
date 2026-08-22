@@ -51,8 +51,8 @@ class PDAL_EXPORT GDALWriter : public FlexWriter, public Streamable
 public:
     std::string getName() const;
 
-    GDALWriter() : m_outputTypes(0), m_expandByPoint(true)
-    {}
+    GDALWriter();
+    ~GDALWriter() override;
 
 private:
     virtual void addArgs(ProgramArgs& args);

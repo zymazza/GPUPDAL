@@ -2,6 +2,8 @@
 #include <pdg/PointBatch.hpp>
 #include <pdg/index/SpatialIndex.hpp>
 
+#include "PinnedCovariance.hpp"
+
 #include <Eigen/Eigenvalues>
 #include <Eigen/SVD>
 
@@ -1904,6 +1906,7 @@ void knnCovariances(const SpatialIndex& index, std::uint32_t neighbors,
     const double* x = batch.data<double>(X);
     const double* y = batch.data<double>(Y);
     const double* z = batch.data<double>(Z);
+    const std::array<const double*, 3> coordinates{x, y, z};
     for (std::size_t query = 0; query < batch.size(); ++query)
     {
         const std::size_t row = query * static_cast<std::size_t>(neighbors);
@@ -1915,43 +1918,11 @@ void knnCovariances(const SpatialIndex& index, std::uint32_t neighbors,
                                   missing, missing, missing};
             continue;
         }
-        double meanX = 0.0;
-        double meanY = 0.0;
-        double meanZ = 0.0;
-        for (std::uint32_t item = 0; item < neighbors; ++item)
-        {
-            const std::size_t count = static_cast<std::size_t>(item) + 1U;
-            const std::uint32_t point = pointIds[row + item];
-            meanX += (x[point] - meanX) / static_cast<double>(count);
-            meanY += (y[point] - meanY) / static_cast<double>(count);
-            meanZ += (z[point] - meanZ) / static_cast<double>(count);
-        }
-
-        Covariance3d covariance;
-        for (std::uint32_t item = 0; item < neighbors; ++item)
-        {
-            const std::uint32_t point = pointIds[row + item];
-            const double dx =
-                static_cast<double>(static_cast<float>(x[point] - meanX));
-            const double dy =
-                static_cast<double>(static_cast<float>(y[point] - meanY));
-            const double dz =
-                static_cast<double>(static_cast<float>(z[point] - meanZ));
-            covariance.xx += dx * dx;
-            covariance.xy += dx * dy;
-            covariance.xz += dx * dz;
-            covariance.yy += dy * dy;
-            covariance.yz += dy * dz;
-            covariance.zz += dz * dz;
-        }
-        const double divisor = static_cast<double>(neighbors - 1U);
-        covariance.xx /= divisor;
-        covariance.xy /= divisor;
-        covariance.xz /= divisor;
-        covariance.yy /= divisor;
-        covariance.yz /= divisor;
-        covariance.zz /= divisor;
-        covariances[query] = covariance;
+        const Eigen::Matrix3d matrix =
+            detail::pinnedCovariance(coordinates, pointIds.data() + row,
+                                     neighbors);
+        covariances[query] = {matrix(0, 0), matrix(0, 1), matrix(0, 2),
+                              matrix(1, 1), matrix(1, 2), matrix(2, 2)};
     }
 }
 

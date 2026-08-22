@@ -273,6 +273,11 @@ struct GDALWriter::BandWorkers
     {}
 };
 
+GDALWriter::GDALWriter() : m_outputTypes(0), m_expandByPoint(true)
+{}
+
+GDALWriter::~GDALWriter() = default;
+
 namespace
 {
 constexpr std::size_t BandWorkerCap = 8U;

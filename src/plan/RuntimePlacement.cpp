@@ -1161,58 +1161,71 @@ buildRuntimePlacement(const Plan& plan, const RuntimePlacementFacts& facts,
         !directNeighborClassifierRegion)
         return unavailable(
             RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directHagNnCountOneRegion =
-        facts.directHagNnBoundaryExecutor
-            ? measuredDirectHagNnCountOneRegion(plan, facts)
-            : std::nullopt;
-    if (facts.directHagNnBoundaryExecutor && !directHagNnCountOneRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directHagDelaunayCountThreeRegion =
-        facts.directHagDelaunayBoundaryExecutor
-            ? measuredDirectHagDelaunayCountThreeRegion(plan, facts)
-            : std::nullopt;
-    if (facts.directHagDelaunayBoundaryExecutor &&
-        !directHagDelaunayCountThreeRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directSkewnessRegion =
-        facts.directSkewnessBoundaryExecutor
-            ? measuredDirectSkewnessRegion(plan, facts)
-            : std::nullopt;
-    if (facts.directSkewnessBoundaryExecutor && !directSkewnessRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directSortRegion =
-        facts.directSortBoundaryExecutor ? measuredDirectSortRegion(plan, facts)
-                                         : std::nullopt;
-    if (facts.directSortBoundaryExecutor && !directSortRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+    std::size_t directHagNnCountOneRegion = NoResidentRegion;
+    if (facts.directHagNnBoundaryExecutor)
+    {
+        const auto measuredRegion =
+            measuredDirectHagNnCountOneRegion(plan, facts);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directHagNnCountOneRegion = measuredRegion.value();
+    }
+    std::size_t directHagDelaunayCountThreeRegion = NoResidentRegion;
+    if (facts.directHagDelaunayBoundaryExecutor)
+    {
+        const auto measuredRegion =
+            measuredDirectHagDelaunayCountThreeRegion(plan, facts);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directHagDelaunayCountThreeRegion = measuredRegion.value();
+    }
+    std::size_t directSkewnessRegion = NoResidentRegion;
+    if (facts.directSkewnessBoundaryExecutor)
+    {
+        const auto measuredRegion = measuredDirectSkewnessRegion(plan, facts);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directSkewnessRegion = measuredRegion.value();
+    }
+    std::size_t directSortRegion = NoResidentRegion;
+    if (facts.directSortBoundaryExecutor)
+    {
+        const auto measuredRegion = measuredDirectSortRegion(plan, facts);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directSortRegion = measuredRegion.value();
+    }
     if (facts.directOutlierNnDistanceBoundaryExecutor &&
         facts.inputRecordBytes != 36U)
         return unavailable(
             RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directOutlierNnDistanceRegion =
-        facts.directOutlierNnDistanceBoundaryExecutor
-            ? measuredDirectOutlierNnDistanceRegion(plan)
-            : std::nullopt;
-    if (facts.directOutlierNnDistanceBoundaryExecutor &&
-        !directOutlierNnDistanceRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+    std::size_t directOutlierNnDistanceRegion = NoResidentRegion;
+    if (facts.directOutlierNnDistanceBoundaryExecutor)
+    {
+        const auto measuredRegion = measuredDirectOutlierNnDistanceRegion(plan);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directOutlierNnDistanceRegion = measuredRegion.value();
+    }
     if (facts.directRadiusOutlierRadialDensityBoundaryExecutor &&
         (facts.inputPointFormat != 7U || facts.inputRecordBytes != 36U))
         return unavailable(
             RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
-    const std::optional<std::size_t> directRadiusOutlierRadialDensityRegion =
-        facts.directRadiusOutlierRadialDensityBoundaryExecutor
-            ? measuredDirectRadiusOutlierRadialDensityRegion(plan)
-            : std::nullopt;
-    if (facts.directRadiusOutlierRadialDensityBoundaryExecutor &&
-        !directRadiusOutlierRadialDensityRegion)
-        return unavailable(
-            RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+    std::size_t directRadiusOutlierRadialDensityRegion = NoResidentRegion;
+    if (facts.directRadiusOutlierRadialDensityBoundaryExecutor)
+    {
+        const auto measuredRegion =
+            measuredDirectRadiusOutlierRadialDensityRegion(plan);
+        if (!measuredRegion)
+            return unavailable(
+                RuntimePlacementUnavailableReason::OutsideCalibrationEnvelope);
+        directRadiusOutlierRadialDensityRegion = measuredRegion.value();
+    }
     if (facts.directApproximateCoplanarOutputExecutor &&
         (facts.inputPointFormat != 7U || facts.inputRecordBytes != 36U))
         return unavailable(
@@ -1244,18 +1257,18 @@ buildRuntimePlacement(const Plan& plan, const RuntimePlacementFacts& facts,
         if (stage.residentRegion == NoResidentRegion ||
             stage.residentRegion >= regionModels.size() ||
             (stage.descriptor.placementModel.empty() &&
-             (!directOutlierNnDistanceRegion ||
-              stage.residentRegion != *directOutlierNnDistanceRegion) &&
-             (!directRadiusOutlierRadialDensityRegion ||
-              stage.residentRegion !=
-                  *directRadiusOutlierRadialDensityRegion) &&
-             (!directHagNnCountOneRegion ||
-              stage.residentRegion != *directHagNnCountOneRegion) &&
-             (!directHagDelaunayCountThreeRegion ||
-              stage.residentRegion != *directHagDelaunayCountThreeRegion) &&
-             (!directSkewnessRegion ||
-              stage.residentRegion != *directSkewnessRegion) &&
-             (!directSortRegion || stage.residentRegion != *directSortRegion)))
+             (directOutlierNnDistanceRegion == NoResidentRegion ||
+              stage.residentRegion != directOutlierNnDistanceRegion) &&
+             (directRadiusOutlierRadialDensityRegion == NoResidentRegion ||
+              stage.residentRegion != directRadiusOutlierRadialDensityRegion) &&
+             (directHagNnCountOneRegion == NoResidentRegion ||
+              stage.residentRegion != directHagNnCountOneRegion) &&
+             (directHagDelaunayCountThreeRegion == NoResidentRegion ||
+              stage.residentRegion != directHagDelaunayCountThreeRegion) &&
+             (directSkewnessRegion == NoResidentRegion ||
+              stage.residentRegion != directSkewnessRegion) &&
+             (directSortRegion == NoResidentRegion ||
+              stage.residentRegion != directSortRegion)))
             return unavailable(
                 RuntimePlacementUnavailableReason::MissingCalibrationModel);
         std::string_view& model = regionModels[stage.residentRegion];
@@ -1309,37 +1322,38 @@ buildRuntimePlacement(const Plan& plan, const RuntimePlacementFacts& facts,
             RuntimePlacementUnavailableReason::NoDeviceCandidate);
 
     if (eigenFamilyRegion)
-        regionModels[*eigenFamilyRegion] = "eigen-family-compose";
+        regionModels.at(eigenFamilyRegion.value()) = "eigen-family-compose";
     if (rankOptimalRegion)
-        regionModels[*rankOptimalRegion] = "rank-optimal-compose";
+        regionModels.at(rankOptimalRegion.value()) = "rank-optimal-compose";
     if (normalCovarianceRegion)
-        regionModels[*normalCovarianceRegion] =
+        regionModels.at(normalCovarianceRegion.value()) =
             extraDimsAllComposeModel
                 ? "normal-covariancefeatures-compose-extradims"
                 : "normal-covariancefeatures-compose";
     if (facts.exactDirectRadiusAssignExecutor)
-        regionModels[*directRadiusAssignBoundaryRegion] = "radiusassign-direct";
+        regionModels.at(directRadiusAssignBoundaryRegion.value()) =
+            "radiusassign-direct";
     if (directNeighborClassifierRegion)
-        regionModels[*directNeighborClassifierRegion] =
+        regionModels.at(directNeighborClassifierRegion.value()) =
             "neighborclassifier-direct-compose";
-    if (directHagNnCountOneRegion)
-        regionModels[*directHagNnCountOneRegion] =
+    if (directHagNnCountOneRegion != NoResidentRegion)
+        regionModels.at(directHagNnCountOneRegion) =
             "hag-nn-count1-direct-compose";
-    if (directHagDelaunayCountThreeRegion)
-        regionModels[*directHagDelaunayCountThreeRegion] =
+    if (directHagDelaunayCountThreeRegion != NoResidentRegion)
+        regionModels.at(directHagDelaunayCountThreeRegion) =
             "hag-delaunay-count3-direct-compose";
-    if (directSkewnessRegion)
-        regionModels[*directSkewnessRegion] = "skewness-direct-compose";
-    if (directSortRegion)
-        regionModels[*directSortRegion] = "sort-direct-compose";
-    if (directOutlierNnDistanceRegion)
-        regionModels[*directOutlierNnDistanceRegion] =
+    if (directSkewnessRegion != NoResidentRegion)
+        regionModels.at(directSkewnessRegion) = "skewness-direct-compose";
+    if (directSortRegion != NoResidentRegion)
+        regionModels.at(directSortRegion) = "sort-direct-compose";
+    if (directOutlierNnDistanceRegion != NoResidentRegion)
+        regionModels.at(directOutlierNnDistanceRegion) =
             "outlier-nndistance-direct-compose";
-    if (directRadiusOutlierRadialDensityRegion)
-        regionModels[*directRadiusOutlierRadialDensityRegion] =
+    if (directRadiusOutlierRadialDensityRegion != NoResidentRegion)
+        regionModels.at(directRadiusOutlierRadialDensityRegion) =
             "radius-outlier-radialdensity-direct-compose";
     if (directApproximateCoplanarRegion)
-        regionModels[*directApproximateCoplanarRegion] =
+        regionModels.at(directApproximateCoplanarRegion.value()) =
             "approximatecoplanar-direct-compose";
 
     for (std::size_t region = 0U; region < regionModels.size(); ++region)
@@ -1395,16 +1409,19 @@ buildRuntimePlacement(const Plan& plan, const RuntimePlacementFacts& facts,
         facts.directSortBoundaryExecutor ||
         facts.directOutlierNnDistanceBoundaryExecutor ||
         facts.directRadiusOutlierRadialDensityBoundaryExecutor;
-    if (directHagNnCountOneRegion || directHagDelaunayCountThreeRegion ||
-        directSkewnessRegion || directSortRegion)
+    if (directHagNnCountOneRegion != NoResidentRegion ||
+        directHagDelaunayCountThreeRegion != NoResidentRegion ||
+        directSkewnessRegion != NoResidentRegion ||
+        directSortRegion != NoResidentRegion)
     {
         const std::size_t bytesPerPoint =
-            directHagNnCountOneRegion
+            directHagNnCountOneRegion != NoResidentRegion
                 ? HagNnCountOneExactDevicePeakBytesPerPoint
-            : directHagDelaunayCountThreeRegion
+            : directHagDelaunayCountThreeRegion != NoResidentRegion
                 ? HagDelaunayCountThreeExactDevicePeakBytesPerPoint
-            : directSkewnessRegion ? SkewnessExactDevicePeakBytesPerPoint
-                                   : OrderingExactDevicePeakBytesPerPoint;
+            : directSkewnessRegion != NoResidentRegion
+                ? SkewnessExactDevicePeakBytesPerPoint
+                : OrderingExactDevicePeakBytesPerPoint;
         result.request.executorUntiledDeviceBytes =
             facts.inputPointCount * bytesPerPoint;
         result.request.executorPeakDeviceBytes =

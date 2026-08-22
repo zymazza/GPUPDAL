@@ -2,7 +2,7 @@
 
 Status date: 2026-08-21
 
-Target: first public pre-release (`v0.1.0`)
+Target: first public pre-release (final version/channel needs owner approval)
 
 Current repository posture: private development
 
@@ -40,8 +40,9 @@ the few owner choices and technical gates that remain.
 - Release operation: local/manual. GitHub Actions was disabled for the private
   repository on 2026-08-21; no paid hosted CI is a release requirement.
 - Native packaging is project work, not an owner prerequisite. A maintained
-  Linux bundle target and SPDX SBOM generator now exist; its portable build and
-  clean-machine qualification remain engineering gates below.
+  pinned-Debian Linux bundle, SPDX SBOM generator, and non-root bare-container
+  smoke now exist; final clean-commit and selected-binary qualification remain
+  engineering gates below.
 - Howard Butler's GPUPDAL naming permission is in the owner's email. It need
   not be published or committed. Preserve the original message and a backup
   privately before launch, including its date, sender, recipients, and exact
@@ -52,11 +53,26 @@ the few owner choices and technical gates that remain.
   private `main` history was replaced with a clean root snapshot before public
   visibility.
 
-## Owner questionnaire status
+## Owner review still needed
 
 The initial license, rights, contact, response target, npm owner, platform, and
-plugin-scope decisions are complete. Remaining items below are operational
-release qualification, not unanswered owner policy questions.
+plugin-scope decisions are complete. Before publication, Zy still needs to
+review these release-specific choices:
+
+1. **Version/channel:** use `0.1.0-alpha.1` for the first public compatibility
+   preview (recommended while upstream-suite and CUDA artifact gates remain
+   open), or wait and publish stable `0.1.0` only after those
+   gates close.
+2. **First public binary:** approve a clearly labeled CPU-only compatibility
+   preview, or wait for physically qualified CUDA artifacts. The controlled
+   Debian archive currently has `PDG_ENABLE_CUDA=OFF`; it preserves configured
+   PDAL behavior but is not a GPU acceleration binary.
+3. **Naming record:** confirm the original Howard Butler email and one private
+   backup preserve the date, participants, and permission scope for both the
+   GPUPDAL project name and `gpupdal` command. The email need not be public.
+
+Actual npm publication and any change from private to public visibility are
+separate, explicit owner actions after the selected gates pass.
 
 ## Dependency and rights audit
 
@@ -70,40 +86,50 @@ integrations, so all are excluded from the proposed first bundle. See
 
 The exact shared-library closure is distribution-specific. Each binary bundle
 must include its generated `RUNTIME_DEPENDENCIES.tsv`, copied license material,
-and SPDX SBOM, followed by review of any missing license entry. This is the
-remaining binary-distribution check; it is not evidence that the project as a
-whole depends on closed-source PDAL components.
+and SPDX SBOM, followed by review of any missing license entry. The controlled
+CPU archive passes that review; future CUDA and platform artifacts repeat it.
+None of this is evidence that the project as a whole depends on closed-source
+PDAL components.
 
 ## Technical release blockers
 
 - [x] Add a GPUPDAL Linux x86-64 bundle target containing `gpupdal`,
       `pdg-engine`, sibling `pdal`, runtime libraries/data, notices, hashes, and
       a file-level SPDX 2.3 SBOM.
-- [ ] Build the Linux archive in a declared oldest-supported distribution,
-      review its exact dependency/license closure, and pass clean installs on
-      every advertised distribution. The current workstation bundle is only a
-      developer release candidate.
-- [ ] Replace the reference workstation's broad Arch GDAL linkage with a
-      controlled minimal release build. The first dependency scan found 15
-      packages without locally installed license texts and GPL/LGPL libraries
-      in the transitive GDAL closure. These are open-source dependencies, not
-      proprietary ones, but the public bundle needs a smaller reviewed closure
-      and complete corresponding notices.
-- [ ] Decide and validate the CUDA runtime policy. Produce separate
+- [x] Build the Linux archive in the pinned Debian 12 oldest-supported
+      environment and review its exact dependency/license closure. The current
+      controlled archive contains 51 runtime dependency rows, 45 copied system
+      notice sets, 47 SPDX packages, 290 inventoried files, 337 SPDX
+      relationships, and no missing-license marker. Its relative runtime paths,
+      internal/outer hashes, driver parity, private-path scan, and bare Debian
+      non-root startup passed.
+- [x] Replace the reference workstation's broad Arch GDAL linkage with pinned
+      GDAL 3.8.5 built in the controlled Debian image, including the GEOS and
+      command-line support required by the release differentials.
+- [ ] Decide and validate the CUDA runtime policy. The current controlled
+      artifact is CPU-only. Produce separate
       CUDA-toolkit artifacts only after physical-GPU exactness and Compute
       Sanitizer gates pass; do not bundle NVIDIA driver libraries.
-- [ ] Complete the host release gate locally: conformance, differential tests,
-      sanitizers, upstream PDAL tests, and retained logs. GitHub Actions is
-      intentionally not part of this gate.
+- [ ] Complete the remaining host release gate locally. In the controlled
+      Debian image, 447 unit tests passed and two optional local-corpus tests
+      skipped; the full exact differential suite passed 98/98. The host
+      ASan/UBSan lane passed all 454 applicable tests with five intentional
+      fixture-dependent skips and no sanitizer finding. All 142 tests in the
+      sequential published upstream PDAL suite pass, including the two remote
+      STAC/COPC cases against their official fixtures. Final conformance and
+      retained clean-commit logs remain. GitHub Actions is intentionally not
+      part of this gate.
 - [ ] Complete or explicitly defer the generated stage-coverage reconciliation
       between older dated counts and the current audit.
 - [x] Replace inherited PDAL-only citation metadata with Zy Mazza as the
       GPUPDAL citation author while retaining upstream PDAL attribution.
-- [ ] Populate `packages/npm/native-manifest.json` only after an immutable
-      public asset exists, set the final version, run a clean npm installation,
-      authenticate with an npm-supported publication method, and publish from
-      the `zymazza` account. Remove temporary credential material after
-      verifying the registry package.
+- [ ] After the owner selects a version and binary lane, rebuild from the clean
+      commit, place the immutable archive inside the npm package, populate
+      `packages/npm/native-manifest.json`, and run pack plus clean-install
+      tests. The bundled-archive design works while GitHub remains private.
+      Authenticate with an npm-supported publication method and publish from
+      `zymazza` only with explicit final approval; remove temporary credential
+      material after verifying the registry package.
 - [ ] Preserve the private GPUPDAL naming-permission email and confirm that its
       exact scope covers the project name and command. Do not publish the email
       unless Zy and its sender intentionally choose to.
@@ -134,8 +160,8 @@ whole depends on closed-source PDAL components.
 - [x] Private-phase security policy, conduct policy, issue template, pull
       request checklist, license wrapper, attribution, and provenance files are
       present.
-- [x] The default host suite passed 459/459 tests with five optional local
-      fixtures skipped; the extended exact differential suite passed 98/98,
+- [x] The controlled Debian unit suite passed 447 tests with two optional local
+      corpus tests skipped; the extended exact differential suite passed 98/98,
       and the npm scaffold tests pass.
 - [x] The independent benchmark report labels the current product GPUPDAL and
       presents the aggregate 18-job graph on a zero-based linear scale.

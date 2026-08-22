@@ -10,8 +10,9 @@ const { run } = require("../bin/gpupdal.js");
 const {
   platformKey: installerPlatformKey,
   sha256,
-  validateEntry
-} = require("../scripts/install.js");
+  validateEntry,
+  verifyNativeTree
+} = require("../scripts/native.js");
 
 test("launcher forwards arguments and exit status", () => {
   let invocation;
@@ -40,25 +41,26 @@ test("launcher fails clearly when no native binary is installed", () => {
   assert.match(messages.join("\n"), /native binary is unavailable/);
 });
 
-test("installer accepts only immutable GPUPDAL release entries", () => {
+test("package accepts only checksummed GPUPDAL native trees", () => {
   const digest = "a".repeat(64);
   assert.doesNotThrow(() => validateEntry({
-    url: "https://github.com/zymazza/GPUPDAL/releases/download/v0.1.0/" +
-      "gpupdal-linux-x64.tar.gz",
-    sha256: digest
+    directory: "native/linux-x64",
+    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
+    sourceArchiveSha256: digest
   }));
   assert.throws(() => validateEntry({
-    url: "https://example.com/gpupdal.tar.gz",
-    sha256: digest
+    directory: "../native/linux-x64",
+    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
+    sourceArchiveSha256: digest
   }), /incomplete or untrusted/);
   assert.throws(() => validateEntry({
-    url: "https://github.com/zymazza/GPUPDAL/releases/download/latest/" +
-      "gpupdal-linux-x64.tar.gz",
-    sha256: "not-a-digest"
+    directory: "native/linux-x64",
+    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
+    sourceArchiveSha256: "not-a-digest"
   }), /incomplete or untrusted/);
 });
 
-test("installer platform selection and SHA-256 are deterministic", () => {
+test("package platform selection and SHA-256 are deterministic", () => {
   assert.equal(installerPlatformKey("linux", "x64"), "linux-x64");
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-npm-test-"));
   const fixture = path.join(directory, "fixture");
@@ -68,6 +70,37 @@ test("installer platform selection and SHA-256 are deterministic", () => {
       sha256(fixture),
       "10466f0b0d1c65b3e41609eb332b5119dd5e47967a20fbd3f55238f3b5dadedf"
     );
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("package verifier checks every staged native file", () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-native-test-"));
+  const native = path.join(directory, "native", "linux-x64");
+  const entry = {
+    directory: "native/linux-x64",
+    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
+    sourceArchiveSha256: "a".repeat(64)
+  };
+  try {
+    fs.mkdirSync(native, { recursive: true });
+    for (const executable of ["gpupdal", "pdg-engine", "pdal"]) {
+      const filename = path.join(native, executable);
+      fs.writeFileSync(filename, `${executable}\n`, { mode: 0o755 });
+    }
+    const sums = ["gpupdal", "pdg-engine", "pdal"].map((filename) =>
+      `${sha256(path.join(native, filename))}  ./${filename}`
+    );
+    fs.writeFileSync(path.join(native, "SHA256SUMS"), `${sums.join("\n")}\n`);
+    assert.equal(verifyNativeTree(directory, entry), 3);
+    fs.writeFileSync(path.join(native, "unlisted"), "not checksummed\n");
+    assert.throws(
+      () => verifyNativeTree(directory, entry), /unchecksummed file/
+    );
+    fs.rmSync(path.join(native, "unlisted"));
+    fs.appendFileSync(path.join(native, "gpupdal"), "tampered\n");
+    assert.throws(() => verifyNativeTree(directory, entry), /checksum mismatch/);
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }

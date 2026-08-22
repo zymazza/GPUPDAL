@@ -1,10 +1,12 @@
 # `gpupdal verify`
 
-`gpupdal verify` creates a portable, self-contained record that another machine or
-user can publish without giving PDG permission to contact anyone or upload
-anything. The command performs one local complete-process differential: the
-pinned PDAL oracle and `gpupdal` run the same normal/covariance pipeline with an
-untimed warm-up and at least three alternating measured pairs.
+`gpupdal verify` creates a portable, self-contained record that another machine
+or user can publish without giving GPUPDAL permission to contact anyone or
+upload anything. The optional verification command requires Python 3 on
+`PATH`; ordinary PDAL-compatible `gpupdal` commands do not require Python. The
+command performs one local complete-process differential: the pinned PDAL
+oracle and `gpupdal` run the same normal/covariance pipeline with an untimed
+warm-up and at least three alternating measured pairs.
 
 ```sh
 gpupdal verify --output-dir gpupdal-proof

@@ -14,6 +14,7 @@ set(PDG_CORE_SOURCES
     core/scheduler.cpp
     core/SyntheticCloud.cpp
     expr/Expression.cpp
+    index/PinnedCovariance.cpp
     index/SpatialIndex.cpp
     index/RasterGrid.cpp
     index/SpatialTile.cpp

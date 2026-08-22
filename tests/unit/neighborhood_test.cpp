@@ -2,6 +2,10 @@
 #include <pdg/PointBatch.hpp>
 #include <pdg/index/SpatialIndex.hpp>
 
+#include <pdal/PointTable.hpp>
+#include <pdal/PointView.hpp>
+#include <pdal/private/MathUtils.hpp>
+
 #include <gtest/gtest.h>
 
 #include <Eigen/Dense>
@@ -41,35 +45,39 @@ struct NeighborhoodFixture
     }
 };
 
-Eigen::Matrix3d
-pinnedCovariance(const std::vector<std::array<double, 3>>& points,
-                 const std::vector<std::uint32_t>& ids, std::size_t row,
-                 std::size_t neighbors)
+class PinnedPdalCovariance
 {
-    Eigen::Vector3d centroid = Eigen::Vector3d::Zero();
-    std::size_t count = 0;
-    for (std::size_t item = 0; item < neighbors; ++item)
+public:
+    explicit PinnedPdalCovariance(
+        const std::vector<std::array<double, 3>>& points)
+        : m_view(m_table)
     {
-        ++count;
-        const auto& point = points[ids[row + item]];
-        for (std::size_t axis = 0; axis < 3; ++axis)
+        m_table.layout()->registerDim(pdal::Dimension::Id::X);
+        m_table.layout()->registerDim(pdal::Dimension::Id::Y);
+        m_table.layout()->registerDim(pdal::Dimension::Id::Z);
+        for (std::size_t point = 0; point < points.size(); ++point)
         {
-            const double delta = point[axis] - centroid[axis];
-            centroid[axis] += delta / static_cast<double>(count);
+            m_view.setField(pdal::Dimension::Id::X, point, points[point][0]);
+            m_view.setField(pdal::Dimension::Id::Y, point, points[point][1]);
+            m_view.setField(pdal::Dimension::Id::Z, point, points[point][2]);
         }
     }
-    Eigen::MatrixXd demeaned(3, static_cast<Eigen::Index>(neighbors));
-    for (std::size_t item = 0; item < neighbors; ++item)
+
+    Eigen::Matrix3d covariance(const std::vector<std::uint32_t>& ids,
+                               std::size_t row,
+                               std::size_t neighbors) const
     {
-        const auto& point = points[ids[row + item]];
-        for (std::size_t axis = 0; axis < 3; ++axis)
-            demeaned(static_cast<Eigen::Index>(axis),
-                     static_cast<Eigen::Index>(item)) =
-                static_cast<float>(point[axis] - centroid[axis]);
+        pdal::PointIdList pointIds;
+        pointIds.reserve(neighbors);
+        for (std::size_t item = 0; item < neighbors; ++item)
+            pointIds.push_back(ids[row + item]);
+        return pdal::math::computeCovariance(m_view, pointIds);
     }
-    return demeaned * demeaned.transpose() /
-           static_cast<double>(neighbors - 1U);
-}
+
+private:
+    pdal::PointTable m_table;
+    pdal::PointView m_view;
+};
 
 void expectCovariance(const pdg::Covariance3d& actual,
                       const Eigen::Matrix3d& expected, std::size_t query)
@@ -93,6 +101,7 @@ TEST(NeighborhoodCovariance, MatchesPinnedPdalForEveryKnnRowBitForBit)
              100.0 + static_cast<double>((point * 313U) % 101U) * 0.019});
     }
     constexpr std::uint32_t Neighbors = 9;
+    const PinnedPdalCovariance oracle(points);
     NeighborhoodFixture fixture;
     pdg::PointBatch batch = fixture.makeBatch(points);
     const std::array<pdg::UniformGridConfig, 2> configs{
@@ -120,8 +129,7 @@ TEST(NeighborhoodCovariance, MatchesPinnedPdalForEveryKnnRowBitForBit)
         {
             ASSERT_EQ(status[query] & pdg::KnnSearchIncomplete, 0U) << query;
             const std::size_t row = query * Neighbors;
-            expectCovariance(actual[query],
-                             pinnedCovariance(points, ids, row, Neighbors),
+            expectCovariance(actual[query], oracle.covariance(ids, row, Neighbors),
                              query);
         }
     }
@@ -152,6 +160,7 @@ TEST(NeighborhoodEigenSystem, MatchesPinnedSolverBitForBit)
              60.0 + static_cast<double>((point * 281U) % 109U) * 0.029});
     }
     constexpr std::uint32_t Neighbors = 11;
+    const PinnedPdalCovariance oracle(points);
     NeighborhoodFixture fixture;
     pdg::PointBatch batch = fixture.makeBatch(points);
     const std::array<pdg::UniformGridConfig, 2> configs{
@@ -180,7 +189,7 @@ TEST(NeighborhoodEigenSystem, MatchesPinnedSolverBitForBit)
                       0U)
                 << query;
             const Eigen::Matrix3d covariance =
-                pinnedCovariance(points, ids, query * Neighbors, Neighbors);
+                oracle.covariance(ids, query * Neighbors, Neighbors);
             const Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> expected(
                 covariance);
             ASSERT_EQ(expected.info(), Eigen::Success);

@@ -53,6 +53,16 @@ with tempfile.TemporaryDirectory(prefix="pdg-dispatch-") as temp:
         "pathlib.Path(os.environ['PDG_VERIFY_TEST_LOG']).write_text("
         "'\\n'.join(sys.argv[1:]))\n"
         "raise SystemExit(37)\n")
+    no_python = root / "no-python"
+    no_python.mkdir()
+    no_python_environment = os.environ.copy()
+    no_python_environment["PATH"] = str(no_python)
+    result = subprocess.run([str(pdg), "verify"], text=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=no_python_environment)
+    assert result.returncode == 127, result
+    assert "verification requires Python 3" in result.stderr, result.stderr
+
     verify_environment = os.environ.copy()
     verify_environment["PDG_VERIFY_TEST_LOG"] = str(verify_log)
     verify_environment["PDG_FUTURE_UNLISTED_PROOF_CONTROL"] = "1"

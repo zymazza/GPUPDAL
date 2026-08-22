@@ -1,0 +1,91 @@
+FROM debian@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends \
+        bash \
+        binutils \
+        build-essential \
+        ca-certificates \
+        cmake \
+        curl \
+        git \
+        libcurl4-openssl-dev \
+        libexpat1-dev \
+        libgeos-dev \
+        libgeotiff-dev \
+        libjpeg62-turbo-dev \
+        liblzma-dev \
+        libpng-dev \
+        libproj-dev \
+        libsqlite3-dev \
+        libtiff-dev \
+        libxml2-dev \
+        libzstd-dev \
+        ninja-build \
+        patchelf \
+        python3 \
+        tar \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG GDAL_VERSION=3.8.5
+ARG GDAL_SHA256=0c865c7931c7e9bb4832f50fb53aec8676cbbaccd6e55945011b737fb89a49c2
+
+RUN curl --fail --location \
+        --output /tmp/gdal.tar.gz \
+        "https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz" \
+    && echo "${GDAL_SHA256}  /tmp/gdal.tar.gz" | sha256sum --check - \
+    && tar --extract --gzip --file /tmp/gdal.tar.gz --directory /tmp \
+    && cmake -S "/tmp/gdal-${GDAL_VERSION}" -B /tmp/gdal-build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/gpupdal-deps \
+        -DBUILD_APPS=ON \
+        -DBUILD_PYTHON_BINDINGS=OFF \
+        -DBUILD_TESTING=OFF \
+        -DENABLE_GNM=OFF \
+        -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
+        -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
+        -DGDAL_ENABLE_DRIVER_AAIGRID=ON \
+        -DGDAL_ENABLE_DRIVER_HTTP=ON \
+        -DGDAL_ENABLE_DRIVER_JPEG=ON \
+        -DGDAL_ENABLE_DRIVER_PNG=ON \
+        -DGDAL_ENABLE_DRIVER_RAW=ON \
+        -DGDAL_ENABLE_DRIVER_WMS=ON \
+        -DGDAL_ENABLE_DRIVER_XYZ=ON \
+        -DOGR_ENABLE_DRIVER_CSV=ON \
+        -DOGR_ENABLE_DRIVER_GML=ON \
+        -DOGR_ENABLE_DRIVER_GPKG=ON \
+        -DOGR_ENABLE_DRIVER_GPX=ON \
+        -DOGR_ENABLE_DRIVER_OPENFILEGDB=ON \
+        -DOGR_ENABLE_DRIVER_SQLITE=ON \
+    && cmake --build /tmp/gdal-build --parallel 2 \
+    && cmake --install /tmp/gdal-build \
+    && mkdir -p /opt/gpupdal-deps/share/licenses/gdal \
+    && install -m 0644 "/tmp/gdal-${GDAL_VERSION}/LICENSE.TXT" \
+        /opt/gpupdal-deps/share/licenses/gdal/LICENSE.TXT \
+    && rm -rf /tmp/gdal.tar.gz "/tmp/gdal-${GDAL_VERSION}" /tmp/gdal-build
+
+# Debian 12 ships CMake 3.25, while the GPUPDAL release configuration requires
+# CMake 3.28 or newer. Keep the distribution CMake for the GDAL build above,
+# then install a checksummed upstream binary as a build-only tool.
+ARG CMAKE_VERSION=3.28.6
+ARG CMAKE_SHA256=931e3c0d546ee03ca72bb147ccd9b49e3b6252f765f66bf21b9d165519940458
+
+RUN curl --fail --location \
+        --output /tmp/cmake.tar.gz \
+        "https://cmake.org/files/v3.28/cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz" \
+    && echo "${CMAKE_SHA256}  /tmp/cmake.tar.gz" | sha256sum --check - \
+    && mkdir -p /opt/cmake \
+    && tar --extract --gzip --file /tmp/cmake.tar.gz \
+        --directory /opt/cmake --strip-components 1 \
+    && rm -f /tmp/cmake.tar.gz
+
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV PATH=/opt/cmake/bin:/opt/gpupdal-deps/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/gpupdal-deps/lib
+ENV CMAKE_PREFIX_PATH=/opt/gpupdal-deps
+
+WORKDIR /src

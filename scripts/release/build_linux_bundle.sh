@@ -45,9 +45,9 @@ if [[ "${GPUPDAL_SKIP_BUILD:-0}" != "1" ]]; then
         --parallel "${GPUPDAL_BUILD_JOBS:-2}"
 fi
 
-version="$(sed -n 's/^set(GPUPDAL_VERSION "\([^"]*\)").*/\1/p' \
-    "${source_root}/CMakeLists.txt")"
-if [[ "${version}" == *'${'* ]]; then
+version="$(sed -n 's/^GPUPDAL_VERSION:STRING=//p' \
+    "${build_dir}/CMakeCache.txt")"
+if [[ -z "${version}" ]]; then
     version_major="$(sed -n 's/^set(GPUPDAL_VERSION_MAJOR \([^)]*\)).*/\1/p' \
         "${source_root}/CMakeLists.txt")"
     version_minor="$(sed -n 's/^set(GPUPDAL_VERSION_MINOR \([^)]*\)).*/\1/p' \
@@ -110,10 +110,33 @@ install -m 0644 "${source_root}/NOTICE" "${bundle}/NOTICE"
 install -m 0644 "${source_root}/ORIGIN.md" "${bundle}/ORIGIN.md"
 install -m 0644 "${source_root}/THIRD_PARTY_LICENSES.md" \
     "${bundle}/THIRD_PARTY_LICENSES.md"
+
+{
+    printf 'release_baseline=%s\n' \
+        "${GPUPDAL_RELEASE_BASELINE:-unmanaged workstation}"
+    printf 'base_image=%s\n' \
+        "${GPUPDAL_RELEASE_BASE_IMAGE:-not applicable}"
+    printf 'compiler=%s\n' "$(c++ --version | head -n 1)"
+    printf 'cmake=%s\n' "$(cmake --version | head -n 1)"
+    printf 'glibc=%s\n' "$(ldd --version | head -n 1)"
+    printf 'source_revision=%s\n' "${source_revision}"
+} >"${bundle}/BUILD-ENVIRONMENT.txt"
+
 install -m 0644 "${source_root}/licenses/Apache-2.0.txt" \
     "${bundle}/licenses/source/Apache-2.0.txt"
 install -m 0644 "${source_root}/licenses/MPL-2.0.txt" \
     "${bundle}/licenses/source/MPL-2.0.txt"
+
+if [[ -n "${GPUPDAL_GDAL_PREFIX:-}" ]]; then
+    gdal_license="${GPUPDAL_GDAL_PREFIX}/share/licenses/gdal/LICENSE.TXT"
+    if [[ ! -f "${gdal_license}" ]]; then
+        echo "controlled GDAL license is missing: ${gdal_license}" >&2
+        exit 2
+    fi
+    mkdir -p "${bundle}/licenses/source/gdal"
+    install -m 0644 "${gdal_license}" \
+        "${bundle}/licenses/source/gdal/LICENSE.TXT"
+fi
 
 for license in \
     vendor/arbiter/LICENSE \
@@ -143,7 +166,15 @@ package_for_path() {
     if command -v pacman >/dev/null 2>&1; then
         pacman -Qoq "${path}" 2>/dev/null | head -n 1 || true
     elif command -v dpkg-query >/dev/null 2>&1; then
-        dpkg-query -S "${path}" 2>/dev/null | head -n 1 | cut -d: -f1 || true
+        local owner
+        owner="$(dpkg-query -S "${path}" 2>/dev/null | head -n 1 || true)"
+        # Debian's merged-/usr filesystem resolves /lib package files through
+        # /usr/lib, while dpkg records their canonical /lib paths.
+        if [[ -z "${owner}" && "${path}" == /usr/* ]]; then
+            owner="$(dpkg-query -S "${path#/usr}" 2>/dev/null | \
+                head -n 1 || true)"
+        fi
+        printf '%s\n' "${owner}" | cut -d: -f1
     fi
 }
 
@@ -218,6 +249,11 @@ copy_dependency() {
         package="GPUPDAL"
         version_value="${version}"
         license_value="BSD-3-Clause"
+    elif [[ -n "${GPUPDAL_GDAL_PREFIX:-}" &&
+            "${resolved}" == "${GPUPDAL_GDAL_PREFIX}"/* ]]; then
+        package="GDAL"
+        version_value="$("${GPUPDAL_GDAL_PREFIX}/bin/gdal-config" --version)"
+        license_value="MIT"
     else
         package="$(package_for_path "${resolved}")"
         version_value="$(package_version "${package}")"
@@ -231,7 +267,7 @@ copy_dependency() {
     printf '%s\t%s\t%s\t%s\t%s\n' "${soname}" "${recorded_path}" \
         "${package:-unmanaged}" "${version_value:-unknown}" \
         "${license_value:-unknown}" >>"${dependency_map}"
-    if [[ "${package}" != "GPUPDAL" ]]; then
+    if [[ "${package}" != "GPUPDAL" && "${package}" != "GDAL" ]]; then
         copy_package_license "${package}"
     fi
 }
@@ -264,12 +300,16 @@ for elf in "${bundle}"/lib/*; do
     fi
 done
 
-for data_directory in gdal proj; do
-    if [[ -d "/usr/share/${data_directory}" ]]; then
-        cp -aL "/usr/share/${data_directory}" \
-            "${bundle}/share/${data_directory}"
-    fi
-done
+gdal_data_directory="/usr/share/gdal"
+if [[ -n "${GPUPDAL_GDAL_PREFIX:-}" ]]; then
+    gdal_data_directory="$("${GPUPDAL_GDAL_PREFIX}/bin/gdal-config" --datadir)"
+fi
+if [[ -d "${gdal_data_directory}" ]]; then
+    cp -aL "${gdal_data_directory}" "${bundle}/share/gdal"
+fi
+if [[ -d /usr/share/proj ]]; then
+    cp -aL /usr/share/proj "${bundle}/share/proj"
+fi
 
 if [[ ! -s "${missing_licenses}" ]]; then
     rm -f -- "${missing_licenses}"
@@ -288,12 +328,18 @@ python3 "${script_dir}/generate_spdx_sbom.py" \
     --created-epoch "${created_epoch}" \
     --output "${bundle}/SBOM.spdx.json"
 
-if LC_ALL=C grep -r -a -l -F -- "${source_root}" "${bundle}" \
-    >"${temporary}/absolute-build-paths.txt"; then
-    echo "bundle embeds the local source path in:" >&2
-    sed "s#^${bundle}/##" "${temporary}/absolute-build-paths.txt" >&2
-    exit 2
-fi
+sensitive_paths=(
+    "${build_dir}"
+    "${GPUPDAL_PRIVATE_SOURCE_ROOT:-${source_root}}"
+)
+for sensitive_path in "${sensitive_paths[@]}"; do
+    if LC_ALL=C grep -r -a -l -F -- "${sensitive_path}" "${bundle}" \
+        >"${temporary}/absolute-build-paths.txt"; then
+        echo "bundle embeds a private build path (${sensitive_path}) in:" >&2
+        sed "s#^${bundle}/##" "${temporary}/absolute-build-paths.txt" >&2
+        exit 2
+    fi
+done
 
 (
     cd "${bundle}"
