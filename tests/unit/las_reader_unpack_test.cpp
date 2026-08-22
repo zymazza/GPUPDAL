@@ -9,6 +9,8 @@
 
 #include <gtest/gtest.h>
 
+#include <nlohmann/json.hpp>
+
 #include <pdal/PipelineManager.hpp>
 #include <pdal/util/FileUtils.hpp>
 
@@ -17,7 +19,9 @@
 #include <fstream>
 #include <iterator>
 #include <sstream>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <optional>
 #include <string>
 #include <vector>
@@ -54,11 +58,16 @@ std::vector<char> bytes(const std::filesystem::path& path)
 {
     std::ifstream in(path, std::ios::binary);
     return std::vector<char>((std::istreambuf_iterator<char>(in)),
-        std::istreambuf_iterator<char>());
+                             std::istreambuf_iterator<char>());
+}
+
+std::string jsonString(const std::string& value)
+{
+    return nlohmann::json(value).dump();
 }
 
 void runPipeline(const std::string& json, pdal::point_count_t streamLimit,
-    bool stream)
+                 bool stream)
 {
     pdal::PipelineManager manager(streamLimit);
     std::stringstream in(json);
@@ -85,15 +94,21 @@ TEST(LasReaderUnpack, MultiSegmentStreamBatchesMatchSerialAndStandard)
     // 123,457 synthetic points: three tiles, the last one partial.
     runPipeline(R"json({"pipeline":[{"type":"readers.faux","count":123457,
         "mode":"ramp","bounds":"([0,1000],[0,1000],[0,100])"},
-        {"type":"writers.las","filename":")json" + source + R"json(",
-        "minor_version":4,"dataformat_id":6}]})json", 10000, false);
+        {"type":"writers.las","filename":)json" +
+                    jsonString(source) + R"json(,
+        "minor_version":4,"dataformat_id":6}]})json",
+                10000, false);
 
-    auto convert = [&](const std::string& out, pdal::point_count_t limit,
-        bool stream)
+    auto convert =
+        [&](const std::string& out, pdal::point_count_t limit, bool stream)
     {
-        runPipeline(R"json({"pipeline":[{"type":"readers.las","filename":")json" +
-            source + R"json("},{"type":"writers.las","filename":")json" + out +
-            R"json(","minor_version":4,"dataformat_id":6}]})json", limit, stream);
+        runPipeline(
+            R"json({"pipeline":[{"type":"readers.las","filename":)json" +
+                jsonString(source) +
+                R"json(},{"type":"writers.las","filename":)json" +
+                jsonString(out) +
+                R"json(,"minor_version":4,"dataformat_id":6}]})json",
+            limit, stream);
         return bytes(out);
     };
 
@@ -101,9 +116,9 @@ TEST(LasReaderUnpack, MultiSegmentStreamBatchesMatchSerialAndStandard)
     std::vector<char> standard;
     {
         ScopedEnvironment forced("PDAL_TEST_FORCE_HOST_NEIGHBORHOOD_WORKERS",
-            "3");
+                                 "3");
         ScopedEnvironment enabled("PDG_DISABLE_HOST_NEIGHBORHOOD_WORKERS",
-            nullptr);
+                                  nullptr);
         // 15,000-row batches: rows 45,000..59,999 span tiles 0 and 1.
         parallel = convert((dir / "parallel.las").string(), 15000, true);
         standard = convert((dir / "standard.las").string(), 15000, false);
@@ -111,9 +126,9 @@ TEST(LasReaderUnpack, MultiSegmentStreamBatchesMatchSerialAndStandard)
     std::vector<char> serial;
     {
         ScopedEnvironment forced("PDAL_TEST_FORCE_HOST_NEIGHBORHOOD_WORKERS",
-            nullptr);
+                                 nullptr);
         ScopedEnvironment disabled("PDG_DISABLE_HOST_NEIGHBORHOOD_WORKERS",
-            "1");
+                                   "1");
         serial = convert((dir / "serial.las").string(), 15000, true);
     }
     ASSERT_GT(serial.size(), 123457U * 30U);

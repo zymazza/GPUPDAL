@@ -126,10 +126,41 @@ foreach(_pdg_profile IN LISTS PDG_SHIPPED_PROFILE_FILES)
     get_filename_component(_pdg_profile_name ${_pdg_profile} NAME)
     file(READ ${_pdg_profile} _pdg_profile_text)
     file(SHA256 ${_pdg_profile} _pdg_profile_sha256)
+    string(LENGTH "${_pdg_profile_text}" _pdg_profile_bytes)
+    set(_pdg_profile_chunks "")
+    set(_pdg_profile_chunk_count 0)
+    set(_pdg_profile_offset 0)
+    while(_pdg_profile_offset LESS _pdg_profile_bytes)
+        math(EXPR _pdg_profile_remaining
+            "${_pdg_profile_bytes} - ${_pdg_profile_offset}")
+        if(_pdg_profile_remaining GREATER 8192)
+            set(_pdg_profile_chunk_bytes 8192)
+        else()
+            set(_pdg_profile_chunk_bytes ${_pdg_profile_remaining})
+        endif()
+        string(SUBSTRING "${_pdg_profile_text}" ${_pdg_profile_offset}
+            ${_pdg_profile_chunk_bytes} _pdg_profile_chunk)
+        string(APPEND _pdg_profile_chunks
+            "    R\"pdgprofile(${_pdg_profile_chunk})pdgprofile\",\n")
+        math(EXPR _pdg_profile_offset
+            "${_pdg_profile_offset} + ${_pdg_profile_chunk_bytes}")
+        math(EXPR _pdg_profile_chunk_count
+            "${_pdg_profile_chunk_count} + 1")
+    endwhile()
     string(APPEND _pdg_shipped_body
-        "constexpr std::string_view Profile${_pdg_shipped_index} = R\"pdgprofile(${_pdg_profile_text})pdgprofile\";\n")
+        "const std::string Profile${_pdg_shipped_index} = []\n"
+        "{\n"
+        "    constexpr std::array<std::string_view, ${_pdg_profile_chunk_count}> Chunks{{\n"
+        "${_pdg_profile_chunks}"
+        "    }};\n"
+        "    std::string text;\n"
+        "    text.reserve(${_pdg_profile_bytes});\n"
+        "    for (std::string_view chunk : Chunks)\n"
+        "        text.append(chunk);\n"
+        "    return text;\n"
+        "}();\n")
     string(APPEND _pdg_shipped_entries
-        "    {\"${_pdg_profile_name}\", \"${_pdg_profile_sha256}\", Profile${_pdg_shipped_index}},\n")
+        "    {\"${_pdg_profile_name}\", \"${_pdg_profile_sha256}\", std::string_view(Profile${_pdg_shipped_index})},\n")
     math(EXPR _pdg_shipped_index "${_pdg_shipped_index} + 1")
 endforeach()
 file(WRITE ${PDG_SHIPPED_PROFILES_CPP}.in
@@ -138,6 +169,7 @@ file(WRITE ${PDG_SHIPPED_PROFILES_CPP}.in
 
 #include <array>
 #include <span>
+#include <string>
 #include <string_view>
 
 namespace pdg
@@ -145,7 +177,7 @@ namespace pdg
 namespace
 {
 ${_pdg_shipped_body}
-constexpr std::array<ShippedProfileSource, ${_pdg_shipped_index}> Sources{{
+const std::array<ShippedProfileSource, ${_pdg_shipped_index}> Sources{{
 ${_pdg_shipped_entries}}};
 } // unnamed namespace
 
@@ -192,9 +224,15 @@ target_compile_definitions(pdg_core
         PDG_ORACLE_VERSION="${PDG_ORACLE_VERSION}")
 
 if (MSVC)
-    target_compile_options(pdg_core PRIVATE /W4)
+    target_compile_definitions(pdg_core PRIVATE
+        NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(pdg_core PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:/W4;/EHsc;/Zc:preprocessor>
+        $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=/W4,/EHsc,/Zc:preprocessor>)
     if (PDG_WARNINGS_AS_ERRORS)
-        target_compile_options(pdg_core PRIVATE /WX)
+        target_compile_options(pdg_core PRIVATE
+            $<$<COMPILE_LANGUAGE:CXX>:/WX>
+            $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=/WX>)
     endif()
 else()
     target_compile_options(pdg_core PRIVATE
@@ -219,9 +257,14 @@ if (GPUPDAL_ENABLE_CUDA)
         $<$<COMPILE_LANGUAGE:CUDA>:--ftz=false>
         $<$<COMPILE_LANGUAGE:CUDA>:--prec-div=true>
         $<$<COMPILE_LANGUAGE:CUDA>:--prec-sqrt=true>)
-    set_source_files_properties(index/SpatialIndexKernels.cu PROPERTIES
-        COMPILE_OPTIONS
-            "--expt-relaxed-constexpr;-Xcompiler=-Wno-unknown-pragmas")
+    if (MSVC)
+        set_source_files_properties(index/SpatialIndexKernels.cu PROPERTIES
+            COMPILE_OPTIONS "--expt-relaxed-constexpr")
+    else()
+        set_source_files_properties(index/SpatialIndexKernels.cu PROPERTIES
+            COMPILE_OPTIONS
+                "--expt-relaxed-constexpr;-Xcompiler=-Wno-unknown-pragmas")
+    endif()
     set_source_files_properties(stages/NeighborhoodKernels.cu PROPERTIES
         COMPILE_OPTIONS "--expt-relaxed-constexpr")
     set_target_properties(pdg_core PROPERTIES
@@ -239,6 +282,11 @@ add_library(pdg_dispatch STATIC
     cli/Dispatch.cpp)
 target_compile_features(pdg_dispatch PUBLIC cxx_std_20)
 target_include_directories(pdg_dispatch PRIVATE ${NLOHMANN_INCLUDE_DIR})
+if (MSVC)
+    target_compile_definitions(pdg_dispatch PRIVATE
+        NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(pdg_dispatch PRIVATE /EHsc /Zc:preprocessor)
+endif()
 
 add_executable(pdg_engine
     cli/Calibrate.cpp
@@ -302,6 +350,11 @@ target_include_directories(pdg_engine PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}/include
     ${PDAL_VENDOR_EIGEN_DIR})
+if (MSVC)
+    target_compile_definitions(pdg_engine PRIVATE
+        NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(pdg_engine PRIVATE /EHsc /Zc:preprocessor)
+endif()
 
 add_executable(pdg_cli cli/DispatchMain.cpp)
 # Keep the internal target name stable for the existing build and differential
@@ -311,13 +364,20 @@ target_compile_features(pdg_cli PRIVATE cxx_std_20)
 target_compile_definitions(pdg_cli PRIVATE
     PDG_HAS_CUDA=$<BOOL:${GPUPDAL_ENABLE_CUDA}>)
 target_link_libraries(pdg_cli PRIVATE pdg_dispatch ${CMAKE_DL_LIBS})
+if (MSVC)
+    target_compile_definitions(pdg_cli PRIVATE
+        NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(pdg_cli PRIVATE /EHsc /Zc:preprocessor)
+endif()
 add_dependencies(pdg_cli pdg_engine)
 
-add_library(pdg_frozen_time SHARED cli/FrozenTime.c)
-target_compile_definitions(pdg_frozen_time PRIVATE _GNU_SOURCE)
-target_compile_options(pdg_frozen_time PRIVATE -Wall -Wextra -Werror)
-target_link_libraries(pdg_frozen_time PRIVATE ${CMAKE_DL_LIBS})
-add_dependencies(pdg_cli pdg_frozen_time)
+if (NOT WIN32)
+    add_library(pdg_frozen_time SHARED cli/FrozenTime.c)
+    target_compile_definitions(pdg_frozen_time PRIVATE _GNU_SOURCE)
+    target_compile_options(pdg_frozen_time PRIVATE -Wall -Wextra -Werror)
+    target_link_libraries(pdg_frozen_time PRIVATE ${CMAKE_DL_LIBS})
+    add_dependencies(pdg_cli pdg_frozen_time)
+endif()
 
 set(PDG_VERIFY_HELPER "${PDAL_OUTPUT_BIN_DIR}/pdg-verify.py")
 set(PDG_BENCHMARK_HELPER "${PDAL_OUTPUT_BIN_DIR}/pdg-benchmark-reference.py")
@@ -351,8 +411,10 @@ install(TARGETS pdg_core pdg_cli pdg_engine
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS pdg_frozen_time
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pdg)
+if (NOT WIN32)
+    install(TARGETS pdg_frozen_time
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pdg)
+endif()
 install(PROGRAMS
     ${PROJECT_SOURCE_DIR}/scripts/pdg/verify.py
     DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pdg

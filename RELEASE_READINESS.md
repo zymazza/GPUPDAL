@@ -42,8 +42,10 @@ repository-visibility approvals.
   archive may be shipped as a compatibility companion, but is not the stable
   GPUPDAL acceleration product.
 - Long-term platforms: Linux, Windows, and macOS. The first supported native
-  artifact is Linux x86-64. Windows and macOS require real-machine
-  validation; modern macOS is CPU-only.
+  artifact is Linux x86-64. Windows Server 2022 source-build and physical L4
+  CUDA qualification is complete, but a redistributable Windows bundle and
+  its clean-machine package gates remain future work. Modern macOS is CPU-only
+  and still requires real-machine validation.
 - Release operation: local/manual. GitHub Actions was disabled for the private
   repository on 2026-08-21; no paid hosted CI is a release requirement.
 - Native packaging is project work, not an owner prerequisite. A maintained
@@ -192,6 +194,44 @@ closed-source PDAL components.
       result, and a fourteen-workflow total-wall subset ranging 0.987–1.430x,
       so no universal speedup is claimed. This is not a blocker for the narrow
       SM 89 automatic-acceleration support statement.
+
+## Future Windows artifact gates
+
+These items do not block the qualified Linux x86-64 `0.1.0` candidate.
+
+- [x] Compile the native `gpupdal`, `pdg-engine`, and `pdg_unit_tests`
+      targets on Windows Server 2022 with Visual Studio 2022/MSVC 19.44 and
+      CUDA 13.3. The port preserves the public `gpupdal` command and internal
+      `pdg` namespace, uses Windows process/mapping/profile primitives, and
+      retains exact host fallback.
+- [x] Run the Windows product on physical CUDA hardware. On an AWS G6
+      non-fractional NVIDIA L4/SM 89 with Tesla driver 610.88, `gpupdal
+      doctor` reported CUDA toolkit/runtime/driver 13.3 and one 23,910,350,848
+      byte device. The explicit NVRTC specialization gate passed, the broad
+      CUDA unit surface passed 95/95, and the forced fused assign/ferry process
+      differential matched the sibling pinned PDAL oracle exactly.
+- [x] Run the rebuilt complete Windows unit binary and focused physical
+      sanitizer lane. The final binary SHA-256 is
+      `3f60e3855d174301e1fd18c49c62299564776d8548ac8a9a6d6c1fccffe74233`;
+      it discovered 650 tests, passed 645, explicitly skipped five unavailable
+      local/benchmark fixtures, and had zero failures. Its checked-in
+      eight-test CUDA matrix passed Compute Sanitizer memcheck, initcheck, and
+      synccheck with zero errors and racecheck with zero hazards, errors, or
+      warnings.
+- [ ] Produce a redistributable Windows archive and npm platform payload with
+      an audited DLL/data dependency closure, copied license material,
+      `SHA256SUMS`, and a file-level SPDX SBOM. NVIDIA's host driver must remain
+      external.
+- [ ] Exercise that archive on a separate clean Windows machine: install,
+      command discovery, `--version`, exact driver catalog, forced GPU/NVRTC
+      differential, driverless exact fallback, uninstall, and absence of
+      compiler/Conda/source-tree dependencies.
+- [ ] Run the complete Windows CTest process/differential aggregate from the
+      packaged candidate. Source-tree units and one exact process lane are not
+      a substitute for the complete package-level compatibility matrix.
+- [ ] Establish same-machine Windows PDAL baselines before making a Windows
+      performance or automatic-selection support claim. The current Windows
+      work qualifies correctness and CUDA execution, not a speedup claim.
 
 ## Completed preparation
 

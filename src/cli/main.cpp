@@ -51,14 +51,55 @@
 #include <utility>
 #include <vector>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <process.h>
+#include <windows.h>
+#else
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 namespace
 {
 using pdg::cli::MappedInput;
+
+#ifdef _WIN32
+[[noreturn]] void throwWindowsError(const char* message)
+{
+    throw std::system_error(static_cast<int>(::GetLastError()),
+                            std::system_category(), message);
+}
+
+void resizeWindowsFile(HANDLE file, std::size_t size, const char* message)
+{
+    if (size > static_cast<std::size_t>(
+                   std::numeric_limits<LONGLONG>::max()))
+        throw std::overflow_error(
+            "native LAS output exceeds the file offset domain");
+    LARGE_INTEGER position{};
+    position.QuadPart = static_cast<LONGLONG>(size);
+    if (!::SetFilePointerEx(file, position, nullptr, FILE_BEGIN) ||
+        !::SetEndOfFile(file))
+        throwWindowsError(message);
+}
+#endif
+
+std::uint64_t processId() noexcept
+{
+#ifdef _WIN32
+    return static_cast<std::uint64_t>(::_getpid());
+#else
+    return static_cast<std::uint64_t>(::getpid());
+#endif
+}
 
 void version()
 {
@@ -207,6 +248,31 @@ public:
         : m_size(size)
     {
         created = false;
+#ifdef _WIN32
+        m_file = ::CreateFileW(path.c_str(), GENERIC_READ | GENERIC_WRITE, 0,
+                               nullptr, CREATE_NEW, FILE_ATTRIBUTE_NORMAL,
+                               nullptr);
+        if (m_file == INVALID_HANDLE_VALUE)
+            throwWindowsError("unable to create native LAS output");
+        created = true;
+        try
+        {
+            resizeWindowsFile(m_file, size,
+                              "unable to size native LAS output");
+            m_mapping = ::CreateFileMappingW(
+                m_file, nullptr, PAGE_READWRITE, 0, 0, nullptr);
+            if (!m_mapping)
+                throwWindowsError("unable to map native LAS output");
+            m_data = ::MapViewOfFile(m_mapping, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+            if (!m_data)
+                throwWindowsError("unable to map native LAS output");
+        }
+        catch (...)
+        {
+            reset();
+            throw;
+        }
+#else
         if (size > static_cast<std::size_t>(std::numeric_limits<off_t>::max()))
             throw std::overflow_error(
                 "native LAS output exceeds the file offset domain");
@@ -236,6 +302,7 @@ public:
             reset();
             throw;
         }
+#endif
     }
 
     MappedOutput(const MappedOutput&) = delete;
@@ -253,6 +320,33 @@ public:
 
     void close()
     {
+#ifdef _WIN32
+        std::error_code failure;
+        if (m_data)
+        {
+            if (!::UnmapViewOfFile(m_data))
+                failure.assign(static_cast<int>(::GetLastError()),
+                               std::system_category());
+            m_data = nullptr;
+        }
+        if (m_mapping)
+        {
+            if (!::CloseHandle(m_mapping) && !failure)
+                failure.assign(static_cast<int>(::GetLastError()),
+                               std::system_category());
+            m_mapping = nullptr;
+        }
+        if (m_file != INVALID_HANDLE_VALUE)
+        {
+            if (!::CloseHandle(m_file) && !failure)
+                failure.assign(static_cast<int>(::GetLastError()),
+                               std::system_category());
+            m_file = INVALID_HANDLE_VALUE;
+        }
+        if (failure)
+            throw std::system_error(failure,
+                                    "unable to close native LAS output");
+#else
         int failure = 0;
         if (m_data)
         {
@@ -269,11 +363,29 @@ public:
         if (failure)
             throw std::system_error(failure, std::generic_category(),
                                     "unable to close native LAS output");
+#endif
     }
 
 private:
     void reset() noexcept
     {
+#ifdef _WIN32
+        if (m_data)
+        {
+            ::UnmapViewOfFile(m_data);
+            m_data = nullptr;
+        }
+        if (m_mapping)
+        {
+            ::CloseHandle(m_mapping);
+            m_mapping = nullptr;
+        }
+        if (m_file != INVALID_HANDLE_VALUE)
+        {
+            ::CloseHandle(m_file);
+            m_file = INVALID_HANDLE_VALUE;
+        }
+#else
         if (m_data)
         {
             ::munmap(m_data, m_size);
@@ -284,9 +396,15 @@ private:
             ::close(m_descriptor);
             m_descriptor = -1;
         }
+#endif
     }
 
+#ifdef _WIN32
+    HANDLE m_file = INVALID_HANDLE_VALUE;
+    HANDLE m_mapping = nullptr;
+#else
     int m_descriptor = -1;
+#endif
     void* m_data = nullptr;
     std::size_t m_size;
 };
@@ -299,6 +417,24 @@ public:
         : m_size(size), m_freeBuffers(QueueDepth)
     {
         created = false;
+#ifdef _WIN32
+        m_file = ::CreateFileW(path.c_str(), GENERIC_WRITE, 0, nullptr,
+                               CREATE_NEW, FILE_ATTRIBUTE_NORMAL, nullptr);
+        if (m_file == INVALID_HANDLE_VALUE)
+            throwWindowsError("unable to create native LAS output");
+        created = true;
+        try
+        {
+            resizeWindowsFile(m_file, size,
+                              "unable to size native LAS output");
+            m_worker = std::thread([this] { run(); });
+        }
+        catch (...)
+        {
+            reset();
+            throw;
+        }
+#else
         if (size > static_cast<std::size_t>(std::numeric_limits<off_t>::max()))
             throw std::overflow_error(
                 "native LAS output exceeds the file offset domain");
@@ -321,6 +457,7 @@ public:
             reset();
             throw;
         }
+#endif
     }
 
     PositionedOutput(const PositionedOutput&) = delete;
@@ -379,9 +516,13 @@ public:
 
     void close(std::size_t finalSize)
     {
-        if (finalSize > m_size ||
+        if (finalSize > m_size
+#ifndef _WIN32
+            ||
             finalSize >
-                static_cast<std::size_t>(std::numeric_limits<off_t>::max()))
+                static_cast<std::size_t>(std::numeric_limits<off_t>::max())
+#endif
+        )
             throw std::out_of_range("native LAS final output size is invalid");
         stopWorker();
         std::exception_ptr failure;
@@ -389,6 +530,26 @@ public:
             std::lock_guard lock(m_mutex);
             failure = m_failure;
         }
+#ifdef _WIN32
+        std::error_code closeFailure;
+        if (!failure && m_file != INVALID_HANDLE_VALUE)
+        {
+            try
+            {
+                resizeWindowsFile(m_file, finalSize,
+                                  "unable to resize native LAS output");
+            }
+            catch (const std::system_error& error)
+            {
+                closeFailure = error.code();
+            }
+        }
+        if (m_file != INVALID_HANDLE_VALUE && !::CloseHandle(m_file) &&
+            !closeFailure)
+            closeFailure.assign(static_cast<int>(::GetLastError()),
+                                std::system_category());
+        m_file = INVALID_HANDLE_VALUE;
+#else
         int closeFailure = 0;
         if (!failure && m_descriptor >= 0 &&
             ::ftruncate(m_descriptor, static_cast<off_t>(finalSize)) != 0)
@@ -397,12 +558,18 @@ public:
             if (!closeFailure)
                 closeFailure = errno;
         m_descriptor = -1;
+#endif
         if (failure)
             std::rethrow_exception(failure);
         if (closeFailure)
         {
+#ifdef _WIN32
+            throw std::system_error(closeFailure,
+                                    "unable to close native LAS output");
+#else
             throw std::system_error(closeFailure, std::generic_category(),
                                     "unable to close native LAS output");
+#endif
         }
     }
 
@@ -417,6 +584,32 @@ private:
 
     void writeDirect(const Request& request)
     {
+#ifdef _WIN32
+        if (request.offset > static_cast<std::size_t>(
+                                 std::numeric_limits<LONGLONG>::max()))
+            throw std::overflow_error(
+                "native LAS positioned write offset is invalid");
+        LARGE_INTEGER position{};
+        position.QuadPart = static_cast<LONGLONG>(request.offset);
+        if (!::SetFilePointerEx(m_file, position, nullptr, FILE_BEGIN))
+            throwWindowsError("unable to position native LAS output");
+        std::size_t written = 0;
+        while (written < request.bytes.size())
+        {
+            const DWORD chunk = static_cast<DWORD>(std::min<std::size_t>(
+                request.bytes.size() - written,
+                std::numeric_limits<DWORD>::max()));
+            DWORD completed = 0;
+            if (!::WriteFile(m_file, request.bytes.data() + written, chunk,
+                             &completed, nullptr))
+                throwWindowsError("unable to write native LAS output");
+            if (completed == 0)
+                throw std::system_error(
+                    std::make_error_code(std::errc::io_error),
+                    "unable to write native LAS output");
+            written += completed;
+        }
+#else
         std::size_t written = 0;
         while (written < request.bytes.size())
         {
@@ -435,6 +628,7 @@ private:
                                         "unable to write native LAS output");
             written += static_cast<std::size_t>(result);
         }
+#endif
     }
 
     void run() noexcept
@@ -497,14 +691,26 @@ private:
     void reset() noexcept
     {
         stopWorker();
+#ifdef _WIN32
+        if (m_file != INVALID_HANDLE_VALUE)
+        {
+            ::CloseHandle(m_file);
+            m_file = INVALID_HANDLE_VALUE;
+        }
+#else
         if (m_descriptor >= 0)
         {
             ::close(m_descriptor);
             m_descriptor = -1;
         }
+#endif
     }
 
+#ifdef _WIN32
+    HANDLE m_file = INVALID_HANDLE_VALUE;
+#else
     int m_descriptor = -1;
+#endif
     std::size_t m_size;
     std::mutex m_mutex;
     std::condition_variable m_writeReady;
@@ -520,6 +726,40 @@ bool writeFileExclusive(const std::filesystem::path& path,
                         std::span<const std::byte> bytes, bool& created)
 {
     created = false;
+#ifdef _WIN32
+    HANDLE file = ::CreateFileW(path.c_str(), GENERIC_WRITE, 0, nullptr,
+                                CREATE_NEW, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (file == INVALID_HANDLE_VALUE)
+        return false;
+    created = true;
+    try
+    {
+        std::size_t written = 0;
+        while (written < bytes.size())
+        {
+            const DWORD chunk = static_cast<DWORD>(std::min<std::size_t>(
+                bytes.size() - written, std::numeric_limits<DWORD>::max()));
+            DWORD completed = 0;
+            if (!::WriteFile(file, bytes.data() + written, chunk, &completed,
+                             nullptr))
+                throwWindowsError("unable to write native LAS output");
+            if (completed == 0)
+                throw std::system_error(
+                    std::make_error_code(std::errc::io_error),
+                    "unable to write native LAS output");
+            written += completed;
+        }
+        if (!::CloseHandle(file))
+            throwWindowsError("unable to close native LAS output");
+        file = INVALID_HANDLE_VALUE;
+    }
+    catch (...)
+    {
+        if (file != INVALID_HANDLE_VALUE)
+            ::CloseHandle(file);
+        throw;
+    }
+#else
     int descriptor =
         ::open(path.c_str(),
                O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC | O_NOFOLLOW, 0666);
@@ -557,7 +797,26 @@ bool writeFileExclusive(const std::filesystem::path& path,
             ::close(descriptor);
         throw;
     }
+#endif
     return true;
+}
+
+void publishExclusive(const std::filesystem::path& temporaryPath,
+                      const std::filesystem::path& outputPath,
+                      bool& temporaryOwned)
+{
+#ifdef _WIN32
+    if (!::CreateHardLinkW(outputPath.c_str(), temporaryPath.c_str(), nullptr))
+        throwWindowsError("unable to publish native LAS output");
+    if (::DeleteFileW(temporaryPath.c_str()))
+        temporaryOwned = false;
+#else
+    if (::link(temporaryPath.c_str(), outputPath.c_str()) != 0)
+        throw std::system_error(errno, std::generic_category(),
+                                "unable to publish native LAS output");
+    if (::unlink(temporaryPath.c_str()) == 0)
+        temporaryOwned = false;
+#endif
 }
 
 bool declaresWholeProgramFusion(const pdg::Plan& plan)
@@ -639,7 +898,7 @@ bool tryNativeTranslate(int argc, char** argv)
                 "requested input is outside the exact CUDA envelope");
 #endif
         temporaryPath = outputPath;
-        temporaryPath += ".pdg-native-" + std::to_string(::getpid());
+        temporaryPath += ".pdg-native-" + std::to_string(processId());
         if (std::filesystem::exists(temporaryPath, error) || error)
             return false;
         if (output.empty())
@@ -653,11 +912,7 @@ bool tryNativeTranslate(int argc, char** argv)
         }
         else if (!writeFileExclusive(temporaryPath, output, temporaryOwned))
             return false;
-        if (::link(temporaryPath.c_str(), outputPath.c_str()) != 0)
-            throw std::system_error(errno, std::generic_category(),
-                                    "unable to publish native LAS output");
-        if (::unlink(temporaryPath.c_str()) == 0)
-            temporaryOwned = false;
+        publishExclusive(temporaryPath, outputPath, temporaryOwned);
         return true;
     }
     catch (...)
@@ -855,7 +1110,7 @@ bool tryNativePipeline(int argc, char** argv)
             return false;
 
         temporaryPath = outputPath;
-        temporaryPath += ".pdg-native-" + std::to_string(::getpid());
+        temporaryPath += ".pdg-native-" + std::to_string(processId());
         if (std::filesystem::exists(temporaryPath, error) || error)
             return false;
         const pdg::las::DefaultTranslationMetadata metadata =
@@ -949,11 +1204,7 @@ bool tryNativePipeline(int argc, char** argv)
                                                nativeWorkerLimit());
             mappedOutput.close();
         }
-        if (::link(temporaryPath.c_str(), outputPath.c_str()) != 0)
-            throw std::system_error(errno, std::generic_category(),
-                                    "unable to publish native LAS output");
-        if (::unlink(temporaryPath.c_str()) == 0)
-            temporaryOwned = false;
+        publishExclusive(temporaryPath, outputPath, temporaryOwned);
         return true;
     }
     catch (...)
@@ -1132,7 +1383,7 @@ tryDirectResidentLasImpl(const pdg::Plan& plan,
             throw std::system_error(error,
                                     "unable to inspect resident LAS output");
         temporaryPath = outputPath;
-        temporaryPath += ".pdg-native-" + std::to_string(::getpid());
+        temporaryPath += ".pdg-native-" + std::to_string(processId());
         if (std::filesystem::exists(temporaryPath, error))
             throw std::system_error(
                 std::make_error_code(std::errc::file_exists),
@@ -1188,11 +1439,7 @@ tryDirectResidentLasImpl(const pdg::Plan& plan,
         else
             output.close();
 
-        if (::link(temporaryPath.c_str(), outputPath.c_str()) != 0)
-            throw std::system_error(errno, std::generic_category(),
-                                    "unable to publish resident LAS output");
-        if (::unlink(temporaryPath.c_str()) == 0)
-            temporaryOwned = false;
+        publishExclusive(temporaryPath, outputPath, temporaryOwned);
         return result;
     }
     catch (...)
@@ -1471,7 +1718,7 @@ void publishDirectResidentLasOutputImpl(const pdg::Plan& plan,
     if (error)
         throw std::system_error(error, "unable to inspect resident LAS output");
     std::filesystem::path temporaryPath = outputPath;
-    temporaryPath += ".pdg-resident-output-" + std::to_string(::getpid());
+    temporaryPath += ".pdg-resident-output-" + std::to_string(processId());
     if (std::filesystem::exists(temporaryPath, error))
         throw std::system_error(std::make_error_code(std::errc::file_exists),
                                 "resident LAS temporary output already exists");
@@ -1555,11 +1802,7 @@ void publishDirectResidentLasOutputImpl(const pdg::Plan& plan,
             }
         }
         output.close();
-        if (::link(temporaryPath.c_str(), outputPath.c_str()) != 0)
-            throw std::system_error(errno, std::generic_category(),
-                                    "unable to publish resident LAS output");
-        if (::unlink(temporaryPath.c_str()) == 0)
-            temporaryOwned = false;
+        publishExclusive(temporaryPath, outputPath, temporaryOwned);
     }
     catch (...)
     {
@@ -1578,7 +1821,23 @@ std::filesystem::path oraclePath(const char* executable)
         configured && *configured)
         return configured;
 
+#ifdef _WIN32
+    std::vector<wchar_t> path(512U);
+    for (;;)
+    {
+        const DWORD length = ::GetModuleFileNameW(
+            nullptr, path.data(), static_cast<DWORD>(path.size()));
+        if (length == 0)
+            break;
+        if (length < path.size())
+            return std::filesystem::path(path.data(), path.data() + length)
+                       .parent_path() /
+                   "pdal.exe";
+        path.resize(path.size() * 2U);
+    }
+#endif
     std::error_code error;
+#ifndef _WIN32
     std::filesystem::path self =
         std::filesystem::read_symlink("/proc/self/exe", error);
     if (error)
@@ -1586,6 +1845,13 @@ std::filesystem::path oraclePath(const char* executable)
     if (error || self.empty())
         return "pdal";
     return self.parent_path() / "pdal";
+#else
+    const std::filesystem::path self =
+        std::filesystem::absolute(executable, error);
+    if (error || self.empty())
+        return "pdal.exe";
+    return self.parent_path() / "pdal.exe";
+#endif
 }
 
 int runOracle(int argc, char** argv)
@@ -1599,10 +1865,20 @@ int runOracle(int argc, char** argv)
         arguments.push_back(argv[index]);
     arguments.push_back(nullptr);
 
+#ifdef _WIN32
+    const intptr_t status = oracle.has_parent_path()
+                                ? ::_spawnv(_P_WAIT, program.c_str(),
+                                            arguments.data())
+                                : ::_spawnvp(_P_WAIT, program.c_str(),
+                                             arguments.data());
+    if (status >= 0)
+        return static_cast<int>(status);
+#else
     if (oracle.has_parent_path())
         ::execv(program.c_str(), arguments.data());
     else
         ::execvp(program.c_str(), arguments.data());
+#endif
 
     const int error = errno;
     std::cerr << "gpupdal: unable to execute pinned PDAL fallback " << program

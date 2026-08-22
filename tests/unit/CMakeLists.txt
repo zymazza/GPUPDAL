@@ -80,6 +80,14 @@ target_include_directories(pdg_unit_tests PRIVATE
     ${PROJECT_SOURCE_DIR}/vendor)
 target_compile_definitions(pdg_unit_tests PRIVATE
     PDG_TEST_DATA_DIR="${PROJECT_SOURCE_DIR}/test/data")
+if(MSVC)
+    target_compile_definitions(pdg_unit_tests PRIVATE
+        NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(pdg_unit_tests PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:/EHsc;/Zc:preprocessor>
+        $<$<COMPILE_LANGUAGE:CXX>:/FI${CMAKE_CURRENT_SOURCE_DIR}/WindowsCompat.hpp>
+        $<$<COMPILE_LANGUAGE:CUDA>:--pre-include=${CMAKE_CURRENT_SOURCE_DIR}/WindowsCompat.hpp>)
+endif()
 
 if(GPUPDAL_ENABLE_CUDA)
     target_compile_definitions(pdg_unit_tests PRIVATE PDG_UNIT_TESTING=1)

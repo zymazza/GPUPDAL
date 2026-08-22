@@ -3277,7 +3277,7 @@ std::optional<int> runResidentPipelineImpl(int argc, char** argv,
     // nullopt so the unchanged public selector runs stock PDAL. B0156 made
     // that decline free by refusing on plan structure before device work, and
     // B0179 discharged the exactness burden for the class this newly reaches.
-    static_cast<void>(automaticResidentLasOutputEnvelope);
+    static_cast<void>(&automaticResidentLasOutputEnvelope);
 
     bool committed = false;
     try

@@ -13116,3 +13116,57 @@ embedded SM images remain compilation coverage, Windows and macOS remain
 future platform work, and no universal speedup is claimed. Publication on
 npm's `latest` channel and changing the private repository to public remain
 separate owner-authorized external actions.
+
+## D0303 — Physically qualify the native Windows CUDA source build
+
+The Windows lane uses Windows Server 2022, Visual Studio 2022/MSVC 19.44,
+CUDA 13.3.73, and the existing SM 89-focused test build. Portability work uses
+native Windows process creation, executable discovery, memory mapping,
+positioned output, profile paths, CPU discovery, and NVML driver reporting.
+The differential harness retains bounded stdout/stderr capture, timeout, and
+process-tree containment by using reader threads and a Windows process group;
+it also isolates `USERPROFILE`, `APPDATA`, and related home variables per role.
+The public command remains `gpupdal`, while the internal namespace and runtime
+controls remain `pdg`/`PDG_*`.
+
+NVCC/MSVC exposed Eigen 3.4.0's nonstandard device-global `::arg` lookup. The
+vendored file now carries Eigen's merged !1363 `std::arg` fix under its
+existing MPL-2.0 notice. A complete unit run then exposed a separate
+Windows-only test defect: a temporary `C:\\...` path had been concatenated
+unescaped into pipeline JSON. The regression now serializes filenames with
+`nlohmann::json`; it passes on both Linux and Windows.
+
+The first fractional G6f L4/SM 89 trial proved actual CUDA execution, the
+checked-in eight-test device matrix, and the forced fused assign/ferry exact
+process differential. Its GRID 19.5 driver exposed CUDA 13.0 to CUDA 13.3
+NVRTC, so the newest PTX specialization was correctly rejected as an
+unsupported PTX version, and Compute Sanitizer could not initialize its WDDM
+debugger interface. These are fractional-vGPU/driver limitations, not accepted
+qualification results.
+
+The final physical lane therefore used a non-fractional AWS G6 NVIDIA L4 with
+23,910,350,848 bytes, SM 89, and NVIDIA data-center driver 610.88. The driver
+installer was 767,867,480 bytes with SHA-256
+`173f7ba2478bb3725e704f19e45988a9c4ab520487c88576ce91aea91b5d55d5`.
+`gpupdal doctor` reported CUDA toolkit, runtime, and driver 13.3. The explicit
+`FusedJitSpecializesEveryAdmittedFormat` gate passed; the broad CUDA unit
+filter passed 95/95; and `pdg_cuda_assign_ferry_fused` matched the sibling
+pinned PDAL process exactly. The final rebuilt `pdg_unit_tests.exe` has
+SHA-256
+`3f60e3855d174301e1fd18c49c62299564776d8548ac8a9a6d6c1fccffe74233`.
+It discovered 650 tests, passed 645, explicitly skipped five unavailable
+local/benchmark fixtures, and reported zero failures. On that same binary the
+checked-in eight-test matrix passed Compute Sanitizer memcheck, initcheck, and
+synccheck with zero errors and racecheck with zero hazards, errors, or
+warnings. The forced fused process differential remained exact after the
+Windows harness fixes.
+
+**Consequences.** Native Windows source compilation, physical SM 89 CUDA
+execution, NVRTC JIT, exact process behavior, complete unit execution, and all
+four focused sanitizer tools are qualified. This does not create a supported
+Windows release artifact or a Windows performance claim. A redistributable
+DLL/data/license/SBOM closure, clean-machine install/uninstall and driverless
+fallback, complete packaged CTest process aggregate, and same-machine PDAL
+performance baseline remain before Windows can be advertised as a supported
+binary platform. Those future Windows gates do not block the already-qualified
+Linux x86-64 `0.1.0` candidate or authorize npm publication/public visibility.

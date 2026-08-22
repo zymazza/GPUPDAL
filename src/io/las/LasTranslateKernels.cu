@@ -10,7 +10,17 @@
 #include <cuda.h>
 #include <nvrtc.h>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#else
 #include <dlfcn.h>
+#endif
 
 #include <cstdio>
 #include <map>
@@ -1882,10 +1892,10 @@ extern "C" __global__ void __launch_bounds__(256, 5) pdgJitFusedKernel(
 
 // B0155: NVRTC is 114.5 MB and costs 5.4 ms to load in every process, yet it is
 // only needed when D0076's fused JIT actually compiles, which most pipelines
-// never do. Resolving it through dlopen on first use keeps that cost off every
-// other invocation. The symbol set is small and fixed; a missing library or
-// symbol simply means no JIT, which the caller already treats as a compile
-// failure and falls back from.
+// never do. Resolving it through the platform loader on first use keeps that
+// cost off every other invocation. The symbol set is small and fixed; a
+// missing library or symbol simply means no JIT, which the caller already
+// treats as a compile failure and falls back from.
 struct NvrtcApi
 {
     nvrtcResult (*createProgram)(nvrtcProgram*, const char*, const char*, int,
@@ -1911,28 +1921,49 @@ const NvrtcApi* loadNvrtc()
     static const NvrtcApi* const resolved = []() -> const NvrtcApi*
     {
         static NvrtcApi api;
-        // Versioned SONAME first, then the development symlink, so a
-        // runtime-only CUDA install resolves without the full toolkit.
+        // Prefer versioned runtime names so a runtime-only CUDA install works
+        // without the full toolkit. Keep the module loaded for the process
+        // lifetime because the resolved function pointers remain cached.
+#ifdef _WIN32
+        HMODULE handle = nullptr;
+        constexpr std::array<const wchar_t*, 5> Libraries{
+            L"nvrtc64_133_0.dll", L"nvrtc64_132_0.dll",
+            L"nvrtc64_131_0.dll", L"nvrtc64_130_0.dll",
+            L"nvrtc64_120_0.dll"};
+        for (const wchar_t* library : Libraries)
+        {
+            handle = ::LoadLibraryW(library);
+            if (handle)
+                break;
+        }
+        if (!handle)
+            return nullptr;
+        const auto symbol = [handle](const char* name)
+        { return ::GetProcAddress(handle, name); };
+#else
         void* handle = dlopen("libnvrtc.so.13", RTLD_LAZY | RTLD_LOCAL);
         if (!handle)
             handle = dlopen("libnvrtc.so", RTLD_LAZY | RTLD_LOCAL);
         if (!handle)
             return nullptr;
+        const auto symbol = [handle](const char* name)
+        { return dlsym(handle, name); };
+#endif
         api.createProgram = reinterpret_cast<decltype(api.createProgram)>(
-            dlsym(handle, "nvrtcCreateProgram"));
+            symbol("nvrtcCreateProgram"));
         api.compileProgram = reinterpret_cast<decltype(api.compileProgram)>(
-            dlsym(handle, "nvrtcCompileProgram"));
+            symbol("nvrtcCompileProgram"));
         api.getProgramLogSize =
             reinterpret_cast<decltype(api.getProgramLogSize)>(
-                dlsym(handle, "nvrtcGetProgramLogSize"));
+                symbol("nvrtcGetProgramLogSize"));
         api.getProgramLog = reinterpret_cast<decltype(api.getProgramLog)>(
-            dlsym(handle, "nvrtcGetProgramLog"));
+            symbol("nvrtcGetProgramLog"));
         api.getPtxSize = reinterpret_cast<decltype(api.getPtxSize)>(
-            dlsym(handle, "nvrtcGetPTXSize"));
-        api.getPtx =
-            reinterpret_cast<decltype(api.getPtx)>(dlsym(handle, "nvrtcGetPTX"));
+            symbol("nvrtcGetPTXSize"));
+        api.getPtx = reinterpret_cast<decltype(api.getPtx)>(
+            symbol("nvrtcGetPTX"));
         api.destroyProgram = reinterpret_cast<decltype(api.destroyProgram)>(
-            dlsym(handle, "nvrtcDestroyProgram"));
+            symbol("nvrtcDestroyProgram"));
         return api.valid() ? &api : nullptr;
     }();
     return resolved;

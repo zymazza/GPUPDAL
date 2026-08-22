@@ -11,8 +11,22 @@
 
 #include <nlohmann/json.hpp>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <fcntl.h>
+#include <io.h>
+#include <process.h>
+#include <sys/stat.h>
+#include <windows.h>
+#else
 #include <sys/wait.h>
 #include <unistd.h>
+#endif
 
 #include <algorithm>
 #include <cctype>
@@ -36,7 +50,9 @@
 #include <string_view>
 #include <vector>
 
+#ifndef _WIN32
 extern char** environ;
+#endif
 
 namespace pdg::cli
 {
@@ -262,7 +278,11 @@ std::string utcNow()
 {
     const std::time_t now = std::time(nullptr);
     std::tm utc{};
+#ifdef _WIN32
+    gmtime_s(&utc, &now);
+#else
     gmtime_r(&now, &utc);
+#endif
     char buffer[32];
     std::strftime(buffer, sizeof buffer, "%Y-%m-%dT%H:%M:%SZ", &utc);
     return buffer;
@@ -270,17 +290,48 @@ std::string utcNow()
 
 std::filesystem::path selfExecutable(const char* argv0)
 {
+#ifdef _WIN32
+    std::vector<wchar_t> path(512U);
+    for (;;)
+    {
+        const DWORD length = ::GetModuleFileNameW(
+            nullptr, path.data(), static_cast<DWORD>(path.size()));
+        if (length == 0)
+            break;
+        if (length < path.size())
+            return std::filesystem::path(path.data(), path.data() + length);
+        path.resize(path.size() * 2U);
+    }
+#endif
     std::error_code error;
+#ifndef _WIN32
     std::filesystem::path self =
         std::filesystem::read_symlink("/proc/self/exe", error);
     if (error || self.empty())
         self = std::filesystem::absolute(argv0, error);
     return self;
+#else
+    return std::filesystem::absolute(argv0, error);
+#endif
 }
 
 std::filesystem::path siblingPdal(const char* argv0)
 {
-    return selfExecutable(argv0).parent_path() / "pdal";
+    return selfExecutable(argv0).parent_path() /
+#ifdef _WIN32
+           "pdal.exe";
+#else
+           "pdal";
+#endif
+}
+
+std::uint64_t processId() noexcept
+{
+#ifdef _WIN32
+    return static_cast<std::uint64_t>(::_getpid());
+#else
+    return static_cast<std::uint64_t>(::getpid());
+#endif
 }
 
 struct ProcessResult
@@ -300,7 +351,12 @@ runProcess(const std::vector<std::string>& arguments,
            const std::filesystem::path& stderrPath)
 {
     std::vector<std::string> environmentStrings;
-    for (char** entry = environ; entry && *entry; ++entry)
+#ifdef _WIN32
+    char** processEnvironment = _environ;
+#else
+    char** processEnvironment = environ;
+#endif
+    for (char** entry = processEnvironment; entry && *entry; ++entry)
     {
         const std::string_view text(*entry);
         if (text.rfind("PDG_", 0) == 0 || text.rfind("PDAL_TEST_", 0) == 0 ||
@@ -323,6 +379,58 @@ runProcess(const std::vector<std::string>& arguments,
     argv.push_back(nullptr);
 
     const Clock::time_point start = Clock::now();
+#ifdef _WIN32
+    const int outputDescriptor = ::_wopen(
+        stdoutPath.c_str(), _O_WRONLY | _O_CREAT | _O_TRUNC | _O_TEXT,
+        _S_IREAD | _S_IWRITE);
+    if (outputDescriptor < 0)
+        throw std::runtime_error(std::string("open stdout failed: ") +
+                                 std::strerror(errno));
+    const int errorDescriptor = ::_wopen(
+        stderrPath.c_str(), _O_WRONLY | _O_CREAT | _O_TRUNC | _O_TEXT,
+        _S_IREAD | _S_IWRITE);
+    if (errorDescriptor < 0)
+    {
+        ::_close(outputDescriptor);
+        throw std::runtime_error(std::string("open stderr failed: ") +
+                                 std::strerror(errno));
+    }
+    std::fflush(stdout);
+    std::fflush(stderr);
+    const int savedOutput = ::_dup(::_fileno(stdout));
+    const int savedError = ::_dup(::_fileno(stderr));
+    if (savedOutput < 0 || savedError < 0 ||
+        ::_dup2(outputDescriptor, ::_fileno(stdout)) != 0 ||
+        ::_dup2(errorDescriptor, ::_fileno(stderr)) != 0)
+    {
+        const int failure = errno;
+        if (savedOutput >= 0)
+        {
+            ::_dup2(savedOutput, ::_fileno(stdout));
+            ::_close(savedOutput);
+        }
+        if (savedError >= 0)
+        {
+            ::_dup2(savedError, ::_fileno(stderr));
+            ::_close(savedError);
+        }
+        ::_close(outputDescriptor);
+        ::_close(errorDescriptor);
+        throw std::runtime_error(std::string("redirect output failed: ") +
+                                 std::strerror(failure));
+    }
+    ::_close(outputDescriptor);
+    ::_close(errorDescriptor);
+    const intptr_t childStatus = ::_spawnve(
+        _P_WAIT, argumentStorage.front().c_str(), argv.data(), envp.data());
+    const int spawnError = errno;
+    std::fflush(stdout);
+    std::fflush(stderr);
+    ::_dup2(savedOutput, ::_fileno(stdout));
+    ::_dup2(savedError, ::_fileno(stderr));
+    ::_close(savedOutput);
+    ::_close(savedError);
+#else
     const pid_t child = ::fork();
     if (child < 0)
         throw std::runtime_error(std::string("fork failed: ") +
@@ -340,12 +448,19 @@ runProcess(const std::vector<std::string>& arguments,
         if (errno != EINTR)
             throw std::runtime_error(std::string("waitpid failed: ") +
                                      std::strerror(errno));
+#endif
     ProcessResult result;
     result.wallSeconds =
         std::chrono::duration<double>(Clock::now() - start).count();
+#ifdef _WIN32
+    result.exitStatus = childStatus < 0
+                            ? (spawnError == ENOENT ? 127 : 126)
+                            : static_cast<int>(childStatus);
+#else
     result.exitStatus = WIFEXITED(status)   ? WEXITSTATUS(status)
                         : WIFSIGNALED(status) ? 128 + WTERMSIG(status)
                                               : -1;
+#endif
     std::ifstream errors(stderrPath);
     const std::string text((std::istreambuf_iterator<char>(errors)),
                            std::istreambuf_iterator<char>());
@@ -839,7 +954,7 @@ int runCalibrate(int argc, char** argv)
         std::filesystem::path work = options.work;
         if (work.empty())
             work = std::filesystem::temp_directory_path() /
-                   ("pdg-calibrate-" + std::to_string(::getpid()));
+                   ("pdg-calibrate-" + std::to_string(processId()));
         std::filesystem::create_directories(work);
         struct WorkGuard
         {

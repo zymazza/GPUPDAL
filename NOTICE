@@ -180,6 +180,12 @@ for CUDA without substituting a numerically different solver. The file remains
 Copyright (c) 2008 Gael Guennebaud and Copyright (c) 2010 Jitse Niesen and is
 distributed under the Mozilla Public License 2.0 stated in that source file.
 
+The vendored `vendor/eigen/Eigen/src/Core/MathFunctions.h` also carries
+Eigen's merged change !1363, "Fix use of arg function in CUDA." It replaces
+the nonstandard device-global `::arg` lookup with `std::arg`, fixing Eigen
+3.4.0 compilation under NVCC, MSVC, and C++20. The file remains distributed
+under Eigen's Mozilla Public License 2.0 terms and retained source notice.
+
 The exact normal, curvature, orientation, skip-message, covariance, and
 eigendecomposition behavior in `src/pdal/PdgNormalFilter.cpp` and the shared
 neighborhood primitives in `src/index/SpatialIndex*` is behaviorally derived

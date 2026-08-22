@@ -211,17 +211,36 @@ std::filesystem::path defaultLocalProfilePath()
         explicitPath && *explicitPath)
         return std::filesystem::path(explicitPath);
     std::filesystem::path base;
+#ifdef _WIN32
+    if (const char* local = std::getenv("LOCALAPPDATA"); local && *local)
+        base = local;
+    else if (const char* roaming = std::getenv("APPDATA");
+             roaming && *roaming)
+        base = roaming;
+    else if (const char* profile = std::getenv("USERPROFILE");
+             profile && *profile)
+        base = profile;
+    else
+        base = std::filesystem::path(".");
+#else
     if (const char* xdg = std::getenv("XDG_CONFIG_HOME"); xdg && *xdg)
         base = xdg;
     else if (const char* home = std::getenv("HOME"); home && *home)
         base = std::filesystem::path(home) / ".config";
     else
         base = std::filesystem::path(".");
+#endif
     return base / "gpupdal" / "placement-profile.json";
 }
 
 std::string hostCpuModelName()
 {
+#ifdef _WIN32
+    if (const char* identifier = std::getenv("PROCESSOR_IDENTIFIER");
+        identifier && *identifier)
+        return trimmed(identifier);
+    return {};
+#else
     std::ifstream input("/proc/cpuinfo");
     std::string line;
     while (std::getline(input, line))
@@ -234,6 +253,7 @@ std::string hostCpuModelName()
         return trimmed(line.substr(colon + 1));
     }
     return {};
+#endif
 }
 
 LocalProfileMachineKey currentLocalProfileMachineKey()
@@ -265,7 +285,7 @@ std::optional<LocalPlacementProfile> parseLocalProfile(std::string_view json,
         const Json document = Json::parse(json);
         if (!document.is_object())
             throw std::invalid_argument("profile is not a JSON object");
-        if (document.at("schema") != LocalProfileSchema)
+        if (requiredString(document, "schema") != LocalProfileSchema)
             throw std::invalid_argument("unsupported local profile schema");
         LocalPlacementProfile profile;
         profile.id = requiredString(document, "id");

@@ -1,5 +1,16 @@
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
+# Linux uses a preload shim to freeze PDAL's LAS creation date during exact
+# comparisons. Windows has no LD_PRELOAD equivalent; candidate and oracle run
+# back-to-back against the same local date instead.
+set(PDG_FROZEN_TIME_ARGUMENTS "")
+set(PDG_FROZEN_TIME_DEPENDENCY "")
+if(TARGET pdg_frozen_time)
+    set(PDG_FROZEN_TIME_ARGUMENTS
+        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+    set(PDG_FROZEN_TIME_DEPENDENCY pdg_frozen_time)
+endif()
+
 # The frozen-time shim is intentionally preloaded by differential.py so that
 # candidate and oracle metadata remain deterministic.  ASan requires its
 # runtime to appear before every other preloaded library, however.  Pass its
@@ -77,7 +88,7 @@ set_tests_properties(pdg_3dep_preregistration_contract
     PROPERTIES LABELS "pdg;benchmark;3dep;preregistration;statistics;infrastructure")
 
 add_custom_target(pdg_differential_prerequisites
-    DEPENDS pdal pdg_cli pdg_frozen_time)
+    DEPENDS pdal pdg_cli ${PDG_FROZEN_TIME_DEPENDENCY})
 
 function(pdg_add_native_las_test name fixture)
     add_test(NAME ${name}
@@ -88,7 +99,7 @@ function(pdg_add_native_las_test name fixture)
             --candidate $<TARGET_FILE:pdg_cli>
             --case ${name}
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             -- translate ${PROJECT_SOURCE_DIR}/test/data/las/${fixture} out.las)
     set_tests_properties(${name}
         PROPERTIES LABELS "differential;native;exact")
@@ -109,7 +120,7 @@ function(pdg_add_native_ferry_test name pipeline)
             --candidate $<TARGET_FILE:pdg_cli>
             --case ${name}
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -130,7 +141,7 @@ function(pdg_add_native_point_program_test name pipeline)
             --candidate $<TARGET_FILE:pdg_cli>
             --case ${name}
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -154,7 +165,7 @@ add_test(NAME pdg_hybrid_assign_ferry_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_assign_ferry_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-assign-ferry.json
         -- pipeline pipeline.json)
@@ -171,7 +182,7 @@ add_test(NAME pdg_hybrid_coordinate_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_coordinate_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/sample_c.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-coordinate.json
         -- pipeline pipeline.json)
@@ -188,7 +199,7 @@ add_test(NAME pdg_hybrid_expression_fused_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_expression_fused_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-expression-fused.json
         -- pipeline pipeline.json)
@@ -205,7 +216,7 @@ add_test(NAME pdg_hybrid_range_fused_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_range_fused_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-range-fused.json
         -- pipeline pipeline.json)
@@ -228,7 +239,7 @@ foreach(kind IN ITEMS 2d 3d_outside)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_crop_${kind}_host_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -247,7 +258,7 @@ add_test(NAME pdg_hybrid_crop_same_srs_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_crop_same_srs_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/interesting.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-crop-2d.json
         -- pipeline pipeline.json)
@@ -265,7 +276,7 @@ add_test(NAME pdg_hybrid_crop_empty_standard_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_crop_empty_standard_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/no-points.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-crop-empty-standard.json
         -- pipeline pipeline.json)
@@ -290,7 +301,7 @@ function(pdg_add_hybrid_ordinal_host_test name pipeline input mode)
             --candidate $<TARGET_FILE:pdg_cli>
             --case ${name}
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/${input}
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -326,7 +337,7 @@ function(pdg_add_hybrid_locate_host_test name pipeline input)
             --candidate $<TARGET_FILE:pdg_cli>
             --case ${name}
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/${input}
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -354,7 +365,7 @@ add_test(NAME pdg_ordinal_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_ordinal_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;ordinal;matrix;fallback")
@@ -367,7 +378,7 @@ add_test(NAME pdg_locate_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_locate_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;locate;matrix;fallback;global-reduction")
@@ -380,7 +391,7 @@ add_test(NAME pdg_transformation_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_transformation_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;transformation;matrix;fallback;stream-mode")
@@ -393,7 +404,7 @@ add_test(NAME pdg_robust_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_robust_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;robust;iqr;mad;matrix;fallback;global-selection")
@@ -406,7 +417,7 @@ add_test(NAME pdg_ordering_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_ordering_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;ordering;sort;matrix;fallback;global-ordering")
@@ -419,7 +430,7 @@ add_test(NAME pdg_morton_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_morton_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;ordering;morton;matrix;fallback;global-ordering")
@@ -432,7 +443,7 @@ add_test(NAME pdg_groupby_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_groupby_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;partition;groupby;matrix;fallback;multi-view")
@@ -445,7 +456,7 @@ add_test(NAME pdg_returns_merge_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_returns_merge_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;partition;returns;merge;matrix;fallback;multi-view")
@@ -458,7 +469,7 @@ add_test(NAME pdg_divider_splitter_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_divider_splitter_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;partition;divider;splitter;matrix;fallback;multi-view")
@@ -471,7 +482,7 @@ add_test(NAME pdg_colorinterp_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_colorinterp_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;colorinterp;matrix;fallback;multi-view")
@@ -484,7 +495,7 @@ add_test(NAME pdg_randomize_composition_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_randomize_composition_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;randomize;ordering;matrix;fallback")
@@ -497,7 +508,7 @@ add_test(NAME pdg_stats_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_stats_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;stats;metadata;matrix;fallback;multi-view")
@@ -510,7 +521,7 @@ add_test(NAME pdg_info_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_info_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;info;metadata;matrix;fallback;multi-view")
@@ -522,7 +533,7 @@ add_test(NAME pdg_r9_polygon_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_r9_polygon_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;fallback;exact;crop;polygon;reference")
@@ -534,7 +545,7 @@ add_test(NAME pdg_r7_dsm_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_r7_dsm_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;fallback;exact;returns;gdal;raster;reference")
@@ -546,7 +557,7 @@ add_test(NAME pdg_r10_decimation_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_r10_decimation_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;fallback;exact;decimation;voxel;reference")
@@ -563,7 +574,7 @@ add_test(NAME pdg_r11_classification_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_R11_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_r11_classification_process_matrix_host_exact
     PROPERTIES LABELS
@@ -576,7 +587,7 @@ add_test(NAME pdg_r14_conversion_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_r14_conversion_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;fallback;exact;conversion;compression;copc;reference")
@@ -589,7 +600,7 @@ add_test(NAME pdg_expressionstats_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_expressionstats_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;expressionstats;metadata;matrix;fallback;multi-view")
@@ -602,7 +613,7 @@ add_test(NAME pdg_outlier_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_outlier_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;outlier;neighborhood;spatial-index;matrix;fallback")
@@ -615,7 +626,7 @@ add_test(NAME pdg_radialdensity_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_radialdensity_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;radialdensity;neighborhood;spatial-index;radius;matrix;fallback")
@@ -628,7 +639,7 @@ add_test(NAME pdg_radiusassign_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_radiusassign_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;radiusassign;neighborhood;spatial-index;radius;matrix;fallback")
@@ -641,7 +652,7 @@ add_test(NAME pdg_label_duplicates_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_label_duplicates_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;label_duplicates;ordering;matrix;fallback")
@@ -658,7 +669,7 @@ add_test(NAME pdg_reprojection_process_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_reprojection_process_matrix_pinned_exact
     PROPERTIES LABELS
@@ -671,7 +682,7 @@ add_test(NAME pdg_sample_process_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_sample_process_matrix_pinned_exact
     PROPERTIES LABELS
@@ -687,7 +698,7 @@ add_test(NAME pdg_las_writer_pack_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_las_writer_pack_matrix_pinned_exact
     PROPERTIES LABELS
@@ -703,7 +714,7 @@ add_test(NAME pdg_las_reader_unpack_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_las_reader_unpack_matrix_pinned_exact
     PROPERTIES LABELS
@@ -719,7 +730,7 @@ add_test(NAME pdg_copc_reader_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_copc_reader_matrix_pinned_exact
     PROPERTIES LABELS
@@ -735,7 +746,7 @@ add_test(NAME pdg_gdal_writer_matrix_pinned_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_REPROJECTION_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_gdal_writer_matrix_pinned_exact
     PROPERTIES LABELS
@@ -753,7 +764,7 @@ add_test(NAME pdg_smrf_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         ${PDG_SMRF_PINNED_ORACLE_ARGS})
 set_tests_properties(pdg_smrf_process_matrix_host_exact
     PROPERTIES LABELS
@@ -767,7 +778,7 @@ add_test(NAME pdg_pmf_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_pmf_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;pmf;grid;matrix;fallback"
@@ -780,7 +791,7 @@ add_test(NAME pdg_csf_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_csf_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;csf;grid;matrix;fallback"
@@ -793,7 +804,7 @@ add_test(NAME pdg_skewnessbalancing_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_skewnessbalancing_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;skewnessbalancing;global-ordering;matrix;fallback"
@@ -806,7 +817,7 @@ add_test(NAME pdg_elm_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_elm_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;elm;grid;matrix;fallback"
@@ -819,7 +830,7 @@ add_test(NAME pdg_hag_nn_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_hag_nn_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;hag_nn;terrain;neighborhood;spatial-index;matrix;fallback"
@@ -832,7 +843,7 @@ add_test(NAME pdg_hag_delaunay_process_matrix_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_hag_delaunay_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;hag_delaunay;terrain;neighborhood;spatial-index;matrix;fallback"
@@ -846,7 +857,7 @@ add_test(NAME pdg_nndistance_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_nndistance_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;nndistance;neighborhood;spatial-index;matrix;fallback")
@@ -859,7 +870,7 @@ add_test(NAME pdg_normal_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_normal_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;normal;neighborhood;spatial-index;eigen;matrix;fallback")
@@ -872,7 +883,7 @@ add_test(NAME pdg_approximatecoplanar_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_approximatecoplanar_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;approximatecoplanar;neighborhood;spatial-index;eigen;uint8;matrix;fallback")
@@ -885,7 +896,7 @@ add_test(NAME pdg_eigenvalues_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_eigenvalues_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;eigenvalues;neighborhood;spatial-index;eigen;matrix;fallback")
@@ -898,7 +909,7 @@ add_test(NAME pdg_covariancefeatures_process_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_covariancefeatures_process_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;covariancefeatures;neighborhood;spatial-index;eigen;matrix;fallback")
@@ -914,7 +925,7 @@ add_test(NAME pdg_hybrid_neighborhood_resident_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_neighborhood_resident_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-resident.json
         -- pipeline pipeline.json)
@@ -933,7 +944,7 @@ add_test(NAME pdg_hybrid_approximatecoplanar_resident_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_approximatecoplanar_resident_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-resident.json
         -- pipeline pipeline.json)
@@ -952,7 +963,7 @@ add_test(NAME pdg_hybrid_nndistance_resident_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_nndistance_resident_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-nndistance-resident.json
         -- pipeline pipeline.json)
@@ -971,7 +982,7 @@ add_test(NAME pdg_hybrid_neighborhood_two_bridges_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_neighborhood_two_bridges_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-two-bridges.json
         -- pipeline pipeline.json)
@@ -990,7 +1001,7 @@ add_test(NAME pdg_hybrid_neighborhood_custom_ferry_layout_fallback_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_neighborhood_custom_ferry_layout_fallback_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-custom-ferry-layout.json
         -- pipeline pipeline.json)
@@ -1022,7 +1033,7 @@ add_test(NAME pdg_hybrid_colorinterp_stream_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_colorinterp_stream_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-colorinterp-stream.json
         -- pipeline pipeline.json)
@@ -1040,7 +1051,7 @@ add_test(NAME pdg_hybrid_two_regions_host_exact
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_hybrid_two_regions_host_exact
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-two-regions.json
         -- pipeline pipeline.json)
@@ -1059,7 +1070,7 @@ add_test(NAME pdg_hybrid_reader_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --case-prefix pdg-hybrid-reader-host)
 set_tests_properties(pdg_hybrid_reader_matrix_host_exact
     PROPERTIES LABELS "differential;hybrid;host;exact;reader-matrix")
@@ -1076,7 +1087,7 @@ add_test(NAME pdg_hybrid_stream_mode_reader_matrix_host_exact
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --fixture-root ${PROJECT_SOURCE_DIR}/test/data
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --case-prefix pdg-hybrid-stream-reader-host
         --original-streamable)
 set_tests_properties(pdg_hybrid_stream_mode_reader_matrix_host_exact
@@ -1092,7 +1103,7 @@ if(GPUPDAL_ENABLE_CUDA AND PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+            ${PDG_FROZEN_TIME_ARGUMENTS})
     set_tests_properties(pdg_automatic_approximatecoplanar_cuda_exact
         PROPERTIES
             LABELS
@@ -1146,7 +1157,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture ${PROJECT_SOURCE_DIR}/build/bench-data/reference/ref-1m.laz
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --cuda-toolkit ${CMAKE_CUDA_COMPILER_VERSION})
     set_tests_properties(pdg_automatic_r2_ground_normalize_cuda_exact
         PROPERTIES
@@ -1166,7 +1177,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture ${PROJECT_SOURCE_DIR}/build/bench-data/reference/ref-1m.laz
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --cuda-toolkit ${CMAKE_CUDA_COMPILER_VERSION})
     set_tests_properties(pdg_automatic_r4_outlier_cuda_exact
         PROPERTIES
@@ -1185,7 +1196,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --cuda-toolkit ${CMAKE_CUDA_COMPILER_VERSION})
     set_tests_properties(pdg_automatic_label_nndistance_cuda_exact
         PROPERTIES
@@ -1203,7 +1214,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_label_duplicates_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1217,7 +1228,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_radiusassign_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1230,7 +1241,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_pmf_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1244,7 +1255,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_csf_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1258,7 +1269,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_skewnessbalancing_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1272,7 +1283,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_elm_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1290,7 +1301,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --oracle $<TARGET_FILE:pdal>
             --candidate $<TARGET_FILE:pdg_cli>
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+            ${PDG_FROZEN_TIME_ARGUMENTS})
     set_tests_properties(pdg_resident_selection_matrix_cuda_exact
         PROPERTIES LABELS
             "differential;resident;cuda;exact;selection;neighborhood;matrix"
@@ -1304,7 +1315,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_hag_nn_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1318,7 +1329,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_hag_delaunay_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1333,7 +1344,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --require-cuda)
     set_tests_properties(pdg_expressionstats_process_matrix_cuda_exact
         PROPERTIES LABELS
@@ -1351,7 +1362,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_colorinterp_stream_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-colorinterp-stream.json
             -- pipeline pipeline.json)
@@ -1370,7 +1381,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_colorinterp_autorange_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-colorinterp-autorange.json
             -- pipeline pipeline.json)
@@ -1389,7 +1400,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_colorinterp_divider_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-colorinterp-divider.json
             -- pipeline pipeline.json)
@@ -1406,7 +1417,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_cuda_assign_ferry_fused
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/assign-ferry-fused.json
             -- pipeline pipeline.json)
@@ -1435,7 +1446,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_transformation_${kind}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/${input}
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -1463,7 +1474,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_robust_${kind}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -1483,7 +1494,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_outlier_radius_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-outlier-radius.json
             -- pipeline pipeline.json)
@@ -1504,7 +1515,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_outlier_radius_tiled_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-outlier-radius.json
             -- pipeline pipeline.json)
@@ -1523,7 +1534,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_radialdensity_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-radialdensity.json
             -- pipeline pipeline.json)
@@ -1544,7 +1555,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_radialdensity_tiled_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-radialdensity.json
             -- pipeline pipeline.json)
@@ -1563,7 +1574,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_outlier_statistical_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-outlier-statistical.json
             -- pipeline pipeline.json)
@@ -1582,7 +1593,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_normal_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-normal.json
             -- pipeline pipeline.json)
@@ -1601,7 +1612,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_eigenvalues_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-eigenvalues.json
             -- pipeline pipeline.json)
@@ -1623,7 +1634,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_nndistance_resident_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-nndistance-resident.json
             -- pipeline pipeline.json)
@@ -1645,7 +1656,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_two_bridges_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-two-bridges.json
             -- pipeline pipeline.json)
@@ -1667,7 +1678,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_two_bridges_autzen_ties_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/autzen_trim.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-two-bridges.json
             -- pipeline pipeline.json)
@@ -1691,7 +1702,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_deterministic_ties_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-deterministic-ties.json
             -- pipeline pipeline.json)
@@ -1715,7 +1726,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_varying_k_cache_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-varying-k-cache.json
             -- pipeline pipeline.json)
@@ -1737,7 +1748,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_bridge_fallback_rebuild_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-bridge-fallback-rebuild.json
             -- pipeline pipeline.json)
@@ -1759,7 +1770,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_increasing_k_fallback_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-increasing-k-fallback.json
             -- pipeline pipeline.json)
@@ -1779,7 +1790,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_covariancefeatures_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-covariancefeatures.json
             -- pipeline pipeline.json)
@@ -1799,7 +1810,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_covariancefeatures_extended_${mode}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-covariancefeatures-extended-${mode}.json
                 -- pipeline pipeline.json)
@@ -1821,7 +1832,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar.json
             -- pipeline pipeline.json --metadata=metadata.json)
@@ -1841,7 +1852,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_max_knn_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-max.json
             -- pipeline pipeline.json)
@@ -1862,7 +1873,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_tie_repair_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-ties.json
             -- pipeline pipeline.json)
@@ -1884,7 +1895,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_solver_failure_fallback_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/approximatecoplanar-solver-failure.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-solver-failure.json
             -- pipeline pipeline.json)
@@ -1905,7 +1916,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_boundary_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/approximatecoplanar-boundary.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-boundary.json
             -- pipeline pipeline.json)
@@ -1925,7 +1936,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_zero_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/approximatecoplanar-boundary.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-zero.json
             -- pipeline pipeline.json --verbose=2)
@@ -1946,7 +1957,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_small_view_fallback_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.csv=${PROJECT_SOURCE_DIR}/test/data/pdg/neighborhood-points.csv
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-small-view.json
             -- pipeline pipeline.json)
@@ -1971,7 +1982,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_approximatecoplanar_resident_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-approximatecoplanar-resident.json
             -- pipeline pipeline.json)
@@ -1992,7 +2003,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_resident_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-resident.json
             -- pipeline pipeline.json)
@@ -2014,7 +2025,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_neighborhood_column_consumer_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-neighborhood-column-consumer.json
             -- pipeline pipeline.json)
@@ -2033,7 +2044,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_sort_stable_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-sort-stable.json
             -- pipeline pipeline.json)
@@ -2053,7 +2064,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_morton_${mode}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-morton-${mode}.json
                 -- pipeline pipeline.json)
@@ -2073,7 +2084,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_groupby_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-groupby-classification.json
             -- pipeline pipeline.json)
@@ -2092,7 +2103,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_returns_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-returns-all.json
             -- pipeline pipeline.json)
@@ -2111,7 +2122,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_divider_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-divider-round-robin.json
             -- pipeline pipeline.json)
@@ -2130,7 +2141,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_splitter_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-splitter-primary.json
             -- pipeline pipeline.json)
@@ -2161,7 +2172,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_locate_${kind}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/${input}
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2188,7 +2199,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_cuda_ordered_ordinal_${kind}_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2213,7 +2224,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_cuda_ordered_${kind}_fused_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2233,7 +2244,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_crop_same_srs_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/interesting.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-crop-2d.json
             -- pipeline pipeline.json)
@@ -2257,7 +2268,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_cuda_ordered_crop_${kind}_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2276,7 +2287,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_assign_ferry_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-assign-ferry.json
             -- pipeline pipeline.json)
@@ -2293,7 +2304,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_coordinate_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/sample_c.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-coordinate.json
             -- pipeline pipeline.json)
@@ -2310,7 +2321,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_expression_fused_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-expression-fused.json
             -- pipeline pipeline.json)
@@ -2327,7 +2338,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_range_fused_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-range-fused.json
             -- pipeline pipeline.json)
@@ -2358,7 +2369,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_ordinal_${kind}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2384,7 +2395,7 @@ if(GPUPDAL_ENABLE_CUDA)
                 --candidate $<TARGET_FILE:pdg_cli>
                 --case pdg_hybrid_crop_${kind}_cuda_exact
                 --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-                --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+                ${PDG_FROZEN_TIME_ARGUMENTS}
                 --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
                 --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
                 -- pipeline pipeline.json)
@@ -2403,7 +2414,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_hybrid_two_regions_cuda_exact
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/hybrid-two-regions.json
             -- pipeline pipeline.json)
@@ -2422,7 +2433,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --case-prefix pdg-hybrid-reader-cuda)
     set_tests_properties(pdg_hybrid_reader_matrix_cuda_exact
         PROPERTIES LABELS "differential;hybrid;cuda;exact;reader-matrix")
@@ -2439,7 +2450,7 @@ if(GPUPDAL_ENABLE_CUDA)
             --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
             --fixture-root ${PROJECT_SOURCE_DIR}/test/data
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --case-prefix pdg-hybrid-stream-reader-cuda
             --original-streamable)
     set_tests_properties(pdg_hybrid_stream_mode_reader_matrix_cuda_exact
@@ -2454,7 +2465,7 @@ add_test(NAME pdg_decimation_standard_offset_fallback_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_decimation_standard_offset_fallback_matches_oracle
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/decimation-standard-offset-fallback.json
         -- pipeline pipeline.json)
@@ -2479,7 +2490,7 @@ foreach(kind IN ITEMS multibounds reproject invalid)
             --candidate $<TARGET_FILE:pdg_cli>
             --case pdg_crop_${kind}_fallback_matches_oracle
             --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-            --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+            ${PDG_FROZEN_TIME_ARGUMENTS}
             --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/${input}
             --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/${pipeline}
             -- pipeline pipeline.json)
@@ -2494,7 +2505,7 @@ add_test(NAME pdg_fallback_assign_coordinate_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_fallback_assign_coordinate_matches_oracle
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/sample_c.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/assign-coordinate-fallback.json
         -- pipeline pipeline.json)
@@ -2509,7 +2520,7 @@ add_test(NAME pdg_native_ferry_format_0
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_native_ferry_format_0
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/hextest.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/ferry-base.json
         -- pipeline pipeline.json)
@@ -2523,7 +2534,7 @@ add_test(NAME pdg_fallback_ferry_custom_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_fallback_ferry_custom_matches_oracle
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/ferry-custom-fallback.json
         -- pipeline pipeline.json)
@@ -2537,7 +2548,7 @@ add_test(NAME pdg_fallback_ferry_type_widening_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case pdg_fallback_ferry_type_widening_matches_oracle
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file input.las=${PROJECT_SOURCE_DIR}/test/data/las/simple.las
         --seed-file pipeline.json=${PROJECT_SOURCE_DIR}/test/data/pdg/ferry-widen-fallback.json
         -- pipeline pipeline.json)
@@ -2551,7 +2562,7 @@ add_test(NAME pdg_native_translate_generated_matrix
         --candidate $<TARGET_FILE:pdg_cli>
         --differential ${PROJECT_SOURCE_DIR}/scripts/pdg/differential.py
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
+        ${PDG_FROZEN_TIME_ARGUMENTS})
 set_tests_properties(pdg_native_translate_generated_matrix
     PROPERTIES LABELS "differential;native;exact;generated")
 
@@ -2562,7 +2573,7 @@ add_test(NAME pdg_fallback_translate_vlr_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-translate-vlr
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         -- translate ${PROJECT_SOURCE_DIR}/test/data/las/test1_4.las out.las)
 set_tests_properties(pdg_fallback_translate_vlr_matches_oracle
     PROPERTIES LABELS "differential;fallback;exact")
@@ -2574,7 +2585,7 @@ add_test(NAME pdg_fallback_existing_output_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-existing-output
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --seed-file out.las=${PROJECT_SOURCE_DIR}/test/data/las/hextest.las
         -- translate ${PROJECT_SOURCE_DIR}/test/data/las/simple.las out.las)
 set_tests_properties(pdg_fallback_existing_output_matches_oracle
@@ -2587,7 +2598,7 @@ add_test(NAME pdg_fallback_failure_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-missing-input
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         -- info definitely-missing-input.las)
 set_tests_properties(pdg_fallback_failure_matches_oracle
     PROPERTIES LABELS "differential;fallback")
@@ -2599,7 +2610,7 @@ add_test(NAME pdg_fallback_metadata_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-info-metadata
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         -- info --metadata ${PROJECT_SOURCE_DIR}/test/data/las/simple.las)
 set_tests_properties(pdg_fallback_metadata_matches_oracle
     PROPERTIES LABELS "differential;fallback")
@@ -2611,7 +2622,7 @@ add_test(NAME pdg_fallback_drivers_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-drivers
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         -- --drivers)
 set_tests_properties(pdg_fallback_drivers_matches_oracle
     PROPERTIES LABELS "differential;fallback;catalog")
@@ -2623,7 +2634,7 @@ add_test(NAME pdg_fallback_no_arguments_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-no-arguments
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         --allow-empty-command --)
 set_tests_properties(pdg_fallback_no_arguments_matches_oracle
     PROPERTIES LABELS "differential;fallback")
@@ -2635,7 +2646,7 @@ add_test(NAME pdg_fallback_version_matches_oracle
         --candidate $<TARGET_FILE:pdg_cli>
         --case fallback-version
         --work-dir ${PROJECT_BINARY_DIR}/tests/differential
-        --frozen-time-library $<TARGET_FILE:pdg_frozen_time>
+        ${PDG_FROZEN_TIME_ARGUMENTS}
         -- --version)
 set_tests_properties(pdg_fallback_version_matches_oracle
     PROPERTIES LABELS "differential;fallback")

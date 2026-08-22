@@ -57,18 +57,21 @@ TEST(ResidentPipeline, MaterializesSelectedPointProgramRegion)
     const Json document = Json::parse(rewritten.json);
     ASSERT_EQ(document.at("pipeline").size(), 5U);
     const Json& upload = document.at("pipeline").at(1U);
-    EXPECT_EQ(upload.at("type"), pdg::HybridResidentBoundaryStage);
+    EXPECT_EQ(upload.at("type").get<std::string>(),
+              pdg::HybridResidentBoundaryStage);
     EXPECT_EQ(upload.at("pdg_boundary_kind"), "upload");
     EXPECT_FALSE(upload.at("pdg_requires_full_point_record").get<bool>());
     const Json& replacement = document.at("pipeline").at(2U);
-    EXPECT_EQ(replacement.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(replacement.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(replacement.at("pdg_plan_cuda").get<bool>());
     EXPECT_TRUE(replacement.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(replacement.at("pdg_execution_region"), 0U);
     EXPECT_EQ(Json::parse(replacement.at("program").get<std::string>()).size(),
               2U);
     const Json& spill = document.at("pipeline").at(3U);
-    EXPECT_EQ(spill.at("type"), pdg::HybridResidentBoundaryStage);
+    EXPECT_EQ(spill.at("type").get<std::string>(),
+              pdg::HybridResidentBoundaryStage);
     EXPECT_EQ(spill.at("pdg_boundary_kind"), "spill");
     EXPECT_FALSE(spill.at("pdg_requires_full_point_record").get<bool>());
 }
@@ -140,9 +143,11 @@ TEST(ResidentPipeline, MaterializesFullRecordRandomizeBoundaryBetweenRegions)
                                     std::string_view kind, std::size_t id,
                                     bool fullRecord)
     {
-        EXPECT_EQ(stages.at(stageIndex).at("type"),
+        EXPECT_EQ(stages.at(stageIndex).at("type").get<std::string>(),
                   pdg::HybridResidentBoundaryStage);
-        EXPECT_EQ(stages.at(stageIndex).at("pdg_boundary_kind"), kind);
+        EXPECT_EQ(
+            stages.at(stageIndex).at("pdg_boundary_kind").get<std::string>(),
+            kind);
         EXPECT_EQ(stages.at(stageIndex).at("pdg_boundary_id"), id);
         EXPECT_EQ(stages.at(stageIndex)
                       .at("pdg_requires_full_point_record")
@@ -150,12 +155,14 @@ TEST(ResidentPipeline, MaterializesFullRecordRandomizeBoundaryBetweenRegions)
                   fullRecord);
     };
     expectBoundary(1U, "upload", boundaryId(initialUpload), false);
-    EXPECT_EQ(stages.at(2U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(2U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     expectBoundary(3U, "spill", boundaryId(fallbackSpill), true);
-    EXPECT_EQ(stages.at(4U).at("type"), "filters.randomize");
+    EXPECT_EQ(stages.at(4U).at("type").get<std::string>(), "filters.randomize");
     EXPECT_EQ(stages.at(4U).at("seed"), 17U);
     expectBoundary(5U, "upload", boundaryId(fallbackUpload), true);
-    EXPECT_EQ(stages.at(6U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(6U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     expectBoundary(7U, "spill", boundaryId(finalSpill), false);
     EXPECT_EQ(stages.at(2U).at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(6U).at("pdg_execution_region"), 1U);
@@ -187,7 +194,8 @@ TEST(ResidentPipeline, MaterializesDeclaredCardinalityChangingExpressionRegion)
     ASSERT_EQ(document.at("pipeline").size(), 5U);
     EXPECT_EQ(document.at("pipeline").at(1U).at("pdg_boundary_kind"), "upload");
     const Json& replacement = document.at("pipeline").at(2U);
-    EXPECT_EQ(replacement.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(replacement.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(replacement.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(Json::parse(replacement.at("program").get<std::string>()).size(),
               4U);
@@ -272,12 +280,14 @@ TEST(ResidentPipeline, MaterializesASharedIndexNeighborhoodRegion)
     ASSERT_EQ(document.at("pipeline").size(), 6U);
     EXPECT_EQ(document.at("pipeline").at(1U).at("pdg_boundary_kind"), "upload");
     const Json& neighborhood = document.at("pipeline").at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridApproximateCoplanarStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridApproximateCoplanarStage);
     EXPECT_EQ(neighborhood.at("knn"), 8);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
     const Json& consumer = document.at("pipeline").at(3U);
-    EXPECT_EQ(consumer.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(consumer.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(consumer.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(consumer.at("pdg_neighborhood_region_id"),
               neighborhood.at("pdg_region_id"));
@@ -312,7 +322,7 @@ TEST(ResidentPipeline, TerminalSinkMarkerIsFalseBeforeAHostConsumer)
     for (const Json& stage : document.at("pipeline"))
     {
         if (stage.contains("type") &&
-            stage.at("type") == pdg::HybridNormalStage)
+            stage.at("type").get<std::string>() == pdg::HybridNormalStage)
         {
             sawNormal = true;
             EXPECT_FALSE(stage.at("pdg_region_terminal_sink").get<bool>());
@@ -340,12 +350,14 @@ TEST(ResidentPipeline, MaterializesAdjacentLabelingWithoutAPrivateIndex)
     ASSERT_EQ(stages.size(), 6U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& labeling = stages.at(2U);
-    EXPECT_EQ(labeling.at("type"), pdg::HybridLabelDuplicatesStage);
+    EXPECT_EQ(labeling.at("type").get<std::string>(),
+              pdg::HybridLabelDuplicatesStage);
     EXPECT_TRUE(labeling.at("pdg_resident_context").get<bool>());
     EXPECT_FALSE(labeling.at("pdg_region_index_required").get<bool>());
     EXPECT_FALSE(labeling.at("pdg_region_last").get<bool>());
     const Json& consumer = stages.at(3U);
-    EXPECT_EQ(consumer.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(consumer.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_EQ(consumer.at("pdg_neighborhood_region_id"),
               labeling.at("pdg_region_id"));
     EXPECT_TRUE(consumer.at("pdg_neighborhood_region_last").get<bool>());
@@ -371,7 +383,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneGlobalSmrfGridRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& smrf = stages.at(2U);
-    EXPECT_EQ(smrf.at("type"), pdg::HybridSmrfStage);
+    EXPECT_EQ(smrf.at("type").get<std::string>(), pdg::HybridSmrfStage);
     EXPECT_TRUE(smrf.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(smrf.at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(3U).at("pdg_boundary_kind"), "spill");
@@ -395,7 +407,7 @@ TEST(ResidentPipeline, MaterializesASmrfGridBridge)
     ASSERT_EQ(stages.size(), 8U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& smrf = stages.at(2U);
-    EXPECT_EQ(smrf.at("type"), pdg::HybridSmrfStage);
+    EXPECT_EQ(smrf.at("type").get<std::string>(), pdg::HybridSmrfStage);
     EXPECT_TRUE(smrf.at("pdg_resident_context").get<bool>());
     const Json& smrfUpload = stages.at(1U);
     const Json& smrfSpill = stages.at(3U);
@@ -406,7 +418,8 @@ TEST(ResidentPipeline, MaterializesASmrfGridBridge)
               smrf.at("pdg_execution_region"));
     EXPECT_EQ(stages.at(4U).at("pdg_boundary_kind"), "upload");
     const Json& assign = stages.at(5U);
-    EXPECT_EQ(assign.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(assign.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(assign.at("pdg_resident_context").get<bool>());
     EXPECT_NE(smrf.at("pdg_execution_region"),
               assign.at("pdg_execution_region"));
@@ -436,7 +449,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneGlobalPmfGridRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& pmf = stages.at(2U);
-    EXPECT_EQ(pmf.at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(pmf.at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_TRUE(pmf.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(pmf.at("pdg_execution_region"), 0U);
     EXPECT_FALSE(pmf.at("pdg_grid_reuse").get<bool>());
@@ -467,13 +480,13 @@ TEST(ResidentPipeline, MaterializesAdjacentPmfAllocationReuse)
     ASSERT_EQ(stages.size(), 6U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& first = stages.at(2U);
-    EXPECT_EQ(first.at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(first.at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_TRUE(first.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(first.at("pdg_execution_region"), 0U);
     EXPECT_FALSE(first.at("pdg_grid_reuse").get<bool>());
     EXPECT_FALSE(first.at("pdg_grid_region_last").get<bool>());
     const Json& second = stages.at(3U);
-    EXPECT_EQ(second.at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(second.at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_TRUE(second.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(second.at("pdg_execution_region"), 0U);
     EXPECT_TRUE(second.at("pdg_grid_reuse").get<bool>());
@@ -548,7 +561,7 @@ TEST(ResidentPipeline, MaterializesAPmfGridBridge)
     ASSERT_EQ(stages.size(), 8U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& pmf = stages.at(2U);
-    EXPECT_EQ(pmf.at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(pmf.at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_TRUE(pmf.at("pdg_resident_context").get<bool>());
     const Json& pmfUpload = stages.at(1U);
     const Json& pmfSpill = stages.at(3U);
@@ -559,7 +572,8 @@ TEST(ResidentPipeline, MaterializesAPmfGridBridge)
               pmf.at("pdg_execution_region"));
     EXPECT_EQ(stages.at(4U).at("pdg_boundary_kind"), "upload");
     const Json& assign = stages.at(5U);
-    EXPECT_EQ(assign.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(assign.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(assign.at("pdg_resident_context").get<bool>());
     EXPECT_NE(pmf.at("pdg_execution_region"),
               assign.at("pdg_execution_region"));
@@ -604,7 +618,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneGlobalCsfGridRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& csf = stages.at(2U);
-    EXPECT_EQ(csf.at("type"), pdg::HybridCsfStage);
+    EXPECT_EQ(csf.at("type").get<std::string>(), pdg::HybridCsfStage);
     EXPECT_TRUE(csf.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(csf.at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(3U).at("pdg_boundary_kind"), "spill");
@@ -628,7 +642,7 @@ TEST(ResidentPipeline, MaterializesACsfGridBridge)
     ASSERT_EQ(stages.size(), 8U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& csf = stages.at(2U);
-    EXPECT_EQ(csf.at("type"), pdg::HybridCsfStage);
+    EXPECT_EQ(csf.at("type").get<std::string>(), pdg::HybridCsfStage);
     EXPECT_TRUE(csf.at("pdg_resident_context").get<bool>());
     const Json& csfUpload = stages.at(1U);
     const Json& csfSpill = stages.at(3U);
@@ -639,7 +653,8 @@ TEST(ResidentPipeline, MaterializesACsfGridBridge)
               csf.at("pdg_execution_region"));
     EXPECT_EQ(stages.at(4U).at("pdg_boundary_kind"), "upload");
     const Json& assign = stages.at(5U);
-    EXPECT_EQ(assign.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(assign.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(assign.at("pdg_resident_context").get<bool>());
     EXPECT_NE(csf.at("pdg_execution_region"),
               assign.at("pdg_execution_region"));
@@ -668,7 +683,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneGlobalElmGridRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& elm = stages.at(2U);
-    EXPECT_EQ(elm.at("type"), pdg::HybridElmStage);
+    EXPECT_EQ(elm.at("type").get<std::string>(), pdg::HybridElmStage);
     EXPECT_TRUE(elm.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(elm.at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(3U).at("pdg_boundary_kind"), "spill");
@@ -692,7 +707,7 @@ TEST(ResidentPipeline, MaterializesAnElmGridBridge)
     ASSERT_EQ(stages.size(), 8U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& elm = stages.at(2U);
-    EXPECT_EQ(elm.at("type"), pdg::HybridElmStage);
+    EXPECT_EQ(elm.at("type").get<std::string>(), pdg::HybridElmStage);
     EXPECT_TRUE(elm.at("pdg_resident_context").get<bool>());
     const Json& elmUpload = stages.at(1U);
     const Json& elmSpill = stages.at(3U);
@@ -703,7 +718,8 @@ TEST(ResidentPipeline, MaterializesAnElmGridBridge)
               elm.at("pdg_execution_region"));
     EXPECT_EQ(stages.at(4U).at("pdg_boundary_kind"), "upload");
     const Json& assign = stages.at(5U);
-    EXPECT_EQ(assign.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(assign.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_TRUE(assign.at("pdg_resident_context").get<bool>());
     EXPECT_NE(elm.at("pdg_execution_region"),
               assign.at("pdg_execution_region"));
@@ -732,7 +748,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneSkewnessGlobalRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& skewness = stages.at(2U);
-    EXPECT_EQ(skewness.at("type"), pdg::HybridSkewnessStage);
+    EXPECT_EQ(skewness.at("type").get<std::string>(), pdg::HybridSkewnessStage);
     EXPECT_TRUE(skewness.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(skewness.at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(3U).at("pdg_boundary_kind"), "spill");
@@ -757,7 +773,7 @@ TEST(ResidentPipeline, MaterializesAStandaloneSortGlobalRegion)
     ASSERT_EQ(stages.size(), 5U);
     EXPECT_EQ(stages.at(1U).at("pdg_boundary_kind"), "upload");
     const Json& sort = stages.at(2U);
-    EXPECT_EQ(sort.at("type"), pdg::HybridOrderStage);
+    EXPECT_EQ(sort.at("type").get<std::string>(), pdg::HybridOrderStage);
     EXPECT_TRUE(sort.at("pdg_resident_context").get<bool>());
     EXPECT_EQ(sort.at("pdg_execution_region"), 0U);
     EXPECT_EQ(stages.at(3U).at("pdg_boundary_kind"), "spill");
@@ -806,11 +822,13 @@ TEST(ResidentPipeline, LabelingCanPrecedeAPlannerOwnedSharedIndex)
     ASSERT_EQ(stages.size(), 6U);
     const Json& labeling = stages.at(2U);
     const Json& neighborhood = stages.at(3U);
-    EXPECT_EQ(labeling.at("type"), pdg::HybridLabelDuplicatesStage);
+    EXPECT_EQ(labeling.at("type").get<std::string>(),
+              pdg::HybridLabelDuplicatesStage);
     EXPECT_TRUE(labeling.at("pdg_region_index_required").get<bool>());
     EXPECT_EQ(labeling.at("pdg_region_neighbors"), 4U);
     EXPECT_FALSE(labeling.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridNnDistanceStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridNnDistanceStage);
     EXPECT_EQ(neighborhood.at("pdg_region_id"), labeling.at("pdg_region_id"));
     EXPECT_TRUE(neighborhood.at("pdg_region_last").get<bool>());
 }
@@ -832,11 +850,13 @@ TEST(ResidentPipeline, MaterializesCountOneHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 1U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountTwoHagNnWithATwoDimensionalIndex)
@@ -856,11 +876,13 @@ TEST(ResidentPipeline, MaterializesCountTwoHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 2U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountThreeHagNnWithATwoDimensionalIndex)
@@ -880,11 +902,13 @@ TEST(ResidentPipeline, MaterializesCountThreeHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 3U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountFourHagNnWithATwoDimensionalIndex)
@@ -904,11 +928,13 @@ TEST(ResidentPipeline, MaterializesCountFourHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 4U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountFiveHagNnWithATwoDimensionalIndex)
@@ -928,11 +954,13 @@ TEST(ResidentPipeline, MaterializesCountFiveHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 5U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountSixHagNnWithATwoDimensionalIndex)
@@ -952,11 +980,13 @@ TEST(ResidentPipeline, MaterializesCountSixHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 6U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline, MaterializesCountSevenHagNnWithATwoDimensionalIndex)
@@ -976,11 +1006,13 @@ TEST(ResidentPipeline, MaterializesCountSevenHagNnWithATwoDimensionalIndex)
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 7U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(stages.at(3U).at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(stages.at(3U).at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
 }
 
 TEST(ResidentPipeline,
@@ -1001,12 +1033,14 @@ TEST(ResidentPipeline,
     const Json stages = Json::parse(rewritten.json).at("pipeline");
     ASSERT_EQ(stages.size(), 6U);
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridHagDelaunayStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridHagDelaunayStage);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 3U);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
     const Json& bridge = stages.at(3U);
-    EXPECT_EQ(bridge.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(bridge.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_EQ(bridge.at("pdg_neighborhood_region_id"),
               neighborhood.at("pdg_region_id"));
     EXPECT_TRUE(bridge.at("pdg_neighborhood_region_last").get<bool>());
@@ -1033,24 +1067,26 @@ TEST(ResidentPipeline, MaterializesPmfCountTwoHagNnPmfBoundarySequence)
     const auto expectBoundary =
         [&](std::size_t index, std::string_view kind, std::uint64_t region)
     {
-        EXPECT_EQ(stages.at(index).at("type"),
+        EXPECT_EQ(stages.at(index).at("type").get<std::string>(),
                   pdg::HybridResidentBoundaryStage);
-        EXPECT_EQ(stages.at(index).at("pdg_boundary_kind"), kind);
+        EXPECT_EQ(stages.at(index).at("pdg_boundary_kind").get<std::string>(),
+                  kind);
         EXPECT_EQ(stages.at(index).at("pdg_execution_region"), region);
         EXPECT_FALSE(
             stages.at(index).at("pdg_requires_full_point_record").get<bool>());
     };
     expectBoundary(1U, "upload", 0U);
-    EXPECT_EQ(stages.at(2U).at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(stages.at(2U).at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_EQ(stages.at(2U).at("pdg_execution_region"), 0U);
     expectBoundary(3U, "spill", 0U);
     expectBoundary(4U, "upload", 1U);
-    EXPECT_EQ(stages.at(5U).at("type"), pdg::HybridHagNnStage);
+    EXPECT_EQ(stages.at(5U).at("type").get<std::string>(),
+              pdg::HybridHagNnStage);
     EXPECT_EQ(stages.at(5U).at("pdg_execution_region"), 1U);
     EXPECT_EQ(stages.at(5U).at("pdg_region_neighbors"), 2U);
     expectBoundary(6U, "spill", 1U);
     expectBoundary(7U, "upload", 2U);
-    EXPECT_EQ(stages.at(8U).at("type"), pdg::HybridPmfStage);
+    EXPECT_EQ(stages.at(8U).at("type").get<std::string>(), pdg::HybridPmfStage);
     EXPECT_EQ(stages.at(8U).at("pdg_execution_region"), 2U);
     expectBoundary(9U, "spill", 2U);
 }
@@ -1130,14 +1166,15 @@ TEST(ResidentPipeline, MaterializesASharedKnnLofRegion)
     const Json document = Json::parse(rewritten.json);
     ASSERT_EQ(document.at("pipeline").size(), 6U);
     const Json& neighborhood = document.at("pipeline").at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridLofStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(), pdg::HybridLofStage);
     EXPECT_EQ(neighborhood.at("minpts"), 10);
     // The wrapper's kNN envelope carries upstream's self-inclusive increment.
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 11U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
     const Json& consumer = document.at("pipeline").at(3U);
-    EXPECT_EQ(consumer.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(consumer.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_EQ(consumer.at("pdg_neighborhood_region_id"),
               neighborhood.at("pdg_region_id"));
     EXPECT_TRUE(consumer.at("pdg_neighborhood_region_last").get<bool>());
@@ -1162,13 +1199,15 @@ TEST(ResidentPipeline, MaterializesASharedRadiusDensityRegion)
     const Json document = Json::parse(rewritten.json);
     ASSERT_EQ(document.at("pipeline").size(), 6U);
     const Json& neighborhood = document.at("pipeline").at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridRadialDensityStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridRadialDensityStage);
     EXPECT_DOUBLE_EQ(neighborhood.at("pdg_region_radius").get<double>(), 1.01);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 3U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
     EXPECT_FALSE(neighborhood.at("pdg_region_last").get<bool>());
     const Json& consumer = document.at("pipeline").at(3U);
-    EXPECT_EQ(consumer.at("type"), pdg::HybridPointProgramStage);
+    EXPECT_EQ(consumer.at("type").get<std::string>(),
+              pdg::HybridPointProgramStage);
     EXPECT_EQ(consumer.at("pdg_neighborhood_region_id"),
               neighborhood.at("pdg_region_id"));
     EXPECT_TRUE(consumer.at("pdg_neighborhood_region_last").get<bool>());
@@ -1194,12 +1233,13 @@ TEST(ResidentPipeline, MaterializesASharedStatisticalOutlierKnnRegion)
     ASSERT_EQ(document.at("pipeline").size(), 6U);
     const Json& outlier = document.at("pipeline").at(2U);
     const Json& nndistance = document.at("pipeline").at(3U);
-    EXPECT_EQ(outlier.at("type"), pdg::HybridOutlierStage);
+    EXPECT_EQ(outlier.at("type").get<std::string>(), pdg::HybridOutlierStage);
     EXPECT_EQ(outlier.at("pdg_region_neighbors"), 13U);
     EXPECT_EQ(outlier.at("pdg_region_gather_neighbors"), 13U);
     EXPECT_TRUE(outlier.at("pdg_resident_context").get<bool>());
     EXPECT_FALSE(outlier.at("pdg_region_last").get<bool>());
-    EXPECT_EQ(nndistance.at("type"), pdg::HybridNnDistanceStage);
+    EXPECT_EQ(nndistance.at("type").get<std::string>(),
+              pdg::HybridNnDistanceStage);
     EXPECT_EQ(nndistance.at("pdg_region_id"), outlier.at("pdg_region_id"));
     EXPECT_EQ(nndistance.at("pdg_region_neighbors"), 13U);
     EXPECT_EQ(nndistance.at("pdg_region_gather_neighbors"), 13U);
@@ -1247,7 +1287,7 @@ TEST(ResidentPipeline, MaterializesASharedRadiusOutlierRegion)
     const Json document = Json::parse(rewritten.json);
     ASSERT_EQ(document.at("pipeline").size(), 5U);
     const Json& outlier = document.at("pipeline").at(2U);
-    EXPECT_EQ(outlier.at("type"), pdg::HybridOutlierStage);
+    EXPECT_EQ(outlier.at("type").get<std::string>(), pdg::HybridOutlierStage);
     EXPECT_DOUBLE_EQ(outlier.at("pdg_region_radius").get<double>(), 2.0);
     EXPECT_EQ(outlier.at("pdg_region_dimensions"), 3U);
     EXPECT_TRUE(outlier.at("pdg_resident_context").get<bool>());
@@ -1324,7 +1364,8 @@ TEST(ResidentPipeline, MaterializesASharedKnnNeighborClassifierRegion)
     const Json& stages =
         document.is_object() ? document.at("pipeline") : document;
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridNeighborClassifierStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridNeighborClassifierStage);
     EXPECT_EQ(neighborhood.at("k"), 7);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 7U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
@@ -1349,7 +1390,8 @@ TEST(ResidentPipeline, MaterializesASharedRadiusAssignRegion)
     const Json& stages =
         document.is_object() ? document.at("pipeline") : document;
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridRadiusAssignStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridRadiusAssignStage);
     EXPECT_DOUBLE_EQ(neighborhood.at("pdg_region_radius").get<double>(), 1.5);
     EXPECT_EQ(neighborhood.at("pdg_region_dimensions"), 2U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
@@ -1370,7 +1412,8 @@ TEST(ResidentPipeline, MaterializesASharedKnnOptimalNeighborhoodRegion)
     const Json& stages =
         document.is_object() ? document.at("pipeline") : document;
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridOptimalNeighborhoodStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridOptimalNeighborhoodStage);
     EXPECT_EQ(neighborhood.at("max_k"), 14);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 14U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
@@ -1392,7 +1435,8 @@ TEST(ResidentPipeline, MaterializesASharedKnnEstimateRankRegion)
     const Json& stages =
         document.is_object() ? document.at("pipeline") : document;
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridEstimateRankStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridEstimateRankStage);
     EXPECT_EQ(neighborhood.at("knn"), 8);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 8U);
     EXPECT_TRUE(neighborhood.at("pdg_resident_context").get<bool>());
@@ -1417,7 +1461,8 @@ TEST(ResidentPipeline, MaterializesASharedKnnNormalRegion)
     const Json& stages =
         document.is_object() ? document.at("pipeline") : document;
     const Json& neighborhood = stages.at(2U);
-    EXPECT_EQ(neighborhood.at("type"), pdg::HybridNormalStage);
+    EXPECT_EQ(neighborhood.at("type").get<std::string>(),
+              pdg::HybridNormalStage);
     EXPECT_EQ(neighborhood.at("knn"), 8);
     EXPECT_EQ(neighborhood.at("pdg_region_neighbors"), 9U);
     EXPECT_FALSE(neighborhood.contains("pdg_region_dimensions"));

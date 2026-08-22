@@ -18,6 +18,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <iterator>
+#include <numeric>
 #include <random>
 #include <span>
 #include <string>

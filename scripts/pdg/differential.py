@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 from pathlib import Path
 
@@ -171,6 +172,21 @@ def role_environment(env: dict[str, str], directory: Path) -> dict[str, str]:
     config.mkdir(parents=True, exist_ok=True)
     process_env["HOME"] = str(home)
     process_env["XDG_CONFIG_HOME"] = str(config)
+    if os.name == "nt":
+        roaming = home / "AppData" / "Roaming"
+        local = home / "AppData" / "Local"
+        roaming.mkdir(parents=True, exist_ok=True)
+        local.mkdir(parents=True, exist_ok=True)
+        home_text = str(home)
+        drive = home.drive or directory.drive
+        home_path = home_text[len(drive):] if drive else home_text
+        process_env.update({
+            "USERPROFILE": home_text,
+            "HOMEDRIVE": drive,
+            "HOMEPATH": home_path,
+            "APPDATA": str(roaming),
+            "LOCALAPPDATA": str(local),
+        })
     return process_env
 
 
@@ -178,14 +194,17 @@ def run(program: Path, command: list[str], directory: Path,
         env: dict[str, str], timeout_seconds: float,
         max_stream_bytes: int) -> dict[str, object]:
     process_env = role_environment(env, directory)
+    process_options: dict[str, object] = {}
+    if os.name == "nt":
+        process_options["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+        process_options["bufsize"] = 0
+    else:
+        process_options["start_new_session"] = True
     process = subprocess.Popen(
         [str(program.resolve()), *command], cwd=directory, env=process_env,
         stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE, start_new_session=True)
+        stderr=subprocess.PIPE, **process_options)
     assert process.stdout is not None and process.stderr is not None
-    selector = selectors.DefaultSelector()
-    selector.register(process.stdout, selectors.EVENT_READ, "stdout")
-    selector.register(process.stderr, selectors.EVENT_READ, "stderr")
     captured = {"stdout": bytearray(), "stderr": bytearray()}
     counts = {"stdout": 0, "stderr": 0}
     termination_reason: str | None = None
@@ -197,35 +216,99 @@ def run(program: Path, command: list[str], directory: Path,
             return
         termination_reason = reason
         if process.poll() is None:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
+            if os.name == "nt":
+                try:
+                    subprocess.run(
+                        ["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                        timeout=2.0, check=False)
+                except (OSError, subprocess.TimeoutExpired):
+                    process.kill()
+            else:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
 
-    while selector.get_map() and termination_reason is None:
-        remaining = deadline - time.monotonic()
-        if remaining <= 0.0:
-            terminate("timeout")
-            remaining = 0.1
-        events = selector.select(timeout=min(0.1, max(0.0, remaining)))
-        for key, _ in events:
-            chunk = os.read(key.fileobj.fileno(), 1 << 16)
-            stream = key.data
-            if not chunk:
-                selector.unregister(key.fileobj)
-                continue
-            counts[stream] += len(chunk)
-            room = max_stream_bytes - len(captured[stream])
-            if room > 0:
-                captured[stream].extend(chunk[:room])
-            if counts[stream] > max_stream_bytes:
-                terminate(f"{stream}-limit")
-    # Do not wait for EOF after containment fires. A malicious grandchild can
-    # detach into a new session while retaining a pipe descriptor; closing our
-    # read ends keeps that escape from defeating the wall-clock/stream bound.
-    for key in list(selector.get_map().values()):
-        selector.unregister(key.fileobj)
-    selector.close()
+    if os.name == "nt":
+        overflow_streams: list[str] = []
+        capture_errors: list[str] = []
+        capture_event = threading.Event()
+
+        def capture_stream(stream: str, pipe: object) -> None:
+            try:
+                while True:
+                    chunk = pipe.read(1 << 16)
+                    if not chunk:
+                        return
+                    counts[stream] += len(chunk)
+                    room = max_stream_bytes - len(captured[stream])
+                    if room > 0:
+                        captured[stream].extend(chunk[:room])
+                    if counts[stream] > max_stream_bytes:
+                        overflow_streams.append(stream)
+                        capture_event.set()
+                        return
+            except (OSError, ValueError) as error:
+                capture_errors.append(f"{stream}: {error}")
+                capture_event.set()
+
+        readers = [
+            threading.Thread(
+                target=capture_stream, args=("stdout", process.stdout),
+                daemon=True),
+            threading.Thread(
+                target=capture_stream, args=("stderr", process.stderr),
+                daemon=True),
+        ]
+        for reader in readers:
+            reader.start()
+        while any(reader.is_alive() for reader in readers):
+            remaining = deadline - time.monotonic()
+            if overflow_streams:
+                terminate(f"{overflow_streams[0]}-limit")
+                break
+            if capture_errors:
+                terminate("capture-error")
+                break
+            if remaining <= 0.0:
+                terminate("timeout")
+                break
+            capture_event.wait(timeout=min(0.1, remaining))
+        if termination_reason is not None:
+            process.stdout.close()
+            process.stderr.close()
+        for reader in readers:
+            reader.join(timeout=2.0)
+    else:
+        selector = selectors.DefaultSelector()
+        selector.register(process.stdout, selectors.EVENT_READ, "stdout")
+        selector.register(process.stderr, selectors.EVENT_READ, "stderr")
+        while selector.get_map() and termination_reason is None:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0.0:
+                terminate("timeout")
+                remaining = 0.1
+            events = selector.select(timeout=min(0.1, max(0.0, remaining)))
+            for key, _ in events:
+                chunk = os.read(key.fileobj.fileno(), 1 << 16)
+                stream = key.data
+                if not chunk:
+                    selector.unregister(key.fileobj)
+                    continue
+                counts[stream] += len(chunk)
+                room = max_stream_bytes - len(captured[stream])
+                if room > 0:
+                    captured[stream].extend(chunk[:room])
+                if counts[stream] > max_stream_bytes:
+                    terminate(f"{stream}-limit")
+        # Do not wait for EOF after containment fires. A malicious grandchild
+        # can detach into a new session while retaining a pipe descriptor;
+        # closing our read ends keeps that escape from defeating the
+        # wall-clock/stream bound.
+        for key in list(selector.get_map().values()):
+            selector.unregister(key.fileobj)
+        selector.close()
     process.stdout.close()
     process.stderr.close()
     try:

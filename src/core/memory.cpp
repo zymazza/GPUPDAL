@@ -10,6 +10,16 @@
 #include <string>
 #include <string_view>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
+
 namespace pdg
 {
 
@@ -164,12 +174,38 @@ std::string parseNvidiaKernelDriverVersion(std::string_view text)
 
 std::string nvidiaKernelDriverVersion()
 {
+#ifdef _WIN32
+    const HMODULE library = ::LoadLibraryW(L"nvml.dll");
+    if (!library)
+        return {};
+    const auto close = [&] { ::FreeLibrary(library); };
+    using Init = int(WINAPI*)();
+    using DriverVersion = int(WINAPI*)(char*, unsigned int);
+    using Shutdown = int(WINAPI*)();
+    const auto init = reinterpret_cast<Init>(
+        ::GetProcAddress(library, "nvmlInit_v2"));
+    const auto driverVersion = reinterpret_cast<DriverVersion>(
+        ::GetProcAddress(library, "nvmlSystemGetDriverVersion"));
+    const auto shutdown = reinterpret_cast<Shutdown>(
+        ::GetProcAddress(library, "nvmlShutdown"));
+    if (!init || !driverVersion || !shutdown || init() != 0)
+    {
+        close();
+        return {};
+    }
+    char version[96]{};
+    const int result = driverVersion(version, sizeof version);
+    shutdown();
+    close();
+    return result == 0 ? std::string(version) : std::string{};
+#else
     std::ifstream input("/proc/driver/nvidia/version");
     if (!input)
         return {};
     const std::string content((std::istreambuf_iterator<char>(input)),
                               std::istreambuf_iterator<char>());
     return parseNvidiaKernelDriverVersion(content);
+#endif
 }
 
 } // namespace pdg

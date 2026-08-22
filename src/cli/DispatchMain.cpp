@@ -16,10 +16,21 @@
 #include <system_error>
 #include <vector>
 
-#if PDG_HAS_CUDA && defined(__linux__)
-#include <dlfcn.h>
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
 #endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <process.h>
+#include <windows.h>
+#elif PDG_HAS_CUDA && defined(__linux__)
+#include <dlfcn.h>
 #include <unistd.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace
 {
@@ -39,12 +50,51 @@ presentDispatchEnvironment(char* const* environment)
 
 std::filesystem::path executablePath(const char* executable)
 {
+#ifdef _WIN32
+    std::vector<wchar_t> path(512U);
+    for (;;)
+    {
+        const DWORD length = ::GetModuleFileNameW(
+            nullptr, path.data(), static_cast<DWORD>(path.size()));
+        if (length == 0)
+            break;
+        if (length < path.size())
+            return std::filesystem::path(path.data(), path.data() + length);
+        path.resize(path.size() * 2U);
+    }
+#endif
     std::error_code error;
+#ifndef _WIN32
     std::filesystem::path self =
         std::filesystem::read_symlink("/proc/self/exe", error);
     if (error)
         self = std::filesystem::absolute(executable, error);
     return error ? std::filesystem::path{} : self;
+#else
+    const std::filesystem::path self =
+        std::filesystem::absolute(executable, error);
+    return error ? std::filesystem::path{} : self;
+#endif
+}
+
+int setEnvironment(std::string_view name, const char* value)
+{
+    const std::string ownedName(name);
+#ifdef _WIN32
+    return ::_putenv_s(ownedName.c_str(), value);
+#else
+    return ::setenv(ownedName.c_str(), value, 1);
+#endif
+}
+
+int unsetEnvironment(std::string_view name)
+{
+    const std::string ownedName(name);
+#ifdef _WIN32
+    return ::_putenv_s(ownedName.c_str(), "");
+#else
+    return ::unsetenv(ownedName.c_str());
+#endif
 }
 
 std::filesystem::path oraclePath(const char* executable)
@@ -56,7 +106,12 @@ std::filesystem::path oraclePath(const char* executable)
     const std::filesystem::path self = executablePath(executable);
     if (self.empty())
         return "pdal";
-    return self.parent_path() / "pdal";
+    return self.parent_path() /
+#ifdef _WIN32
+           "pdal.exe";
+#else
+           "pdal";
+#endif
 }
 
 int execProgram(const std::filesystem::path& program, int argc, char** argv,
@@ -76,10 +131,20 @@ int execProgram(const std::filesystem::path& program, int argc, char** argv,
         arguments.push_back(const_cast<char*>(appendedArgument->data()));
     arguments.push_back(nullptr);
 
+#ifdef _WIN32
+    const intptr_t status = program.has_parent_path()
+                                ? ::_spawnv(_P_WAIT, executable.c_str(),
+                                            arguments.data())
+                                : ::_spawnvp(_P_WAIT, executable.c_str(),
+                                             arguments.data());
+    if (status >= 0)
+        return static_cast<int>(status);
+#else
     if (program.has_parent_path())
         ::execv(executable.c_str(), arguments.data());
     else
         ::execvp(executable.c_str(), arguments.data());
+#endif
 
     const int error = errno;
     std::cerr << "gpupdal: unable to execute " << description << ' '
@@ -108,11 +173,22 @@ int runEngine(int argc, char** argv)
         ::dlopen("libcuda.so.1", RTLD_LAZY | RTLD_LOCAL), &::dlclose);
     if (!driver)
         return runOracle(argc, argv);
+#elif PDG_HAS_CUDA && defined(_WIN32)
+    const HMODULE driver = ::LoadLibraryW(L"nvcuda.dll");
+    if (!driver)
+        return runOracle(argc, argv);
+    ::FreeLibrary(driver);
 #endif
     const std::filesystem::path self = executablePath(argv[0]);
     const std::filesystem::path engine =
-        self.empty() ? std::filesystem::path("pdg-engine")
-                     : self.parent_path() / "pdg-engine";
+        self.empty()
+#ifdef _WIN32
+            ? std::filesystem::path("pdg-engine.exe")
+            : self.parent_path() / "pdg-engine.exe";
+#else
+            ? std::filesystem::path("pdg-engine")
+            : self.parent_path() / "pdg-engine";
+#endif
     return execProgram(engine, argc, argv, "PDG engine", false);
 }
 
@@ -159,7 +235,13 @@ int runVerify(int argc, char** argv)
         return 2;
     }
     const std::string helperText = helper.string();
-    std::vector<std::string> owned{"python3", helperText};
+    std::vector<std::string> owned{
+#ifdef _WIN32
+        "python",
+#else
+        "python3",
+#endif
+        helperText};
     for (int index = 2; index < argc; ++index)
         owned.emplace_back(argv[index]);
     // Inject resolved roles last so user arguments cannot substitute a
@@ -176,7 +258,13 @@ int runVerify(int argc, char** argv)
     for (std::string& value : owned)
         arguments.push_back(value.data());
     arguments.push_back(nullptr);
+#ifdef _WIN32
+    const intptr_t status = ::_spawnvp(_P_WAIT, arguments[0], arguments.data());
+    if (status >= 0)
+        return static_cast<int>(status);
+#else
     ::execvp(arguments[0], arguments.data());
+#endif
     const int executionError = errno;
     if (executionError == ENOENT)
     {
@@ -332,7 +420,7 @@ void armAutomaticR2MarkerIfMatched(int argc, char** argv)
         inputFacts = lasInputFacts(*filename);
     if (pdg::cli::dispatchUsesAutomaticR2Hybrid(*pipeline, inputFacts))
     {
-        ::setenv("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1", 1);
+        setEnvironment("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1");
         if (std::getenv("PDG_DEBUG_HYBRID"))
             std::cerr << "gpupdal: armed automatic r2 hybrid dispatch\n";
     }
@@ -366,7 +454,7 @@ bool commandRequiresEngine(int argc, char** argv,
     }
     if (pdg::cli::dispatchUsesAutomaticR2Hybrid(*pipeline, inputFacts))
     {
-        ::setenv("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1", 1);
+        setEnvironment("PDG_INTERNAL_AUTOMATIC_R2_HYBRID", "1");
         if (std::getenv("PDG_DEBUG_HYBRID"))
             std::cerr << "gpupdal: armed automatic r2 hybrid dispatch\n";
     }
@@ -374,7 +462,7 @@ bool commandRequiresEngine(int argc, char** argv,
         pdg::cli::dispatchUsesAutomaticR7ReaderThreads(*pipeline, inputFacts);
     if (pdg::cli::dispatchUsesAutomaticR14ParallelCompression(*pipeline,
                                                               inputFacts) &&
-        ::setenv("PDG_LAZ_COMPRESSION_THREADS", "2", 1) != 0)
+        setEnvironment("PDG_LAZ_COMPRESSION_THREADS", "2") != 0)
         return true;
     return pdg::cli::classifyPipelineForDispatch(*pipeline, inputFacts) ==
            pdg::cli::DispatchRoute::Engine;
@@ -418,15 +506,15 @@ int main(int argc, char** argv, char** environmentPointers)
         // tuning options. Never forward an ambient value into an engine-owned
         // route: an externally injected fast-mode marker must not relax the
         // default exact contract; only the flag consumed above arms it.
-        ::unsetenv("PDG_LAZ_COMPRESSION_THREADS");
-        ::unsetenv(pdg::cli::FastModeMarker.data());
+        unsetEnvironment("PDG_LAZ_COMPRESSION_THREADS");
+        unsetEnvironment(pdg::cli::FastModeMarker);
         if (fastFlag &&
-            ::setenv(pdg::cli::FastModeMarker.data(), "1", 1) != 0)
+            setEnvironment(pdg::cli::FastModeMarker, "1") != 0)
             return 1;
         armAutomaticR2MarkerIfMatched(argc, argv);
         return runEngine(argc, argv);
     }
-    if (fastFlag && ::setenv(pdg::cli::FastModeMarker.data(), "1", 1) != 0)
+    if (fastFlag && setEnvironment(pdg::cli::FastModeMarker, "1") != 0)
         return runEngine(argc, argv);
     bool useAutomaticR7ReaderThreads = false;
     if (commandRequiresEngine(argc, argv, useAutomaticR7ReaderThreads))
