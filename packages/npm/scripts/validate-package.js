@@ -12,12 +12,19 @@ const manifest = JSON.parse(fs.readFileSync(
   path.join(root, "native-manifest.json"), "utf8"));
 
 if (metadata.version.includes("development") || metadata.version.endsWith("-dev") ||
-    manifest.schema !== 2 || manifest.version !== metadata.version) {
+    manifest.schema !== 3 || manifest.version !== metadata.version) {
   throw new Error("npm package and native manifest need the same release version");
 }
-const entry = manifest.platforms["linux-x64"];
-validateEntry(entry);
-const verifiedFiles = verifyNativeTree(root, entry);
+const supported = ["linux-x64", "win32-x64"];
+if (Object.keys(manifest.platforms).sort().join(",") !== supported.join(",")) {
+  throw new Error("npm package must contain the complete supported platform set");
+}
+let verifiedFiles = 0;
+for (const key of supported) {
+  const entry = manifest.platforms[key];
+  validateEntry(entry, key);
+  verifiedFiles += verifyNativeTree(root, entry);
+}
 console.log(
   `gpupdal npm package ${metadata.version} is ready to pack ` +
     `(${verifiedFiles} native files verified)`

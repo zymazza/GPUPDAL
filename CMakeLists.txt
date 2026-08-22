@@ -572,6 +572,37 @@ if (WITH_PDG AND CMAKE_SYSTEM_NAME STREQUAL "Linux" AND
         USES_TERMINAL)
 endif()
 
+if (WITH_PDG AND WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    find_program(POWERSHELL_EXECUTABLE powershell REQUIRED)
+    set(GPUPDAL_SOURCE_REVISION "" CACHE STRING
+        "Full Git revision recorded in a Windows release artifact")
+    if (NOT GPUPDAL_SOURCE_REVISION)
+        execute_process(
+            COMMAND git -C ${PROJECT_SOURCE_DIR} rev-parse HEAD
+            OUTPUT_VARIABLE GPUPDAL_SOURCE_REVISION
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            RESULT_VARIABLE GPUPDAL_GIT_REVISION_RESULT
+            ERROR_QUIET)
+    endif()
+    if (GPUPDAL_SOURCE_REVISION MATCHES "^[0-9a-f]{40}$")
+        add_custom_target(gpupdal_windows_bundle
+            COMMAND ${POWERSHELL_EXECUTABLE} -NoProfile -ExecutionPolicy Bypass
+                -File ${PROJECT_SOURCE_DIR}/scripts/release/build_windows_bundle.ps1
+                -Version ${GPUPDAL_VERSION}
+                -SourceRevision ${GPUPDAL_SOURCE_REVISION}
+                -SourceRoot ${PROJECT_SOURCE_DIR}
+                -BuildDirectory ${PROJECT_BINARY_DIR}
+                -OutputDirectory ${PROJECT_SOURCE_DIR}/dist
+            DEPENDS pdg_cli pdg_engine pdg_verify_helpers pdal
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+            COMMENT "Building the GPUPDAL Windows x64 native bundle"
+            USES_TERMINAL)
+    else()
+        message(STATUS "GPUPDAL Windows bundle target disabled: configure "
+            "with -DGPUPDAL_SOURCE_REVISION=<full-commit>")
+    endif()
+endif()
+
 export(
     TARGETS
         ${PDAL_LIB_NAME}

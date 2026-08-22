@@ -1,0 +1,2 @@
+GPUPDAL Windows exact comparisons run oracle and candidate back-to-back.
+The differential harness rejects a comparison that crosses a local-date boundary.

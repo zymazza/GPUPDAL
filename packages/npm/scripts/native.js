@@ -16,11 +16,24 @@ function sha256(filename) {
   return hash.digest("hex");
 }
 
-function validateEntry(entry, key = "linux-x64") {
+function executableNames(key) {
+  return key.startsWith("win32-")
+    ? ["gpupdal.exe", "pdg-engine.exe", "pdal.exe"]
+    : ["gpupdal", "pdg-engine", "pdal"];
+}
+
+function archivePattern(key) {
+  const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const extension = key.startsWith("win32-") ? "\\.zip" : "\\.tar\\.gz";
+  return new RegExp(
+    `^gpupdal-[0-9A-Za-z][0-9A-Za-z._-]*-${escaped}-cuda13${extension}$`
+  );
+}
+
+function validateEntry(entry, key) {
   if (!entry || entry.directory !== `native/${key}` ||
       typeof entry.sourceArchive !== "string" ||
-      !/^gpupdal-[0-9A-Za-z][0-9A-Za-z._-]*-linux-x64-cuda13\.tar\.gz$/.test(
-        entry.sourceArchive) ||
+      !archivePattern(key).test(entry.sourceArchive) ||
       !/^[0-9a-f]{64}$/.test(entry.sourceArchiveSha256 || "") ||
       entry.accelerator?.type !== "cuda" ||
       entry.accelerator?.toolkitMajor !== 13 ||
@@ -39,11 +52,12 @@ function verifyNativeTree(packageRoot, entry) {
   if (!directory.startsWith(`${nativeRoot}${path.sep}`)) {
     throw new Error("native directory escapes the package root");
   }
-  for (const executable of ["gpupdal", "pdg-engine", "pdal"]) {
+  for (const executable of executableNames(entry.directory.slice("native/".length))) {
     const status = fs.lstatSync(path.join(directory, executable), {
       throwIfNoEntry: false
     });
-    if (!status?.isFile() || (status.mode & 0o111) === 0) {
+    const needsExecuteBit = !entry.directory.startsWith("native/win32-");
+    if (!status?.isFile() || (needsExecuteBit && (status.mode & 0o111) === 0)) {
       throw new Error(`native package is missing ${executable}`);
     }
   }
@@ -103,4 +117,10 @@ function verifyNativeTree(packageRoot, entry) {
   return checkedFiles.size;
 }
 
-module.exports = { platformKey, sha256, validateEntry, verifyNativeTree };
+module.exports = {
+  executableNames,
+  platformKey,
+  sha256,
+  validateEntry,
+  verifyNativeTree
+};

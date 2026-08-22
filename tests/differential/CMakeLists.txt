@@ -9,6 +9,13 @@ if(TARGET pdg_frozen_time)
     set(PDG_FROZEN_TIME_ARGUMENTS
         --frozen-time-library $<TARGET_FILE:pdg_frozen_time>)
     set(PDG_FROZEN_TIME_DEPENDENCY pdg_frozen_time)
+elseif(WIN32)
+    # Matrix drivers share one interface and require the option. The marker
+    # selects differential.py's guarded same-local-date mode on Windows; it is
+    # never loaded into a process.
+    set(PDG_FROZEN_TIME_ARGUMENTS
+        --frozen-time-library
+        ${CMAKE_CURRENT_SOURCE_DIR}/windows-same-local-date.txt)
 endif()
 
 # The frozen-time shim is intentionally preloaded by differential.py so that

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import os
@@ -124,7 +125,7 @@ def environment(oracle: Path, frozen_time_library: Path | None,
             "PDG_ORACLE_PDAL": str(oracle.resolve()),
         }
     )
-    if frozen_time_library:
+    if frozen_time_library and os.name != "nt":
         preload = str(frozen_time_library.resolve())
         if result.get("LD_PRELOAD"):
             preload += ":" + result["LD_PRELOAD"]
@@ -731,7 +732,7 @@ def main() -> int:
     oracle_env = environment(
         args.oracle, args.frozen_time_library, args.freeze_epoch
     )
-    if args.oracle_preload:
+    if args.oracle_preload and os.name != "nt":
         preload = ":".join(str(path.resolve()) for path in args.oracle_preload)
         if oracle_env.get("LD_PRELOAD"):
             preload += ":" + oracle_env["LD_PRELOAD"]
@@ -741,17 +742,19 @@ def main() -> int:
         args.freeze_epoch
     )
     candidate_env.update(candidate_assignments)
-    if args.candidate_preload:
+    if args.candidate_preload and os.name != "nt":
         preload = ":".join(str(path.resolve()) for path in args.candidate_preload)
         if candidate_env.get("LD_PRELOAD"):
             preload += ":" + candidate_env["LD_PRELOAD"]
         candidate_env["LD_PRELOAD"] = preload
+    local_day_before = dt.datetime.now().astimezone().date()
     oracle_run = run(args.oracle, args.command, oracle_directory, oracle_env,
                      args.timeout_seconds, args.max_stream_bytes)
     candidate_run = run(
         args.candidate, args.command, candidate_directory, candidate_env,
         args.timeout_seconds, args.max_stream_bytes
     )
+    local_day_after = dt.datetime.now().astimezone().date()
     inventories: dict[str, dict[str, dict[str, object]]] = {}
     resource_differences: list[dict[str, object]] = []
     for role, directory in (("oracle", oracle_directory),
@@ -770,6 +773,13 @@ def main() -> int:
         oracle_run, candidate_run, oracle_directory, candidate_directory,
         inventories["oracle"], inventories["candidate"])
     differences.extend(resource_differences)
+    if os.name == "nt" and local_day_after != local_day_before:
+        differences.append({
+            "artifact": "windows_local_date_boundary",
+            "before": local_day_before.isoformat(),
+            "after": local_day_after.isoformat(),
+            "detail": "rerun the exact comparison within one local date",
+        })
     for role, result in (("oracle", oracle_run), ("candidate", candidate_run)):
         exceeded = result.get("stream_limit_exceeded", {})
         for stream in ("stdout", "stderr"):
@@ -813,7 +823,13 @@ def main() -> int:
         "oracle": str(args.oracle.resolve()),
         "candidate": str(args.candidate.resolve()),
         "candidate_oracle": str((args.candidate_oracle or args.oracle).resolve()),
-        "freeze_epoch": args.freeze_epoch if args.frozen_time_library else None,
+        "freeze_epoch": (args.freeze_epoch
+                         if args.frozen_time_library and os.name != "nt"
+                         else None),
+        "time_control": ("windows-same-local-date"
+                         if os.name == "nt" else
+                         "preloaded-frozen-epoch"
+                         if args.frozen_time_library else "none"),
         "oracle_preload": [
             str(path.resolve()) for path in args.oracle_preload
         ],

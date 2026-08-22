@@ -10,8 +10,15 @@ function platformKey() {
   return `${process.platform}-${process.arch}`;
 }
 
-function packagedBinary() {
-  return path.join(__dirname, "..", "native", platformKey(), "gpupdal");
+function executableName(platform = process.platform) {
+  return platform === "win32" ? "gpupdal.exe" : "gpupdal";
+}
+
+function packagedBinary(platform = process.platform, arch = process.arch) {
+  return path.join(
+    __dirname, "..", "native", `${platform}-${arch}`,
+    executableName(platform)
+  );
 }
 
 function run(args, options = {}) {
@@ -51,4 +58,4 @@ if (require.main === module) {
   process.exit(run(process.argv.slice(2)));
 }
 
-module.exports = { packagedBinary, platformKey, run };
+module.exports = { executableName, packagedBinary, platformKey, run };

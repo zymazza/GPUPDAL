@@ -9,7 +9,8 @@ const { spawnSync } = require("node:child_process");
 
 function usage() {
   console.error(
-    "usage: prepare-release.js --version <semver> --archive <tar.gz> " +
+    "usage: prepare-release.js --version <semver> " +
+      "--linux-archive <tar.gz> --windows-archive <zip> " +
       "--output <directory>"
   );
   process.exit(2);
@@ -30,7 +31,8 @@ function sha256(filename) {
 }
 
 const version = argument("--version");
-const archive = path.resolve(argument("--archive"));
+const linuxArchive = path.resolve(argument("--linux-archive"));
+const windowsArchive = path.resolve(argument("--windows-archive"));
 const output = path.resolve(argument("--output"));
 const packageRoot = path.resolve(__dirname, "..");
 const projectRoot = path.resolve(packageRoot, "../..");
@@ -42,10 +44,15 @@ if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$/.test(version)) {
 if (version.endsWith("-dev")) {
   throw new Error("development archives cannot be staged for npm publication");
 }
-const expectedArchive = `gpupdal-${version}-linux-x64-cuda13.tar.gz`;
-if (path.basename(archive) !== expectedArchive ||
-    !fs.statSync(archive, { throwIfNoEntry: false })?.isFile()) {
-  throw new Error(`expected a built archive named ${expectedArchive}`);
+const expectedLinuxArchive = `gpupdal-${version}-linux-x64-cuda13.tar.gz`;
+const expectedWindowsArchive = `gpupdal-${version}-win32-x64-cuda13.zip`;
+if (path.basename(linuxArchive) !== expectedLinuxArchive ||
+    !fs.statSync(linuxArchive, { throwIfNoEntry: false })?.isFile()) {
+  throw new Error(`expected a built archive named ${expectedLinuxArchive}`);
+}
+if (path.basename(windowsArchive) !== expectedWindowsArchive ||
+    !fs.statSync(windowsArchive, { throwIfNoEntry: false })?.isFile()) {
+  throw new Error(`expected a built archive named ${expectedWindowsArchive}`);
 }
 if (!output.startsWith(`${allowedOutputRoot}${path.sep}`)) {
   throw new Error(`release staging output must be below ${allowedOutputRoot}`);
@@ -64,7 +71,7 @@ fs.cpSync(packageRoot, output, {
 const nativeDirectory = path.join(output, "native", "linux-x64");
 fs.mkdirSync(nativeDirectory, { recursive: true, mode: 0o755 });
 const extracted = spawnSync("tar", [
-  "--extract", "--gzip", "--file", archive,
+  "--extract", "--gzip", "--file", linuxArchive,
   "--directory", nativeDirectory,
   "--no-same-owner", "--no-same-permissions"
 ], { stdio: "inherit" });
@@ -75,6 +82,16 @@ for (const executable of ["gpupdal", "pdg-engine", "pdal"]) {
   fs.chmodSync(path.join(nativeDirectory, executable), 0o755);
 }
 
+const windowsDirectory = path.join(output, "native", "win32-x64");
+fs.mkdirSync(windowsDirectory, { recursive: true, mode: 0o755 });
+const windowsExtracted = spawnSync("unzip", [
+  "-q", windowsArchive, "-d", windowsDirectory
+], { stdio: "inherit" });
+if (windowsExtracted.error || windowsExtracted.status !== 0) {
+  throw windowsExtracted.error ||
+    new Error(`unzip exited with status ${windowsExtracted.status}`);
+}
+
 const metadataPath = path.join(output, "package.json");
 const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
 metadata.version = version;
@@ -82,13 +99,24 @@ fs.writeFileSync(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
 
 const manifestPath = path.join(output, "native-manifest.json");
 const manifest = {
-  schema: 2,
+  schema: 3,
   version,
   platforms: {
     "linux-x64": {
       directory: "native/linux-x64",
-      sourceArchive: expectedArchive,
-      sourceArchiveSha256: sha256(archive),
+      sourceArchive: expectedLinuxArchive,
+      sourceArchiveSha256: sha256(linuxArchive),
+      accelerator: {
+        type: "cuda",
+        toolkitMajor: 13,
+        minimumDriverMajor: 580,
+        physicallyQualifiedComputeCapabilities: ["8.9"]
+      }
+    },
+    "win32-x64": {
+      directory: "native/win32-x64",
+      sourceArchive: expectedWindowsArchive,
+      sourceArchiveSha256: sha256(windowsArchive),
       accelerator: {
         type: "cuda",
         toolkitMajor: 13,

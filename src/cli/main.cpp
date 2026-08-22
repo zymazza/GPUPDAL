@@ -90,6 +90,40 @@ void resizeWindowsFile(HANDLE file, std::size_t size, const char* message)
         !::SetEndOfFile(file))
         throwWindowsError(message);
 }
+
+void configureBundledRuntimeEnvironment()
+{
+    std::vector<wchar_t> executable(512U);
+    for (;;)
+    {
+        const DWORD length = ::GetModuleFileNameW(
+            nullptr, executable.data(), static_cast<DWORD>(executable.size()));
+        if (length == 0)
+            return;
+        if (length < executable.size())
+            break;
+        executable.resize(executable.size() * 2U);
+    }
+
+    const std::filesystem::path root =
+        std::filesystem::path(executable.data()).parent_path();
+    const auto setBundledPath = [&](const wchar_t* name,
+                                    const std::filesystem::path& path)
+    {
+        if (::GetEnvironmentVariableW(name, nullptr, 0) != 0)
+            return;
+        std::error_code error;
+        if (!std::filesystem::exists(path, error) || error)
+            return;
+        ::SetEnvironmentVariableW(name, path.c_str());
+    };
+    setBundledPath(L"GDAL_DATA", root / "share" / "gdal");
+    setBundledPath(L"PROJ_DATA", root / "share" / "proj");
+    setBundledPath(L"CURL_CA_BUNDLE", root / "share" / "certs" /
+                                             "cacert.pem");
+    setBundledPath(L"SSL_CERT_FILE", root / "share" / "certs" /
+                                           "cacert.pem");
+}
 #endif
 
 std::uint64_t processId() noexcept
@@ -1946,6 +1980,9 @@ void publishDirectResidentLasOutput(const Plan& plan,
 
 int main(int argc, char** argv)
 {
+#ifdef _WIN32
+    configureBundledRuntimeEnvironment();
+#endif
     const std::string_view command = argc > 1 ? argv[1] : "";
     if (command == "version")
     {
