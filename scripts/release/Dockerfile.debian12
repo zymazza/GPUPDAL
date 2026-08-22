@@ -26,6 +26,7 @@ RUN apt-get update \
         ninja-build \
         patchelf \
         python3 \
+        proj-bin \
         tar \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*

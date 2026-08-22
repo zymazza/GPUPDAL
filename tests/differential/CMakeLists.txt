@@ -1083,7 +1083,7 @@ set_tests_properties(pdg_hybrid_stream_mode_reader_matrix_host_exact
     PROPERTIES LABELS
         "differential;hybrid;host;exact;reader-matrix;stream-mode")
 
-if(PDG_ENABLE_CUDA AND PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR)
+if(GPUPDAL_ENABLE_CUDA AND PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR)
     add_test(NAME pdg_automatic_approximatecoplanar_cuda_exact
         COMMAND ${Python3_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/automatic_approximatecoplanar.py
@@ -1101,7 +1101,7 @@ if(PDG_ENABLE_CUDA AND PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR)
             TIMEOUT 600)
 endif()
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     # D0277: `gpupdal calibrate` and the local placement profile.
     set(PDG_CALIBRATE_PINNED_ORACLE_ARGS)
     if (PDG_PINNED_ORACLE_EXECUTABLE)
@@ -1122,7 +1122,7 @@ if(PDG_ENABLE_CUDA)
             TIMEOUT 2400)
 endif()
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     # D0271: the `--fast` tie-order contract on the CUDA hybrid route.
     add_test(NAME pdg_fast_tie_contract_cuda
         COMMAND ${Python3_EXECUTABLE}
@@ -1137,7 +1137,7 @@ if(PDG_ENABLE_CUDA)
             "differential;hybrid;cuda;fast;tie-repair;neighborhood;deterministic-ties")
 endif()
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     add_test(NAME pdg_automatic_r2_ground_normalize_cuda_exact
         COMMAND ${Python3_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/automatic_r2_ground_normalize.py
@@ -1157,7 +1157,7 @@ if(PDG_ENABLE_CUDA)
             TIMEOUT 600)
 endif()
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     add_test(NAME pdg_automatic_r4_outlier_cuda_exact
         COMMAND ${Python3_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/automatic_r4_outlier.py
@@ -1177,7 +1177,7 @@ if(PDG_ENABLE_CUDA)
             TIMEOUT 600)
 endif()
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     add_test(NAME pdg_automatic_label_nndistance_cuda_exact
         COMMAND ${Python3_EXECUTABLE}
             ${CMAKE_CURRENT_SOURCE_DIR}/automatic_label_nndistance.py

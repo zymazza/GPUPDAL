@@ -5,7 +5,7 @@ set -euo pipefail
 script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 source_root="$(CDPATH= cd -- "${script_dir}/../.." && pwd -P)"
 base_image="debian@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241"
-archive="$(realpath -e -- "${1:-${source_root}/dist/gpupdal-0.1.0-dev-linux-x64.tar.gz}")"
+archive="$(realpath -e -- "${1:-${source_root}/dist/gpupdal-0.1.0-dev-linux-x64-cpu.tar.gz}")"
 
 docker run --rm \
     --network none \

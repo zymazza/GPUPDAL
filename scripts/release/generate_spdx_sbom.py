@@ -37,6 +37,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=Path)
     parser.add_argument("--version", required=True)
+    parser.add_argument("--artifact-name", required=True)
     parser.add_argument("--commit", required=True)
     parser.add_argument("--created-epoch", required=True, type=int)
     parser.add_argument("--output", required=True, type=Path)
@@ -139,10 +140,10 @@ def main() -> int:
         "spdxVersion": "SPDX-2.3",
         "dataLicense": "CC0-1.0",
         "SPDXID": "SPDXRef-DOCUMENT",
-        "name": f"gpupdal-{args.version}-linux-x64",
+        "name": args.artifact_name,
         "documentNamespace": (
             "https://github.com/zymazza/GPUPDAL/"
-            f"spdx/{args.commit}/gpupdal-{args.version}-linux-x64"
+            f"spdx/{args.commit}/{args.artifact_name}"
         ),
         "creationInfo": {
             "created": created.isoformat().replace("+00:00", "Z"),

@@ -12,7 +12,7 @@ const manifest = JSON.parse(fs.readFileSync(
   path.join(root, "native-manifest.json"), "utf8"));
 
 if (metadata.version.includes("development") || metadata.version.endsWith("-dev") ||
-    manifest.version !== metadata.version) {
+    manifest.schema !== 2 || manifest.version !== metadata.version) {
   throw new Error("npm package and native manifest need the same release version");
 }
 const entry = manifest.platforms["linux-x64"];

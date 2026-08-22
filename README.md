@@ -105,9 +105,13 @@ npx gpupdal --version
 Use `npm install --global gpupdal` when you want `gpupdal` directly on your
 shell path.
 
-The package is not published yet. GPUPDAL is a native C++/CUDA distribution,
-so npm publication is gated on checksummed Linux x86-64 release binaries, a
-declared support matrix, and clean-machine installation tests. See
+The package is not published yet. The first stable npm package is the CUDA 13
+Linux x86-64 artifact, physically qualified for compute capability 8.9 on an
+RTX 4090. It requires an NVIDIA driver 580 or newer; the exact first-release
+qualification uses driver 610.43.03. Other cubins in the portable binary are
+not advertised as stable until their physical fixed-bit lanes pass. Publication
+is gated on checksummed release binaries, the declared support matrix, and
+clean-machine installation tests. See
 [packages/npm/README.md](packages/npm/README.md) and
 [RELEASE_READINESS.md](RELEASE_READINESS.md). Releases are built and checked
 locally; the repository does not require GitHub Actions. See the
@@ -139,7 +143,8 @@ cmake --build --preset pdg-host-debug
 ctest --preset pdg-host-debug
 ```
 
-CUDA builds require CUDA 12.4 or newer. Runtime acceleration is conservative:
+CUDA builds require CUDA 12.4 or newer and use the public
+`GPUPDAL_ENABLE_CUDA` CMake option. Runtime acceleration is conservative:
 when a device, pipeline, layout, or performance profile is not qualified,
 GPUPDAL uses the exact host implementation.
 

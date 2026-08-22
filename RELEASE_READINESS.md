@@ -2,13 +2,16 @@
 
 Status date: 2026-08-21
 
-Target: first public pre-release (final version/channel needs owner approval)
+Target: first stable CUDA release (proposed version `0.1.0`; owner approval
+still required before publication)
 
 Current repository posture: private development
 
-GPUPDAL is not ready for public npm publication yet. The source and exactness
-evidence are mature, and this file now separates decisions already made from
-the few owner choices and technical gates that remain.
+The CUDA release candidate is physically qualified on the declared RTX 4090 /
+SM 89 support profile, but GPUPDAL has not been published. The remaining gates
+are a clean-commit `0.1.0` rebuild, the final 2,048-case conformance report, the
+matching npm clean-install rehearsal, and the owner's explicit publication and
+repository-visibility approvals.
 
 ## Owner answers recorded
 
@@ -34,6 +37,10 @@ the few owner choices and technical gates that remain.
   Drop-in behavior covers the complete configured stage catalog and is gated
   by exact `gpupdal --drivers` parity with the bundled sibling `pdal`; plugin
   source remains available for later artifacts and source builds.
+- Stable-product meaning: the first stable package is the CUDA 13 artifact,
+  and supported measured envelopes must select real GPU execution. A CPU-only
+  archive may be shipped as a compatibility companion, but is not the stable
+  GPUPDAL acceleration product.
 - Long-term platforms: Linux, Windows, and macOS. The first supported native
   artifact will be Linux x86-64. Windows and macOS require real-machine
   validation; modern macOS is CPU-only.
@@ -57,28 +64,28 @@ the few owner choices and technical gates that remain.
 
 ## Owner review still needed
 
-The initial license, rights, contact, response target, npm owner, platform, and
-plugin-scope decisions are complete. Before publication, Zy still needs to
-review these release-specific choices:
+The initial license, rights, contact, response target, npm owner, platform,
+plugin scope, and stable CUDA binary decisions are complete. Before
+publication, Zy still needs to approve:
 
-1. **Version/channel:** use `0.1.0-alpha.1` for the first public compatibility
-   preview (recommended for a clearly labeled CPU-only first artifact), or wait
-   and publish stable `0.1.0` only after the selected release gates close.
-2. **First public binary:** approve a clearly labeled CPU-only compatibility
-   preview, or wait for physically qualified CUDA artifacts. The controlled
-   Debian archive currently has `PDG_ENABLE_CUDA=OFF`; it preserves configured
-   PDAL behavior but is not a GPU acceleration binary.
-Actual npm publication and any change from private to public visibility are
-separate, explicit owner actions after the selected gates pass.
+1. **Version/channel:** publish the physically qualified CUDA artifact as
+   stable `0.1.0` on npm's `latest` channel (recommended), or choose a different
+   version/channel before the final clean build.
+2. **External state changes:** separately authorize the actual npm publication
+   and changing `zymazza/GPUPDAL` from private to public. Neither action is
+   implied by approving the engineering candidate.
 
 ## Dependency and rights audit
 
-The default build uses open-source system dependencies such as GDAL, PROJ,
-GeoTIFF, curl, zlib, zstd, and libxml2, plus vendored components carrying BSD,
-MIT, Apache-2.0, Boost-1.0, MPL-2.0, and per-file notices. No proprietary
-dependency was identified in the default release preset. Optional plugins can
-introduce materially different dependencies, including MATLAB and vendor SDK
-integrations, so all are excluded from the proposed first bundle. See
+The source and CPU dependency set uses open-source components such as GDAL,
+PROJ, GeoTIFF, curl, zlib, zstd, libxml2, and vendored code carrying BSD, MIT,
+Apache-2.0, Boost-1.0, MPL-2.0, and per-file notices. The stable CUDA artifact
+also redistributes NVIDIA's proprietary `libcudart`, `libnvrtc`, and matching
+NVRTC builtins under the CUDA Toolkit EULA. Those are accelerator runtime
+dependencies, not closed-source PDAL stages. NVIDIA driver libraries remain a
+host prerequisite and are never bundled. Optional plugins can introduce
+materially different dependencies, including MATLAB and vendor SDK
+integrations, so all are excluded from the first bundle. See
 `THIRD_PARTY_LICENSES.md`.
 
 The exact shared-library closure is distribution-specific. Each binary bundle
@@ -103,24 +110,40 @@ PDAL components.
 - [x] Replace the reference workstation's broad Arch GDAL linkage with pinned
       GDAL 3.8.5 built in the controlled Debian image, including the GEOS and
       command-line support required by the release differentials.
-- [ ] Decide and validate the CUDA runtime policy. The current controlled
-      artifact is CPU-only. Produce separate
-      CUDA-toolkit artifacts only after physical-GPU exactness and Compute
-      Sanitizer gates pass; do not bundle NVIDIA driver libraries.
-- [ ] Complete the remaining host release gate locally. In the controlled
-      Debian image, 447 unit tests passed and two optional local-corpus tests
-      skipped; the full exact differential suite passed 98/98. The host
-      ASan/UBSan lane passed all 454 applicable tests with five intentional
-      fixture-dependent skips and no sanitizer finding. All 142 tests in the
-      sequential published upstream PDAL suite pass, including the two remote
-      STAC/COPC cases against their official fixtures. Final conformance and
-      retained clean-commit logs remain. GitHub Actions is intentionally not
-      part of this gate.
-- [ ] Complete or explicitly defer the generated stage-coverage reconciliation
-      between older dated counts and the current audit.
+- [x] Validate the stable CUDA runtime policy and physical device lane. The
+      controlled Debian 12/CUDA 13.3.73 all-architecture build produced the
+      `-linux-x64-cuda13` archive. On RTX 4090/SM 89 with driver 610.43.03,
+      all 862 registered release tests passed with zero failures; 22 optional
+      local-fixture/profile-envelope cases were explicitly skipped. The 106
+      CUDA-labeled tests include option-free automatic GPU selection for the
+      accepted acceleration envelopes. The checked-in eight-test sanitizer
+      matrix passes memcheck, initcheck, and synccheck with zero errors and
+      racecheck with zero hazards/errors/warnings. An extracted archive also
+      passed the forced fused CUDA/NVRTC exact differential without the host
+      CUDA toolkit mounted.
+- [x] Review CUDA binary portability and dependency closure. CUDA 13.3 emitted
+      cubins for SM 75, 80, 86, 87, 88, 89, 90, 100, 103, 110, 120, and 121,
+      plus newest-target SM 120 PTX. Only SM 89 is physically qualified; the
+      other images are compile coverage. The 116 MB development archive has
+      54 runtime dependency rows, 45 copied system notice sets, 48 SPDX
+      packages, 295 SPDX files, 343 relationships, and no missing-license
+      marker or bundled NVIDIA driver library.
+- [x] Complete the current controlled aggregate release gate locally. The
+      final CUDA-enabled aggregate passed 862/862 registrations, including the
+      exact host/fallback and CUDA process matrices. Earlier host ASan/UBSan
+      passed all 454 applicable registrations with five intentional
+      fixture-dependent skips; the sequential published upstream PDAL suite
+      passed 142/142, including the official network STAC/COPC cases. GitHub
+      Actions is intentionally not part of this gate.
+- [ ] Run and retain the final 2,048-case conformance report against the clean
+      `0.1.0` archive. The historical frozen B0286 report passed 2,048/2,048,
+      but the selected release archive must have its own complete report.
+- [x] Reconcile the configured stage catalog against the selected controlled
+      build: `gpupdal --drivers` and sibling `pdal --drivers` are byte-identical
+      at 124 entries (84 filters, 25 readers, 15 writers).
 - [x] Replace inherited PDAL-only citation metadata with Zy Mazza as the
       GPUPDAL citation author while retaining upstream PDAL attribution.
-- [ ] After the owner selects a version and binary lane, rebuild from the clean
+- [ ] After the owner approves the proposed version, rebuild from the clean
       commit, place the immutable archive inside the npm package, populate
       `packages/npm/native-manifest.json`, and run pack plus clean-install
       tests. A nonpublic `0.0.0-test.1` rehearsal from clean commit
@@ -128,7 +151,8 @@ PDAL components.
       smoke, a 300-entry npm dry run, and a clean local install with both
       `gpupdal --version` and `gpupdal --drivers`. The bundled-archive design
       works while GitHub remains private; repeat the same gate for the selected
-      final version and binary lane.
+      final CUDA version and binary lane, including GPU execution from the
+      clean-installed npm tarball.
       Authenticate with an npm-supported publication method and publish from
       `zymazza` only with explicit final approval; remove temporary credential
       material after verifying the registry package.
@@ -146,11 +170,13 @@ PDAL components.
       after the owner approved the force-push and the equivalent compressed
       fixture passed its metadata/value checks. The old 54.41 MB blob is not
       reachable from the new public-history candidate.
-- [ ] Retain immutable release logs and run at least one unrelated-user
+- [ ] Post-release validation: retain immutable release logs and invite at
+      least one unrelated user to run
       `gpupdal verify` before making broad performance claims. Historical
       evidence includes the 18-job aggregate graph, a 0.986x RTX 3090 1M-point
       result, and a fourteen-workflow total-wall subset ranging 0.987–1.430x,
-      so no universal speedup is claimed.
+      so no universal speedup is claimed. This is not a blocker for the narrow
+      SM 89 automatic-acceleration support statement.
 
 ## Completed preparation
 

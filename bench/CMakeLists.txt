@@ -111,7 +111,7 @@ else()
     endif()
 endif()
 
-if (PDG_ENABLE_CUDA)
+if (GPUPDAL_ENABLE_CUDA)
     add_executable(pdg_spatial_benchmark spatial_index_benchmark.cpp)
     target_compile_features(pdg_spatial_benchmark PRIVATE cxx_std_20)
     target_link_libraries(pdg_spatial_benchmark PRIVATE

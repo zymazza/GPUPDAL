@@ -32,6 +32,46 @@ if ! grep -qx 'WITH_PDG:BOOL=ON' "${build_dir}/CMakeCache.txt"; then
     exit 2
 fi
 
+cuda_root=""
+cuda_enabled="$(sed -n 's/^GPUPDAL_ENABLE_CUDA:BOOL=//p' \
+    "${build_dir}/CMakeCache.txt")"
+case "${cuda_enabled}" in
+    ON)
+        cuda_compiler="$(sed -n 's/^CMAKE_CUDA_COMPILER:[^=]*=//p' \
+            "${build_dir}/CMakeCache.txt")"
+        if [[ ! -x "${cuda_compiler}" ]]; then
+            echo "CUDA release build has no usable CMAKE_CUDA_COMPILER" >&2
+            exit 2
+        fi
+        cuda_root="$(realpath -m -- "$(dirname -- "${cuda_compiler}")/..")"
+        cuda_version="$(${cuda_compiler} --version | \
+            sed -n 's/.*release \([0-9][0-9]*\.[0-9][0-9]*\).*/\1/p' | \
+            head -n 1)"
+        cuda_major="${cuda_version%%.*}"
+        if [[ ! "${cuda_major}" =~ ^[0-9]+$ ]]; then
+            echo "unable to determine the CUDA toolkit major version" >&2
+            exit 2
+        fi
+        if ! grep -qx 'PDG_CUDA_ARCHITECTURES:STRING=all' \
+                "${build_dir}/CMakeCache.txt" ||
+                ! grep -qx 'PDG_REQUIRE_PORTABLE_CUDA_ARCHITECTURES:BOOL=ON' \
+                "${build_dir}/CMakeCache.txt"; then
+            echo "CUDA release bundles require the guarded all-architecture build" >&2
+            exit 2
+        fi
+        release_variant="cuda${cuda_major}"
+        ;;
+    OFF)
+        cuda_compiler="none"
+        cuda_version="none"
+        release_variant="cpu"
+        ;;
+    *)
+        echo "bundle build has no valid GPUPDAL_ENABLE_CUDA cache value" >&2
+        exit 2
+        ;;
+esac
+
 enabled_plugins="$(sed -n 's/^\(BUILD_PLUGIN_[A-Z0-9_]*\):BOOL=ON$/\1/p' \
     "${build_dir}/CMakeCache.txt" | sort -u)"
 if [[ -n "${enabled_plugins}" ]]; then
@@ -71,7 +111,7 @@ if [[ -n "$(git -C "${source_root}" status --porcelain --untracked-files=normal)
     source_revision="${commit}-dirty"
 fi
 created_epoch="${SOURCE_DATE_EPOCH:-$(git -C "${source_root}" show -s --format=%ct HEAD)}"
-artifact_name="gpupdal-${version}-linux-x64"
+artifact_name="gpupdal-${version}-linux-x64-${release_variant}"
 temporary="$(mktemp -d /tmp/gpupdal-bundle.XXXXXX)"
 bundle="${temporary}/${artifact_name}"
 trap 'rm -rf -- "${temporary}"' EXIT
@@ -119,6 +159,19 @@ install -m 0644 "${source_root}/THIRD_PARTY_LICENSES.md" \
     printf 'compiler=%s\n' "$(c++ --version | head -n 1)"
     printf 'cmake=%s\n' "$(cmake --version | head -n 1)"
     printf 'glibc=%s\n' "$(ldd --version | head -n 1)"
+    printf 'release_variant=%s\n' "${release_variant}"
+    printf 'cuda_enabled=%s\n' "${cuda_enabled}"
+    printf 'cuda_toolkit=%s\n' "${cuda_version}"
+    printf 'cuda_compiler=%s\n' "${cuda_compiler}"
+    if [[ "${cuda_enabled}" == "ON" ]]; then
+        printf 'cuda_architectures=%s\n' \
+            "$(sed -n 's/^PDG_CUDA_ARCHITECTURES:STRING=//p' "${build_dir}/CMakeCache.txt")"
+        printf 'cccl=%s\n' "${GPUPDAL_CCCL_VERSION:-unmanaged}"
+        printf 'cccl_header_tree_sha256=%s\n' \
+            "${GPUPDAL_CCCL_SHA256:-unmanaged}"
+        printf 'cuda_driver_policy=not bundled; NVIDIA driver 580 or newer required\n'
+        printf 'physically_qualified_profile=SM 89; RTX 4090; qualification report required\n'
+    fi
     printf 'source_revision=%s\n' "${source_revision}"
 } >"${bundle}/BUILD-ENVIRONMENT.txt"
 
@@ -126,6 +179,23 @@ install -m 0644 "${source_root}/licenses/Apache-2.0.txt" \
     "${bundle}/licenses/source/Apache-2.0.txt"
 install -m 0644 "${source_root}/licenses/MPL-2.0.txt" \
     "${bundle}/licenses/source/MPL-2.0.txt"
+
+if [[ "${cuda_enabled}" == "ON" ]]; then
+    if [[ ! -f "${GPUPDAL_CCCL_LICENSE:-}" ]]; then
+        echo "CUDA release bundle requires the complete CCCL license" >&2
+        exit 2
+    fi
+    mkdir -p "${bundle}/licenses/source/cccl"
+    install -m 0644 "${GPUPDAL_CCCL_LICENSE}" \
+        "${bundle}/licenses/source/cccl/LICENSE"
+    if [[ ! -f "${GPUPDAL_CUDA_LICENSE:-}" ]]; then
+        echo "CUDA release bundle requires the CUDA Toolkit EULA" >&2
+        exit 2
+    fi
+    mkdir -p "${bundle}/licenses/source/cuda"
+    install -m 0644 "${GPUPDAL_CUDA_LICENSE}" \
+        "${bundle}/licenses/source/cuda/EULA.txt"
+fi
 
 if [[ -n "${GPUPDAL_GDAL_PREFIX:-}" ]]; then
     gdal_license="${GPUPDAL_GDAL_PREFIX}/share/licenses/gdal/LICENSE.TXT"
@@ -254,6 +324,11 @@ copy_dependency() {
         package="GDAL"
         version_value="$("${GPUPDAL_GDAL_PREFIX}/bin/gdal-config" --version)"
         license_value="MIT"
+    elif [[ "${cuda_enabled}" == "ON" &&
+            "${resolved}" == "${cuda_root}"/* ]]; then
+        package="NVIDIA CUDA Toolkit"
+        version_value="${cuda_version}"
+        license_value="NVIDIA CUDA Toolkit EULA"
     else
         package="$(package_for_path "${resolved}")"
         version_value="$(package_version "${package}")"
@@ -267,10 +342,23 @@ copy_dependency() {
     printf '%s\t%s\t%s\t%s\t%s\n' "${soname}" "${recorded_path}" \
         "${package:-unmanaged}" "${version_value:-unknown}" \
         "${license_value:-unknown}" >>"${dependency_map}"
-    if [[ "${package}" != "GPUPDAL" && "${package}" != "GDAL" ]]; then
+    if [[ "${package}" != "GPUPDAL" && "${package}" != "GDAL" &&
+            "${package}" != "NVIDIA CUDA Toolkit" ]]; then
         copy_package_license "${package}"
     fi
 }
+
+# NVRTC is intentionally loaded with dlopen only for the fused-JIT lane, so it
+# does not appear in DT_NEEDED. A CUDA release must still carry the versioned
+# runtime and its matching builtins image or the promised specialization path
+# silently declines at runtime.
+if [[ "${cuda_enabled}" == "ON" ]]; then
+    cuda_library_root="${cuda_root}/targets/x86_64-linux/lib"
+    copy_dependency "libnvrtc.so.13" \
+        "${cuda_library_root}/libnvrtc.so.13"
+    copy_dependency "libnvrtc-builtins.so.13.3" \
+        "${cuda_library_root}/libnvrtc-builtins.so.13.3"
+fi
 
 scan_index=0
 while (( scan_index < ${#scan_queue[@]} )); do
@@ -324,6 +412,7 @@ install -m 0644 "${sorted_dependency_map}" "${dependency_map}"
 python3 "${script_dir}/generate_spdx_sbom.py" \
     --root "${bundle}" \
     --version "${version}" \
+    --artifact-name "${artifact_name}" \
     --commit "${source_revision}" \
     --created-epoch "${created_epoch}" \
     --output "${bundle}/SBOM.spdx.json"
@@ -385,6 +474,20 @@ done
 "${clean_environment[@]}" "${extracted}/gpupdal" verify \
     --points 16 --runs 3 --warmups 1 \
     --output-dir "${temporary}/extracted-verify" >/dev/null
+if [[ "${cuda_enabled}" == "ON" ]]; then
+    "${clean_environment[@]}" PDG_REQUIRE_FUSED_CUDA_POINT_PROGRAM=1 \
+        python3 "${source_root}/scripts/pdg/differential.py" \
+        --oracle "${extracted}/pdal" \
+        --candidate "${extracted}/gpupdal" \
+        --case installed_cuda_assign_ferry_fused \
+        --work-dir "${temporary}/extracted-fused" \
+        --frozen-time-library \
+            "${extracted}/libexec/libpdg_frozen_time.so" \
+        --seed-file input.las="${source_root}/test/data/las/simple.las" \
+        --seed-file \
+            pipeline.json="${source_root}/test/data/pdg/assign-ferry-fused.json" \
+        -- pipeline pipeline.json >/dev/null
+fi
 
 echo "Created ${artifact}"
 echo "Created ${artifact}.sha256"

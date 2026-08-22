@@ -45,18 +45,42 @@ test("package accepts only checksummed GPUPDAL native trees", () => {
   const digest = "a".repeat(64);
   assert.doesNotThrow(() => validateEntry({
     directory: "native/linux-x64",
-    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
-    sourceArchiveSha256: digest
+    sourceArchive: "gpupdal-0.1.0-linux-x64-cuda13.tar.gz",
+    sourceArchiveSha256: digest,
+    accelerator: {
+      type: "cuda",
+      toolkitMajor: 13,
+      minimumDriverMajor: 580,
+      physicallyQualifiedComputeCapabilities: ["8.9"]
+    }
   }));
   assert.throws(() => validateEntry({
     directory: "../native/linux-x64",
-    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
-    sourceArchiveSha256: digest
+    sourceArchive: "gpupdal-0.1.0-linux-x64-cuda13.tar.gz",
+    sourceArchiveSha256: digest,
+    accelerator: {
+      type: "cuda",
+      toolkitMajor: 13,
+      minimumDriverMajor: 580,
+      physicallyQualifiedComputeCapabilities: ["8.9"]
+    }
   }), /incomplete or untrusted/);
   assert.throws(() => validateEntry({
     directory: "native/linux-x64",
-    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
-    sourceArchiveSha256: "not-a-digest"
+    sourceArchive: "gpupdal-0.1.0-linux-x64-cuda13.tar.gz",
+    sourceArchiveSha256: "not-a-digest",
+    accelerator: {
+      type: "cuda",
+      toolkitMajor: 13,
+      minimumDriverMajor: 580,
+      physicallyQualifiedComputeCapabilities: ["8.9"]
+    }
+  }), /incomplete or untrusted/);
+  assert.throws(() => validateEntry({
+    directory: "native/linux-x64",
+    sourceArchive: "gpupdal-0.1.0-linux-x64-cpu.tar.gz",
+    sourceArchiveSha256: digest,
+    accelerator: { type: "cpu" }
   }), /incomplete or untrusted/);
 });
 
@@ -80,8 +104,14 @@ test("package verifier checks every staged native file", () => {
   const native = path.join(directory, "native", "linux-x64");
   const entry = {
     directory: "native/linux-x64",
-    sourceArchive: "gpupdal-0.1.0-linux-x64.tar.gz",
-    sourceArchiveSha256: "a".repeat(64)
+    sourceArchive: "gpupdal-0.1.0-linux-x64-cuda13.tar.gz",
+    sourceArchiveSha256: "a".repeat(64),
+    accelerator: {
+      type: "cuda",
+      toolkitMajor: 13,
+      minimumDriverMajor: 580,
+      physicallyQualifiedComputeCapabilities: ["8.9"]
+    }
   };
   try {
     fs.mkdirSync(native, { recursive: true });

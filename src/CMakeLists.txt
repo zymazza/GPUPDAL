@@ -1,6 +1,6 @@
-if(PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR AND NOT PDG_ENABLE_CUDA)
+if(PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR AND NOT GPUPDAL_ENABLE_CUDA)
     message(FATAL_ERROR
-        "PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR requires PDG_ENABLE_CUDA")
+        "PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR requires GPUPDAL_ENABLE_CUDA")
 endif()
 
 set(PDG_CORE_SOURCES
@@ -53,7 +53,7 @@ set(PDG_CORE_SOURCES
     stages/Summary.cpp
     stages/Transformation.cpp)
 
-if (PDG_ENABLE_CUDA)
+if (GPUPDAL_ENABLE_CUDA)
     list(APPEND PDG_CORE_SOURCES
         core/allocator.cu
         core/CalibrationProbes.cu
@@ -185,7 +185,7 @@ target_include_directories(pdg_core
         ${PDAL_VENDOR_EIGEN_DIR})
 target_compile_definitions(pdg_core
     PUBLIC
-        PDG_HAS_CUDA=$<BOOL:${PDG_ENABLE_CUDA}>
+        PDG_HAS_CUDA=$<BOOL:${GPUPDAL_ENABLE_CUDA}>
         PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR=$<BOOL:${PDG_QUALIFY_AUTOMATIC_APPROXIMATECOPLANAR}>
         GPUPDAL_VERSION="${GPUPDAL_VERSION}"
         PDG_ORACLE_COMMIT="${PDG_ORACLE_COMMIT}"
@@ -209,7 +209,9 @@ else()
     endif()
 endif()
 
-if (PDG_ENABLE_CUDA)
+if (GPUPDAL_ENABLE_CUDA)
+    target_include_directories(pdg_core SYSTEM PRIVATE
+        ${PDG_CCCL_INCLUDE_DIR})
     # Exact mode must not depend on whether nvcc finds a contraction opportunity
     # in a new translation unit or on an architecture's denormal policy.
     target_compile_options(pdg_core PRIVATE

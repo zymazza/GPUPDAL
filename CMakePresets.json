@@ -44,7 +44,7 @@
       "binaryDir": "${sourceDir}/build/pdg-host-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PDG_ENABLE_CUDA": "OFF",
+        "GPUPDAL_ENABLE_CUDA": "OFF",
         "PDG_WARNINGS_AS_ERRORS": "ON"
       }
     },
@@ -55,7 +55,7 @@
       "binaryDir": "${sourceDir}/build/pdg-cuda-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PDG_ENABLE_CUDA": "ON",
+        "GPUPDAL_ENABLE_CUDA": "ON",
         "PDG_WARNINGS_AS_ERRORS": "ON"
       }
     },
@@ -66,7 +66,7 @@
       "binaryDir": "${sourceDir}/build/pdg-host-sanitize",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PDG_ENABLE_CUDA": "OFF",
+        "GPUPDAL_ENABLE_CUDA": "OFF",
         "PDG_WARNINGS_AS_ERRORS": "ON",
         "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
         "CMAKE_C_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
@@ -81,7 +81,7 @@
       "binaryDir": "${sourceDir}/build/pdg-host-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "PDG_ENABLE_CUDA": "OFF",
+        "GPUPDAL_ENABLE_CUDA": "OFF",
         "PDG_WARNINGS_AS_ERRORS": "ON"
       }
     },
@@ -92,7 +92,7 @@
       "binaryDir": "${sourceDir}/build/pdal-upstream-tests",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "PDG_ENABLE_CUDA": "OFF",
+        "GPUPDAL_ENABLE_CUDA": "OFF",
         "PDG_BUILD_TESTS": "OFF",
         "WITH_TESTS": "ON"
       }
@@ -104,7 +104,7 @@
       "binaryDir": "${sourceDir}/build/pdg-cuda-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "PDG_ENABLE_CUDA": "ON",
+        "GPUPDAL_ENABLE_CUDA": "ON",
         "PDG_WARNINGS_AS_ERRORS": "OFF"
       }
     }

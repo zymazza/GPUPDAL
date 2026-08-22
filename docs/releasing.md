@@ -5,10 +5,11 @@ for the project repository and is not part of the release gate.
 
 ## Supported artifacts
 
-The first native package is Linux x86-64. It is a CLI distribution containing
-the public `gpupdal` launcher, `pdg-engine`, the pinned sibling `pdal`, runtime
-libraries, GDAL/PROJ data, notices, checksums, and an SPDX 2.3 software bill of
-materials (SBOM).
+The first stable native package is Linux x86-64 with CUDA 13. It is a CLI
+distribution containing the public `gpupdal` launcher, CUDA-capable
+`pdg-engine`, the pinned sibling `pdal`, runtime libraries, GDAL/PROJ data,
+notices, checksums, and an SPDX 2.3 software bill of materials (SBOM). The
+driver is a host prerequisite and is never bundled.
 
 Optional external plugins are off in this first artifact to keep its dependency
 and license closure controlled. This does not weaken compatibility within the
@@ -40,7 +41,9 @@ scripts/release/build_linux_bundle_debian12.sh
 
 The resulting binaries require glibc 2.36 or newer. Debian 12 is the declared
 oldest-supported build environment for the first Linux artifact; clean-install
-qualification on other advertised distributions remains mandatory.
+qualification on other advertised distributions remains mandatory. The CPU
+bundle is a compatibility companion, not the stable GPUPDAL acceleration
+artifact. Its archive name ends in `-linux-x64-cpu.tar.gz`.
 
 The artifact and its outer SHA-256 file are written under `dist/`. The bundle
 records the pinned base image, compiler, CMake, glibc, and source revision in
@@ -65,8 +68,40 @@ diagnostic for the optional Python-based verifier:
 
 ```sh
 scripts/release/smoke_linux_bundle_debian12.sh \
-  dist/gpupdal-0.1.0-dev-linux-x64.tar.gz
+  dist/gpupdal-0.1.0-dev-linux-x64-cpu.tar.gz
 ```
+
+## Build and qualify the stable CUDA artifact
+
+The CUDA lane mounts the locally installed, version-checked CUDA 13.3.73
+toolkit read-only into the same pinned Debian 12 builder, compiles serially for
+every real architecture supported by that compiler plus newest-target PTX,
+and creates `gpupdal-<version>-linux-x64-cuda13.tar.gz`. It requires the host
+NVIDIA container runtime because packaging runs a real GPU smoke test:
+
+```sh
+free -h
+nvidia-smi
+scripts/release/build_linux_cuda_bundle_debian12.sh
+scripts/release/test_linux_cuda_bundle_debian12.sh
+scripts/release/sanitize_linux_cuda_debian12.sh
+scripts/release/smoke_linux_cuda_bundle_debian12.sh \
+  dist/gpupdal-0.1.0-dev-linux-x64-cuda13.tar.gz
+```
+
+The first stable support profile is compute capability 8.9 on an RTX 4090.
+Other cubins in the portable archive are compile coverage, not a physical
+exactness or acceleration promise. CUDA 13 applications require an NVIDIA
+driver from the CUDA 13 family (580 or newer); the release qualification
+records the exact tested driver and hardware.
+
+The stable archive carries `libcudart`, `libnvrtc`, and matching NVRTC builtins
+under the CUDA Toolkit EULA. It never carries `libcuda` or `libnvidia-*` driver
+libraries. The extracted-artifact gate must run the forced fused CUDA
+differential without mounting the host CUDA toolkit; this proves JIT
+specialization resolves from the archive instead of an undeclared machine
+dependency. `smoke_linux_cuda_bundle_debian12.sh` enforces that `/opt/cuda` is
+absent in its fresh GPU container.
 
 ## Required release checks
 
@@ -79,9 +114,11 @@ scripts/release/test_linux_bundle_debian12.sh
 git diff --check
 ```
 
-CUDA artifacts additionally require the portable architecture build, exactness
-on physical supported GPUs, and Compute Sanitizer memcheck/racecheck. A local
-`cudaErrorNoDevice` is not acceptance evidence.
+CUDA artifacts additionally require the portable architecture build, a full
+physical CTest aggregate, the compact architecture bit lane, a forced-public
+CUDA acceleration proof, and Compute Sanitizer memcheck, initcheck, racecheck,
+and synccheck on the final candidate. A local `cudaErrorNoDevice` is not
+acceptance evidence.
 
 ## npm publication
 
@@ -94,15 +131,15 @@ Immediately before the first public publish:
    staging. A non-development bundle refuses a dirty source tree:
 
    ```sh
-   GPUPDAL_RELEASE_VERSION=0.1.0-alpha.1 \
-     scripts/release/build_linux_bundle_debian12.sh
+   GPUPDAL_RELEASE_VERSION=0.1.0 \
+     scripts/release/build_linux_cuda_bundle_debian12.sh
    ```
 2. Stage the package without committing the binary archive:
 
    ```sh
    node packages/npm/scripts/prepare-release.js \
-     --version 0.1.0-alpha.1 \
-     --archive dist/gpupdal-0.1.0-alpha.1-linux-x64.tar.gz \
+     --version 0.1.0 \
+     --archive dist/gpupdal-0.1.0-linux-x64-cuda13.tar.gz \
      --output dist/npm/gpupdal
    ```
 

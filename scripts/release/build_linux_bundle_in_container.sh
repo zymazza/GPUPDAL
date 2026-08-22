@@ -4,7 +4,12 @@ set -euo pipefail
 
 script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 source_root="$(CDPATH= cd -- "${script_dir}/../.." && pwd -P)"
-build_dir="${source_root}/build/pdg-debian12-release"
+release_cuda="${GPUPDAL_RELEASE_CUDA:-0}"
+if [[ "${release_cuda}" == "1" ]]; then
+    build_dir="${GPUPDAL_RELEASE_BUILD_DIR:-${source_root}/build/pdg-debian12-cuda13-release}"
+else
+    build_dir="${GPUPDAL_RELEASE_BUILD_DIR:-${source_root}/build/pdg-debian12-release}"
+fi
 oracle_commit="$(sed -n \
     's/^set(PDG_ORACLE_COMMIT "\([0-9a-f]*\)").*/\1/p' \
     "${source_root}/cmake/pdg-oracle.cmake")"
@@ -54,18 +59,42 @@ if [[ -n "${GPUPDAL_RELEASE_VERSION:-}" ]]; then
     )
 fi
 
+cuda_arguments=(-DGPUPDAL_ENABLE_CUDA=OFF -DPDG_WARNINGS_AS_ERRORS=ON)
+if [[ "${release_cuda}" == "1" ]]; then
+    cuda_compiler="${GPUPDAL_CUDA_ROOT:-/opt/cuda}/bin/nvcc"
+    if [[ ! -x "${cuda_compiler}" ]]; then
+        echo "controlled CUDA release requires ${cuda_compiler}" >&2
+        exit 2
+    fi
+    actual_cuda="$(${cuda_compiler} --version | \
+        sed -n 's/.*V\([0-9][0-9.]*\).*/\1/p' | tail -n 1)"
+    expected_cuda="${GPUPDAL_CUDA_VERSION:-13.3.73}"
+    if [[ "${actual_cuda}" != "${expected_cuda}" ]]; then
+        echo "expected CUDA ${expected_cuda}, found ${actual_cuda}" >&2
+        exit 2
+    fi
+    cuda_arguments=(
+        -DGPUPDAL_ENABLE_CUDA=ON
+        -DCMAKE_CUDA_COMPILER="${cuda_compiler}"
+        -DCUDAToolkit_ROOT="${GPUPDAL_CUDA_ROOT:-/opt/cuda}"
+        -DPDG_CCCL_INCLUDE_DIR=/opt/cccl/include
+        -DPDG_CUDA_ARCHITECTURES=all
+        -DPDG_REQUIRE_PORTABLE_CUDA_ARCHITECTURES=ON
+        -DPDG_WARNINGS_AS_ERRORS=OFF
+    )
+fi
+
 cmake -S "${source_root}" -B "${build_dir}" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=/opt/gpupdal-deps \
     -DWITH_PDG=ON \
-    -DPDG_ENABLE_CUDA=OFF \
     -DPDG_BUILD_TESTS=ON \
     -DPDG_BUILD_BENCHMARKS=OFF \
-    -DPDG_WARNINGS_AS_ERRORS=ON \
     -DPDG_PINNED_ORACLE_EXECUTABLE="${oracle_build_dir}/bin/pdal" \
     -DWITH_TESTS=OFF \
     -DWITH_GCS=OFF \
     -DWITH_BACKTRACE=OFF \
+    "${cuda_arguments[@]}" \
     "${gpupdal_version_argument[@]}"
 
 cmake --build "${build_dir}" \

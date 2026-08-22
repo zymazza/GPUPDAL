@@ -42,7 +42,7 @@ if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$/.test(version)) {
 if (version.endsWith("-dev")) {
   throw new Error("development archives cannot be staged for npm publication");
 }
-const expectedArchive = `gpupdal-${version}-linux-x64.tar.gz`;
+const expectedArchive = `gpupdal-${version}-linux-x64-cuda13.tar.gz`;
 if (path.basename(archive) !== expectedArchive ||
     !fs.statSync(archive, { throwIfNoEntry: false })?.isFile()) {
   throw new Error(`expected a built archive named ${expectedArchive}`);
@@ -82,13 +82,19 @@ fs.writeFileSync(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
 
 const manifestPath = path.join(output, "native-manifest.json");
 const manifest = {
-  schema: 1,
+  schema: 2,
   version,
   platforms: {
     "linux-x64": {
       directory: "native/linux-x64",
       sourceArchive: expectedArchive,
-      sourceArchiveSha256: sha256(archive)
+      sourceArchiveSha256: sha256(archive),
+      accelerator: {
+        type: "cuda",
+        toolkitMajor: 13,
+        minimumDriverMajor: 580,
+        physicallyQualifiedComputeCapabilities: ["8.9"]
+      }
     }
   }
 };

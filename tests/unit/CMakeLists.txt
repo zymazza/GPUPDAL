@@ -81,7 +81,7 @@ target_include_directories(pdg_unit_tests PRIVATE
 target_compile_definitions(pdg_unit_tests PRIVATE
     PDG_TEST_DATA_DIR="${PROJECT_SOURCE_DIR}/test/data")
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     target_compile_definitions(pdg_unit_tests PRIVATE PDG_UNIT_TESTING=1)
     target_sources(pdg_unit_tests PRIVATE
         approximatecoplanar_pdal_test.cpp
@@ -181,7 +181,7 @@ add_test(NAME pdg_resident_pipeline_process
 set_tests_properties(pdg_resident_pipeline_process
     PROPERTIES LABELS "pdg;unit;resident;process")
 
-if(PDG_ENABLE_CUDA)
+if(GPUPDAL_ENABLE_CUDA)
     foreach(validation IN ITEMS v8 v7 v4 v5 v6 v3 v2 v1 direct)
         add_test(NAME pdg_resident_placement_${validation}_gpu
             COMMAND ${Python3_EXECUTABLE}

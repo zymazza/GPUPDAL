@@ -453,9 +453,18 @@ if (WITH_PDG)
         message(FATAL_ERROR "PDG requires CMake 3.28 or newer")
     endif()
 
-    if (PDG_ENABLE_CUDA)
+    if (GPUPDAL_ENABLE_CUDA)
         enable_language(CUDA)
         find_package(CUDAToolkit 12.4 REQUIRED)
+        find_path(PDG_CCCL_INCLUDE_DIR
+            NAMES cub/device/device_select.cuh
+            HINTS ${CUDAToolkit_INCLUDE_DIRS}
+            PATH_SUFFIXES cccl)
+        if (NOT PDG_CCCL_INCLUDE_DIR)
+            message(FATAL_ERROR
+                "GPUPDAL CUDA builds require CCCL headers (CUB, Thrust, and libcu++)")
+        endif()
+        message(STATUS "PDG CCCL include directory: ${PDG_CCCL_INCLUDE_DIR}")
 
         # CUDA 13 removed the legacy pre-Turing code-generation targets.
         # A CUDA 12.x builder therefore produces the legacy-compatible release

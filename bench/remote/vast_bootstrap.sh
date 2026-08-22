@@ -47,7 +47,7 @@ echo "oracle built: $("$ROOT/oracle/bin/pdal" --version | head -1)"
 
 # Fork CUDA Release tree (same preset flags as build/pdg-cuda-release locally).
 cmake -S "$ROOT/pdal-gpu" -B "$ROOT/pdal-gpu/build/pdg-cuda-release" -G Ninja \
-  -DCMAKE_BUILD_TYPE=Release -DWITH_PDG=ON -DPDG_ENABLE_CUDA=ON \
+  -DCMAKE_BUILD_TYPE=Release -DWITH_PDG=ON -DGPUPDAL_ENABLE_CUDA=ON \
   -DPDG_WARNINGS_AS_ERRORS=OFF -DPDG_BUILD_TESTS=ON -DWITH_TESTS=OFF \
   -DWITH_GCS=OFF -DWITH_BACKTRACE=OFF -DBUILD_PLUGIN_ARROW=OFF \
   -DBUILD_PLUGIN_TILEDB=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \

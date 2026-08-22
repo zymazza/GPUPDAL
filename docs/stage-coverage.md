@@ -37,18 +37,18 @@ optimization work.
 
 ## Configured catalog snapshot
 
-On the 2026-08-09 reference build, `gpupdal --drivers` reports the same 122 drivers
-as the sibling PDAL executable:
+On the 2026-08-21 controlled Debian 12 CUDA release build, `gpupdal --drivers`
+is byte-identical to the sibling PDAL executable and reports 124 drivers:
 
 | Driver family | Configured | Functionally supported | GPU-native | Performance-qualified | Automatically selected |
 | --- | ---: | ---: | --- | --- | --- |
 | Filters | 84 | 84 | See the option-envelope audit below | See the audit below | 23 filters |
-| Readers | 24 | 24 | 1 direct LAS format family | Direct LAS only inside the accepted fused pipeline envelope | Only as an endpoint of an automatically selected fused region |
-| Writers | 14 | 14 | 1 direct LAS format family | Direct LAS only inside the accepted fused pipeline envelope | Only as an endpoint of an automatically selected fused region |
-| Total | 122 | 122 | Never inferred from functional support | Never inferred from a kernel timing | Never inferred from device code existing |
+| Readers | 25 | 25 | 1 direct LAS format family | Direct LAS only inside the accepted fused pipeline envelope | Only as an endpoint of an automatically selected fused region |
+| Writers | 15 | 15 | 1 direct LAS format family | Direct LAS only inside the accepted fused pipeline envelope | Only as an endpoint of an automatically selected fused region |
+| Total | 124 | 124 | Never inferred from functional support | Never inferred from a kernel timing | Never inferred from device code existing |
 
 Optional plugins disabled at CMake configuration time are not counted in the
-122. They are also absent from the sibling PDAL build. The full optional-plugin
+124. They are also absent from the sibling PDAL build. The full optional-plugin
 dependency matrix remains an F0/P5 release task.
 
 ## Implemented-stage audit at D0099

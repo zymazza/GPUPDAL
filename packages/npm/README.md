@@ -29,7 +29,12 @@ commands.
 The package intentionally disables npm provenance for now because npm does not
 support provenance from a local manual publish or a private source repository.
 
-The initial support declaration is Linux x86-64. Additional platforms require
+The initial stable support declaration is Linux x86-64 with an NVIDIA GPU,
+driver 580 or newer, and the bundled CUDA 13 runtime. Physical exactness and
+automatic acceleration are qualified on compute capability 8.9 (RTX 4090).
+The portable binary contains every real architecture supported by its CUDA
+13 compiler plus newest-target PTX, but an architecture is not advertised as
+stable until its physical fixed-bit lane passes. Additional platforms require
 their own tested artifacts and manifest entries; they must not silently reuse
 the Linux bundle.
 

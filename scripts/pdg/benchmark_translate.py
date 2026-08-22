@@ -63,7 +63,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input-label", required=True)
     parser.add_argument("--work-dir", required=True, type=Path)
     parser.add_argument("--report", required=True, type=Path)
-    parser.add_argument("--repo-root", type=Path, default=Path.cwd())
+    parser.add_argument(
+        "--repo-root", type=Path,
+        default=Path(__file__).resolve().parents[2]
+    )
     parser.add_argument("--runs", type=positive, default=15)
     parser.add_argument("--warmups", type=nonnegative, default=2)
     parser.add_argument(
@@ -505,7 +508,7 @@ def parse_cache(build_dir: Path) -> dict[str, str]:
         "CMAKE_CUDA_FLAGS",
         "CMAKE_CUDA_FLAGS_RELEASE",
         "CMAKE_CUDA_ARCHITECTURES",
-        "PDG_ENABLE_CUDA",
+        "GPUPDAL_ENABLE_CUDA",
         "WITH_PDG",
     }
     result: dict[str, str] = {}
@@ -542,7 +545,12 @@ def git_metadata(repo_root: Path) -> dict[str, Any]:
         check=False,
     )
     if diff.returncode != 0:
-        raise BenchmarkError("unable to capture the working-tree diff")
+        detail = diff.stderr.decode("utf-8", errors="replace").strip()
+        raise BenchmarkError(
+            "unable to capture the working-tree diff" +
+            (f": {detail}" if detail else
+             f" (git exited {diff.returncode})")
+        )
     untracked_output = subprocess.run(
         ["git", "ls-files", "--others", "--exclude-standard", "-z"],
         cwd=repo_root,

@@ -102,8 +102,25 @@ option(BUILD_TOOLS_NITFWRAP "Choose if nitfwrap tool should be built" FALSE)
 
 option(WITH_PDG
     "Build the GPUPDAL command and its accelerated execution engine" FALSE)
-option(PDG_ENABLE_CUDA
-    "Compile CUDA backends for PDG" TRUE)
+if(DEFINED PDG_ENABLE_CUDA)
+    if(DEFINED GPUPDAL_ENABLE_CUDA AND
+            ((PDG_ENABLE_CUDA AND NOT GPUPDAL_ENABLE_CUDA) OR
+             (NOT PDG_ENABLE_CUDA AND GPUPDAL_ENABLE_CUDA)))
+        message(FATAL_ERROR
+            "PDG_ENABLE_CUDA and GPUPDAL_ENABLE_CUDA disagree; remove the "
+            "retired PDG_ENABLE_CUDA cache entry")
+    endif()
+    if(NOT DEFINED GPUPDAL_ENABLE_CUDA)
+        set(GPUPDAL_ENABLE_CUDA "${PDG_ENABLE_CUDA}" CACHE BOOL
+            "Compile CUDA backends for GPUPDAL" FORCE)
+    endif()
+    message(DEPRECATION
+        "PDG_ENABLE_CUDA was renamed to GPUPDAL_ENABLE_CUDA; update the "
+        "configure command or preset")
+    unset(PDG_ENABLE_CUDA CACHE)
+endif()
+option(GPUPDAL_ENABLE_CUDA
+    "Compile CUDA backends for GPUPDAL" TRUE)
 option(PDG_BUILD_TESTS
     "Build PDG unit and differential tests" TRUE)
 option(PDG_BUILD_BENCHMARKS

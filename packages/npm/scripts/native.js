@@ -19,9 +19,15 @@ function sha256(filename) {
 function validateEntry(entry, key = "linux-x64") {
   if (!entry || entry.directory !== `native/${key}` ||
       typeof entry.sourceArchive !== "string" ||
-      !/^gpupdal-[0-9A-Za-z][0-9A-Za-z._-]*-linux-x64\.tar\.gz$/.test(
+      !/^gpupdal-[0-9A-Za-z][0-9A-Za-z._-]*-linux-x64-cuda13\.tar\.gz$/.test(
         entry.sourceArchive) ||
-      !/^[0-9a-f]{64}$/.test(entry.sourceArchiveSha256 || "")) {
+      !/^[0-9a-f]{64}$/.test(entry.sourceArchiveSha256 || "") ||
+      entry.accelerator?.type !== "cuda" ||
+      entry.accelerator?.toolkitMajor !== 13 ||
+      entry.accelerator?.minimumDriverMajor !== 580 ||
+      !Array.isArray(entry.accelerator?.physicallyQualifiedComputeCapabilities) ||
+      entry.accelerator.physicallyQualifiedComputeCapabilities.length !== 1 ||
+      entry.accelerator.physicallyQualifiedComputeCapabilities[0] !== "8.9") {
     throw new Error("release manifest entry is incomplete or untrusted");
   }
 }

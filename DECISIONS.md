@@ -13013,3 +13013,55 @@ context.
 original email and one private backup; do not commit or publish it. This is a
 project risk-record decision, not a claim of trademark registration or a
 general trademark clearance opinion.
+
+## D0301 — Define stable GPUPDAL as a physically qualified CUDA product
+
+Zy requires the first stable GPUPDAL package to provide GPU acceleration, not
+merely CPU compatibility with an optional build switch. The stable Linux
+artifact is therefore the CUDA 13 variant. The CPU archive remains a useful
+compatibility companion and fallback implementation, but it is not the stable
+acceleration product.
+
+**Decision.** Rename the public CMake option to `GPUPDAL_ENABLE_CUDA`. A legacy
+`PDG_ENABLE_CUDA` cache entry is migrated with a deprecation warning and then
+removed; contradictory old/new values fail configuration. Internal `PDG_*`
+runtime controls and namespaces remain implementation details. The controlled
+Debian 12 release uses CUDA 13.3.73, CCCL 3.4.0, an `all` architecture build,
+and serial CUDA compilation. It emits real cubins for SM 75, 80, 86, 87, 88,
+89, 90, 100, 103, 110, 120, and 121 plus SM 120 PTX. Only RTX 4090/SM 89 is a
+physically supported first-release profile; every other image is compile
+coverage until its own fixed-bit physical lane passes.
+
+On the physical RTX 4090 with driver 610.43.03, the final candidate tree passed
+all 862 controlled release registrations with zero failures and 22 explicit
+optional local-fixture/profile-envelope skips. The 106 CUDA-labeled tests
+include exact resident execution, shared spatial indexes, ordering, fused point
+programs, process matrices, and option-free automatic GPU selection for the
+accepted acceleration envelopes. The checked-in eight-test Compute Sanitizer
+matrix passes memcheck, initcheck, and synccheck with zero errors and racecheck
+with zero hazards, errors, or warnings.
+
+The package carries `libcudart`, `libnvrtc`, and matching NVRTC builtins under
+the CUDA Toolkit EULA, but no `libcuda` or `libnvidia-*` driver library. The
+extracted 116 MB development archive passed its forced fused CUDA/NVRTC exact
+differential with no host CUDA toolkit mounted. Its SHA-256 is
+`cdabe02ac853aab199f27074c57ff43428f77a525ae7e09eb7e575afb3f095b4`;
+it has 54 runtime dependency rows, 45 copied system notice sets, 48 SPDX
+packages, 295 SPDX files, 343 SPDX relationships, and no missing-license
+marker. This dirty-development artifact is qualification evidence only and is
+not publishable.
+
+CUDA 13.3 may warn that the SM-89-tuned `__launch_bounds__(256, 5)` minimum
+blocks value is impossible on a newer compiler target and ignore only that
+occupancy hint for that target. D0070 records why the value is retained for the
+physically qualified SM 89 path. The warning does not remove a cubin or change
+correctness, but it reinforces that the newer cubins are compile coverage and
+not runtime support claims.
+
+**Consequences.** The CUDA build, physical exactness, automatic-acceleration,
+sanitizer, dependency, and installed-JIT gates are complete for SM 89. Stable
+publication still requires a clean non-development build, a complete current
+2,048-case conformance report, a staged npm pack/clean-install GPU rehearsal,
+and Zy's separate approval for npm publication and public repository
+visibility. No npm publish or visibility change is authorized by this
+decision.
