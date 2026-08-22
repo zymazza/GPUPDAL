@@ -91,11 +91,46 @@ if (unzipProbe.error || unzipProbe.status !== 0) {
 }
 const windowsExtracted = spawnSync("unzip", [
   "-q", windowsArchive, "-d", windowsDirectory
-], { stdio: "inherit" });
-if (windowsExtracted.error || windowsExtracted.status !== 0) {
+], { encoding: "utf8" });
+const windowsWarning = windowsExtracted.stderr?.trim() || "";
+const knownPowerShellZipWarning =
+  /^warning:\s+.+ appears to use backslashes as path separators$/;
+const knownPowerShellZipResult =
+  windowsExtracted.status === 1 &&
+  knownPowerShellZipWarning.test(windowsWarning) &&
+  !(windowsExtracted.stdout?.trim()) &&
+  (!windowsExtracted.error || windowsExtracted.error.code === "EPERM");
+if ((windowsExtracted.error && !knownPowerShellZipResult) ||
+    (windowsExtracted.status !== 0 && !knownPowerShellZipResult)) {
+  if (windowsExtracted.stdout) {
+    process.stdout.write(windowsExtracted.stdout);
+  }
+  if (windowsExtracted.stderr) {
+    process.stderr.write(windowsExtracted.stderr);
+  }
   throw windowsExtracted.error ||
     new Error(`unzip exited with status ${windowsExtracted.status}`);
 }
+
+// Windows Compress-Archive records DOS paths and file attributes. Info-ZIP
+// translates the paths correctly, but its DOS-to-Unix mode mapping can create
+// directories without execute/search bits. Normalize the trusted, hash-pinned
+// release tree before the package validator walks and checksums every entry.
+function normalizeWindowsTree(directory) {
+  fs.chmodSync(directory, 0o755);
+  for (const name of fs.readdirSync(directory)) {
+    const filename = path.join(directory, name);
+    const status = fs.lstatSync(filename);
+    if (status.isDirectory()) {
+      normalizeWindowsTree(filename);
+    } else if (status.isFile()) {
+      fs.chmodSync(filename, 0o644);
+    } else {
+      throw new Error(`unsupported Windows archive entry: ${filename}`);
+    }
+  }
+}
+normalizeWindowsTree(windowsDirectory);
 
 const metadataPath = path.join(output, "package.json");
 const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
