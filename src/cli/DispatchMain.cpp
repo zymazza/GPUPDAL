@@ -84,22 +84,27 @@ void configureBundledRuntimeEnvironment(const char* executable)
     if (self.empty())
         return;
     const std::filesystem::path root = self.parent_path();
-    const auto setBundledPath = [&](const wchar_t* name,
+    const auto setBundledPath = [&](const char* name,
                                     const std::filesystem::path& path)
     {
-        if (::GetEnvironmentVariableW(name, nullptr, 0) != 0)
+        if (std::getenv(name))
             return;
         std::error_code error;
         if (!std::filesystem::exists(path, error) || error)
             return;
-        ::SetEnvironmentVariableW(name, path.c_str());
+        // `_spawnv` inherits the CRT environment. SetEnvironmentVariableW
+        // alone updates the Win32 process block but can leave `_environ`
+        // stale, so a driverless fallback would spawn pdal.exe without these
+        // bundle-relative data paths.
+        const std::string value = path.string();
+        ::_putenv_s(name, value.c_str());
     };
-    setBundledPath(L"GDAL_DATA", root / "share" / "gdal");
-    setBundledPath(L"PROJ_DATA", root / "share" / "proj");
-    setBundledPath(L"CURL_CA_BUNDLE", root / "share" / "certs" /
-                                             "cacert.pem");
-    setBundledPath(L"SSL_CERT_FILE", root / "share" / "certs" /
-                                           "cacert.pem");
+    setBundledPath("GDAL_DATA", root / "share" / "gdal");
+    setBundledPath("PROJ_DATA", root / "share" / "proj");
+    setBundledPath("CURL_CA_BUNDLE", root / "share" / "certs" /
+                                            "cacert.pem");
+    setBundledPath("SSL_CERT_FILE", root / "share" / "certs" /
+                                          "cacert.pem");
 }
 #endif
 
