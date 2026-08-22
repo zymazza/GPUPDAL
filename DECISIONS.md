@@ -13170,3 +13170,51 @@ fallback, complete packaged CTest process aggregate, and same-machine PDAL
 performance baseline remain before Windows can be advertised as a supported
 binary platform. Those future Windows gates do not block the already-qualified
 Linux x86-64 `0.1.0` candidate or authorize npm publication/public visibility.
+
+## D0304 — Ship and clean-machine qualify the Windows CUDA runtime bundle
+
+The source-qualified Windows binaries needed a redistributable runtime closure
+and independent install tests before Windows could join the `0.1.0` npm
+payload. The first driverless package trial found that setting bundle-relative
+PROJ/GDAL paths only through the Win32 environment API did not update the C
+runtime environment inherited by `_spawnv`; delegated `pdal.exe` therefore
+could not find `proj.db` during reprojection.
+
+Use `_putenv_s` so both the launcher and its spawned sibling inherit the
+bundle-relative GDAL, PROJ, and certificate paths. Ship the optimized CUDA 13
+x64 archive with app-local Visual C++ runtime, PDAL/GDAL/PROJ data, the exact
+DLL closure, copied notices, internal hashes, and a file-level SPDX 2.3 SBOM.
+Keep the NVIDIA host driver external. Accept the Windows runtime platform only
+after the exact final archive and universal npm tarball pass on separate clean
+SM 89 GPU and driverless hosts with no compiler, CMake, Conda, or CUDA toolkit
+on `PATH`.
+
+The final source revision is
+`76e4116f6ca5163e69a6e252903eb7eab89daa04`. The 115,495,729-byte Windows
+archive has SHA-256
+`f3d5362fb0972d39dcb163fad9e7973fcee055da93013d29d7135f645543994e`;
+its 245 checksummed payload files include 71 runtime dependency rows, 45 SPDX
+packages, 244 SPDX files, and 289 SPDX relationships. Product cubins cover SM
+75, 80, 86, 87, 88, 89, 90, 100, 103, 110, 120, and 121 with SM 120 PTX. The
+universal 239,636,564-byte npm tarball has SHA-256
+`b4ada2b336e3fb1f6d52454e2fdb7520f62ee71a83a70c14cda85b74a54be0d5`
+and validates 541 native files across Linux and Windows.
+
+On a clean Windows Server 2022 NVIDIA L4/SM 89 host, SSM qualification
+`33254cbd-cb56-4124-a49e-99ffc270cfa7` detected CUDA toolkit, runtime, and
+driver 13.3; passed exact forced CUDA output against the bundled PDAL oracle;
+and passed local and global npm install, command discovery, and uninstall. On
+a separate clean x64 host with no NVIDIA driver, qualification
+`25acc63f-4667-44f3-a569-835d944ca579` passed direct and reprojection fallback
+plus the same npm local/global lifecycle.
+
+The minimal runtime archive intentionally excludes test executables. Do not
+claim that CTest ran inside it. Instead, bind package acceptance to the
+same-core 650-test source aggregate (645 pass, five intentional fixture skips),
+the eight-test physical Compute Sanitizer matrix, cryptographic identity of the
+shipped engine and sibling PDAL binaries, and direct clean-package coverage of
+the launcher, catalog, forced CUDA, driverless, and reprojection boundaries.
+Windows x64 is therefore supported for exact behavior and physically qualified
+CUDA execution in `0.1.0`. A same-machine PDAL baseline remains mandatory
+before any Windows speedup or automatic-selection claim. This decision
+supersedes D0303's description of Windows runtime packaging as future work.

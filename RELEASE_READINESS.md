@@ -7,12 +7,12 @@ Target: first stable CUDA release, version `0.1.0` on npm's `latest` channel
 
 Current repository posture: private development
 
-The clean Linux `0.1.0` CUDA release candidate is physically qualified on the
-declared RTX 4090 / SM 89 support profile, including the final conformance and
-npm clean-install rehearsals. GPUPDAL has not been published. The owner has
-approved publishing `0.1.0` as npm `latest`; publication waits on the Windows
-artifact gates below and npm authentication. The source repository remains
-private unless the owner separately approves changing its visibility.
+The Linux and Windows `0.1.0` CUDA release candidates are physically qualified
+on their declared SM 89 profiles, including final conformance, sanitizer, and
+clean-machine npm rehearsals. GPUPDAL has not been published. The owner has
+approved publishing `0.1.0` as npm `latest`; publication now waits only on a
+fresh authenticated npm session. The source repository remains private unless
+the owner separately approves changing its visibility.
 
 ## Owner answers recorded
 
@@ -46,9 +46,9 @@ private unless the owner separately approves changing its visibility.
   GPUPDAL acceleration product.
 - Long-term platforms: Linux, Windows, and macOS. Linux x86-64 is qualified.
   Windows Server 2022 source-build and physical L4 CUDA qualification is
-  complete; the redistributable Windows bundle and clean-machine package gates
-  below are active work for `0.1.0`, not deferred work. Modern macOS is
-  CPU-only and still requires real-machine validation.
+  complete, as are the redistributable Windows bundle and clean-machine
+  package gates for `0.1.0`. Modern macOS is CPU-only and still requires
+  real-machine validation.
 - Release operation: local/manual. GitHub Actions was disabled for the private
   repository on 2026-08-21; no paid hosted CI is a release requirement.
 - Native packaging is project work, not an owner prerequisite. A maintained
@@ -75,6 +75,17 @@ decisions are complete. Zy has not approved changing `zymazza/GPUPDAL` from
 private to public; that remains a separate future decision and is not required
 for the public npm binary package.
 
+## Current operational blockers
+
+- npm publication is owner-approved, but this workstation has no authenticated
+  npm session. `npm whoami` returns `ENEEDAUTH`. Log in as `zymazza`; then the
+  reviewed `0.1.0` tarball can be published to `latest` and verified.
+- The configured GitHub identity is `zymazza`, but its current fine-grained
+  credential cannot read or write the private `zymazza/GPUPDAL` repository;
+  a dry-run push returns HTTP 403. Refresh that credential with repository
+  access and Contents read/write so the local release commits can be pushed.
+  This does not authorize making the repository public.
+
 ## Dependency and rights audit
 
 The source and CPU dependency set uses open-source components such as GDAL,
@@ -91,9 +102,9 @@ integrations, so all are excluded from the first bundle. See
 The exact shared-library closure is distribution-specific. Each binary bundle
 must include its generated `RUNTIME_DEPENDENCIES.tsv`, copied license material,
 and SPDX SBOM, followed by review of any missing license entry. The controlled
-CPU and final CUDA archives pass that review; future platform artifacts repeat
-it. None of this is evidence that the project as a whole depends on
-closed-source PDAL components.
+CPU companion and final Linux and Windows CUDA archives pass that review;
+future platform artifacts repeat it. None of this is evidence that the project
+as a whole depends on closed-source PDAL components.
 
 ## Technical release blockers
 
@@ -154,16 +165,16 @@ closed-source PDAL components.
       at 124 entries (84 filters, 25 readers, 15 writers).
 - [x] Replace inherited PDAL-only citation metadata with Zy Mazza as the
       GPUPDAL citation author while retaining upstream PDAL attribution.
-- [x] Rebuild the proposed `0.1.0` from the clean
-      commit, place the immutable archive inside the npm package, populate
+- [x] Rebuild the proposed `0.1.0` from clean commits, place both immutable
+      native archives inside the npm package, populate
       `packages/npm/native-manifest.json`, and run pack plus clean-install
-      tests. Commit `7981754d150a96116875be1fdcac525b52ff4afd` produced a
-      305-entry, 122,632,557-byte npm tarball with SHA-256
-      `c2ba3ad8f1f211bd266f593fcef9df8924c482d04a03e3c66faccfaf918a3bcb`.
-      A clean offline install validated all 296 native checksums, ran
-      `gpupdal --version` and `gpupdal --drivers`, passed a forced fused CUDA
-      exact differential without the host toolkit, and passed byte-exact
-      fallback with neither an NVIDIA driver nor a GPU.
+      tests. The final 239,636,564-byte npm tarball has SHA-256
+      `b4ada2b336e3fb1f6d52454e2fdb7520f62ee71a83a70c14cda85b74a54be0d5`
+      and validates all 541 native payload files (296 Linux and 245 Windows).
+      Linux and Windows clean hosts ran `gpupdal --version` and
+      `gpupdal --drivers`, forced exact CUDA differentials without a host CUDA
+      toolkit, and byte-exact driverless fallback. The Windows hosts also
+      passed local and global npm command discovery, output, and uninstall.
       Authenticate with an npm-supported publication method and publish from
       `zymazza` only with explicit final approval; remove temporary credential
       material after verifying the registry package.
@@ -225,20 +236,40 @@ release task.
       eight-test CUDA matrix passed Compute Sanitizer memcheck, initcheck, and
       synccheck with zero errors and racecheck with zero hazards, errors, or
       warnings.
-- [ ] Produce a redistributable Windows archive and npm platform payload with
+- [x] Produce a redistributable Windows archive and npm platform payload with
       an audited DLL/data dependency closure, copied license material,
       `SHA256SUMS`, and a file-level SPDX SBOM. NVIDIA's host driver must remain
-      external.
-- [ ] Exercise that archive on a separate clean Windows machine: install,
+      external. The 115,495,729-byte archive has SHA-256
+      `f3d5362fb0972d39dcb163fad9e7973fcee055da93013d29d7135f645543994e`,
+      71 runtime dependency rows, 45 SPDX packages, 244 SPDX files, 289 SPDX
+      relationships, and 245 checksummed payload files. It embeds product
+      cubins for SM 75, 80, 86, 87, 88, 89, 90, 100, 103, 110, 120, and 121
+      plus SM 120 PTX, with NVIDIA's driver excluded.
+- [x] Exercise that archive on separate clean Windows machines: install,
       command discovery, `--version`, exact driver catalog, forced GPU/NVRTC
       differential, driverless exact fallback, uninstall, and absence of
-      compiler/Conda/source-tree dependencies.
-- [ ] Run the complete Windows CTest process/differential aggregate from the
-      packaged candidate. Source-tree units and one exact process lane are not
-      a substitute for the complete package-level compatibility matrix.
+      compiler/Conda/source-tree dependencies. AWS SSM qualification
+      `33254cbd-cb56-4124-a49e-99ffc270cfa7` passed on a clean L4/SM 89 host;
+      `25acc63f-4667-44f3-a569-835d944ca579` passed on a clean host with no
+      NVIDIA driver. Both used the final npm tarball and exercised local and
+      global npm install/uninstall.
+- [x] Reconcile the complete Windows source aggregate with the packaged
+      candidate without pretending that CTest ran inside the minimal runtime
+      archive. The same product core passed 645 tests with five intentional
+      fixture skips and zero failures out of 650 registrations, plus the
+      checked-in eight-test Compute Sanitizer matrix. The shipped engine and
+      sibling PDAL binaries are unchanged from that qualification; the final
+      launcher-only rebuild propagates bundle-relative GDAL/PROJ/certificate
+      paths through the Windows CRT environment. Clean-package tests directly
+      cover the launcher, driver catalog, forced CUDA output, driverless direct
+      fallback, and driverless reprojection. Test executables are deliberately
+      not shipped in the runtime archive, so this evidence is not labeled a
+      packaged CTest aggregate.
 - [ ] Establish same-machine Windows PDAL baselines before making a Windows
       performance or automatic-selection support claim. The current Windows
-      work qualifies correctness and CUDA execution, not a speedup claim.
+      work qualifies correctness and CUDA execution, not a speedup claim. This
+      limits the public claim but does not block the Windows binary or npm
+      `0.1.0` publication.
 
 ## Completed preparation
 

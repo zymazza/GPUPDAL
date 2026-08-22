@@ -105,13 +105,15 @@ npx gpupdal --version
 Use `npm install --global gpupdal` when you want `gpupdal` directly on your
 shell path.
 
-The package is not published yet. The first stable npm package is the CUDA 13
-Linux x86-64 artifact, physically qualified for compute capability 8.9 on an
-RTX 4090. It requires an NVIDIA driver 580 or newer; the exact first-release
-qualification uses driver 610.43.03. Other cubins in the portable binary are
-not advertised as stable until their physical fixed-bit lanes pass. Publication
-is gated on checksummed release binaries, the declared support matrix, and
-clean-machine installation tests. See
+The package is not published yet. The first stable npm package carries CUDA 13
+artifacts for Linux x86-64 and Windows x64. Compute capability 8.9 exactness
+and CUDA execution are physically qualified on an RTX 4090 with driver
+610.43.03 on Linux and an NVIDIA L4 with driver 610.88 on Windows; driver 580
+or newer is required. The measured automatic-acceleration promise currently
+applies to the Linux RTX 4090 profile. Windows is qualified for exact CUDA
+execution, but not yet for a speedup or automatic-selection claim. Other
+cubins in the portable binaries are not advertised as stable until their
+physical fixed-bit lanes pass. See
 [packages/npm/README.md](packages/npm/README.md) and
 [RELEASE_READINESS.md](RELEASE_READINESS.md). Releases are built and checked
 locally; the repository does not require GitHub Actions. See the
