@@ -583,15 +583,21 @@ if (WITH_PDG AND WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
             OUTPUT_STRIP_TRAILING_WHITESPACE
             RESULT_VARIABLE GPUPDAL_GIT_REVISION_RESULT
             ERROR_QUIET)
+        string(LENGTH "${GPUPDAL_DISCOVERED_SOURCE_REVISION}"
+            GPUPDAL_DISCOVERED_SOURCE_REVISION_LENGTH)
         if (GPUPDAL_GIT_REVISION_RESULT EQUAL 0 AND
-                GPUPDAL_DISCOVERED_SOURCE_REVISION MATCHES "^[0-9a-f]{40}$")
+                GPUPDAL_DISCOVERED_SOURCE_REVISION MATCHES "^[0-9a-f]+$" AND
+                GPUPDAL_DISCOVERED_SOURCE_REVISION_LENGTH EQUAL 40)
             set(GPUPDAL_SOURCE_REVISION
                 "${GPUPDAL_DISCOVERED_SOURCE_REVISION}" CACHE STRING
                 "Full Git revision recorded in a Windows release artifact"
                 FORCE)
         endif()
     endif()
-    if (GPUPDAL_SOURCE_REVISION MATCHES "^[0-9a-f]{40}$")
+    string(LENGTH "${GPUPDAL_SOURCE_REVISION}"
+        GPUPDAL_SOURCE_REVISION_LENGTH)
+    if (GPUPDAL_SOURCE_REVISION MATCHES "^[0-9a-f]+$" AND
+            GPUPDAL_SOURCE_REVISION_LENGTH EQUAL 40)
         add_custom_target(gpupdal_windows_bundle
             COMMAND ${POWERSHELL_EXECUTABLE} -NoProfile -ExecutionPolicy Bypass
                 -File ${PROJECT_SOURCE_DIR}/scripts/release/build_windows_bundle.ps1
