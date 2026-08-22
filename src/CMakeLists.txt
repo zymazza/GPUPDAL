@@ -308,7 +308,9 @@ add_executable(pdg_cli cli/DispatchMain.cpp)
 # infrastructure.  GPUPDAL is the public, PDAL-compatible command name.
 set_target_properties(pdg_cli PROPERTIES OUTPUT_NAME gpupdal)
 target_compile_features(pdg_cli PRIVATE cxx_std_20)
-target_link_libraries(pdg_cli PRIVATE pdg_dispatch)
+target_compile_definitions(pdg_cli PRIVATE
+    PDG_HAS_CUDA=$<BOOL:${GPUPDAL_ENABLE_CUDA}>)
+target_link_libraries(pdg_cli PRIVATE pdg_dispatch ${CMAKE_DL_LIBS})
 add_dependencies(pdg_cli pdg_engine)
 
 add_library(pdg_frozen_time SHARED cli/FrozenTime.c)

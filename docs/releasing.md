@@ -94,6 +94,8 @@ scripts/release/test_linux_cuda_bundle_debian12.sh
 scripts/release/sanitize_linux_cuda_debian12.sh
 scripts/release/smoke_linux_cuda_bundle_debian12.sh \
   dist/gpupdal-0.1.0-dev-linux-x64-cuda13.tar.gz
+scripts/release/smoke_linux_cuda_bundle_no_driver_debian12.sh \
+  dist/gpupdal-0.1.0-dev-linux-x64-cuda13.tar.gz
 ```
 
 The first stable support profile is compute capability 8.9 on an RTX 4090.
@@ -109,6 +111,12 @@ differential without mounting the host CUDA toolkit; this proves JIT
 specialization resolves from the archive instead of an undeclared machine
 dependency. `smoke_linux_cuda_bundle_debian12.sh` enforces that `/opt/cuda` is
 absent in its fresh GPU container.
+
+The CUDA engine itself cannot load without NVIDIA's unbundled `libcuda`.
+The public launcher therefore checks driver availability before selecting the
+engine and delegates directly to the bundled pinned PDAL command on a
+driverless machine. The separate no-driver smoke proves that delegation is
+byte-exact in a container with neither NVIDIA devices nor a CUDA toolkit.
 
 ## Required release checks
 

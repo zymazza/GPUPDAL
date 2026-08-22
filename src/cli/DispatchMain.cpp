@@ -9,12 +9,16 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <memory>
 #include <optional>
 #include <string>
 #include <string_view>
 #include <system_error>
 #include <vector>
 
+#if PDG_HAS_CUDA && defined(__linux__)
+#include <dlfcn.h>
+#endif
 #include <unistd.h>
 
 namespace
@@ -94,6 +98,17 @@ int runOracle(int argc, char** argv,
 
 int runEngine(int argc, char** argv)
 {
+#if PDG_HAS_CUDA && defined(__linux__)
+    // A CUDA release links the engine to NVIDIA's driver library, which is
+    // deliberately never bundled. If the driver is absent, exec would fail
+    // in the dynamic loader before the engine could select its exact host
+    // fallback. The thin launcher has no CUDA dependency, so it can preserve
+    // drop-in behavior by delegating directly to the bundled pinned oracle.
+    const std::unique_ptr<void, int (*)(void*)> driver(
+        ::dlopen("libcuda.so.1", RTLD_LAZY | RTLD_LOCAL), &::dlclose);
+    if (!driver)
+        return runOracle(argc, argv);
+#endif
     const std::filesystem::path self = executablePath(argv[0]);
     const std::filesystem::path engine =
         self.empty() ? std::filesystem::path("pdg-engine")
