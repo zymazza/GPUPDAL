@@ -97,3 +97,9 @@ The PDF was regenerated on 2026-08-21 to use the GPUPDAL presentation label
 and a zero-based linear y-axis for the aggregate 18-job chart. The retained
 JSON inputs and benchmark values were not changed; their historical `pdg_*`
 tool identifiers remain intact.
+
+`gpupdal-0.1.0-cuda-sm89/` retains the complete bounded conformance report and
+hashes for the clean Linux x86-64 CUDA 13 / RTX 4090 release candidate. Its
+README records the matching aggregate, Compute Sanitizer, extracted-archive,
+driverless-fallback, and npm clean-install results. It is engineering
+qualification evidence; no npm or GitHub release publication is implied.

@@ -1,16 +1,16 @@
 # GPUPDAL release readiness
 
-Status date: 2026-08-21
+Status date: 2026-08-22
 
 Target: first stable CUDA release (proposed version `0.1.0`; owner approval
 still required before publication)
 
 Current repository posture: private development
 
-The CUDA release candidate is physically qualified on the declared RTX 4090 /
-SM 89 support profile, but GPUPDAL has not been published. The remaining gates
-are a clean-commit `0.1.0` rebuild, the final 2,048-case conformance report, the
-matching npm clean-install rehearsal, and the owner's explicit publication and
+The clean `0.1.0` CUDA release candidate is physically qualified on the
+declared RTX 4090 / SM 89 support profile, including the final conformance and
+npm clean-install rehearsals. GPUPDAL has not been published. The remaining
+release gates are the owner's explicit npm-publication and
 repository-visibility approvals.
 
 ## Owner answers recorded
@@ -42,14 +42,14 @@ repository-visibility approvals.
   archive may be shipped as a compatibility companion, but is not the stable
   GPUPDAL acceleration product.
 - Long-term platforms: Linux, Windows, and macOS. The first supported native
-  artifact will be Linux x86-64. Windows and macOS require real-machine
+  artifact is Linux x86-64. Windows and macOS require real-machine
   validation; modern macOS is CPU-only.
 - Release operation: local/manual. GitHub Actions was disabled for the private
   repository on 2026-08-21; no paid hosted CI is a release requirement.
 - Native packaging is project work, not an owner prerequisite. A maintained
   pinned-Debian Linux bundle, SPDX SBOM generator, and non-root bare-container
-  smoke now exist; final clean-commit and selected-binary qualification remain
-  engineering gates below.
+  smoke exist; the final clean-commit and selected-binary qualification gates
+  below are complete.
 - Howard Butler's GPUPDAL naming permission is in the owner's email. Zy
   confirmed that it expressly covers the project name; the lowercase
   `gpupdal` executable is the ordinary command form of that same name and does
@@ -70,7 +70,7 @@ publication, Zy still needs to approve:
 
 1. **Version/channel:** publish the physically qualified CUDA artifact as
    stable `0.1.0` on npm's `latest` channel (recommended), or choose a different
-   version/channel before the final clean build.
+   version/channel and repeat the version-bound archive/npm staging.
 2. **External state changes:** separately authorize the actual npm publication
    and changing `zymazza/GPUPDAL` from private to public. Neither action is
    implied by approving the engineering candidate.
@@ -91,9 +91,9 @@ integrations, so all are excluded from the first bundle. See
 The exact shared-library closure is distribution-specific. Each binary bundle
 must include its generated `RUNTIME_DEPENDENCIES.tsv`, copied license material,
 and SPDX SBOM, followed by review of any missing license entry. The controlled
-CPU archive passes that review; future CUDA and platform artifacts repeat it.
-None of this is evidence that the project as a whole depends on closed-source
-PDAL components.
+CPU and final CUDA archives pass that review; future platform artifacts repeat
+it. None of this is evidence that the project as a whole depends on
+closed-source PDAL components.
 
 ## Technical release blockers
 
@@ -113,50 +113,57 @@ PDAL components.
 - [x] Validate the stable CUDA runtime policy and physical device lane. The
       controlled Debian 12/CUDA 13.3.73 all-architecture build produced the
       `-linux-x64-cuda13` archive. On RTX 4090/SM 89 with driver 610.43.03,
-      all 862 registered release tests passed with zero failures; 22 optional
-      local-fixture/profile-envelope cases were explicitly skipped. The 106
+      all 863 registered release tests passed with zero failures; 22 optional
+      local-fixture/profile-envelope cases were explicitly skipped. The 107
       CUDA-labeled tests include option-free automatic GPU selection for the
       accepted acceleration envelopes. The checked-in eight-test sanitizer
       matrix passes memcheck, initcheck, and synccheck with zero errors and
       racecheck with zero hazards/errors/warnings. An extracted archive also
       passed the forced fused CUDA/NVRTC exact differential without the host
-      CUDA toolkit mounted.
+      CUDA toolkit mounted. A second extracted-archive smoke passed exact
+      fallback with no NVIDIA device, driver library, or CUDA toolkit present.
 - [x] Review CUDA binary portability and dependency closure. CUDA 13.3 emitted
       cubins for SM 75, 80, 86, 87, 88, 89, 90, 100, 103, 110, 120, and 121,
       plus newest-target SM 120 PTX. Only SM 89 is physically qualified; the
-      other images are compile coverage. The 116 MB development archive has
+      other images are compile coverage. The final 121,512,265-byte archive
+      has SHA-256
+      `f241da5888ac8de837449da3a96bc09d042bb3d265a8d51084ddd88520261841`,
       54 runtime dependency rows, 45 copied system notice sets, 48 SPDX
-      packages, 295 SPDX files, 343 relationships, and no missing-license
-      marker or bundled NVIDIA driver library.
+      packages, 295 SPDX files, 343 relationships, 296 internal checksum
+      entries, and no missing-license marker or bundled NVIDIA driver library.
       The base image, source archives, CUDA compiler, and CCCL digest are
       verified. Debian apt inputs are version-recorded but not snapshot-pinned,
       so this is an auditable controlled build rather than a bit-reproducible
       rebuild claim.
 - [x] Complete the current controlled aggregate release gate locally. The
-      final CUDA-enabled aggregate passed 862/862 registrations, including the
+      final CUDA-enabled aggregate passed 863/863 registrations, including the
       exact host/fallback and CUDA process matrices. Earlier host ASan/UBSan
       passed all 454 applicable registrations with five intentional
       fixture-dependent skips; the sequential published upstream PDAL suite
       passed 142/142, including the official network STAC/COPC cases. GitHub
       Actions is intentionally not part of this gate.
-- [ ] Run and retain the final 2,048-case conformance report against the clean
-      `0.1.0` archive. The historical frozen B0286 report passed 2,048/2,048,
-      but the selected release archive must have its own complete report.
+- [x] Run and retain the final 2,048-case conformance report against the clean
+      `0.1.0` archive. All 2,048 cases passed, the run is complete rather than
+      partial, and it records zero unexplained semantic differences. The raw
+      report SHA-256 is
+      `b1a46bbd2cd1e1a423e877df6d81aec0100328b9c10252ae760489d83837f8a0`;
+      its deterministic retained gzip SHA-256 is
+      `ca0866a851e255b5a951daf32ca4b39beae9cf1b06258385e04bfd2b866a118a`.
 - [x] Reconcile the configured stage catalog against the selected controlled
       build: `gpupdal --drivers` and sibling `pdal --drivers` are byte-identical
       at 124 entries (84 filters, 25 readers, 15 writers).
 - [x] Replace inherited PDAL-only citation metadata with Zy Mazza as the
       GPUPDAL citation author while retaining upstream PDAL attribution.
-- [ ] After the owner approves the proposed version, rebuild from the clean
+- [x] Rebuild the proposed `0.1.0` from the clean
       commit, place the immutable archive inside the npm package, populate
       `packages/npm/native-manifest.json`, and run pack plus clean-install
-      tests. A nonpublic `0.0.0-test.1` rehearsal from clean commit
-      `984e2d21a` passed archive validation, read-only/non-root bare-Debian
-      smoke, a 300-entry npm dry run, and a clean local install with both
-      `gpupdal --version` and `gpupdal --drivers`. The bundled-archive design
-      works while GitHub remains private; repeat the same gate for the selected
-      final CUDA version and binary lane, including GPU execution from the
-      clean-installed npm tarball.
+      tests. Commit `7981754d150a96116875be1fdcac525b52ff4afd` produced a
+      305-entry, 122,632,557-byte npm tarball with SHA-256
+      `c2ba3ad8f1f211bd266f593fcef9df8924c482d04a03e3c66faccfaf918a3bcb`.
+      A clean offline install validated all 296 native checksums, ran
+      `gpupdal --version` and `gpupdal --drivers`, passed a forced fused CUDA
+      exact differential without the host toolkit, and passed byte-exact
+      fallback with neither an NVIDIA driver nor a GPU.
       Authenticate with an npm-supported publication method and publish from
       `zymazza` only with explicit final approval; remove temporary credential
       material after verifying the registry package.
@@ -165,8 +172,12 @@ PDAL components.
       command-name confirmation is required absent limiting language. Do not
       publish the email unless Zy and its sender intentionally choose to.
 - [ ] Review committed evidence for private paths or corpus details before
-      changing repository visibility. The clean bootstrap snapshot passed a
-      high-confidence secret scan on 2026-08-21.
+      changing repository visibility. A 2026-08-22 credential-pattern scan is
+      clean, and the new `0.1.0` report contains only container-local
+      `/qualification` paths. Historical agent guidance and benchmark JSON
+      intentionally retain `/home/zy` provenance strings and local corpus
+      names. Before making the repository public, Zy must approve retaining
+      those non-secret strings or authorize a mechanical redaction pass.
 - [x] Losslessly compress
       `test/data/autzen/autzen-surface.tif.min.tif` from 54.41 MB to about
       305 KB while preserving raster values and geospatial metadata.

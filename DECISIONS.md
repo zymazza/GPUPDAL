@@ -13065,3 +13065,54 @@ publication still requires a clean non-development build, a complete current
 and Zy's separate approval for npm publication and public repository
 visibility. No npm publish or visibility change is authorized by this
 decision.
+
+## D0302 — Qualify the clean 0.1.0 CUDA/SM 89 release candidate
+
+Clean commit `7981754d150a96116875be1fdcac525b52ff4afd` produced
+`gpupdal-0.1.0-linux-x64-cuda13.tar.gz`, 121,512,265 bytes, with SHA-256
+`f241da5888ac8de837449da3a96bc09d042bb3d265a8d51084ddd88520261841`.
+Its controlled inputs are Debian 12, CUDA 13.3.73, CCCL 3.4.0 header-tree
+SHA-256 `b4410252cb1351a8e350976c55eb8ae097a92cb1a76979f52e6a923bfa4c70a7`,
+and the pinned PDAL oracle. Debian package versions and notices are recorded,
+but apt inputs are not snapshot-pinned, so this is a controlled auditable
+build rather than a claim that a later rebuild will be bit-identical.
+
+On the physically qualified NVIDIA GeForce RTX 4090 / SM 89 with driver
+610.43.03, all 863 registered tests passed with zero failures. This includes
+107 CUDA-labelled tests, 204 differential tests, and option-free automatic GPU
+selection in the accepted acceleration envelopes; 22 explicitly optional
+external-fixture/profile cases self-skipped. The eight-test matrix passed
+Compute Sanitizer memcheck, initcheck, and synccheck with zero errors and
+racecheck with zero hazards, errors, or warnings. The extracted archive passed
+the forced fused CUDA/NVRTC exact differential without a host toolkit.
+
+A clean driverless container exposed that the CUDA engine's unbundled
+`libcuda.so.1` dependency could prevent it from reaching host fallback. The
+thin CUDA launcher now probes that library before selecting the engine and
+delegates directly to the bundled pinned PDAL executable when it is absent.
+The release archive passes byte-exact pipeline, version, and driver-list
+checks with neither a GPU, NVIDIA driver, nor CUDA toolkit present. NVIDIA
+driver binaries remain excluded from the artifact.
+
+The final `pdg-bounded-generated-v1` run passed 2,048/2,048 cases, was not
+partial, and recorded zero unexplained semantic differences. The manifest
+SHA-256 is
+`e0d880fcd33413fc4d2daae67b4ada4bb189d964664dfbe771a1637c65468a1f`,
+the raw report SHA-256 is
+`b1a46bbd2cd1e1a423e877df6d81aec0100328b9c10252ae760489d83837f8a0`,
+and its deterministic retained gzip SHA-256 is
+`ca0866a851e255b5a951daf32ca4b39beae9cf1b06258385e04bfd2b866a118a`.
+
+The matching npm tarball contains 305 entries, is 122,632,557 bytes, and has
+SHA-256
+`c2ba3ad8f1f211bd266f593fcef9df8924c482d04a03e3c66faccfaf918a3bcb`.
+A clean offline install validated all 296 native checksums and passed CLI
+startup, the forced GPU differential, and driverless exact fallback. Neither
+the npm package nor a GitHub release was published.
+
+**Consequences.** The narrow Linux x86-64 `0.1.0` engineering candidate is
+technically release-qualified for the SM 89 CUDA acceleration promise. Other
+embedded SM images remain compilation coverage, Windows and macOS remain
+future platform work, and no universal speedup is claimed. Publication on
+npm's `latest` channel and changing the private repository to public remain
+separate owner-authorized external actions.

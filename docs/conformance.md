@@ -105,3 +105,18 @@ hierarchy-node assignment and the coarse preview, while the canonical full
 record digest, semantic metadata, hierarchy invariants and exact center query
 match. The accepted semantic report SHA-256 is
 `94e348cc24c1dd38a2768df248c1d3b8c566a97d8bd64724b183dccb4a1d465b`.
+
+## GPUPDAL 0.1.0 CUDA/SM 89 candidate
+
+The clean Linux x86-64 CUDA 13 candidate from commit
+`7981754d150a96116875be1fdcac525b52ff4afd` passed **2,048/2,048** complete
+cases on the qualified RTX 4090/SM 89 profile with driver 610.43.03. The run
+was not partial and reported zero failed cases and zero unexplained semantic
+differences. The candidate archive SHA-256 is
+`f241da5888ac8de837449da3a96bc09d042bb3d265a8d51084ddd88520261841`,
+the generated manifest SHA-256 is
+`e0d880fcd33413fc4d2daae67b4ada4bb189d964664dfbe771a1637c65468a1f`,
+and the raw report SHA-256 is
+`b1a46bbd2cd1e1a423e877df6d81aec0100328b9c10252ae760489d83837f8a0`.
+The deterministic compressed report and complete context are retained under
+`docs/reports/gpupdal-0.1.0-cuda-sm89/`.
