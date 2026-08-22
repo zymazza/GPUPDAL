@@ -26,6 +26,7 @@ docker run --rm \
     "${release_image}" \
     bash -c '
         set -euo pipefail
+        /src/scripts/release/verify_cuda_release_device.sh
         if [[ -e /opt/cuda ]]; then
             echo "archive-only CUDA smoke must not mount a host toolkit" >&2
             exit 2

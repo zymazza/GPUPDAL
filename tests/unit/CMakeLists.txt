@@ -167,6 +167,14 @@ add_test(NAME pdg_dimension_generator_is_current
 set_tests_properties(pdg_dimension_generator_is_current
     PROPERTIES LABELS "pdg;unit")
 
+add_test(NAME pdg_cccl_layout_contract
+    COMMAND ${CMAKE_COMMAND}
+        -DTEST_SOURCE_DIR=${PROJECT_SOURCE_DIR}
+        -DTEST_BINARY_DIR=${PROJECT_BINARY_DIR}/tests/cmake
+        -P ${PROJECT_SOURCE_DIR}/tests/cmake/cccl_layout_test.cmake)
+set_tests_properties(pdg_cccl_layout_contract
+    PROPERTIES LABELS "pdg;unit;infrastructure;cuda")
+
 add_test(NAME pdg_dispatcher_process_boundary
     COMMAND ${Python3_EXECUTABLE}
         ${CMAKE_CURRENT_SOURCE_DIR}/dispatcher_process_test.py

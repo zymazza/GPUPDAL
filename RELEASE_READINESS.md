@@ -128,6 +128,10 @@ PDAL components.
       54 runtime dependency rows, 45 copied system notice sets, 48 SPDX
       packages, 295 SPDX files, 343 relationships, and no missing-license
       marker or bundled NVIDIA driver library.
+      The base image, source archives, CUDA compiler, and CCCL digest are
+      verified. Debian apt inputs are version-recorded but not snapshot-pinned,
+      so this is an auditable controlled build rather than a bit-reproducible
+      rebuild claim.
 - [x] Complete the current controlled aggregate release gate locally. The
       final CUDA-enabled aggregate passed 862/862 registrations, including the
       exact host/fallback and CUDA process matrices. Earlier host ASan/UBSan

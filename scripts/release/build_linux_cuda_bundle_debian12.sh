@@ -34,6 +34,13 @@ if [[ "${cccl_version}" != "300400" ]]; then
 fi
 cccl_tree_sha256="$(find "${cccl_include}" -type f -print0 | sort -z | \
     xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)"
+expected_cccl_tree_sha256="b4410252cb1351a8e350976c55eb8ae097a92cb1a76979f52e6a923bfa4c70a7"
+if [[ "${cccl_tree_sha256}" != "${expected_cccl_tree_sha256}" ]]; then
+    echo "CCCL 3.4 header tree does not match the approved release input" >&2
+    echo "expected ${expected_cccl_tree_sha256}" >&2
+    echo "actual   ${cccl_tree_sha256}" >&2
+    exit 2
+fi
 
 available_kib="$(awk '/^MemAvailable:/ { print $2 }' /proc/meminfo)"
 minimum_kib=$((8 * 1024 * 1024))
@@ -84,4 +91,8 @@ docker run --rm \
     --volume "${cccl_license}:/opt/cccl/LICENSE:ro" \
     --workdir /src \
     "${release_image}" \
-    /src/scripts/release/build_linux_bundle_in_container.sh
+    bash -c '
+        set -euo pipefail
+        /src/scripts/release/verify_cuda_release_device.sh
+        exec /src/scripts/release/build_linux_bundle_in_container.sh
+    '

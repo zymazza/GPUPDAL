@@ -85,6 +85,28 @@ if [[ "${GPUPDAL_SKIP_BUILD:-0}" != "1" ]]; then
         --parallel "${GPUPDAL_BUILD_JOBS:-2}"
 fi
 
+if [[ "${cuda_enabled}" == "ON" ]]; then
+    cuobjdump="${cuda_root}/bin/cuobjdump"
+    if [[ ! -x "${cuobjdump}" ]]; then
+        echo "CUDA release build is missing cuobjdump" >&2
+        exit 2
+    fi
+    actual_cubins="$(${cuobjdump} --list-elf "${build_dir}/bin/pdg-engine" | \
+        sed -n 's/.*\.sm_\([0-9][0-9]*\)\.cubin/\1/p' | \
+        sort -Vu | paste -sd, -)"
+    actual_ptx="$(${cuobjdump} --list-ptx "${build_dir}/bin/pdg-engine" | \
+        sed -n 's/.*\.sm_\([0-9][0-9]*\)\.ptx/\1/p' | \
+        sort -Vu | paste -sd, -)"
+    if [[ "${cuda_version}" == "13.3" &&
+            ("${actual_cubins}" != "75,80,86,87,88,89,90,100,103,110,120,121" ||
+             "${actual_ptx}" != "120") ]]; then
+        echo "CUDA 13.3 release fatbin does not contain the approved image set" >&2
+        echo "cubins: ${actual_cubins}" >&2
+        echo "ptx: ${actual_ptx}" >&2
+        exit 2
+    fi
+fi
+
 version="$(sed -n 's/^GPUPDAL_VERSION:STRING=//p' \
     "${build_dir}/CMakeCache.txt")"
 if [[ -z "${version}" ]]; then

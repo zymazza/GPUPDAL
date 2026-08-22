@@ -43,6 +43,7 @@ docker run --rm \
     "${release_image}" \
     bash -c '
         set -euo pipefail
+        /src/scripts/release/verify_cuda_release_device.sh
         for tool in memcheck initcheck synccheck racecheck; do
             log="$(mktemp "/tmp/gpupdal-${tool}.XXXXXX")"
             set +e

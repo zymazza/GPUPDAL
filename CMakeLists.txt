@@ -456,10 +456,10 @@ if (WITH_PDG)
     if (GPUPDAL_ENABLE_CUDA)
         enable_language(CUDA)
         find_package(CUDAToolkit 12.4 REQUIRED)
-        find_path(PDG_CCCL_INCLUDE_DIR
-            NAMES cub/device/device_select.cuh
-            HINTS ${CUDAToolkit_INCLUDE_DIRS}
-            PATH_SUFFIXES cccl)
+        if (NOT PDG_CCCL_INCLUDE_DIR)
+            include(cmake/pdg-cccl.cmake)
+            pdg_find_cccl_include(PDG_CCCL_INCLUDE_DIR)
+        endif()
         if (NOT PDG_CCCL_INCLUDE_DIR)
             message(FATAL_ERROR
                 "GPUPDAL CUDA builds require CCCL headers (CUB, Thrust, and libcu++)")

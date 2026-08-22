@@ -117,6 +117,10 @@ clean-machine installation tests. See
 locally; the repository does not require GitHub Actions. See the
 [manual release guide](docs/releasing.md).
 
+Installation itself does not hard-fail on an unsupported or absent GPU. The
+command can use its exact CPU/PDAL fallback there, but the stable acceleration
+promise is limited to the physically qualified SM 89 profile.
+
 ## Development status
 
 GPUPDAL is under active development. Runtime and differential-test coverage are

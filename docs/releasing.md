@@ -39,6 +39,13 @@ free -h
 scripts/release/build_linux_bundle_debian12.sh
 ```
 
+The Debian base-image digest, CMake archive, GDAL source, CUDA compiler version,
+and CCCL header-tree digest are verified. Debian apt packages come from the
+current signed Bookworm repositories rather than a dated snapshot; their
+actual versions and copied notices are recorded in the artifact. The lane is
+auditable and controlled, but a later rebuild is not claimed to be bit-for-bit
+reproducible unless those apt inputs are snapshot-pinned too.
+
 The resulting binaries require glibc 2.36 or newer. Debian 12 is the declared
 oldest-supported build environment for the first Linux artifact; clean-install
 qualification on other advertised distributions remains mandatory. The CPU

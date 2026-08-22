@@ -41,8 +41,7 @@ docker run --rm \
     "${release_image}" \
     bash -c '
         set -euo pipefail
-        nvidia-smi --query-gpu=name,compute_cap,driver_version \
-            --format=csv,noheader
+        /src/scripts/release/verify_cuda_release_device.sh
         /opt/cmake/bin/cmake --build \
             /src/build/pdg-debian12-cuda13-release --parallel 1
         PDAL_TEST_VERIFY_KD3_SNAPSHOT=1 /opt/cmake/bin/ctest \

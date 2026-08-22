@@ -38,6 +38,11 @@ stable until its physical fixed-bit lane passes. Additional platforms require
 their own tested artifacts and manifest entries; they must not silently reuse
 the Linux bundle.
 
+The npm installer validates the declared artifact; it does not reject a
+machine at install time for lacking the qualified GPU or driver. On such a
+machine the command may still run through its exact CPU/PDAL fallback, but no
+stable GPU-acceleration claim applies.
+
 Publishing the unscoped package makes its current npm maintainers responsible
 for future releases, access changes, deprecation, and maintainer membership.
 The first publish therefore belongs in Zy Mazza's `zymazza` npm account. Keep
