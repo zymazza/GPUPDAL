@@ -17,7 +17,6 @@
   "files": [
     "bin/",
     "scripts/",
-    "native/",
     "LICENSE.txt",
     "README.md",
     "native-manifest.json"
@@ -25,7 +24,14 @@
   "scripts": {
     "prepare-release": "node scripts/prepare-release.js",
     "prepack": "node scripts/validate-package.js",
+    "validate-release-set": "node scripts/validate-release-set.js",
     "test": "node --test test/*.test.js"
+  },
+  "optionalDependencies": {
+    "gpupdal-linux-x64": "0.0.0-development",
+    "gpupdal-win32-x64": "0.0.0-development",
+    "gpupdal-cuda13-linux-x64": "0.0.0-development",
+    "gpupdal-cuda13-win32-x64": "0.0.0-development"
   },
   "engines": {
     "node": ">=18.17"

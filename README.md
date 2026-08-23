@@ -105,8 +105,10 @@ npx gpupdal --version
 Use `npm install --global gpupdal` when you want `gpupdal` directly on your
 shell path.
 
-The package is not published yet. The first stable npm package carries CUDA 13
-artifacts for Linux x86-64 and Windows x64. Compute capability 8.9 exactness
+The first stable npm release carries CUDA 13 artifacts for Linux x86-64 and
+Windows x64. The small `gpupdal` launcher selects exact-version native support
+packages automatically; users still run only `npm install gpupdal`. Compute
+capability 8.9 exactness
 and CUDA execution are physically qualified on an RTX 4090 with driver
 610.43.03 on Linux and an NVIDIA L4 with driver 610.88 on Windows; driver 580
 or newer is required. The measured automatic-acceleration promise currently

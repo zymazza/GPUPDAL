@@ -177,10 +177,13 @@ acceptance evidence.
 
 ## npm publication
 
-The npm package is a small launcher carrying the complete, checksummed native
-tree inside the immutable npm tarball. It needs no post-install download or
+The public `gpupdal` package is a small launcher whose exact optional
+dependencies select a native package and CUDA-runtime package for the current
+platform. This split keeps each immutable npm tarball below the registry's
+upload ceiling. The five-package release set needs no post-install download or
 lifecycle script and remains independent of the private source repository.
-Immediately before the first public publish:
+Users install only `gpupdal`; the four support packages are implementation
+details. Immediately before a public publish:
 
 1. Choose one non-development version for the controlled build and npm
    staging. A non-development bundle refuses a dirty source tree:
@@ -189,7 +192,7 @@ Immediately before the first public publish:
    GPUPDAL_RELEASE_VERSION=0.1.0 \
      scripts/release/build_linux_cuda_bundle_debian12.sh
    ```
-2. Stage the package without committing the binary archive:
+2. Stage the package set without committing the binary archives:
 
    ```sh
    node packages/npm/scripts/prepare-release.js \
@@ -199,16 +202,22 @@ Immediately before the first public publish:
      --output dist/npm/gpupdal
    ```
 
-3. From `dist/npm/gpupdal`, run `node scripts/validate-package.js`,
-   `npm pack --dry-run`, and a clean-directory installation test.
-4. Authenticate as `zymazza` with an npm-supported publication method. Run
-   `npm publish --access public` inside the reviewed `dist/npm/gpupdal` staging
-   directory, keeping any temporary credential configuration outside the
-   repository with mode 0600. npm currently accepts either interactive account
-   2FA or a narrowly scoped granular write token created with **Bypass 2FA**;
-   see [npm's publishing-authentication policy](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/).
-5. Verify the published version and a clean install, delete the temporary npm
-   authentication material, and retire any release-only credentials.
+3. Run `node dist/npm/gpupdal/scripts/validate-release-set.js`. Pack all five
+   staging directories and install the launcher plus the matching native and
+   runtime tarballs into a clean directory with lifecycle scripts disabled.
+4. Authenticate as `zymazza` with an npm-supported publication method, keeping
+   temporary credential configuration outside the repository with mode 0600.
+   npm currently accepts either interactive account 2FA or a narrowly scoped
+   granular write token created with **Bypass 2FA**; see
+   [npm's publishing-authentication policy](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/).
+5. Publish `gpupdal-linux-x64`, `gpupdal-cuda13-linux-x64`,
+   `gpupdal-win32-x64`, and `gpupdal-cuda13-win32-x64` at the exact release
+   version before publishing `gpupdal`. Use `--access public --tag latest` for
+   every package. Publishing the launcher last prevents a visible root version
+   from referring to support versions that do not yet exist.
+6. Verify registry metadata and a clean `npm install gpupdal@<version>`, test
+   the installed command, then delete temporary npm authentication material
+   and retire any release-only credentials.
 
 No npm credential belongs in the repository, shell history, or retained
 release logs. The owner's authentication configuration is not release

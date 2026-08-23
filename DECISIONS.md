@@ -13235,3 +13235,43 @@ for historical decisions and benchmark prose; it does not rewrite or bless any
 measurement. The current tree and binary release payloads contain no occurrence
 of the identifier. Before any repository visibility change, rewrite the private
 branch history so the old Git objects are unreachable from all published refs.
+
+## D0306 — Split the npm payload after the registry rejected the universal tarball
+
+The fully qualified Linux and Windows `0.1.0` native payloads originally fit in
+one 239,636,564-byte npm tarball, but the public npm registry rejected the
+actual upload with HTTP 413 `Payload Too Large`. Nothing was published by that
+attempt. Dropping either platform, downloading binaries during installation,
+or weakening the immutable checksum contract would change the accepted release
+scope or add a private-repository and lifecycle-script dependency.
+
+Publish one small `gpupdal` launcher with exact optional dependencies on four
+unscoped support packages: `gpupdal-linux-x64`,
+`gpupdal-cuda13-linux-x64`, `gpupdal-win32-x64`, and
+`gpupdal-cuda13-win32-x64`. npm's `os`/`cpu` selection installs only the two
+support packages for the current platform. Each native package has an exact
+dependency on its matching CUDA-runtime package. The launcher resolves both
+package roots and augments only the child process's loader path; it has no
+install script, network downloader, mutable URL, or source-repository access.
+The release-set validator reconstructs each original platform tree across its
+two packages and verifies all 541 archive `SHA256SUMS` entries before packing.
+
+The five tarballs are respectively 10,131; 70,946,653; 51,714,215; 71,051,800;
+and 46,142,860 bytes for the launcher, Linux native, Linux CUDA runtime,
+Windows native, and Windows CUDA runtime. Their SHA-256 values are
+`14b4163ed330bccca005e951d3d858106043b351aac37a628b8e996bb93fba85`,
+`07a0e6335bffc30f6f1057a3f2c62ff54ed62c20f64335684446256adaed4f67`,
+`7d332da7384c6abf6dc6edc35d25046791832dc8be793025aa185ff1176c7021`,
+`5918f9db7e836d8b3c3a16a6a6b43abd9c288a948128c3e0924a827addc3ca7e`,
+and `a65e7dbe9188f435163e16bd464e471fb46793e91c178fb03e3f948f7e0da38e`.
+A clean offline Linux installation from the three applicable tarballs passed
+startup and driverless fallback. On the physical RTX 4090 it found the split
+NVRTC runtime and passed the forced fused assign/ferry differential exactly
+against the bundled PDAL oracle.
+
+**Consequences.** The user-facing contract remains `npm install gpupdal` and
+the `gpupdal` command. Support-package names are public registry implementation
+details and must be published at the same immutable version before the root
+launcher. Publishing the launcher last avoids exposing a root version whose
+exact dependencies do not yet exist. The native archive bytes, support claims,
+licenses, and private source-repository posture are unchanged.

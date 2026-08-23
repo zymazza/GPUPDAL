@@ -10,21 +10,24 @@ npx gpupdal --version
 For a shell-wide command, use `npm install --global gpupdal` followed by
 `gpupdal --version`.
 
-GPUPDAL is native software. The npm package is a small launcher distribution,
-not a JavaScript reimplementation. The immutable npm package carries the
-declared platform files themselves, so installation does not depend on access
-to the source repository, a second download host, or an npm lifecycle script.
-Before packing, every file is verified against the release archive's internal
-`SHA256SUMS`. The native tree contains the complete sibling bundle needed by
-the launcher (`gpupdal`, `pdg-engine`, and the pinned `pdal` oracle).
+GPUPDAL is native software. The public `gpupdal` package is a small launcher,
+not a JavaScript reimplementation. Exact optional dependencies install the
+matching immutable native and CUDA-runtime support packages for the current
+operating system. Installation does not depend on access to the source
+repository, a second download host, or an npm lifecycle script. Before packing,
+the release-set validator reconstructs the original platform archive from its
+two support packages and verifies every file against that archive's internal
+`SHA256SUMS`. The installed native tree contains the complete sibling bundle
+needed by the launcher (`gpupdal`, `pdg-engine`, and the pinned `pdal` oracle).
 
 The checked-in manifest is intentionally empty and the development version is
-rejected by `prepack`. The manual release process stages one version and its
-matching Linux x86-64 and Windows x64 archives under `dist/npm/gpupdal`,
-records both source digests, runs the tests, performs clean-machine installs,
-and only then runs an authenticated `npm publish --access public --tag latest`
-from the owner's npm account. Staging requires `tar` and `unzip`. See
-`docs/releasing.md` in the source repository for the exact commands.
+rejected by `prepack`. The manual release process stages one launcher and four
+internal support packages under `dist/npm/`, records both source-archive
+digests, validates the combined release set, performs clean-machine installs,
+publishes support packages first, and publishes `gpupdal` last. Users still
+install only `gpupdal`; npm selects the matching platform packages. Staging
+requires `tar` and `unzip`. See `docs/releasing.md` in the source repository
+for the exact commands.
 The package intentionally disables npm provenance for now because npm does not
 support provenance from a local manual publish or a private source repository.
 

@@ -9,11 +9,15 @@ Current repository posture: private development
 
 The Linux and Windows `0.1.0` CUDA release candidates are physically qualified
 on their declared SM 89 profiles, including final conformance, sanitizer, and
-clean-machine npm rehearsals. GPUPDAL has not been published. The owner has
-approved publishing `0.1.0` as npm `latest`, and a temporary authenticated
-`zymazza` session has been verified. The public registry write and post-publish
-installation check have not yet run. The source repository remains private
-unless the owner separately approves changing its visibility.
+clean-machine npm rehearsals. The owner approved publishing `0.1.0` as npm
+`latest`, and a temporary authenticated `zymazza` session is verified. npm
+rejected the original 239,636,564-byte universal tarball with HTTP 413, so the
+same qualified payload is staged as one launcher plus four exact-version
+platform support packages. The split set has passed full checksum
+reconstruction, a clean Linux installation, driverless fallback, and a forced
+exact CUDA differential on the physical RTX 4090. Registry publication and
+post-publish installation verification are in progress. The source repository
+remains private unless the owner separately approves changing its visibility.
 
 ## Owner answers recorded
 
@@ -83,8 +87,7 @@ for the public npm binary package.
   and private `zymazza/GPUPDAL` `main` is synchronized through the provenance
   redaction commit.
 - The owner-approved public npm registry write and its post-publish clean
-  installation verification remain unexecuted. The exact reviewed tarball and
-  authenticated `zymazza` session are ready.
+  installation verification are the only remaining release operation.
 
 ## Dependency and rights audit
 
@@ -165,19 +168,25 @@ as a whole depends on closed-source PDAL components.
       at 124 entries (84 filters, 25 readers, 15 writers).
 - [x] Replace inherited PDAL-only citation metadata with Zy Mazza as the
       GPUPDAL citation author while retaining upstream PDAL attribution.
-- [x] Rebuild the proposed `0.1.0` from clean commits, place both immutable
-      native archives inside the npm package, populate
-      `packages/npm/native-manifest.json`, and run pack plus clean-install
-      tests. The final 239,636,564-byte npm tarball has SHA-256
-      `b4ada2b336e3fb1f6d52454e2fdb7520f62ee71a83a70c14cda85b74a54be0d5`
-      and validates all 541 native payload files (296 Linux and 245 Windows).
+- [x] Rebuild the proposed `0.1.0` from clean commits and validate all 541
+      native payload files (296 Linux and 245 Windows). The original universal
+      239,636,564-byte tarball, SHA-256
+      `b4ada2b336e3fb1f6d52454e2fdb7520f62ee71a83a70c14cda85b74a54be0d5`,
+      passed local qualification but npm rejected its upload with HTTP 413.
+      The replacement immutable release set preserves those exact native bytes
+      behind one launcher and four exact-version support packages. Its tarball
+      sizes are 10,131; 70,946,653; 51,714,215; 71,051,800; and 46,142,860
+      bytes for the launcher, Linux native, Linux CUDA runtime, Windows native,
+      and Windows CUDA runtime respectively. Combined validation reconstructs
+      and checks every original `SHA256SUMS` entry.
       Linux and Windows clean hosts ran `gpupdal --version` and
       `gpupdal --drivers`, forced exact CUDA differentials without a host CUDA
       toolkit, and byte-exact driverless fallback. The Windows hosts also
-      passed local and global npm command discovery, output, and uninstall.
-      Authenticate with an npm-supported publication method and publish from
-      `zymazza` only with explicit final approval; remove temporary credential
-      material after verifying the registry package.
+      passed local and global npm command discovery, output, and uninstall. The
+      split Linux install additionally passed the forced fused CUDA/NVRTC
+      differential on the physical RTX 4090. Publish from `zymazza` only with
+      explicit final approval; remove temporary credential material after
+      verifying the registry package.
 - [x] Preserve the private GPUPDAL naming-permission email. Zy confirmed the
       permission expressly covers the GPUPDAL project name; no separate
       command-name confirmation is required absent limiting language. Do not
@@ -272,8 +281,8 @@ release task.
 
 ## Completed preparation
 
-- [x] Private repository created at `zymazza/GPUPDAL`; no public release or npm
-      publication has been made.
+- [x] Private repository created at `zymazza/GPUPDAL`; source visibility is
+      independent of the public binary-package release.
 - [x] `gpupdal` is the PDAL-compatible public command; internal `pdg`
       identifiers remain stable.
 - [x] The unscoped npm name returned not-found on 2026-08-21. That check does

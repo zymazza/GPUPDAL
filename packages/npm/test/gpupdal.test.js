@@ -6,13 +6,21 @@ const os = require("node:os");
 const path = require("node:path");
 const test = require("node:test");
 
-const { executableName, packagedBinary, run } = require("../bin/gpupdal.js");
+const {
+  executableName,
+  nativeEnvironment,
+  packagedBinary,
+  packagedLayout,
+  run
+} = require("../bin/gpupdal.js");
+const { PACKAGE_SET, packageNames } = require("../scripts/package-set.js");
 const {
   platformKey: installerPlatformKey,
   sha256,
   validateEntry,
   verifyNativeTree
 } = require("../scripts/native.js");
+const { validateSplitPackage } = require("../scripts/validate-split-package.js");
 
 test("launcher forwards arguments and exit status", () => {
   let invocation;
@@ -96,12 +104,22 @@ test("package accepts only checksummed GPUPDAL native trees", () => {
 });
 
 test("package platform selection and SHA-256 are deterministic", () => {
+  const resolver = (request) =>
+    path.join("/packages", request.slice(0, -"/package.json".length),
+              "package.json");
   assert.equal(installerPlatformKey("linux", "x64"), "linux-x64");
   assert.equal(installerPlatformKey("win32", "x64"), "win32-x64");
   assert.equal(executableName("linux"), "gpupdal");
   assert.equal(executableName("win32"), "gpupdal.exe");
-  assert.match(packagedBinary("win32", "x64"),
-               /native\/win32-x64\/gpupdal\.exe$/);
+  assert.match(packagedBinary("win32", "x64", resolver),
+               /gpupdal-win32-x64\/native\/win32-x64\/gpupdal\.exe$/);
+  assert.deepEqual(packageNames(), [
+    "gpupdal-linux-x64",
+    "gpupdal-cuda13-linux-x64",
+    "gpupdal-win32-x64",
+    "gpupdal-cuda13-win32-x64"
+  ]);
+  assert.equal(PACKAGE_SET["linux-x64"].runtimeFiles.length, 2);
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-npm-test-"));
   const fixture = path.join(directory, "fixture");
   try {
@@ -113,6 +131,32 @@ test("package platform selection and SHA-256 are deterministic", () => {
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }
+});
+
+test("launcher resolves split native packages and configures runtime search", () => {
+  const resolver = (request) =>
+    path.join("/packages", request.slice(0, -"/package.json".length),
+              "package.json");
+  const layout = packagedLayout("linux", "x64", resolver);
+  const environment = nativeEnvironment(
+    { PATH: "/usr/bin", LD_LIBRARY_PATH: "/existing" }, layout, "linux");
+  assert.equal(layout.binary,
+    "/packages/gpupdal-linux-x64/native/linux-x64/gpupdal");
+  assert.equal(
+    environment.LD_LIBRARY_PATH,
+    "/packages/gpupdal-linux-x64/native/linux-x64/lib:" +
+      "/packages/gpupdal-cuda13-linux-x64/native/linux-x64/lib:/existing"
+  );
+  assert.equal(environment.GDAL_DATA,
+    "/packages/gpupdal-linux-x64/native/linux-x64/share/gdal");
+
+  const windowsLayout = packagedLayout("win32", "x64", resolver);
+  const windowsEnvironment = nativeEnvironment(
+    { Path: "C:\\Windows\\System32" }, windowsLayout, "win32");
+  assert.equal(windowsEnvironment.Path,
+    "/packages/gpupdal-win32-x64/native/win32-x64;" +
+      "/packages/gpupdal-cuda13-win32-x64/native/win32-x64;" +
+      "C:\\Windows\\System32");
 });
 
 test("package verifier checks every staged native file", () => {
@@ -181,6 +225,36 @@ test("Windows native verification requires .exe files without Unix mode bits", (
       ).join("\r\n")}\r\n`
     );
     assert.equal(verifyNativeTree(directory, entry), 3);
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("split-package verifier rejects missing and modified native files", () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-split-test-"));
+  const native = path.join(directory, "native", "linux-x64");
+  try {
+    fs.mkdirSync(native, { recursive: true });
+    fs.writeFileSync(path.join(directory, "package.json"), JSON.stringify({
+      name: "gpupdal-linux-x64",
+      version: "0.1.0"
+    }));
+    const filename = path.join(native, "gpupdal");
+    fs.writeFileSync(filename, "gpupdal\n");
+    fs.writeFileSync(path.join(directory, "split-manifest.json"), JSON.stringify({
+      schema: 1,
+      package: "gpupdal-linux-x64",
+      version: "0.1.0",
+      platform: "linux-x64",
+      role: "native",
+      files: { gpupdal: sha256(filename) }
+    }));
+    assert.equal(validateSplitPackage(directory).verifiedFiles, 1);
+    fs.appendFileSync(filename, "modified\n");
+    assert.throws(() => validateSplitPackage(directory), /checksum mismatch/);
+    fs.writeFileSync(filename, "gpupdal\n");
+    fs.writeFileSync(path.join(native, "extra"), "extra\n");
+    assert.throws(() => validateSplitPackage(directory), /inventory differs/);
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }
