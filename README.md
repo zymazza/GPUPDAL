@@ -1,5 +1,7 @@
 # GPUPDAL
 
+## NOTICE: THIS PROJECT WAS MADE ENTIRELY WITH AI
+
 GPUPDAL (GPU Point Data Abstraction Library) is an independent,
 performance-focused point-cloud processing engine derived from PDAL. Its
 public `gpupdal` command is a drop-in command-line replacement for `pdal`: it
