@@ -361,7 +361,7 @@ Independent larger one-shot diagnostics broaden the format and corpus check:
 | Corpus | Format | Points | Pinned PDAL | Forced CUDA | Speedup |
 | --- | --- | ---: | ---: | ---: | ---: |
 | ADKLR ALS | LAS 1.4/6 | 21,970,934 | 15.585881 s | 6.642444 s | 2.346x |
-| snow-road-twin RGB/NIR | LAS | 5,114,283 | 3.913759 s | 2.048268 s | 1.911x |
+| Local RGB/NIR corpus | LAS | 5,114,283 | 3.913759 s | 2.048268 s | 1.911x |
 | VEIL Flatirons | LAZ | 36,772,046 | 26.275503 s | 11.062169 s | 2.375x |
 
 The full ADKLR and VEIL outputs are respectively 790,955,889 bytes at SHA-256
@@ -447,7 +447,7 @@ Independent exact one-shot Morton trials corroborate the device result:
 | Corpus/mode | Points | CUDA/PDAL | PDG host/PDAL where measured |
 | --- | ---: | ---: | ---: |
 | ADKLR ordinary LAS | 21,970,934 | 1.936x | 0.961x |
-| snow-road-twin ordinary LAS | 5,114,283 | 1.578x | — |
+| Local RGB/NIR ordinary LAS | 5,114,283 | 1.578x | — |
 | VEIL ordinary LAZ | 36,772,046 | 2.032x | — |
 | ADKLR reverse LAS | 4,000,000 | 1.682x | 0.997x |
 

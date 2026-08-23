@@ -56,7 +56,7 @@ chain, a predicate before reduction, and conservative fallback edges. Small
 process tests force 17-point chunks so the selected point crosses reduction
 boundaries.
 
-A read-only local-corpus differential also scans 21,970,934 points from the
-snow-road-twin LAS corpus in 168 chunks. The candidate and pinned oracle emit
+A read-only local-corpus differential also scans 21,970,934 points from a
+large local LAS corpus in 168 chunks. The candidate and pinned oracle emit
 the same 2,301-byte one-point LAS with SHA-256
 `44e4bf505c7f304ddba014a29f3b5480dce1ea04a2ccf918d2e8a1cd650d3095`.

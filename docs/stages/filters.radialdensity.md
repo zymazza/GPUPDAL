@@ -75,8 +75,8 @@ clean under ASan/UBSan with leak detection.
 
 Complete-process dirty-tree diagnostics are exact on independent ALS and TLS
 corpora in both LAS and LAZ. A five-sample, 21,970,934-point ADKLR run forced
-through 16 tiles has an 8.164x median speedup over pinned PDAL; one-shot
-snow-road-twin and VEIL LAZ trials at 5,114,283 and 36,772,046 points are
+through 16 tiles has an 8.164x median speedup over pinned PDAL; one-shot local
+RGB/NIR LAS and VEIL LAZ trials at 5,114,283 and 36,772,046 points are
 7.335x and 20.228x. A ten-sample 250,000-point ALS prefix is 2.104x, while
 smaller prefix probes preserve the expected CUDA-startup crossover. Every
 reported artifact is byte-identical to the oracle, including every warm-up and

@@ -1451,7 +1451,7 @@ their historical text.
   took 6.386 s in a one-shot trial. A ten-sample 250,000-point prefix was
   exact at 2.104x (0.387 s versus 0.813 s). Independent one-shot exact trials
   covered a 260,438-point RMIT TLS cloud at 24.134x, a 5,114,283-point
-  snow-road-twin RGB/NIR LAS at 7.335x, and a 36,772,046-point VEIL LAZ tile at
+  local RGB/NIR LAS corpus at 7.335x, and a 36,772,046-point VEIL LAZ tile at
   20.228x. These reports are retained under `build/benchmarks`; because they
   were collected from a dirty development tree and three are single-sample
   corpus probes, they are diagnostic evidence only. They do not enter
@@ -1493,7 +1493,7 @@ their historical text.
   ten alternating measured samples at 1,000,000 points are exact; medians are
   0.797752 s pinned PDAL, 0.779113 s PDG host, and 0.633355 s forced CUDA.
   One-shot exact expressionstats trials reach 2.346x on 21,970,934 ADKLR LAS
-  points, 1.911x on 5,114,283 snow-road-twin points, and 2.375x on a
+  points, 1.911x on 5,114,283 local RGB/NIR points, and 2.375x on a
   36,772,046-point VEIL LAZ tile. At 250,000 points CUDA is only 0.702x. In
   contrast, forced CUDA stats and info at 21,970,934 points are 0.468x and
   0.859x pinned PDAL. The unaccepted diagnostic and raw report names are
@@ -1539,7 +1539,7 @@ their historical text.
   1.796x PDAL, making CUDA only about 0.7% faster; at 4,000,000 points host
   beats CUDA. Five-sample ordinary Morton trials at 4,000,000 points show
   1.481x PDAL for CUDA and 1.022x for PDG host. Independent exact one-shot
-  Morton trials are 1.578x on 5,114,283 snow-road-twin points and 2.032x on a
+  Morton trials are 1.578x on 5,114,283 local RGB/NIR points and 2.032x on a
   36,772,046-point VEIL LAZ tile; reverse Morton is 1.682x PDAL at 4,000,000
   points versus 0.997x for host.
 - Consequences: Multi-view performance claims now include the complete
@@ -13218,3 +13218,20 @@ Windows x64 is therefore supported for exact behavior and physically qualified
 CUDA execution in `0.1.0`. A same-machine PDAL baseline remains mandatory
 before any Windows speedup or automatic-selection claim. This decision
 supersedes D0303's description of Windows runtime packaging as future work.
+
+## D0305 — Redact one location-sensitive corpus identifier
+
+The owner approved retaining the repository's other non-secret provenance,
+including absolute `/home/zy/...` paths, the ADKLR and VEIL project labels,
+hardware and driver descriptions, and dataset hashes. One local corpus name and
+path can disclose the owner's location and must not appear in a public source
+tree or release payload.
+
+Mechanically replace that identifier with neutral `local RGB/NIR` or `local
+LAS corpus` wording and remove its explicit discovery path. Preserve every
+point count, timing, hash, and benchmark conclusion unchanged. This narrow
+privacy redaction is an explicit exception to the append-only wording policy
+for historical decisions and benchmark prose; it does not rewrite or bless any
+measurement. The current tree and binary release payloads contain no occurrence
+of the identifier. Before any repository visibility change, rewrite the private
+branch history so the old Git objects are unreachable from all published refs.

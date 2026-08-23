@@ -67,6 +67,6 @@ Compute Sanitizer memcheck reports zero errors. D0041 records the selection
 decision and preserved fallback envelope.
 
 Earlier dirty-tree diagnostics independently cover 21,970,934 ADKLR points,
-5,114,283 snow-road-twin points, and 36,772,046 VEIL LAZ points at 1.936x,
+5,114,283 local RGB/NIR points, and 36,772,046 VEIL LAZ points at 1.936x,
 1.578x, and 2.032x PDAL respectively. They remain corroborating corpus breadth,
 not substitutes for B0006.

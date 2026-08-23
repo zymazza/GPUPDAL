@@ -100,7 +100,7 @@ bytes and edge condition are reviewable.
 ### Local large corpus
 
 Discover read-only candidates beneath `/home/zy/dev` and
-`/home/zy/Downloads`, especially ADKLR, VEIL, snow-road-twin, LAS/LAZ/COPC,
+`/home/zy/Downloads`, especially ADKLR, VEIL, LAS/LAZ/COPC,
 PLY/PCD, raster, and vector datasets. A generated, Git-ignored manifest records
 only path, size, hash, detected format, key metadata, and provenance class.
 
@@ -114,7 +114,7 @@ Regenerate the ignored local manifest without modifying the source corpus:
 ```sh
 python3 scripts/pdg/discover_corpus.py \
   /home/zy/dev/adklr /home/zy/dev/veil \
-  /home/zy/dev/snow-road-twin /home/zy/Downloads \
+  /home/zy/Downloads \
   --output build/local-corpus.json --hash-max-bytes 67108864
 ```
 
@@ -740,8 +740,8 @@ candidate preloads and therefore also runs against ASan/UBSan builds. CUDA
 promotion additionally requires the multi-block typed reduction under
 memcheck, initcheck, racecheck, and synccheck plus a same-machine break-even
 matrix; until then `filters.locate` remains force/require-only.
-The local large-corpus case scans the read-only 21,970,934-point
-`snow-road-twin` LAS file in 131,072-point chunks and matches the one-point
+The local large-corpus case scans a read-only 21,970,934-point LAS file in
+131,072-point chunks and matches the one-point
 oracle LAS exactly (2,301 bytes, SHA-256
 `44e4bf505c7f304ddba014a29f3b5480dce1ea04a2ccf918d2e8a1cd650d3095`).
 

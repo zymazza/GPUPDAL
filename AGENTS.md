@@ -116,8 +116,8 @@ numeric-tolerance language in `spec.md`. See decision D0002.
 - Large or private local fixtures stay outside Git. Register only their path,
   size, hash, format, and provenance status in a generated local manifest.
 - Useful local corpora include `/home/zy/dev/adklr`, `/home/zy/dev/veil`,
-  `/home/zy/dev/snow-road-twin`, related projects under `/home/zy/dev`, and
-  geospatial files under `/home/zy/Downloads`.
+  related projects under `/home/zy/dev`, and geospatial files under
+  `/home/zy/Downloads`.
 - Never upload, commit, rename, or modify corpus files. Tests write derived
   artifacts only below the configured build directory or `/tmp`.
 - Use named, deterministic boundary fixtures and fixed arithmetic sequences.

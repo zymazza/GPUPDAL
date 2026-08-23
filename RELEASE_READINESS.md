@@ -182,19 +182,18 @@ as a whole depends on closed-source PDAL components.
       permission expressly covers the GPUPDAL project name; no separate
       command-name confirmation is required absent limiting language. Do not
       publish the email unless Zy and its sender intentionally choose to.
-- [ ] Review committed evidence for private paths or corpus details before
+- [x] Review committed evidence for private paths or corpus details before
       changing repository visibility. A 2026-08-22 credential-pattern scan is
       clean, and the new `0.1.0` report contains only container-local
-      `/qualification` paths. Historical agent guidance and benchmark JSON
-      intentionally retain non-secret provenance strings: absolute
-      `/home/zy/...` paths, local corpus/project labels such as `adklr`, `veil`,
-      and `snow-road-twin`, and measured-machine labels such as Ryzen 9 7900,
-      RTX 4090, and driver versions. They are evidence about where a result
-      came from, not credentials, tokens, private keys, AWS identifiers, or
-      personal file contents. Before making the repository public, Zy must
-      approve retaining those strings or authorize a mechanical redaction of
-      the absolute home paths and local project names. Hardware and dataset
-      hashes should remain because benchmark claims depend on them.
+      `/qualification` paths. Zy approved retaining non-secret provenance such
+      as absolute `/home/zy/...` paths, the `adklr` and `veil` corpus labels,
+      measured-machine labels, driver versions, and dataset hashes. One
+      location-sensitive local corpus identifier and its absolute path were
+      replaced in the current tree with generic `local RGB/NIR` wording.
+- [ ] Before public repository visibility, rewrite the private branch history
+      so the removed location-sensitive identifier is unreachable from every
+      published ref. The npm binary release and private source repository do
+      not expose that historical Git object publicly.
 - [x] Losslessly compress
       `test/data/autzen/autzen-surface.tif.min.tif` from 54.41 MB to about
       305 KB while preserving raster values and geospatial metadata.

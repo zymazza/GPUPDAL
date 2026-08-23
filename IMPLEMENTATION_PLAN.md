@@ -2719,7 +2719,7 @@ remaining P1 stage families and 70%-of-roofline exit gate are not complete;
   Exact dirty-tree diagnostic trials now cover ALS and TLS, LAS and LAZ, and
   250,000 through 36,772,046 points. The five-sample 21,970,934-point ADKLR
   forced-tiled run is 8.164x pinned PDAL with identical output on every run;
-  independent snow-road-twin and VEIL LAZ trials are exact at 7.335x and
+  independent local RGB/NIR LAS and VEIL LAZ trials are exact at 7.335x and
   20.228x. These are not release benchmarks or selector evidence while the
   tree is dirty. Tiled multi-stage residency, adaptive exact kNN tiling,
   complete option coverage, clean-tree density-stratified trials, and accepted
