@@ -13,7 +13,11 @@ clean-machine npm rehearsals. The owner approved publishing `0.1.0` as npm
 `latest`, and a temporary authenticated `zymazza` session is verified. npm
 rejected the original 239,636,564-byte universal tarball with HTTP 413, so the
 same qualified payload is staged as one launcher plus four exact-version
-platform support packages. The split set has passed full checksum
+scoped platform support packages. The first unscoped Linux runtime helper
+published, but npm's automated name filter rejected the next unscoped helper;
+the root launcher remained unpublished. Moving the implementation-detail
+helpers under the publisher's reserved `@zymazza` scope avoids that naming
+filter. The split set has passed full checksum
 reconstruction, a clean Linux installation, driverless fallback, and a forced
 exact CUDA differential on the physical RTX 4090. Registry publication and
 post-publish installation verification are in progress. The source repository
@@ -174,8 +178,9 @@ as a whole depends on closed-source PDAL components.
       `b4ada2b336e3fb1f6d52454e2fdb7520f62ee71a83a70c14cda85b74a54be0d5`,
       passed local qualification but npm rejected its upload with HTTP 413.
       The replacement immutable release set preserves those exact native bytes
-      behind one launcher and four exact-version support packages. Its tarball
-      sizes are 10,131; 70,946,653; 51,714,215; 71,051,800; and 46,142,860
+      behind one launcher and four exact-version scoped support packages. Its
+      tarball sizes are 10,137; 70,946,677; 51,714,221; 71,051,829; and
+      46,142,868
       bytes for the launcher, Linux native, Linux CUDA runtime, Windows native,
       and Windows CUDA runtime respectively. Combined validation reconstructs
       and checks every original `SHA256SUMS` entry.

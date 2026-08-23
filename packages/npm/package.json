@@ -28,10 +28,10 @@
     "test": "node --test test/*.test.js"
   },
   "optionalDependencies": {
-    "gpupdal-linux-x64": "0.0.0-development",
-    "gpupdal-win32-x64": "0.0.0-development",
-    "gpupdal-cuda13-linux-x64": "0.0.0-development",
-    "gpupdal-cuda13-win32-x64": "0.0.0-development"
+    "@zymazza/gpupdal-linux-x64": "0.0.0-development",
+    "@zymazza/gpupdal-win32-x64": "0.0.0-development",
+    "@zymazza/gpupdal-cuda13-linux-x64": "0.0.0-development",
+    "@zymazza/gpupdal-cuda13-win32-x64": "0.0.0-development"
   },
   "engines": {
     "node": ">=18.17"

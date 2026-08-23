@@ -13275,3 +13275,40 @@ details and must be published at the same immutable version before the root
 launcher. Publishing the launcher last avoids exposing a root version whose
 exact dependencies do not yet exist. The native archive bytes, support claims,
 licenses, and private source-repository posture are unchanged.
+
+## D0307 — Put npm support packages under the publisher's reserved scope
+
+The first unscoped support leaf, `gpupdal-cuda13-linux-x64@0.1.0`, published
+successfully. npm then rejected the unscoped Windows runtime name with HTTP 403
+because its automated package-name spam detector objected to the name; the
+root `gpupdal` package and the other three support packages remained
+unpublished. Retrying the same public name cannot produce a complete release
+set without npm support intervention.
+
+Supersede D0306's unscoped support-package names with the publisher-owned
+`@zymazza/gpupdal-linux-x64`, `@zymazza/gpupdal-cuda13-linux-x64`,
+`@zymazza/gpupdal-win32-x64`, and
+`@zymazza/gpupdal-cuda13-win32-x64`. The root remains the unscoped
+`gpupdal@0.1.0` package and the user-facing install remains
+`npm install gpupdal`. The scoped packages are public and free to install; no
+paid npm organization is required. Deprecate the one unused unscoped helper
+with a pointer to the root package rather than deleting an already published
+version.
+
+The final scoped tarballs are 10,137; 70,946,677; 51,714,221; 71,051,829; and
+46,142,868 bytes for the root, Linux native, Linux CUDA runtime, Windows native,
+and Windows CUDA runtime. Their SHA-256 values are
+`2ee9800b0266f2d5c2e007f45866d0b7939ba69fd9d202f0164bfc242bf296a3`,
+`7625d5c1dfbcd4ded48951646e8c8b37d7b5ba66baeb3ee444e7d113318eebf3`,
+`29444e3552ecd49a33f003fe095129fd5c036f6cc22e809484f6d10a593a387e`,
+`e05c3a571b64f33b2ed4f313546cba2fed61132ccb0193fbf33215a739cdc800`,
+and `f94dc2474dea7454c9b27d0233836b70542870565899a02b4841cb1bec3b50d0`.
+The combined validator again reconstructs all 541 original checksummed files.
+A clean scoped Linux install passed startup and exact driver-catalog parity,
+and its split NVRTC path passed the forced fused differential on the physical
+RTX 4090.
+
+**Consequences.** Scope ownership makes the implementation-detail names stable
+without changing native bytes, platform filtering, licensing, or the public
+command. Publish the four scoped leaves before the unscoped root. The lone
+unscoped Linux runtime helper is not referenced by the final dependency graph.

@@ -210,11 +210,12 @@ details. Immediately before a public publish:
    npm currently accepts either interactive account 2FA or a narrowly scoped
    granular write token created with **Bypass 2FA**; see
    [npm's publishing-authentication policy](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/).
-5. Publish `gpupdal-linux-x64`, `gpupdal-cuda13-linux-x64`,
-   `gpupdal-win32-x64`, and `gpupdal-cuda13-win32-x64` at the exact release
-   version before publishing `gpupdal`. Use `--access public --tag latest` for
-   every package. Publishing the launcher last prevents a visible root version
-   from referring to support versions that do not yet exist.
+5. Publish `@zymazza/gpupdal-linux-x64`,
+   `@zymazza/gpupdal-cuda13-linux-x64`, `@zymazza/gpupdal-win32-x64`, and
+   `@zymazza/gpupdal-cuda13-win32-x64` at the exact release version before
+   publishing `gpupdal`. Use `--access public --tag latest` for every package.
+   Publishing the launcher last prevents a visible root version from referring
+   to support versions that do not yet exist.
 6. Verify registry metadata and a clean `npm install gpupdal@<version>`, test
    the installed command, then delete temporary npm authentication material
    and retire any release-only credentials.

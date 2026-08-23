@@ -6,8 +6,8 @@ const PACKAGE_SET = Object.freeze({
   "linux-x64": Object.freeze({
     os: "linux",
     cpu: "x64",
-    nativePackage: "gpupdal-linux-x64",
-    runtimePackage: "gpupdal-cuda13-linux-x64",
+    nativePackage: "@zymazza/gpupdal-linux-x64",
+    runtimePackage: "@zymazza/gpupdal-cuda13-linux-x64",
     runtimeFiles: Object.freeze([
       "lib/libnvrtc.so.13",
       "lib/libnvrtc-builtins.so.13.3"
@@ -17,8 +17,8 @@ const PACKAGE_SET = Object.freeze({
   "win32-x64": Object.freeze({
     os: "win32",
     cpu: "x64",
-    nativePackage: "gpupdal-win32-x64",
-    runtimePackage: "gpupdal-cuda13-win32-x64",
+    nativePackage: "@zymazza/gpupdal-win32-x64",
+    runtimePackage: "@zymazza/gpupdal-cuda13-win32-x64",
     runtimeFiles: Object.freeze([
       "nvrtc64_130_0.dll",
       "nvrtc-builtins64_133.dll"

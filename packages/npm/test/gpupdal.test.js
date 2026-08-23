@@ -114,10 +114,10 @@ test("package platform selection and SHA-256 are deterministic", () => {
   assert.match(packagedBinary("win32", "x64", resolver),
                /gpupdal-win32-x64\/native\/win32-x64\/gpupdal\.exe$/);
   assert.deepEqual(packageNames(), [
-    "gpupdal-linux-x64",
-    "gpupdal-cuda13-linux-x64",
-    "gpupdal-win32-x64",
-    "gpupdal-cuda13-win32-x64"
+    "@zymazza/gpupdal-linux-x64",
+    "@zymazza/gpupdal-cuda13-linux-x64",
+    "@zymazza/gpupdal-win32-x64",
+    "@zymazza/gpupdal-cuda13-win32-x64"
   ]);
   assert.equal(PACKAGE_SET["linux-x64"].runtimeFiles.length, 2);
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "gpupdal-npm-test-"));
@@ -141,21 +141,22 @@ test("launcher resolves split native packages and configures runtime search", ()
   const environment = nativeEnvironment(
     { PATH: "/usr/bin", LD_LIBRARY_PATH: "/existing" }, layout, "linux");
   assert.equal(layout.binary,
-    "/packages/gpupdal-linux-x64/native/linux-x64/gpupdal");
+    "/packages/@zymazza/gpupdal-linux-x64/native/linux-x64/gpupdal");
   assert.equal(
     environment.LD_LIBRARY_PATH,
-    "/packages/gpupdal-linux-x64/native/linux-x64/lib:" +
-      "/packages/gpupdal-cuda13-linux-x64/native/linux-x64/lib:/existing"
+    "/packages/@zymazza/gpupdal-linux-x64/native/linux-x64/lib:" +
+      "/packages/@zymazza/gpupdal-cuda13-linux-x64/native/linux-x64/lib:" +
+      "/existing"
   );
   assert.equal(environment.GDAL_DATA,
-    "/packages/gpupdal-linux-x64/native/linux-x64/share/gdal");
+    "/packages/@zymazza/gpupdal-linux-x64/native/linux-x64/share/gdal");
 
   const windowsLayout = packagedLayout("win32", "x64", resolver);
   const windowsEnvironment = nativeEnvironment(
     { Path: "C:\\Windows\\System32" }, windowsLayout, "win32");
   assert.equal(windowsEnvironment.Path,
-    "/packages/gpupdal-win32-x64/native/win32-x64;" +
-      "/packages/gpupdal-cuda13-win32-x64/native/win32-x64;" +
+    "/packages/@zymazza/gpupdal-win32-x64/native/win32-x64;" +
+      "/packages/@zymazza/gpupdal-cuda13-win32-x64/native/win32-x64;" +
       "C:\\Windows\\System32");
 });
 
@@ -236,14 +237,14 @@ test("split-package verifier rejects missing and modified native files", () => {
   try {
     fs.mkdirSync(native, { recursive: true });
     fs.writeFileSync(path.join(directory, "package.json"), JSON.stringify({
-      name: "gpupdal-linux-x64",
+      name: "@zymazza/gpupdal-linux-x64",
       version: "0.1.0"
     }));
     const filename = path.join(native, "gpupdal");
     fs.writeFileSync(filename, "gpupdal\n");
     fs.writeFileSync(path.join(directory, "split-manifest.json"), JSON.stringify({
       schema: 1,
-      package: "gpupdal-linux-x64",
+      package: "@zymazza/gpupdal-linux-x64",
       version: "0.1.0",
       platform: "linux-x64",
       role: "native",
