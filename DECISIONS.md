@@ -13312,3 +13312,32 @@ RTX 4090.
 without changing native bytes, platform filtering, licensing, or the public
 command. Publish the four scoped leaves before the unscoped root. The lone
 unscoped Linux runtime helper is not referenced by the final dependency graph.
+
+## D0308 — Publish and post-install qualify gpupdal 0.1.0 on npm latest
+
+After all four scoped support packages were anonymously resolvable, publish
+the unscoped `gpupdal@0.1.0` launcher last with public access and the `latest`
+tag from the `zymazza` account. npm reports `zymazza <zy@automagics.com>` as
+the root owner and `latest: 0.1.0`. The root registry metadata pins the four
+platform support packages to exactly `0.1.0`; Linux installation selects only
+the scoped Linux native and CUDA-runtime packages. The unused unscoped
+`gpupdal-cuda13-linux-x64@0.1.0` helper from D0307 is deprecated with a message
+directing users to install `gpupdal` and is not referenced by the final graph.
+
+An anonymous clean local install resolved all three applicable tarballs from
+`registry.npmjs.org`, with lifecycle scripts disabled. An independent isolated
+global-style install exposed the `gpupdal` command. Both reported the pinned
+PDAL 2.10.0 oracle version. The installed `gpupdal --drivers` output and its
+sibling `pdal --drivers` output had the same SHA-256
+`bf1fbde0452c9aec8845270e17bda89d1ce04aff80cf4ba0b600e73dd10ab912`.
+On the physical RTX 4090, the registry-installed `gpupdal doctor` found CUDA
+toolkit/runtime/driver 13.3, SM 89, and the embedded placement profile. The
+forced fused assign/ferry process differential then matched the bundled PDAL
+oracle exactly.
+
+**Consequences.** `npm install gpupdal` is the released installation path for
+Linux x86-64 and Windows x64. The `0.1.0` npm release gate is complete; this
+does not change the private GitHub repository's visibility, create a macOS
+artifact, extend physical qualification beyond SM 89, or establish a Windows
+speedup claim. Temporary local authentication material must be deleted, and
+the owner should revoke the release-only token in npm account settings.

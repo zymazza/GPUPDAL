@@ -3,7 +3,7 @@
 Status date: 2026-08-22
 
 Target: first stable CUDA release, version `0.1.0` on npm's `latest` channel
-(owner approved)
+(published)
 
 Current repository posture: private development
 
@@ -17,10 +17,12 @@ scoped platform support packages. The first unscoped Linux runtime helper
 published, but npm's automated name filter rejected the next unscoped helper;
 the root launcher remained unpublished. Moving the implementation-detail
 helpers under the publisher's reserved `@zymazza` scope avoids that naming
-filter. The split set has passed full checksum
-reconstruction, a clean Linux installation, driverless fallback, and a forced
-exact CUDA differential on the physical RTX 4090. Registry publication and
-post-publish installation verification are in progress. The source repository
+filter. The split set passed full checksum reconstruction, a clean Linux
+installation, driverless fallback, and a forced exact CUDA differential on the
+physical RTX 4090. `gpupdal@0.1.0` and all four scoped support packages are now
+public on npm with `latest`. An anonymous registry-only local install, isolated
+global install, command startup, exact driver-catalog comparison, physical CUDA
+doctor, and forced exact CUDA differential all pass. The source repository
 remains private unless the owner separately approves changing its visibility.
 
 ## Owner answers recorded
@@ -90,8 +92,9 @@ for the public npm binary package.
   workstation's configured GitHub CLI OAuth fallback has administrator access,
   and private `zymazza/GPUPDAL` `main` is synchronized through the provenance
   redaction commit.
-- The owner-approved public npm registry write and its post-publish clean
-  installation verification are the only remaining release operation.
+- No npm `0.1.0` release-operation blocker remains. The temporary local
+  credential is removed after this record is synchronized; the owner should
+  revoke the temporary token in npm's account settings as defense in depth.
 
 ## Dependency and rights audit
 
@@ -189,9 +192,10 @@ as a whole depends on closed-source PDAL components.
       toolkit, and byte-exact driverless fallback. The Windows hosts also
       passed local and global npm command discovery, output, and uninstall. The
       split Linux install additionally passed the forced fused CUDA/NVRTC
-      differential on the physical RTX 4090. Publish from `zymazza` only with
-      explicit final approval; remove temporary credential material after
-      verifying the registry package.
+      differential on the physical RTX 4090. The owner-approved public publish
+      completed from `zymazza`; an anonymous clean local and isolated global
+      registry install passed command startup, catalog parity, CUDA doctor, and
+      the forced exact differential.
 - [x] Preserve the private GPUPDAL naming-permission email. Zy confirmed the
       permission expressly covers the GPUPDAL project name; no separate
       command-name confirmation is required absent limiting language. Do not
