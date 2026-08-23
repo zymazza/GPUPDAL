@@ -10,9 +10,10 @@ Current repository posture: private development
 The Linux and Windows `0.1.0` CUDA release candidates are physically qualified
 on their declared SM 89 profiles, including final conformance, sanitizer, and
 clean-machine npm rehearsals. GPUPDAL has not been published. The owner has
-approved publishing `0.1.0` as npm `latest`; publication now waits only on a
-fresh authenticated npm session. The source repository remains private unless
-the owner separately approves changing its visibility.
+approved publishing `0.1.0` as npm `latest`, and a temporary authenticated
+`zymazza` session has been verified. The public registry write and post-publish
+installation check have not yet run. The source repository remains private
+unless the owner separately approves changing its visibility.
 
 ## Owner answers recorded
 
@@ -31,10 +32,10 @@ the owner separately approves changing its visibility.
 - Public security/conduct contact: **zy@automagics.com**. GPUPDAL aims to
   acknowledge reports within five business days on a best-effort basis. This
   is not an SLA, warranty, support promise, or guarantee of a fix.
-- npm owner: **zymazza**. Final publication requires a fresh authenticated npm
-  session after the engineering gates pass. The owner's npm authentication
+- npm owner: **zymazza**. A fresh temporary authenticated session was verified
+  after the engineering gates passed. The owner's npm authentication
   configuration is private operational information rather than project release
-  metadata.
+  metadata and will be removed after publication verification.
 - First binary scope: CLI-only Linux x86-64 and Windows x64 bundles with
   optional external plugins off. Drop-in behavior covers the complete
   configured stage catalog on each platform and is gated by exact
@@ -77,14 +78,13 @@ for the public npm binary package.
 
 ## Current operational blockers
 
-- npm publication is owner-approved, but this workstation has no authenticated
-  npm session. `npm whoami` returns `ENEEDAUTH`. Log in as `zymazza`; then the
-  reviewed `0.1.0` tarball can be published to `latest` and verified.
-- The configured GitHub identity is `zymazza`, but its current fine-grained
-  credential cannot read or write the private `zymazza/GPUPDAL` repository;
-  a dry-run push returns HTTP 403. Refresh that credential with repository
-  access and Contents read/write so the local release commits can be pushed.
-  This does not authorize making the repository public.
+- No engineering or private-GitHub synchronization blocker remains. The
+  workstation's configured GitHub CLI OAuth fallback has administrator access,
+  and private `zymazza/GPUPDAL` `main` is synchronized through the provenance
+  redaction commit.
+- The owner-approved public npm registry write and its post-publish clean
+  installation verification remain unexecuted. The exact reviewed tarball and
+  authenticated `zymazza` session are ready.
 
 ## Dependency and rights audit
 
