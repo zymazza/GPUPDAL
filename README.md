@@ -1,5 +1,6 @@
 # GPUPDAL
 
+This is a PDAL fork designed to save time by utilizing the GPU for operations. Right now, only CUDA/NVIDIA is supported.
 
 GPUPDAL (GPU Point Data Abstraction Library) is an independent,
 performance-focused point-cloud processing engine derived from PDAL. Its
